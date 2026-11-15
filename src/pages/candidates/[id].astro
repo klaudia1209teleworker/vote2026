@@ -3,51 +3,88 @@ import Layout from '../../layouts/Layout.astro';
 import candidates from '../../data/candidates.json';
 import positions from '../../data/positions.json';
 
+const baseUrl = import.meta.env.BASE_URL;
+
 export function getStaticPaths() {
-  return candidates.candidates.map(candidate => ({
-    params: { id: candidate.id },
+  function generateCandidateId(c: any): string {
+    return `${c.county}-${c.position}-${c.district || c.districtOfficial || ''}-${c.name}`.replace(/[^a-zA-Z0-9\u4e00-\u9fff-]/g, '').toLowerCase();
+  }
+  
+  const nonVillageChiefCandidates = (candidates as any[]).filter(c => c.position !== 'village-chief');
+  
+  return nonVillageChiefCandidates.map(candidate => ({
+    params: { id: generateCandidateId(candidate) },
     props: { candidate }
   }));
 }
 
 const { candidate } = Astro.props;
-const baseUrl = import.meta.env.BASE_URL;
 
 const position = positions.positions.find(p => p.id === candidate.position);
 const positionName = position?.name || candidate.position;
+const shortName = position?.shortName || positionName;
 
-function computeProposalStats(proposals: any[] | undefined) {
-  if (!proposals || proposals.length === 0) return null;
-  
-  const passed = proposals.filter(p => p.status === '通過').length;
-  const total = proposals.length;
-  const rate = total > 0 ? ((passed / total) * 100).toFixed(1) : '0';
-  
-  const dates = proposals.map(p => p.date).sort();
-  const periodStart = dates[0];
-  const periodEnd = dates[dates.length - 1];
-  
-  return {
-    passed,
-    total,
-    rate: `${rate}%`,
-    period: `${periodStart} 至 ${periodEnd}`,
-    calculation: `${passed} / ${total}`
-  };
+function getStatusBadge(status: string, registeredOn?: string): { label: string; class: string; fullLabel: string } {
+  if (status.includes('公告候選人')) {
+    return { label: '已公告', class: 'bg-green-100 text-green-700', fullLabel: '正式候選人（選委會已公告）' };
+  } else if (status.includes('已抽籤')) {
+    return { label: '已抽籤', class: 'bg-blue-100 text-blue-700', fullLabel: '已完成號次抽籤' };
+  } else {
+    const dateLabel = registeredOn ? ` (${registeredOn})` : '';
+    return { label: '已登記', class: 'bg-amber-100 text-amber-700', fullLabel: `已完成登記${dateLabel}` };
+  }
 }
 
-const proposalStats = computeProposalStats(candidate.proposals);
-const hasOfficeRecord = candidate.pastRecords?.length > 0 || 
-                        candidate.attendance?.general || 
-                        candidate.attendance?.committee || 
-                        candidate.proposals?.length > 0;
+function getPartyDisplay(party: string | null, partyAsListed: string | null): string {
+  if (party) return party;
+  if (partyAsListed === '無' || partyAsListed === null) return '無黨籍推薦';
+  return partyAsListed;
+}
+
+const statusBadge = getStatusBadge(candidate.status, candidate.registeredOn);
+const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
+
+const districtPageUrl = (() => {
+  const positionId = candidate.position;
+  const city = candidate.county;
+  
+  if (positionId === 'mayor-municipal' || positionId === 'mayor-county') {
+    return `${baseUrl}candidates/district/${positionId}/${encodeURIComponent(city)}/`;
+  }
+  
+  if (positionId === 'councilor-municipal' || positionId === 'councilor-county') {
+    const districtName = candidate.districtOfficial || candidate.district;
+    if (districtName) {
+      return `${baseUrl}candidates/district/${positionId}/${encodeURIComponent(city)}/${encodeURIComponent(districtName)}/`;
+    }
+    return `${baseUrl}candidates/district/${positionId}/${encodeURIComponent(city)}/`;
+  }
+  
+  if (positionId === 'township-mayor' || positionId === 'township-representative') {
+    const township = candidate.district;
+    if (township) {
+      return `${baseUrl}candidates/district/${positionId}/${encodeURIComponent(city)}/${encodeURIComponent(township)}/`;
+    }
+  }
+  
+  if (positionId === 'district-mayor' || positionId === 'district-representative') {
+    const district = candidate.district;
+    if (district) {
+      return `${baseUrl}candidates/district/${positionId}/${encodeURIComponent(city)}/${encodeURIComponent(district)}/`;
+    }
+  }
+  
+  return `${baseUrl}candidates/`;
+})();
 ---
 
-<Layout title={`${candidate.name} - ${positionName}候選人`} description={`${candidate.city}${candidate.district} ${positionName}候選人 ${candidate.name} 的政見、問政紀錄與出席率`}>
+<Layout title={`${candidate.name} - ${positionName}候選人`} description={`${candidate.county}${candidate.district || ''} ${positionName}候選人 ${candidate.name}`}>
   <article class="space-y-8">
     <header>
       <nav class="text-sm text-neutral-500 mb-4">
         <a href={`${baseUrl}candidates/`} class="hover:text-primary-600">候選人資訊</a>
+        <span class="mx-2">›</span>
+        <a href={districtPageUrl} class="hover:text-primary-600">{candidate.county} {candidate.districtOfficial || candidate.district || ''}</a>
         <span class="mx-2">›</span>
         <span class="text-neutral-700">{candidate.name}</span>
       </nav>
@@ -55,387 +92,192 @@ const hasOfficeRecord = candidate.pastRecords?.length > 0 ||
       <div class="flex flex-wrap items-start gap-4 mb-4">
         <div class="flex-1">
           <div class="flex items-center gap-3 mb-2">
-            <span class="text-3xl font-bold text-primary-600">{candidate.number}</span>
+            {candidate.number != null && (
+              <span class="text-3xl font-bold text-primary-600">{candidate.number}</span>
+            )}
             <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800">
               {candidate.name}
             </h1>
           </div>
           <p class="text-neutral-600">
-            {candidate.city} {candidate.district} · {positionName}
+            {candidate.county} {candidate.districtOfficial || candidate.district || ''} · {positionName}
           </p>
         </div>
         <div class="flex flex-wrap gap-2">
-          {candidate.party && (
-            <span class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm">
-              {candidate.party}
-            </span>
-          )}
-          {!candidate.party && (
-            <span class="px-3 py-1 bg-neutral-100 text-neutral-600 rounded-full text-sm">
-              無黨籍
-            </span>
-          )}
-          {candidate.isIncumbent && (
-            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
-              現任
-            </span>
-          )}
+          <span class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm">
+            {partyDisplay}
+          </span>
+          <span class={`px-3 py-1 rounded-full text-sm ${statusBadge.class}`}>
+            {statusBadge.label}
+          </span>
         </div>
       </div>
-      
-      <p class="text-xs text-neutral-500">
-        資料最後驗證：{candidate.lastVerified} · 
-        <a href={candidate.officialSourceUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline">
-          官方來源
-        </a>
-      </p>
     </header>
 
-    <!-- 政見 -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-        📋 政見
-      </h2>
-      
-      {candidate.platform ? (
+    {/* Status Info */}
+    <section class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+      <h2 class="font-medium text-neutral-700 mb-2">📋 候選人狀態</h2>
+      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
         <div>
-          {candidate.platform.content ? (
-            <div class="prose prose-neutral max-w-none mb-4">
-              <p class="whitespace-pre-line text-neutral-700">{candidate.platform.content}</p>
-            </div>
-          ) : (
-            <p class="text-neutral-500 italic mb-4">政見內容尚未整理</p>
-          )}
-          
-          <div class="flex flex-wrap gap-4 text-sm">
-            <a 
-              href={candidate.platform.bulletinUrl} 
-              target="_blank" 
-              rel="noopener"
-              class="inline-flex items-center gap-1 text-primary-600 hover:underline"
-            >
-              📄 選舉公報原文
-            </a>
-            {candidate.platform.bulletinPage && (
-              <span class="text-neutral-500">第 {candidate.platform.bulletinPage} 頁</span>
-            )}
-            {candidate.platform.asOf && (
-              <span class="text-neutral-500">公報日期：{candidate.platform.asOf}</span>
-            )}
-          </div>
+          <dt class="text-neutral-500">目前狀態</dt>
+          <dd class="text-neutral-800 font-medium">{statusBadge.fullLabel}</dd>
         </div>
-      ) : (
-        <p class="text-neutral-500 italic">尚未整理</p>
-      )}
+        {candidate.registeredOn && (
+          <div>
+            <dt class="text-neutral-500">登記日期</dt>
+            <dd class="text-neutral-800">{candidate.registeredOn}</dd>
+          </div>
+        )}
+        {candidate.number != null && (
+          <div>
+            <dt class="text-neutral-500">號次</dt>
+            <dd class="text-neutral-800 font-bold text-lg">{candidate.number} 號</dd>
+          </div>
+        )}
+        <div>
+          <dt class="text-neutral-500">政黨/推薦</dt>
+          <dd class="text-neutral-800">{partyDisplay}</dd>
+        </div>
+      </dl>
     </section>
 
-    <!-- 過去的施政/問政紀錄 -->
-    {(hasOfficeRecord || candidate.isIncumbent) && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-          📜 過去的施政/問政紀錄
-        </h2>
-        
-        {candidate.pastRecords && candidate.pastRecords.length > 0 ? (
-          <div class="space-y-4">
-            {candidate.pastRecords.map((record: any) => (
-              <div class="p-4 bg-neutral-50 rounded-lg">
-                <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
-                  <h3 class="font-medium text-neutral-800">{record.title}</h3>
-                  <span class="text-sm text-neutral-500">{record.date}</span>
-                </div>
-                {record.category && (
-                  <span class="inline-block px-2 py-0.5 bg-neutral-200 text-neutral-600 rounded text-xs mb-2">
-                    {record.category}
-                  </span>
-                )}
-                {record.description && (
-                  <p class="text-sm text-neutral-600 mb-2">{record.description}</p>
-                )}
-                <a 
-                  href={record.sourceUrl} 
-                  target="_blank" 
-                  rel="noopener"
-                  class="text-xs text-primary-600 hover:underline"
-                >
-                  {record.sourceName || '來源連結'} →
-                </a>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p class="text-neutral-500 italic">尚未整理</p>
-        )}
-      </section>
-    )}
-
-    <!-- 出席紀錄 -->
-    {(hasOfficeRecord || candidate.isIncumbent) && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-          📊 出席紀錄
-        </h2>
-        
-        {candidate.attendance ? (
-          <div class="grid gap-6 md:grid-cols-2">
-            <!-- 大會出席 -->
-            <div class="p-4 bg-neutral-50 rounded-lg">
-              <h3 class="font-medium text-neutral-700 mb-3">大會出席</h3>
-              {candidate.attendance.general ? (
-                <div>
-                  {candidate.attendance.general.rate && (
-                    <p class="text-2xl font-bold text-neutral-800 mb-2">
-                      {candidate.attendance.general.rate}
-                    </p>
-                  )}
-                  {candidate.attendance.general.attended !== undefined && candidate.attendance.general.total !== undefined && (
-                    <p class="text-sm text-neutral-600 mb-2">
-                      出席 {candidate.attendance.general.attended} / {candidate.attendance.general.total} 次
-                    </p>
-                  )}
-                  <div class="text-xs text-neutral-500 space-y-1">
-                    <p>屆期：{candidate.attendance.general.term}</p>
-                    <p>期間：{candidate.attendance.general.sessionPeriod}</p>
-                    {candidate.attendance.general.asOf && (
-                      <p>資料截至：{candidate.attendance.general.asOf}</p>
-                    )}
-                    <a 
-                      href={candidate.attendance.general.sourceUrl} 
-                      target="_blank" 
-                      rel="noopener"
-                      class="text-primary-600 hover:underline inline-block mt-1"
-                    >
-                      {candidate.attendance.general.sourceName || '來源'} →
-                    </a>
-                  </div>
-                </div>
-              ) : (
-                <p class="text-neutral-500 italic">尚未整理</p>
-              )}
-            </div>
-            
-            <!-- 委員會出席 -->
-            <div class="p-4 bg-neutral-50 rounded-lg">
-              <h3 class="font-medium text-neutral-700 mb-3">委員會出席</h3>
-              {candidate.attendance.committee ? (
-                <div>
-                  {candidate.attendance.committee.rate && (
-                    <p class="text-2xl font-bold text-neutral-800 mb-2">
-                      {candidate.attendance.committee.rate}
-                    </p>
-                  )}
-                  {candidate.attendance.committee.attended !== undefined && candidate.attendance.committee.total !== undefined && (
-                    <p class="text-sm text-neutral-600 mb-2">
-                      出席 {candidate.attendance.committee.attended} / {candidate.attendance.committee.total} 次
-                    </p>
-                  )}
-                  {candidate.attendance.committee.committeeName && (
-                    <p class="text-sm text-neutral-600 mb-2">
-                      {candidate.attendance.committee.committeeName}
-                    </p>
-                  )}
-                  <div class="text-xs text-neutral-500 space-y-1">
-                    <p>屆期：{candidate.attendance.committee.term}</p>
-                    <p>期間：{candidate.attendance.committee.sessionPeriod}</p>
-                    {candidate.attendance.committee.asOf && (
-                      <p>資料截至：{candidate.attendance.committee.asOf}</p>
-                    )}
-                    <a 
-                      href={candidate.attendance.committee.sourceUrl} 
-                      target="_blank" 
-                      rel="noopener"
-                      class="text-primary-600 hover:underline inline-block mt-1"
-                    >
-                      {candidate.attendance.committee.sourceName || '來源'} →
-                    </a>
-                  </div>
-                </div>
-              ) : (
-                <p class="text-neutral-500 italic">尚未整理</p>
-              )}
-            </div>
-          </div>
-        ) : (
-          <p class="text-neutral-500 italic">尚未整理</p>
-        )}
-      </section>
-    )}
-
-    <!-- 提案紀錄 -->
-    {(hasOfficeRecord || candidate.isIncumbent) && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-          📝 提案紀錄
-        </h2>
-        
-        {candidate.proposals && candidate.proposals.length > 0 ? (
-          <div>
-            {/* 成功提案率 */}
-            {proposalStats && (
-              <div class="p-4 bg-blue-50 rounded-lg mb-4">
-                <p class="font-medium text-blue-800 mb-1">
-                  成功提案率：{proposalStats.rate}
-                </p>
-                <p class="text-sm text-blue-600">
-                  計算方式：通過提案數 / 總提案數 = {proposalStats.calculation}
-                </p>
-                <p class="text-xs text-blue-500 mt-1">
-                  統計期間：{proposalStats.period}
-                </p>
-              </div>
+    {/* Data Sources */}
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📎 資料來源</h2>
+      
+      <div class="space-y-4">
+        {candidate.sourceUrl && (
+          <div class="p-4 bg-neutral-50 rounded-lg">
+            <h3 class="font-medium text-neutral-700 mb-2">候選人公告</h3>
+            <a 
+              href={candidate.sourceUrl}
+              target="_blank"
+              rel="noopener"
+              class="text-primary-600 hover:underline break-all"
+            >
+              {candidate.sourceDoc || '選委會官方公告'} →
+            </a>
+            {candidate.asOf && (
+              <p class="text-xs text-neutral-500 mt-1">公告日期：{candidate.asOf}</p>
             )}
-            
-            <div class="space-y-3">
-              {candidate.proposals.map((proposal: any) => (
-                <div class="p-4 bg-neutral-50 rounded-lg">
-                  <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
-                    <h3 class="font-medium text-neutral-800">{proposal.title}</h3>
-                    <span class={`px-2 py-0.5 rounded text-xs ${
-                      proposal.status === '通過' ? 'bg-green-100 text-green-700' :
-                      proposal.status === '待審' ? 'bg-amber-100 text-amber-700' :
-                      proposal.status === '撤回' ? 'bg-neutral-200 text-neutral-600' :
-                      proposal.status === '否決' ? 'bg-red-100 text-red-700' :
-                      'bg-neutral-200 text-neutral-600'
-                    }`}>
-                      {proposal.status}
-                    </span>
-                  </div>
-                  <div class="flex flex-wrap gap-4 text-xs text-neutral-500">
-                    <span>{proposal.date}</span>
-                    {proposal.term && <span>{proposal.term}</span>}
-                    <a 
-                      href={proposal.sourceUrl} 
-                      target="_blank" 
-                      rel="noopener"
-                      class="text-primary-600 hover:underline"
-                    >
-                      {proposal.sourceName || '來源'} →
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <p class="text-neutral-500 italic">尚未整理</p>
-        )}
-      </section>
-    )}
-
-    <!-- 學經歷（新人候選人） -->
-    {!hasOfficeRecord && candidate.newcomerProfile && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-          🎓 學經歷
-        </h2>
-        
-        {/* 學歷 */}
-        {candidate.newcomerProfile.education && candidate.newcomerProfile.education.length > 0 ? (
-          <div class="mb-6">
-            <h3 class="font-medium text-neutral-700 mb-3">學歷</h3>
-            <div class="space-y-2">
-              {candidate.newcomerProfile.education.map((edu: any) => (
-                <div class="p-3 bg-neutral-50 rounded-lg">
-                  <p class="text-neutral-800">
-                    {edu.school}
-                    {edu.field && ` ${edu.field}`}
-                    {edu.degree && ` ${edu.degree}`}
-                  </p>
-                  <div class="flex flex-wrap gap-4 text-xs text-neutral-500 mt-1">
-                    {edu.year && <span>{edu.year}</span>}
-                    {edu.sourceUrl && (
-                      <a href={edu.sourceUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline">
-                        來源 →
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div class="mb-6">
-            <h3 class="font-medium text-neutral-700 mb-3">學歷</h3>
-            <p class="text-neutral-500 italic">尚未整理</p>
           </div>
         )}
         
-        {/* 經歷 */}
-        {candidate.newcomerProfile.experience && candidate.newcomerProfile.experience.length > 0 ? (
-          <div class="mb-6">
-            <h3 class="font-medium text-neutral-700 mb-3">經歷</h3>
-            <div class="space-y-2">
-              {candidate.newcomerProfile.experience.map((exp: any) => (
-                <div class="p-3 bg-neutral-50 rounded-lg">
-                  <p class="text-neutral-800">
-                    {exp.title}
-                    {exp.organization && ` · ${exp.organization}`}
-                  </p>
-                  <div class="flex flex-wrap gap-4 text-xs text-neutral-500 mt-1">
-                    {exp.period && <span>{exp.period}</span>}
-                    {exp.sourceUrl && (
-                      <a href={exp.sourceUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline">
-                        來源 →
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div class="mb-6">
-            <h3 class="font-medium text-neutral-700 mb-3">經歷</h3>
-            <p class="text-neutral-500 italic">尚未整理</p>
+        {candidate.registrationSourceUrl && (
+          <div class="p-4 bg-neutral-50 rounded-lg">
+            <h3 class="font-medium text-neutral-700 mb-2">登記公告</h3>
+            <a 
+              href={candidate.registrationSourceUrl}
+              target="_blank"
+              rel="noopener"
+              class="text-primary-600 hover:underline break-all"
+            >
+              登記結果公告 →
+            </a>
+            {candidate.registeredOn && (
+              <p class="text-xs text-neutral-500 mt-1">登記日期：{candidate.registeredOn}</p>
+            )}
           </div>
         )}
         
-        {/* 公共參與 */}
-        {candidate.newcomerProfile.publicParticipation && candidate.newcomerProfile.publicParticipation.length > 0 ? (
-          <div>
-            <h3 class="font-medium text-neutral-700 mb-3">公共參與</h3>
-            <div class="space-y-2">
-              {candidate.newcomerProfile.publicParticipation.map((pp: any) => (
-                <div class="p-3 bg-neutral-50 rounded-lg">
-                  <p class="text-neutral-800">
-                    {pp.activity}
-                    {pp.role && ` · ${pp.role}`}
-                  </p>
-                  <div class="flex flex-wrap gap-4 text-xs text-neutral-500 mt-1">
-                    {pp.date && <span>{pp.date}</span>}
-                    {pp.sourceUrl && (
-                      <a href={pp.sourceUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline">
-                        {pp.sourceName || '來源'} →
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div>
-            <h3 class="font-medium text-neutral-700 mb-3">公共參與</h3>
-            <p class="text-neutral-500 italic">尚未整理</p>
+        {candidate.drawSourceUrl && (
+          <div class="p-4 bg-neutral-50 rounded-lg">
+            <h3 class="font-medium text-neutral-700 mb-2">號次抽籤</h3>
+            <a 
+              href={candidate.drawSourceUrl}
+              target="_blank"
+              rel="noopener"
+              class="text-primary-600 hover:underline break-all"
+            >
+              抽籤結果公告 →
+            </a>
           </div>
         )}
-      </section>
-    )}
+        
+        {candidate.sourceArticleUrl && (
+          <div class="p-4 bg-neutral-50 rounded-lg">
+            <h3 class="font-medium text-neutral-700 mb-2">選委會公告頁面</h3>
+            <a 
+              href={candidate.sourceArticleUrl}
+              target="_blank"
+              rel="noopener"
+              class="text-primary-600 hover:underline break-all"
+            >
+              選委會網站公告 →
+            </a>
+          </div>
+        )}
+      </div>
+      
+      <p class="text-xs text-neutral-500 mt-4">
+        資料最後驗證：{candidate.lastVerified || candidate.asOf || '未記錄'}
+      </p>
+    </section>
 
-    <!-- 若無任何資料 -->
-    {!candidate.platform && !hasOfficeRecord && !candidate.newcomerProfile && (
-      <section class="p-6 bg-neutral-100 rounded-xl">
-        <p class="text-neutral-600 text-center">
-          此候選人的詳細資料尚未整理。
-          <br />
-          <span class="text-sm text-neutral-500">
-            正式名單公告後將陸續更新。
-          </span>
-        </p>
-      </section>
-    )}
+    {/* Official Resources */}
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🔗 官方資源</h2>
+      
+      <div class="grid gap-4 sm:grid-cols-2">
+        <a 
+          href="https://bulletin.cec.gov.tw/" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors"
+        >
+          <p class="font-medium text-primary-700">選舉公報</p>
+          <p class="text-sm text-primary-600">查看候選人完整政見</p>
+        </a>
+        
+        {(candidate.position === 'mayor-municipal' || candidate.position === 'mayor-county' || 
+          candidate.position === 'councilor-municipal' || candidate.position === 'councilor-county') && (
+          <a 
+            href="https://pdps-dec.cec.gov.tw/release/formal/HomePage.html" 
+            target="_blank" 
+            rel="noopener"
+            class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
+          >
+            <p class="font-medium text-neutral-700">財產申報</p>
+            <p class="text-sm text-neutral-500">查看候選人財產申報</p>
+          </a>
+        )}
+        
+        <a 
+          href="https://info.cec.gov.tw/vote2026/" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
+        >
+          <p class="font-medium text-neutral-700">中選會選舉專區</p>
+          <p class="text-sm text-neutral-500">更多選舉資訊</p>
+        </a>
+      </div>
+    </section>
 
-    <!-- 免責聲明 -->
+    {/* Evaluation Guide */}
+    <section class="p-6 bg-blue-50 border border-blue-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-blue-800 mb-3">
+        🗳️ 如何評估{shortName}候選人？
+      </h2>
+      {position?.checkpoints && (
+        <ul class="space-y-2 text-blue-700">
+          {position.checkpoints.slice(0, 4).map((checkpoint) => (
+            <li class="flex items-start gap-2">
+              <span class="text-blue-500">•</span>
+              <span>{checkpoint}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <a 
+        href={`${baseUrl}how-to-judge/`}
+        class="mt-4 inline-flex items-center gap-1 text-blue-600 hover:underline"
+      >
+        查看完整評估指南 →
+      </a>
+    </section>
+
+    {/* Disclaimer */}
     <section class="p-4 bg-amber-50 border border-amber-200 rounded-lg">
       <p class="text-sm text-amber-700">
         <strong>⚠️ 資料說明：</strong>
@@ -446,8 +288,8 @@ const hasOfficeRecord = candidate.pastRecords?.length > 0 ||
     </section>
 
     <nav class="flex justify-between pt-8 border-t border-neutral-200">
-      <a href={`${baseUrl}candidates/`} class="text-primary-600 hover:underline">
-        ← 候選人列表
+      <a href={districtPageUrl} class="text-primary-600 hover:underline">
+        ← 返回選區候選人
       </a>
       <a href={`${baseUrl}how-to-judge/`} class="text-primary-600 hover:underline">
         怎麼判斷候選人 →

@@ -6,18 +6,23 @@ import positions from '../../data/positions.json';
 
 const baseUrl = import.meta.env.BASE_URL;
 
-const publicCandidates = candidates.candidates.filter(c => !c.isSample);
-
 const directMunicipalities = districts.directMunicipalities.list;
 const provincialCities = districts.provincialCities.list;
 const counties = districts.counties.list;
 
-const candidatesByCity = publicCandidates.reduce((acc, candidate) => {
-  const city = candidate.city;
-  if (!acc[city]) acc[city] = [];
-  acc[city].push(candidate);
+const positionCounts = (candidates as any[]).reduce((acc, c) => {
+  acc[c.position] = (acc[c.position] || 0) + 1;
   return acc;
-}, {} as Record<string, typeof publicCandidates>);
+}, {} as Record<string, number>);
+
+const totalCandidates = (candidates as any[]).length;
+
+const candidatesByCity = (candidates as any[]).reduce((acc, candidate) => {
+  const city = candidate.county;
+  if (!acc[city]) acc[city] = 0;
+  acc[city]++;
+  return acc;
+}, {} as Record<string, number>);
 
 function getPositionName(positionId: string): string {
   const position = positions.positions.find(p => p.id === positionId);
@@ -25,21 +30,35 @@ function getPositionName(positionId: string): string {
 }
 ---
 
-<Layout title="候選人資訊" description="各選區候選人資訊（正式名單待 11/17 公告後更新）">
+<Layout title="候選人資訊" description="2026 九合一選舉各選區候選人資訊">
   <article class="space-y-8">
     <header>
       <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-4">
         👤 候選人資訊
       </h1>
-      <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg">
-        <p class="text-amber-700">
-          <strong>📢 資料狀態：</strong>候選人正式名單預計於 <strong>2026 年 11 月 17 日</strong>公告。
-          本頁資料將於公告後陸續更新。
+      <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+        <p class="text-green-700">
+          <strong>✅ 資料已更新：</strong>本站已收錄 <strong>{totalCandidates.toLocaleString()}</strong> 位候選人資料，
+          皆來自中選會及各縣市選委會官方公告。
+          <a href={`${baseUrl}about/`} class="underline">了解資料來源</a>
         </p>
       </div>
     </header>
 
-    <!-- Quick Access by City -->
+    {/* Statistics */}
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📊 候選人統計</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {Object.entries(positionCounts).sort((a, b) => b[1] - a[1]).map(([positionId, count]) => (
+          <div class="p-4 bg-neutral-50 rounded-lg">
+            <p class="text-2xl font-bold text-primary-600">{count.toLocaleString()}</p>
+            <p class="text-neutral-600">{getPositionName(positionId)}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* Quick Access by City */}
     <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
       <h2 class="text-lg font-semibold text-neutral-800 mb-4">🗺️ 依縣市查看候選人</h2>
       <p class="text-neutral-600 mb-4">
@@ -47,49 +66,49 @@ function getPositionName(positionId: string): string {
       </p>
       
       <div class="space-y-6">
-        <!-- 六都 -->
+        {/* 六都 */}
         <div>
           <h3 class="text-sm font-medium text-neutral-500 mb-2">直轄市（六都）</h3>
           <div class="grid gap-2 sm:grid-cols-3">
             {directMunicipalities.map(city => (
               <a 
                 href={`${baseUrl}candidates/district/mayor-municipal/${encodeURIComponent(city)}/`}
-                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors"
+                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors flex justify-between items-center"
               >
                 <span class="font-medium text-neutral-800">{city}</span>
-                <span class="text-neutral-400 ml-1">→</span>
+                <span class="text-sm text-neutral-500">{candidatesByCity[city] || 0} 人</span>
               </a>
             ))}
           </div>
         </div>
         
-        <!-- 省轄市 -->
+        {/* 省轄市 */}
         <div>
           <h3 class="text-sm font-medium text-neutral-500 mb-2">省轄市</h3>
           <div class="grid gap-2 sm:grid-cols-3">
             {provincialCities.map(city => (
               <a 
                 href={`${baseUrl}candidates/district/mayor-county/${encodeURIComponent(city)}/`}
-                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors"
+                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors flex justify-between items-center"
               >
                 <span class="font-medium text-neutral-800">{city}</span>
-                <span class="text-neutral-400 ml-1">→</span>
+                <span class="text-sm text-neutral-500">{candidatesByCity[city] || 0} 人</span>
               </a>
             ))}
           </div>
         </div>
         
-        <!-- 縣 -->
+        {/* 縣 */}
         <div>
           <h3 class="text-sm font-medium text-neutral-500 mb-2">縣</h3>
           <div class="grid gap-2 sm:grid-cols-3 lg:grid-cols-4">
             {counties.map(city => (
               <a 
                 href={`${baseUrl}candidates/district/mayor-county/${encodeURIComponent(city)}/`}
-                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors"
+                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors flex justify-between items-center"
               >
                 <span class="font-medium text-neutral-800">{city}</span>
-                <span class="text-neutral-400 ml-1">→</span>
+                <span class="text-sm text-neutral-500">{candidatesByCity[city] || 0} 人</span>
               </a>
             ))}
           </div>
@@ -97,7 +116,7 @@ function getPositionName(positionId: string): string {
       </div>
     </section>
 
-    <!-- Official Sources -->
+    {/* Official Sources */}
     <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
       <h2 class="text-lg font-semibold text-neutral-800 mb-4">🔗 官方候選人查詢</h2>
       
@@ -144,82 +163,52 @@ function getPositionName(positionId: string): string {
       </div>
     </section>
 
-    <!-- Candidate List -->
-    {publicCandidates.length > 0 ? (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-4">📋 候選人列表</h2>
-        
-        {Object.entries(candidatesByCity).map(([city, cityCandidates]) => (
-          <div class="mb-6 last:mb-0">
-            <h3 class="font-medium text-neutral-700 mb-3 pb-2 border-b border-neutral-200">{city}</h3>
-            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {cityCandidates.map(candidate => (
-                <a 
-                  href={`${baseUrl}candidates/${candidate.id}/`}
-                  class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors group"
-                >
-                  <div class="flex items-center gap-3 mb-2">
-                    <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold text-sm">
-                      {candidate.number}
-                    </span>
-                    <div>
-                      <p class="font-medium text-neutral-800 group-hover:text-primary-700">
-                        {candidate.name}
-                      </p>
-                      <p class="text-xs text-neutral-500">
-                        {candidate.district} · {getPositionName(candidate.position)}
-                      </p>
-                    </div>
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    {candidate.party && (
-                      <span class="text-xs px-2 py-0.5 bg-neutral-200 rounded text-neutral-600">
-                        {candidate.party}
-                      </span>
-                    )}
-                    {candidate.isIncumbent && (
-                      <span class="text-xs px-2 py-0.5 bg-blue-100 rounded text-blue-700">
-                        現任
-                      </span>
-                    )}
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        ))}
-      </section>
-    ) : (
-      <section class="p-6 bg-neutral-100 rounded-xl">
-        <p class="text-neutral-600 text-center">
-          候選人資料尚未上架。
-          <br />
-          <span class="text-sm text-neutral-500">
-            正式名單公告後將陸續更新，請先使用上方官方查詢連結。
-          </span>
-        </p>
-      </section>
-    )}
-
-    <!-- Detail Page Info -->
+    {/* Detail Page Info */}
     <section class="p-6 bg-blue-50 border border-blue-200 rounded-xl">
       <h2 class="text-lg font-semibold text-blue-800 mb-4">📄 候選人詳細頁面</h2>
       <p class="text-blue-700 mb-3">
         點擊候選人可查看詳細資訊頁面，包含：
       </p>
       <ul class="space-y-1 text-sm text-blue-600">
-        <li>• <strong>政見</strong>：選舉公報原文與連結</li>
-        <li>• <strong>過去的施政/問政紀錄</strong>：曾任公職者的重要紀錄</li>
-        <li>• <strong>出席紀錄</strong>：大會與委員會出席率（附來源）</li>
-        <li>• <strong>提案紀錄</strong>：提案狀態與成功提案率</li>
-        <li>• <strong>學經歷</strong>：新人候選人的背景與公共參與</li>
+        <li>• <strong>候選人狀態</strong>：登記、抽籤、公告等階段</li>
+        <li>• <strong>資料來源</strong>：登記公告、抽籤結果、正式名單等官方文件連結</li>
+        <li>• <strong>政見</strong>：選舉公報連結</li>
+        <li>• <strong>官方資源</strong>：財產申報、議會紀錄等連結</li>
       </ul>
       <p class="text-xs text-blue-500 mt-3">
         每項資料皆附官方來源連結，所有數據皆可追溯驗證。
+        村里長候選人因數量龐大（{positionCounts['village-chief']?.toLocaleString() || '14,000+'}人），僅提供列表查詢，不生成個別詳細頁面。
       </p>
     </section>
 
-    <!-- Contributing -->
+    {/* Data Refresh Info */}
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🔄 資料更新</h2>
+      <p class="text-neutral-600 mb-4">
+        本站資料來自中選會及各縣市選委會官方公告，會定期更新。
+        最近一次更新：<strong>2026-11-15</strong>
+      </p>
+      
+      <div class="p-4 bg-neutral-50 rounded-lg">
+        <h3 class="font-medium text-neutral-700 mb-2">資料狀態說明</h3>
+        <ul class="space-y-2 text-sm text-neutral-600">
+          <li class="flex items-center gap-2">
+            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已公告</span>
+            <span>選委會已公告正式候選人名單</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">已抽籤</span>
+            <span>已完成號次抽籤，待公告正式名單</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-xs">已登記</span>
+            <span>已完成登記，待抽籤或公告</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    {/* Contributing */}
     <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
       <h2 class="text-lg font-semibold text-neutral-800 mb-4">📝 如何貢獻資料</h2>
       <p class="text-neutral-600 mb-4">
@@ -253,7 +242,6 @@ function getPositionName(positionId: string): string {
           <li>• 不可捏造、推測或使用非官方來源</li>
           <li>• 不可包含主觀評價、推薦或排名</li>
           <li>• 所有數據須可回溯至原始官方文件</li>
-          <li>• 成功提案率必須由提案紀錄計算，不可自行填入</li>
         </ul>
       </div>
     </section>

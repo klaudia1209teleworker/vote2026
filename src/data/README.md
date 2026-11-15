@@ -4,18 +4,26 @@
 
 ## 檔案說明
 
+### `candidates.json`
+**19,707 位候選人資料**，來自中選會及各縣市選委會官方公告。
+
+- **最近更新**：2026-11-15
+- **資料格式**：扁平 JSON 陣列
+- **用途**：候選人列表頁及詳細頁面
+- **注意**：村里長（14,115 人）僅顯示列表，不生成個別詳細頁面以控制網站大小
+
+### `electoralDistricts.json`
+選舉區劃分對照表，依據中選會 115 年 8 月 20 日公告（A0046）。
+
+- **來源**：[中央選舉委員會公告 中選務字第1153150253號](https://info.cec.gov.tw/vote2026/static/file/2074fdd683844689b5bbdfe0e3ac48b3.pdf)
+- **用途**：選票查詢結果連結到正確的選區候選人名單
+- **涵蓋範圍**：全部 22 縣市的議員選舉區（含原住民選區）
+
 ### `districts.json`
 縣市、鄉鎮市區、村里的行政區劃資料，以及六都、省轄市、縣的分類。
 
 - **來源**：中選會 115 年選舉區劃分公告、內政部村里代碼 API
 - **用途**：選票查詢功能的選單與邏輯判斷
-
-### `electoralDistricts.json`
-選舉區劃分對照表，將行政區對應到選舉區（尤其是議員選區）。
-
-- **來源**：中選會 115 年選舉區劃分公告
-- **用途**：選票查詢結果連結到正確的選區候選人名單
-- **注意**：部分選區依里劃分，詳見中選會公告
 
 ### `ballotRules.json`
 選票領取規則，依據戶籍地類型與原住民身分決定會領到哪些選票。
@@ -29,370 +37,171 @@
 - **來源**：地方制度法、選罷法、讀字生活 Ep02 影片
 - **注意**：待遇數字多以台北市為例，各縣市實際數字不同
 
-### `candidates.json`
-候選人資料。每位候選人有獨立的詳細頁面，網址格式為 `/vote2026/candidates/[id]/`。
-
-- **狀態**：正式名單待 11/17 公告後更新
-- **重要**：不可包含 `isSample: true` 的測試資料
-
 ---
 
-## 候選人資料結構 v2
+## 候選人資料結構
 
-### 基本資料（必填）
+### 資料欄位
 
 ```json
 {
-  "id": "councilor-taipei-daan-1",
+  "county": "臺北市",
+  "position": "councilor-municipal",
+  "district": "第2選舉區",
+  "districtOfficial": "第2選舉區",
   "name": "候選人姓名",
   "number": 1,
-  "party": "政黨名稱",
-  "position": "councilor-municipal",
-  "city": "臺北市",
-  "district": "第四選區（大安區）",
-  "isIncumbent": true,
-  "officialSourceUrl": "https://info.cec.gov.tw/vote2026/...",
-  "lastVerified": "2026-11-17"
+  "party": "民主進步黨",
+  "partyAsListed": "民主進步黨",
+  "status": "公告候選人（選委會11/12公告名單）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/xxx.pdf",
+  "sourceArticleUrl": "https://web.cec.gov.tw/tpec/article/12345",
+  "sourceDoc": "公告臺北市第15屆市議員選舉候選人名單",
+  "asOf": "2026-11-12",
+  "registrationSourceUrl": "https://web.cec.gov.tw/api/file/yyy.pdf",
+  "registeredOn": "2026-09-02",
+  "drawSourceUrl": "https://web.cec.gov.tw/api/file/zzz.pdf",
+  "lastVerified": "2026-11-15"
 }
 ```
-
-| 欄位 | 必填 | 說明 |
-|------|------|------|
-| `id` | ✅ | 唯一識別碼，用於 URL。建議格式：`{position}-{city}-{district}-{number}` |
-| `name` | ✅ | 姓名 |
-| `number` | ✅ | 號次 |
-| `party` | | 政黨，無黨籍填 `null` |
-| `position` | ✅ | 職位 ID，對應 `positions.json` |
-| `city` | ✅ | 縣市 |
-| `district` | ✅ | 選區 |
-| `isIncumbent` | | 是否為現任 |
-| `officialSourceUrl` | ✅ | 官方來源連結 |
-| `lastVerified` | ✅ | 最後驗證日期 `YYYY-MM-DD` |
-
----
-
-### 政見 `platform`
-
-來源：選舉公報 (bulletin.cec.gov.tw)
-
-```json
-{
-  "platform": {
-    "content": "政見原文...",
-    "bulletinUrl": "https://bulletin.cec.gov.tw/01選舉公報/...",
-    "bulletinPage": 5,
-    "asOf": "2026-11-20"
-  }
-}
-```
-
-| 欄位 | 必填 | 說明 |
-|------|------|------|
-| `content` | | 政見原文（選舉公報內容） |
-| `bulletinUrl` | ✅ | 選舉公報 PDF 連結 |
-| `bulletinPage` | | 公報頁碼 |
-| `asOf` | | 公報發布日期 |
-
-**來源查找**：
-1. 前往 https://bulletin.cec.gov.tw/
-2. 選擇「01選舉公報」→ 對應職務 → 115年
-3. 下載該選區的 PDF，找到候選人頁面
-4. 複製政見原文，記錄頁碼
-
----
-
-### 過去的施政/問政紀錄 `pastRecords`
-
-適用於：現任或曾任公職者
-
-```json
-{
-  "pastRecords": [
-    {
-      "title": "質詢交通局長關於行人安全改善進度",
-      "date": "2025-05-15",
-      "category": "質詢",
-      "description": "要求交通局說明危險路口改善時程...",
-      "sourceUrl": "https://gaz.tcc.gov.tw/...",
-      "sourceName": "臺北市議會電子公報"
-    }
-  ]
-}
-```
-
-| 欄位 | 必填 | 說明 |
-|------|------|------|
-| `title` | ✅ | 紀錄標題/摘要 |
-| `date` | ✅ | 日期 `YYYY-MM-DD` 或 `YYYY-MM` |
-| `category` | | 類別：質詢、提案、會勘、其他 |
-| `description` | | 詳細說明 |
-| `sourceUrl` | ✅ | 官方來源連結 |
-| `sourceName` | | 來源名稱 |
-
-**來源查找**：
-- 臺北市：https://gaz.tcc.gov.tw/ （電子公報）
-- 高雄市：https://cissearch.kcc.gov.tw/
-- 其他：https://journal.th.gov.tw/ （議事錄總庫）
-
----
-
-### 出席紀錄 `attendance`
-
-大會與委員會出席分開記錄。
-
-```json
-{
-  "attendance": {
-    "general": {
-      "attended": 95,
-      "total": 100,
-      "rate": "95%",
-      "term": "第 14 屆",
-      "sessionPeriod": "2022-12-25 至 2026-10-31",
-      "sourceUrl": "https://www.tcc.gov.tw/...",
-      "sourceName": "臺北市議會",
-      "asOf": "2026-10-31"
-    },
-    "committee": {
-      "attended": 48,
-      "total": 50,
-      "rate": "96%",
-      "committeeName": "交通委員會",
-      "term": "第 14 屆",
-      "sessionPeriod": "2022-12-25 至 2026-10-31",
-      "sourceUrl": "https://www.tcc.gov.tw/...",
-      "sourceName": "臺北市議會",
-      "asOf": "2026-10-31"
-    }
-  }
-}
-```
-
-| 欄位 | 必填 | 說明 |
-|------|------|------|
-| `attended` | | 出席次數 |
-| `total` | | 應出席次數 |
-| `rate` | | 出席率（百分比字串） |
-| `term` | ✅ | 屆期 |
-| `sessionPeriod` | ✅ | 會期期間 |
-| `committeeName` | | 委員會名稱（僅委員會） |
-| `sourceUrl` | ✅ | 官方來源連結 |
-| `sourceName` | | 來源名稱 |
-| `asOf` | | 資料截至日期 |
-
-**來源查找**：
-- 各縣市議會官網的「議事資訊」或「出席統計」
-- 部分議會有公開的出席率報表
-
----
-
-### 提案紀錄 `proposals`
-
-```json
-{
-  "proposals": [
-    {
-      "title": "建請市府增設行人專用號誌",
-      "date": "2025-03-10",
-      "status": "通過",
-      "term": "第 14 屆第 5 次定期大會",
-      "sourceUrl": "https://www.tcc.gov.tw/...",
-      "sourceName": "臺北市議會議事錄"
-    },
-    {
-      "title": "建請市府檢討停車收費標準",
-      "date": "2025-06-20",
-      "status": "待審",
-      "term": "第 14 屆第 6 次定期大會",
-      "sourceUrl": "https://www.tcc.gov.tw/...",
-      "sourceName": "臺北市議會議事錄"
-    }
-  ]
-}
-```
-
-| 欄位 | 必填 | 說明 |
-|------|------|------|
-| `title` | ✅ | 提案標題 |
-| `date` | ✅ | 提案日期 `YYYY-MM-DD` |
-| `status` | ✅ | 狀態：`通過`、`待審`、`撤回`、`否決`、`其他` |
-| `term` | | 屆期/會期 |
-| `sourceUrl` | ✅ | 官方來源連結 |
-| `sourceName` | | 來源名稱 |
-
-**成功提案率計算**：
-- 系統自動計算：`通過數 / 總提案數`
-- **不可自行填入成功提案率**
-- 顯示時會同時顯示分子、分母、統計期間
-
----
-
-### 新人候選人資料 `newcomerProfile`
-
-適用於：無公職經歷者
-
-```json
-{
-  "newcomerProfile": {
-    "education": [
-      {
-        "degree": "碩士",
-        "school": "國立臺灣大學",
-        "field": "都市計劃研究所",
-        "year": "2018",
-        "sourceUrl": "https://bulletin.cec.gov.tw/..."
-      }
-    ],
-    "experience": [
-      {
-        "title": "都市規劃師",
-        "organization": "OO建築師事務所",
-        "period": "2018-2026",
-        "sourceUrl": "https://bulletin.cec.gov.tw/..."
-      }
-    ],
-    "publicParticipation": [
-      {
-        "activity": "社區改造志工",
-        "role": "規劃顧問",
-        "date": "2022-2024",
-        "sourceUrl": "https://...",
-        "sourceName": "XX社區發展協會"
-      }
-    ]
-  }
-}
-```
-
-**學歷 `education`**：
 
 | 欄位 | 說明 |
 |------|------|
-| `degree` | 學位 |
-| `school` | 學校 |
-| `field` | 科系 |
-| `year` | 畢業年份 |
-| `sourceUrl` | 來源（通常為選舉公報） |
+| `county` | 縣市名稱 |
+| `position` | 職位 ID：`mayor-municipal`、`mayor-county`、`councilor-municipal`、`councilor-county`、`township-mayor`、`township-representative`、`district-mayor`、`district-representative`、`village-chief` |
+| `district` | 選區（議員為「第N選舉區」，鄉鎮市為鄉鎮市區名，村里長為里名） |
+| `districtOfficial` | 選委會公告使用的選區名稱 |
+| `name` | 姓名 |
+| `number` | 號次（抽籤前為 `null`） |
+| `party` | 政黨（無黨籍為 `null`） |
+| `partyAsListed` | 選委會公告上的政黨欄位原文（如「無」） |
+| `status` | 候選人狀態（見下方說明） |
+| `sourceUrl` | 主要資料來源（通常為候選人名單 PDF） |
+| `sourceArticleUrl` | 選委會網站公告頁面 |
+| `sourceDoc` | 來源文件標題 |
+| `asOf` | 資料日期 |
+| `registrationSourceUrl` | 登記結果公告連結 |
+| `registeredOn` | 登記日期 |
+| `drawSourceUrl` | 號次抽籤結果連結 |
+| `lastVerified` | 最後驗證日期 |
 
-**經歷 `experience`**：
+### 候選人狀態 (`status`)
 
-| 欄位 | 必填 | 說明 |
-|------|------|------|
-| `title` | ✅ | 職稱 |
-| `organization` | | 機構/公司 |
-| `period` | | 期間 |
-| `sourceUrl` | | 來源連結 |
+| 狀態值 | 顯示標籤 | 說明 |
+|--------|----------|------|
+| `公告候選人（選委會11/12公告名單）` | 已公告 | 選委會已公告正式候選人名單 |
+| `已抽籤，號次已公告` | 已抽籤 | 已完成號次抽籤，待公告正式名單 |
+| `登記（...）` | 已登記 | 已完成登記，待抽籤或公告 |
 
-**公共參與 `publicParticipation`**：
+### 政黨顯示規則
 
-| 欄位 | 必填 | 說明 |
-|------|------|------|
-| `activity` | ✅ | 活動名稱 |
-| `role` | | 角色 |
-| `date` | | 日期/期間 |
-| `sourceUrl` | | 來源連結 |
-| `sourceName` | | 來源名稱 |
+依據使用者要求：
+- 若 `party` 有值：顯示 `party`
+- 若 `party` 為 `null` 且 `partyAsListed` 為 `「無」`：顯示「無黨籍推薦」
+- 其他情況：顯示 `partyAsListed` 原文
+
+---
+
+## 如何更新資料（11/17 後）
+
+選委會將於 2026 年 11 月 17 日公告完整候選人名單，屆時需更新 `candidates.json`。
+
+### 步驟 1：下載最新公告
+
+1. 前往 [中選會選舉專區](https://info.cec.gov.tw/vote2026/)
+2. 或各縣市選委會網站
+3. 下載「候選人名單公告」PDF
+
+### 步驟 2：更新 candidates.json
+
+更新方式：
+- 將新公告的資料合併到 `candidates.json`
+- 更新已有候選人的 `status`、`number`、`sourceUrl`、`asOf` 等欄位
+- 確保 `sourceUrl` 指向官方來源
+
+### 步驟 3：驗證資料
+
+```bash
+# 檢查 JSON 格式
+npm run build
+
+# 驗證候選人數
+cat src/data/candidates.json | jq 'length'
+
+# 檢查特定縣市
+cat src/data/candidates.json | jq '[.[] | select(.county == "臺北市")] | length'
+```
+
+### 步驟 4：測試建置
+
+```bash
+npm run build
+npm run preview
+```
+
+檢查：
+- 候選人列表頁顯示正確
+- 詳細頁連結可正常訪問
+- 狀態徽章顯示正確
+
+---
+
+## 資料來源
+
+### 候選人名單
+- [中選會 115 選舉專區](https://info.cec.gov.tw/vote2026/)
+- [選舉公報](https://bulletin.cec.gov.tw/)
+- 各縣市選委會網站（https://web.cec.gov.tw/）
+
+### 選舉區劃分
+- [中選會公告 A0046](https://info.cec.gov.tw/vote2026/static/file/2074fdd683844689b5bbdfe0e3ac48b3.pdf)
+
+### 各縣市選委會
+
+| 縣市 | 網址 |
+|------|------|
+| 臺北市 | https://web.cec.gov.tw/tpec/ |
+| 新北市 | https://web.cec.gov.tw/tpcec/ |
+| 桃園市 | https://web.cec.gov.tw/tyec/ |
+| 臺中市 | https://web.cec.gov.tw/txec/ |
+| 臺南市 | https://web.cec.gov.tw/tnec/ |
+| 高雄市 | https://web.cec.gov.tw/ksec/ |
+| 基隆市 | https://web.cec.gov.tw/klec/ |
+| 新竹市 | https://web.cec.gov.tw/hcec/ |
+| 嘉義市 | https://web.cec.gov.tw/cyec/ |
+| 新竹縣 | https://web.cec.gov.tw/hchec/ |
+| 苗栗縣 | https://web.cec.gov.tw/mlec/ |
+| 彰化縣 | https://web.cec.gov.tw/chec/ |
+| 南投縣 | https://web.cec.gov.tw/ntec/ |
+| 雲林縣 | https://web.cec.gov.tw/ylec/ |
+| 嘉義縣 | https://web.cec.gov.tw/cyhec/ |
+| 屏東縣 | https://web.cec.gov.tw/ptec/ |
+| 宜蘭縣 | https://web.cec.gov.tw/ilec/ |
+| 花蓮縣 | https://web.cec.gov.tw/hlec/ |
+| 臺東縣 | https://web.cec.gov.tw/ttec/ |
+| 澎湖縣 | https://web.cec.gov.tw/phec/ |
+| 金門縣 | https://web.cec.gov.tw/kmec/ |
+| 連江縣 | https://web.cec.gov.tw/mtsec/ |
 
 ---
 
 ## 貢獻指南
 
-### 新增候選人資料
-
-#### 步驟 1：確認選區
-
-每位候選人必須填入正確的 `position`、`city`、`district` 欄位：
-
-| 職位 | position ID | district 格式 | 範例 |
-|------|-------------|--------------|------|
-| 直轄市長 | `mayor-municipal` | （留空或填縣市名） | `臺北市` |
-| 縣市長 | `mayor-county` | （留空或填縣市名） | `宜蘭縣` |
-| 直轄市議員 | `councilor-municipal` | 第X選區（依中選會公告） | `第五選區` |
-| 縣市議員 | `councilor-county` | 第X選區 | `第一選區` |
-| 鄉鎮市長 | `township-mayor` | 鄉鎮市區名 | `宜蘭市` |
-| 鄉鎮市民代表 | `township-representative` | 鄉鎮市區名 | `羅東鎮` |
-| 山地原住民區區長 | `district-mayor` | 區名 | `烏來區` |
-| 區民代表 | `district-representative` | 區名 | `復興區` |
-| 村里長 | `village-chief` | 鄉鎮市區名或完整村里名 | `萬華區` 或 `青年里` |
-
-#### 步驟 2：查詢選區對照
-
-台北市、新北市議員選區對照表已建置於 `electoralDistricts.json`，可查詢行政區對應的選舉區：
-
-```javascript
-// 例：萬華區 → 第五選區
-electoralDistricts.adminToElectoralMapping["councilor-municipal"]["臺北市"]["萬華區"]
-// { "districtId": "taipei-5", "districtName": "第五選區" }
-```
-
-其他縣市的選區對照待補充，可參考中選會公告自行比對。
-
-#### 步驟 3：填寫候選人資料
-
-在 `candidates.json` 的 `candidates` 陣列新增一筆資料：
-
-```json
-{
-  "id": "councilor-municipal-taipei-5-1",
-  "name": "候選人姓名",
-  "number": 1,
-  "party": "政黨名稱",
-  "position": "councilor-municipal",
-  "city": "臺北市",
-  "district": "第五選區",
-  "bulletinUrl": "https://bulletin.cec.gov.tw/...",
-  "officialSourceUrl": "https://info.cec.gov.tw/vote2026/...",
-  "lastVerified": "2026-11-17",
-  "isIncumbent": false,
-  "isSample": false
-}
-```
-
-**重要：**
-- `isSample` 必須設為 `false`，否則資料不會顯示在公開頁面
-- `officialSourceUrl` 和 `lastVerified` 為必填欄位
-
-#### 步驟 4：驗證頁面生成
-
-新增資料後，執行 `npm run build`，確認候選人出現在對應的選區頁面：
-- 選區列表頁：`/vote2026/candidates/district/councilor-municipal/臺北市/第五選區/`
-- 候選人詳細頁：`/vote2026/candidates/[candidate-id]/`
-
-### 資料來源原則
+### 原則
 
 1. **僅使用官方來源**
-   - 選舉公報 (bulletin.cec.gov.tw)
-   - 議會紀錄（各縣市議會官網）
-   - 議事錄總庫 (journal.th.gov.tw)
-   - 政府公報、公告
+   - 選委會公告 PDF
+   - 選舉公報
+   - 不可使用媒體報導或民間整理
 
-2. **禁止使用**
-   - 媒體報導作為唯一來源
-   - 社群媒體貼文
-   - 未經驗證的民間整理
-   - 候選人自述（除非來自選舉公報）
+2. **保持中立**
+   - 不可包含主觀評價
+   - 不可包含推薦或排名
+   - 僅陳述可驗證的事實
 
-### 資料驗證要求
-
-- 每筆資料必須包含 `sourceUrl`
-- 出席率、提案紀錄需標明 `term`（屆期）和 `sessionPeriod`（會期期間）
-- 時間敏感資料需標明 `asOf`（資料截至日期）
-- 無法驗證的欄位留空，不可捏造
-
-### 成功提案率規則
-
-- **不可自行填入成功提案率**
-- 系統根據 `proposals` 欄位自動計算
-- 計算公式：`status === '通過'` 的數量 / 總提案數
-- 頁面會顯示：百分比、分子、分母、統計期間
-
-### 中立性原則
-
-- 不可包含主觀評價（「優秀」「差勁」）
-- 不可包含推薦或排名
-- 不可使用顏色暗示好壞
-- 僅陳述可驗證的事實
-- 候選人依號次排列（號次未公告前依姓名排列）
+3. **完整來源**
+   - 每筆資料必須包含 `sourceUrl`
+   - 標明 `asOf` 與 `lastVerified`
 
 ### 提交流程
 
@@ -404,23 +213,10 @@ electoralDistricts.adminToElectoralMapping["councilor-municipal"]["臺北市"]["
 
 ---
 
-## 官方資料連結
+## 建置限制
 
-### 選舉公報與候選人
-- [中選會 115 選舉專區](https://info.cec.gov.tw/vote2026/)
-- [選舉公報](https://bulletin.cec.gov.tw/)
+為符合 GitHub Pages 限制（1 GB 網站大小、~10 分鐘建置時間）：
 
-### 議會紀錄
-- [地方議會議事錄總庫](https://journal.th.gov.tw/)
-- [臺北市議會電子公報](https://gaz.tcc.gov.tw/)
-- [高雄市議會議事資訊系統](https://cissearch.kcc.gov.tw/)
-
-### 各縣市議會
-- 臺北市：https://www.tcc.gov.tw/
-- 新北市：https://www.ntp.gov.tw/
-- 桃園市：https://www.tycc.gov.tw/
-- 臺中市：https://www.tccc.gov.tw/
-- 臺南市：https://www.tncc.gov.tw/
-- 高雄市：https://www.kcc.gov.tw/
-
-更多議會連結見：https://journal.th.gov.tw/link.php
+- **村里長候選人**（14,115 人）不生成個別詳細頁面
+- 僅在列表頁顯示村里長資料，附帶村里篩選功能
+- 其他職位候選人（5,592 人）生成詳細頁面
