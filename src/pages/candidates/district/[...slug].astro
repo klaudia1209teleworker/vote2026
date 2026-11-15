@@ -4,8 +4,22 @@ import candidates from '../../../data/candidates.json';
 import positions from '../../../data/positions.json';
 import districts from '../../../data/districts.json';
 import electoralDistricts from '../../../data/electoralDistricts.json';
+import incumbentsData from '../../../data/incumbents.json';
+import { getCandidateKey } from '../../../utils/candidateKey';
 
 const baseUrl = import.meta.env.BASE_URL;
+
+type IncumbentEntry = {
+  incumbency?: {
+    publish?: boolean;
+  };
+};
+
+function isIncumbent(c: any): boolean {
+  const key = getCandidateKey(c);
+  const entry = (incumbentsData as Record<string, IncumbentEntry>)[key];
+  return entry?.incumbency?.publish === true;
+}
 
 export function getStaticPaths() {
   const paths: Array<{ params: { slug: string }, props: any }> = [];
@@ -333,6 +347,7 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                       {villageCandidates.map((candidate) => {
                         const statusBadge = getStatusBadge(candidate.status, candidate.registeredOn);
                         const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
+                        const incumbent = isIncumbent(candidate);
                         return (
                           <div class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
                             <div class="flex items-center gap-3 mb-2">
@@ -344,6 +359,9 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                               <div class="min-w-0">
                                 <p class="font-semibold text-neutral-800 truncate">
                                   {candidate.name}
+                                  {incumbent && (
+                                    <span class="ml-1.5 text-xs px-1.5 py-0.5 bg-neutral-200 text-neutral-600 rounded">現任</span>
+                                  )}
                                 </p>
                                 <p class="text-xs text-neutral-500">
                                   {partyDisplay}
@@ -378,6 +396,7 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
               candidatesForPage.map((candidate) => {
                 const statusBadge = getStatusBadge(candidate.status, candidate.registeredOn);
                 const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
+                const incumbent = isIncumbent(candidate);
                 const candidateId = `${candidate.county}-${candidate.position}-${candidate.district || candidate.districtOfficial || ''}-${candidate.name}`.replace(/[^a-zA-Z0-9\u4e00-\u9fff-]/g, '').toLowerCase();
                 
                 return (
@@ -392,6 +411,9 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                         <span class="font-semibold text-lg text-neutral-800">
                           {candidate.name}
                         </span>
+                        {incumbent && (
+                          <span class="text-xs px-2 py-0.5 bg-neutral-200 text-neutral-600 rounded">現任</span>
+                        )}
                         <span class="text-sm px-2 py-0.5 bg-neutral-200 text-neutral-600 rounded">
                           {partyDisplay}
                         </span>
