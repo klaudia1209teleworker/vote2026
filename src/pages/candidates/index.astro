@@ -1,0 +1,259 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import candidates from '../../data/candidates.json';
+import positions from '../../data/positions.json';
+
+const baseUrl = import.meta.env.BASE_URL;
+
+const publicCandidates = candidates.candidates.filter(c => !c.isSample);
+
+const candidatesByCity = publicCandidates.reduce((acc, candidate) => {
+  const city = candidate.city;
+  if (!acc[city]) acc[city] = [];
+  acc[city].push(candidate);
+  return acc;
+}, {} as Record<string, typeof publicCandidates>);
+
+function getPositionName(positionId: string): string {
+  const position = positions.positions.find(p => p.id === positionId);
+  return position?.shortName || position?.name || positionId;
+}
+---
+
+<Layout title="候選人資訊" description="各選區候選人資訊（正式名單待 11/17 公告後更新）">
+  <article class="space-y-8">
+    <header>
+      <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-4">
+        👤 候選人資訊
+      </h1>
+      <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+        <p class="text-amber-700">
+          <strong>📢 資料狀態：</strong>候選人正式名單預計於 <strong>2026 年 11 月 17 日</strong>公告。
+          本頁資料將於公告後陸續更新。
+        </p>
+      </div>
+    </header>
+
+    <!-- Official Sources -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🔗 官方候選人查詢</h2>
+      
+      <div class="grid gap-4 sm:grid-cols-2">
+        <a 
+          href="https://info.cec.gov.tw/vote2026/" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors"
+        >
+          <p class="font-medium text-primary-700">中選會選舉專區</p>
+          <p class="text-sm text-primary-600">官方候選人查詢系統</p>
+        </a>
+        
+        <a 
+          href="https://bulletin.cec.gov.tw/" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors"
+        >
+          <p class="font-medium text-primary-700">選舉公報</p>
+          <p class="text-sm text-primary-600">候選人完整政見</p>
+        </a>
+        
+        <a 
+          href="https://pdps-dec.cec.gov.tw/release/formal/HomePage.html" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
+        >
+          <p class="font-medium text-neutral-700">財產申報查詢</p>
+          <p class="text-sm text-neutral-500">縣市長、縣市議員（不含基層）</p>
+        </a>
+        
+        <a 
+          href="https://journal.th.gov.tw/" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
+        >
+          <p class="font-medium text-neutral-700">議事錄總庫</p>
+          <p class="text-sm text-neutral-500">現任議員質詢紀錄</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Candidate List -->
+    {publicCandidates.length > 0 ? (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        <h2 class="text-lg font-semibold text-neutral-800 mb-4">📋 候選人列表</h2>
+        
+        {Object.entries(candidatesByCity).map(([city, cityCandidates]) => (
+          <div class="mb-6 last:mb-0">
+            <h3 class="font-medium text-neutral-700 mb-3 pb-2 border-b border-neutral-200">{city}</h3>
+            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {cityCandidates.map(candidate => (
+                <a 
+                  href={`${baseUrl}candidates/${candidate.id}/`}
+                  class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors group"
+                >
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold text-sm">
+                      {candidate.number}
+                    </span>
+                    <div>
+                      <p class="font-medium text-neutral-800 group-hover:text-primary-700">
+                        {candidate.name}
+                      </p>
+                      <p class="text-xs text-neutral-500">
+                        {candidate.district} · {getPositionName(candidate.position)}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    {candidate.party && (
+                      <span class="text-xs px-2 py-0.5 bg-neutral-200 rounded text-neutral-600">
+                        {candidate.party}
+                      </span>
+                    )}
+                    {candidate.isIncumbent && (
+                      <span class="text-xs px-2 py-0.5 bg-blue-100 rounded text-blue-700">
+                        現任
+                      </span>
+                    )}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </section>
+    ) : (
+      <section class="p-6 bg-neutral-100 rounded-xl">
+        <p class="text-neutral-600 text-center">
+          候選人資料尚未上架。
+          <br />
+          <span class="text-sm text-neutral-500">
+            正式名單公告後將陸續更新，請先使用上方官方查詢連結。
+          </span>
+        </p>
+      </section>
+    )}
+
+    <!-- Detail Page Info -->
+    <section class="p-6 bg-blue-50 border border-blue-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-blue-800 mb-4">📄 候選人詳細頁面</h2>
+      <p class="text-blue-700 mb-3">
+        點擊候選人可查看詳細資訊頁面，包含：
+      </p>
+      <ul class="space-y-1 text-sm text-blue-600">
+        <li>• <strong>政見</strong>：選舉公報原文與連結</li>
+        <li>• <strong>過去的施政/問政紀錄</strong>：曾任公職者的重要紀錄</li>
+        <li>• <strong>出席紀錄</strong>：大會與委員會出席率（附來源）</li>
+        <li>• <strong>提案紀錄</strong>：提案狀態與成功提案率</li>
+        <li>• <strong>學經歷</strong>：新人候選人的背景與公共參與</li>
+      </ul>
+      <p class="text-xs text-blue-500 mt-3">
+        每項資料皆附官方來源連結，所有數據皆可追溯驗證。
+      </p>
+    </section>
+
+    <!-- Data Schema Info -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📋 資料架構</h2>
+      <p class="text-neutral-600 mb-4">
+        候選人詳細頁面網址格式：
+      </p>
+      <code class="block p-3 bg-neutral-100 rounded text-sm text-neutral-700 mb-4">
+        /vote2026/candidates/[candidate-id]/
+      </code>
+      <p class="text-neutral-600 mb-4">
+        本站候選人資料依以下結構建置：
+      </p>
+      
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="p-4 bg-neutral-50 rounded-lg">
+          <h3 class="font-medium text-neutral-700 mb-2">基本資料</h3>
+          <ul class="space-y-1 text-sm text-neutral-600">
+            <li>• 姓名、號次、政黨</li>
+            <li>• 參選職位、選區</li>
+            <li>• 官方來源連結</li>
+          </ul>
+        </div>
+        
+        <div class="p-4 bg-green-50 rounded-lg">
+          <h3 class="font-medium text-green-700 mb-2">現任/曾任公職者</h3>
+          <ul class="space-y-1 text-sm text-green-600">
+            <li>• 大會/委員會出席率（附來源）</li>
+            <li>• 提案紀錄與成功率</li>
+            <li>• 過去問政/施政紀錄</li>
+          </ul>
+        </div>
+        
+        <div class="p-4 bg-blue-50 rounded-lg">
+          <h3 class="font-medium text-blue-700 mb-2">新人候選人</h3>
+          <ul class="space-y-1 text-sm text-blue-600">
+            <li>• 學歷（附來源）</li>
+            <li>• 經歷（附來源）</li>
+            <li>• 公共參與紀錄</li>
+          </ul>
+        </div>
+        
+        <div class="p-4 bg-amber-50 rounded-lg">
+          <h3 class="font-medium text-amber-700 mb-2">資料原則</h3>
+          <ul class="space-y-1 text-sm text-amber-600">
+            <li>• 每項數據附官方來源</li>
+            <li>• 無資料顯示「尚未整理」</li>
+            <li>• 不提供評分或排名</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contributing -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📝 如何貢獻資料</h2>
+      <p class="text-neutral-600 mb-4">
+        本站候選人資料以 JSON 格式儲存，歡迎協助補充。貢獻方式：
+      </p>
+      
+      <ol class="space-y-3 text-neutral-600">
+        <li class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">1</span>
+          <span>參閱 <code class="text-sm bg-neutral-100 px-1 py-0.5 rounded">src/data/candidates.json</code> 與 <code class="text-sm bg-neutral-100 px-1 py-0.5 rounded">src/data/README.md</code></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">2</span>
+          <span>僅使用<strong>官方來源</strong>（選舉公報、議會紀錄）</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">3</span>
+          <span>每筆資料須附 <code class="text-sm bg-neutral-100 px-1 py-0.5 rounded">sourceUrl</code> 與相關日期</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">4</span>
+          <span>提交 Pull Request，說明資料來源</span>
+        </li>
+      </ol>
+      
+      <div class="mt-4 p-4 bg-red-50 rounded-lg">
+        <p class="text-sm text-red-700">
+          <strong>⚠️ 重要原則：</strong>
+        </p>
+        <ul class="mt-2 space-y-1 text-sm text-red-600">
+          <li>• 不可捏造、推測或使用非官方來源</li>
+          <li>• 不可包含主觀評價、推薦或排名</li>
+          <li>• 所有數據須可回溯至原始官方文件</li>
+          <li>• 成功提案率必須由提案紀錄計算，不可自行填入</li>
+        </ul>
+      </div>
+    </section>
+
+    <nav class="flex justify-between pt-8 border-t border-neutral-200">
+      <a href={`${baseUrl}cooperation/`} class="text-primary-600 hover:underline">
+        ← 合作案例
+      </a>
+      <a href={`${baseUrl}about/`} class="text-primary-600 hover:underline">
+        關於本站 →
+      </a>
+    </nav>
+  </article>
+</Layout>
