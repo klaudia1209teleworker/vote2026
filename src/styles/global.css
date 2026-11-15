@@ -1,36 +1,72 @@
 @import "tailwindcss";
 
 @theme {
-  --font-family-sans: "Noto Sans TC", system-ui, -apple-system, sans-serif;
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-  --color-neutral-50: #fafafa;
-  --color-neutral-100: #f5f5f5;
-  --color-neutral-200: #e5e5e5;
-  --color-neutral-300: #d4d4d4;
-  --color-neutral-400: #a3a3a3;
-  --color-neutral-500: #737373;
-  --color-neutral-600: #525252;
-  --color-neutral-700: #404040;
-  --color-neutral-800: #262626;
-  --color-neutral-900: #171717;
+  /* Traditional Chinese font stack */
+  --font-family-sans: "PingFang TC", "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  
+  /* Muted civic accent - restrained teal-gray */
+  --color-accent-50: #f7f9f9;
+  --color-accent-100: #e8eeef;
+  --color-accent-200: #d1dde0;
+  --color-accent-300: #a8c0c5;
+  --color-accent-400: #7a9da5;
+  --color-accent-500: #5a8088;
+  --color-accent-600: #48686f;
+  --color-accent-700: #3c555b;
+  --color-accent-800: #35484d;
+  --color-accent-900: #2f3e42;
+  
+  /* Neutral palette - warmer grays */
+  --color-neutral-50: #fafaf9;
+  --color-neutral-100: #f4f4f3;
+  --color-neutral-200: #e7e5e4;
+  --color-neutral-300: #d6d3d1;
+  --color-neutral-400: #a8a29e;
+  --color-neutral-500: #78716c;
+  --color-neutral-600: #57534e;
+  --color-neutral-700: #44403c;
+  --color-neutral-800: #292524;
+  --color-neutral-900: #1c1917;
+  
+  /* Keep primary for backwards compatibility, map to accent */
+  --color-primary-50: var(--color-accent-50);
+  --color-primary-100: var(--color-accent-100);
+  --color-primary-200: var(--color-accent-200);
+  --color-primary-300: var(--color-accent-300);
+  --color-primary-400: var(--color-accent-400);
+  --color-primary-500: var(--color-accent-500);
+  --color-primary-600: var(--color-accent-600);
+  --color-primary-700: var(--color-accent-700);
+  --color-primary-800: var(--color-accent-800);
+  --color-primary-900: var(--color-accent-900);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern" 1;
+  line-height: 1.6;
+}
+
+/* Tabular numbers for ballot numbers and counts */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
 }
 
 @layer utilities {

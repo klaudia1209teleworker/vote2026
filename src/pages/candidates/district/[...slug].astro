@@ -231,70 +231,69 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <article class="space-y-6">
+  <article class="space-y-4">
     <header>
-      <nav class="text-sm text-neutral-500 mb-4">
-        <a href={`${baseUrl}`} class="hover:text-primary-600">首頁</a>
-        <span class="mx-2">›</span>
-        <a href={`${baseUrl}candidates/`} class="hover:text-primary-600">候選人</a>
-        <span class="mx-2">›</span>
+      <nav class="text-xs text-neutral-500 mb-2">
+        <a href={`${baseUrl}`} class="hover:underline">首頁</a>
+        <span class="mx-1">›</span>
+        <a href={`${baseUrl}candidates/`} class="hover:underline">候選人</a>
+        <span class="mx-1">›</span>
         <span class="text-neutral-700">{locationLabel}</span>
       </nav>
       
-      <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-2">
+      <h1 class="text-lg font-semibold text-neutral-800">
         {pageTitle}
       </h1>
       
       {position && (
-        <p class="text-neutral-600">
-          <a href={`${baseUrl}positions/${positionId}/`} class="text-primary-600 hover:underline">
+        <p class="text-sm text-neutral-500 mt-1">
+          <a href={`${baseUrl}positions/${positionId}/`} class="underline hover:text-neutral-700">
             {positionName}
           </a>
           {districtData?.seats && ` · 應選 ${districtData.seats} 名`}
-          {hasCandidates && ` · 共 ${candidatesForPage.length} 位候選人`}
+          {hasCandidates && ` · ${candidatesForPage.length} 位`}
         </p>
       )}
     </header>
 
-    {/* Data Disclaimer Banner */}
+    {/* Data note */}
     {hasCandidates && (
-      <div class="p-4 bg-neutral-100 border border-neutral-300 rounded-lg">
-        <p class="text-neutral-700 text-sm">
-          正式候選人名單以 11/17 中選會公告為準，本頁資料截至 {latestAsOf || '2026-11-15'}。
-        </p>
-      </div>
+      <p class="text-xs text-neutral-500">
+        資料截至 {latestAsOf || '2026-11-15'}，正式名單以 11/17 中選會公告為準
+      </p>
     )}
 
     {/* City Councilor Index - List All Districts */}
     {scope === 'city-councilor-index' && councilDistrictsForCity.length > 0 && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-4">
-          {city}{shortName}選區
-        </h2>
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {councilDistrictsForCity.map((dist) => (
-            <a 
-              href={`${baseUrl}candidates/district/${positionId}/${city}/${dist.name}/`}
-              class="flex items-center justify-between p-4 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors"
-            >
-              <div>
-                <span class="font-medium text-neutral-800">{dist.name}</span>
-                {dist.seats && (
-                  <span class="ml-2 text-sm text-neutral-500">應選 {dist.seats} 名</span>
-                )}
-                {dist.isIndigenous && (
-                  <span class="ml-2 text-xs px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded">
-                    {dist.indigenousType === 'plains' ? '平地原住民' : '山地原住民'}
-                  </span>
-                )}
-              </div>
-              <span class="text-primary-600">→</span>
-            </a>
-          ))}
-        </div>
+      <section class="border border-neutral-200 rounded overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-neutral-50 border-b border-neutral-200">
+            <tr>
+              <th class="text-left px-3 py-2 font-medium text-neutral-700">選區</th>
+              <th class="text-right px-3 py-2 font-medium text-neutral-700">應選</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-neutral-100">
+            {councilDistrictsForCity.map((dist) => (
+              <tr class="hover:bg-neutral-50">
+                <td class="px-3 py-2">
+                  <a href={`${baseUrl}candidates/district/${positionId}/${city}/${dist.name}/`} class="underline text-neutral-800 hover:text-neutral-600">
+                    {dist.name}
+                  </a>
+                  {dist.isIndigenous && (
+                    <span class="ml-1.5 text-xs text-neutral-500">
+                      {dist.indigenousType === 'plains' ? '平地原住民' : '山地原住民'}
+                    </span>
+                  )}
+                </td>
+                <td class="px-3 py-2 text-right text-neutral-500 tabular-nums">{dist.seats}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         {councilDistrictsForCity.some(d => d.note) && (
-          <p class="mt-4 text-sm text-neutral-500">
-            * 部分選區依里劃分，詳見中選會公告
+          <p class="px-3 py-2 text-xs text-neutral-500 border-t border-neutral-100">
+            部分選區依里劃分，詳見中選會公告
           </p>
         )}
       </section>
@@ -302,168 +301,106 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
     {/* Village Chief with Village Filter */}
     {isVillageChief && scope === 'village' && hasCandidates && uniqueVillages.length > 1 && (
-      <section class="p-4 bg-neutral-50 rounded-lg border border-neutral-200">
-        <label for="village-filter" class="block text-sm font-medium text-neutral-700 mb-2">
-          依村里篩選：
-        </label>
+      <div class="flex items-center gap-2">
+        <label for="village-filter" class="text-sm text-neutral-600">篩選村里</label>
         <select 
           id="village-filter" 
-          class="w-full sm:w-auto px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          class="px-2 py-1 text-sm border border-neutral-300 rounded focus:outline-none focus:border-neutral-500"
         >
-          <option value="">全部村里（{uniqueVillages.length} 個）</option>
+          <option value="">全部（{uniqueVillages.length}）</option>
           {uniqueVillages.map(v => (
             <option value={v}>{v}</option>
           ))}
         </select>
-      </section>
+      </div>
     )}
 
     {/* Candidate List */}
     {scope !== 'city-councilor-index' && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <section class="border border-neutral-200 rounded overflow-hidden">
         {hasCandidates ? (
-          <div class="space-y-4" id="candidate-list">
+          <div id="candidate-list">
             {isVillageChief && scope === 'village' ? (
               // Village Chief: Group by village
               uniqueVillages.map(village => {
                 const villageCandidates = candidatesForPage.filter(c => c.district === village);
                 return (
                   <div class="village-group" data-village={village}>
-                    <h3 class="font-medium text-neutral-700 mb-3 pb-2 border-b border-neutral-200">
+                    <div class="px-3 py-2 bg-neutral-50 border-b border-neutral-200 text-sm font-medium text-neutral-700">
                       {village}
-                      <span class="text-sm text-neutral-500 font-normal ml-2">
-                        ({villageCandidates.length} 位候選人)
-                      </span>
-                    </h3>
-                    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mb-4">
-                      {villageCandidates.map((candidate) => {
-                        const statusBadge = getStatusBadge(candidate.status, candidate.registeredOn);
-                        const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
-                        const incumbent = isIncumbent(candidate);
-                        return (
-                          <div class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
-                            <div class="flex items-center gap-3 mb-2">
-                              {candidate.number != null && (
-                                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold text-sm">
-                                  {candidate.number}
-                                </span>
-                              )}
-                              <div class="min-w-0">
-                                <p class="font-semibold text-neutral-800 truncate">
-                                  {candidate.name}
-                                  {incumbent && (
-                                    <span class="ml-1.5 text-xs px-1.5 py-0.5 bg-neutral-200 text-neutral-600 rounded">現任</span>
-                                  )}
-                                </p>
-                                <p class="text-xs text-neutral-500">
-                                  {partyDisplay}
-                                </p>
-                              </div>
-                            </div>
-                            <div class="flex flex-wrap gap-2 items-center">
-                              {statusBadge && (
-                                <span class={`text-xs px-2 py-0.5 rounded ${statusBadge.class}`}>
-                                  {statusBadge.label}
-                                </span>
-                              )}
-                              {candidate.sourceUrl && (
-                                <a 
-                                  href={candidate.sourceUrl} 
-                                  target="_blank" 
-                                  rel="noopener"
-                                  class="text-xs text-primary-600 hover:underline"
-                                  title="官方來源"
-                                >
-                                  📄
-                                </a>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
+                      <span class="text-neutral-500 font-normal ml-1">({villageCandidates.length})</span>
                     </div>
+                    <table class="w-full text-sm">
+                      <tbody class="divide-y divide-neutral-100">
+                        {villageCandidates.map((candidate) => {
+                          const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
+                          const incumbent = isIncumbent(candidate);
+                          return (
+                            <tr class="hover:bg-neutral-50">
+                              <td class="px-3 py-2 w-10 text-neutral-400 tabular-nums text-right">
+                                {candidate.number != null ? candidate.number : ''}
+                              </td>
+                              <td class="px-3 py-2">
+                                <span class="text-neutral-800">{candidate.name}</span>
+                                {incumbent && <span class="ml-1 text-xs text-neutral-500">現任</span>}
+                              </td>
+                              <td class="px-3 py-2 text-neutral-500">{partyDisplay}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
                   </div>
                 );
               })
             ) : (
-              // Non-village-chief: Regular list with links to detail pages
-              candidatesForPage.map((candidate) => {
-                const statusBadge = getStatusBadge(candidate.status, candidate.registeredOn);
-                const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
-                const incumbent = isIncumbent(candidate);
-                const candidateId = `${candidate.county}-${candidate.position}-${candidate.district || candidate.districtOfficial || ''}-${candidate.name}`.replace(/[^a-zA-Z0-9\u4e00-\u9fff-]/g, '').toLowerCase();
-                
-                return (
-                  <div class="flex items-start gap-4 p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
-                    {candidate.number != null && (
-                      <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold text-lg">
-                        {candidate.number}
-                      </span>
-                    )}
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-center gap-2 flex-wrap mb-1">
-                        <span class="font-semibold text-lg text-neutral-800">
-                          {candidate.name}
-                        </span>
-                        {incumbent && (
-                          <span class="text-xs px-2 py-0.5 bg-neutral-200 text-neutral-600 rounded">現任</span>
-                        )}
-                        <span class="text-sm px-2 py-0.5 bg-neutral-200 text-neutral-600 rounded">
-                          {partyDisplay}
-                        </span>
-                        {statusBadge && (
-                          <span class={`text-xs px-2 py-0.5 rounded ${statusBadge.class}`}>
-                            {statusBadge.label}
-                          </span>
-                        )}
-                      </div>
-                      
-                      {candidate.sourceUrl && (
-                        <p class="text-xs text-neutral-500">
-                          資料來源：
-                          <a 
-                            href={candidate.sourceUrl} 
-                            target="_blank" 
-                            rel="noopener" 
-                            class="text-primary-600 hover:underline"
-                          >
-                            官方公告
-                          </a>
-                          {candidate.asOf && ` (${candidate.asOf})`}
-                        </p>
-                      )}
-                    </div>
+              // Non-village-chief: Table list
+              <table class="w-full text-sm">
+                <thead class="bg-neutral-50 border-b border-neutral-200">
+                  <tr>
+                    <th class="px-3 py-2 text-right w-10 font-medium text-neutral-700">號次</th>
+                    <th class="px-3 py-2 text-left font-medium text-neutral-700">姓名</th>
+                    <th class="px-3 py-2 text-left font-medium text-neutral-700">推薦政黨</th>
+                    <th class="px-3 py-2 text-right font-medium text-neutral-700"></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-neutral-100">
+                  {candidatesForPage.map((candidate) => {
+                    const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
+                    const incumbent = isIncumbent(candidate);
+                    const candidateId = `${candidate.county}-${candidate.position}-${candidate.district || candidate.districtOfficial || ''}-${candidate.name}`.replace(/[^a-zA-Z0-9\u4e00-\u9fff-]/g, '').toLowerCase();
                     
-                    <a 
-                      href={`${baseUrl}candidates/${encodeURIComponent(candidateId)}/`}
-                      class="flex-shrink-0 px-3 py-1.5 text-sm text-primary-600 border border-primary-200 rounded-md hover:bg-primary-50"
-                    >
-                      詳細 →
-                    </a>
-                  </div>
-                );
-              })
+                    return (
+                      <tr class="hover:bg-neutral-50">
+                        <td class="px-3 py-2 text-right text-neutral-400 tabular-nums">
+                          {candidate.number != null ? candidate.number : '—'}
+                        </td>
+                        <td class="px-3 py-2">
+                          <span class="font-medium text-neutral-800">{candidate.name}</span>
+                          {incumbent && <span class="ml-1.5 text-xs text-neutral-500 bg-neutral-100 px-1 py-0.5 rounded">現任</span>}
+                        </td>
+                        <td class="px-3 py-2 text-neutral-600">{partyDisplay}</td>
+                        <td class="px-3 py-2 text-right">
+                          <a 
+                            href={`${baseUrl}candidates/${encodeURIComponent(candidateId)}/`}
+                            class="text-xs text-neutral-600 underline hover:text-neutral-800"
+                          >
+                            詳細
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             )}
           </div>
         ) : (
-          <div class="text-center py-12">
-            <p class="text-5xl mb-4">📋</p>
-            <p class="text-lg font-medium text-neutral-600 mb-2">
-              此選區尚無候選人資料
+          <div class="px-4 py-8 text-center text-sm text-neutral-500">
+            <p>此選區尚無候選人資料</p>
+            <p class="mt-1">
+              <a href="https://info.cec.gov.tw/vote2026/" target="_blank" rel="noopener" class="underline">中選會官網</a>
             </p>
-            <p class="text-neutral-500 mb-4">
-              可能原因：登記尚未開始、無人登記參選、或資料尚待更新。
-            </p>
-            <div class="flex flex-wrap justify-center gap-3">
-              <a 
-                href="https://info.cec.gov.tw/vote2026/" 
-                target="_blank" 
-                rel="noopener"
-                class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
-              >
-                前往中選會查詢
-              </a>
-            </div>
           </div>
         )}
       </section>
@@ -471,55 +408,48 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
     {/* Source Info */}
     {hasCandidates && (
-      <section id="sources" class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
-        <h3 class="font-medium text-neutral-700 mb-2">📎 資料來源說明</h3>
-        <p class="text-sm text-neutral-600">
-          本站資料整理自中選會及各縣市選委會官方公告，點擊「📄」圖示可查看原始來源。
-        </p>
-      </section>
+      <p class="text-xs text-neutral-500">
+        資料來源：中選會及各縣市選委會官方公告
+      </p>
     )}
 
     {/* Report Error */}
-    <section class="flex flex-wrap items-center gap-3">
+    <div class="flex items-center gap-2 text-xs">
       <a 
         href={reportMailto}
-        class="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 border border-neutral-300 text-neutral-600 rounded-lg hover:bg-neutral-200 transition-colors text-sm"
+        class="text-neutral-600 underline hover:text-neutral-800"
       >
-        ✉️ 回報資料錯誤
+        回報資料錯誤
       </a>
-      <span class="text-xs text-neutral-500">我們會以官方資料核對後修正</span>
-    </section>
+      <span class="text-neutral-400">以官方資料核對後修正</span>
+    </div>
 
     {/* Voting Tips */}
-    <section class="p-6 bg-blue-50 border border-blue-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-blue-800 mb-3">
-        🗳️ 如何評估{shortName}候選人？
-      </h2>
-      {position?.checkpoints && (
-        <ul class="space-y-2 text-blue-700">
-          {position.checkpoints.slice(0, 4).map((checkpoint) => (
-            <li class="flex items-start gap-2">
-              <span class="text-blue-500">•</span>
-              <span>{checkpoint}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      <a 
-        href={`${baseUrl}how-to-judge/`}
-        class="mt-4 inline-flex items-center gap-1 text-blue-600 hover:underline"
-      >
-        查看完整評估指南 →
-      </a>
-    </section>
+    {position?.checkpoints && (
+      <details class="border border-neutral-200 rounded">
+        <summary class="px-3 py-2 cursor-pointer text-sm font-medium text-neutral-700 hover:bg-neutral-50 select-none">
+          如何評估{shortName}候選人
+        </summary>
+        <div class="px-3 py-2 border-t border-neutral-100">
+          <ul class="text-sm text-neutral-600 space-y-1">
+            {position.checkpoints.slice(0, 4).map((checkpoint) => (
+              <li>· {checkpoint}</li>
+            ))}
+          </ul>
+          <a href={`${baseUrl}how-to-judge/`} class="mt-2 inline-block text-xs underline text-neutral-600">
+            完整指南
+          </a>
+        </div>
+      </details>
+    )}
 
     {/* Navigation */}
-    <nav class="flex flex-wrap justify-between gap-4 pt-6 border-t border-neutral-200">
-      <a href={`${baseUrl}`} class="text-primary-600 hover:underline">
-        ← 返回首頁重新查詢
+    <nav class="flex justify-between text-sm pt-4 border-t border-neutral-200">
+      <a href={`${baseUrl}`} class="text-neutral-600 underline hover:text-neutral-800">
+        ← 首頁
       </a>
-      <a href={`${baseUrl}positions/${positionId}/`} class="text-primary-600 hover:underline">
-        了解{positionName}職責 →
+      <a href={`${baseUrl}positions/${positionId}/`} class="text-neutral-600 underline hover:text-neutral-800">
+        {positionName}職責 →
       </a>
     </nav>
   </article>
