@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "lastUpdated": "2026-11-15",
     "status": "scaffold",
     "officialListDate": "2026-11-17",
-    "note": "候選人正式名單預計於 11/17 公告，此檔案為資料架構示範，包含標記為範例的測試資料",
+    "note": "候選人正式名單預計於 11/17 公告，此檔案為資料架構，正式資料將於公告後更新",
     "sources": [
       {
         "name": "中選會選舉專區",
@@ -13,114 +13,335 @@
       {
         "name": "選舉公報",
         "url": "https://bulletin.cec.gov.tw/"
+      },
+      {
+        "name": "地方議會議事錄總庫",
+        "url": "https://journal.th.gov.tw/"
       }
     ]
   },
   "schema": {
-    "description": "每位候選人的資料結構",
+    "description": "每位候選人的資料結構 v2",
     "fields": {
-      "id": "唯一識別碼（建議格式：position-city-district-number）",
-      "name": "姓名",
-      "number": "號次（抽籤後填入）",
-      "party": "政黨（無黨籍填 null）",
-      "position": "參選職位（對應 positions.json 中的 id）",
-      "city": "縣市",
-      "district": "選區（可能是行政區、里、或選區編號）",
-      "bulletinUrl": "選舉公報連結",
-      "officialSourceUrl": "官方來源連結",
-      "lastVerified": "最後驗證日期 (YYYY-MM-DD)",
-      "isIncumbent": "是否為現任",
-      "checks": {
-        "description": "依據影片建議的候選人評估資料",
-        "incumbent": {
-          "councilAttendance": {
-            "general": "大會出席率",
-            "committee": "委員會出席率",
-            "source": "議會紀錄來源連結"
+      "id": {
+        "type": "string",
+        "description": "唯一識別碼（建議格式：position-city-district-number），用於產生 URL",
+        "required": true
+      },
+      "name": {
+        "type": "string",
+        "description": "姓名",
+        "required": true
+      },
+      "number": {
+        "type": "number",
+        "description": "號次（抽籤後填入）",
+        "required": true
+      },
+      "party": {
+        "type": "string|null",
+        "description": "政黨（無黨籍填 null）"
+      },
+      "position": {
+        "type": "string",
+        "description": "參選職位（對應 positions.json 中的 id）",
+        "required": true
+      },
+      "city": {
+        "type": "string",
+        "description": "縣市",
+        "required": true
+      },
+      "district": {
+        "type": "string",
+        "description": "選區（可能是行政區、里、或選區編號）",
+        "required": true
+      },
+      "isIncumbent": {
+        "type": "boolean",
+        "description": "是否為現任"
+      },
+      "officialSourceUrl": {
+        "type": "string",
+        "description": "官方來源連結（必填）",
+        "required": true
+      },
+      "lastVerified": {
+        "type": "string",
+        "description": "最後驗證日期 (YYYY-MM-DD)",
+        "required": true
+      },
+      "platform": {
+        "type": "object",
+        "description": "政見（來自選舉公報）",
+        "fields": {
+          "content": {
+            "type": "string",
+            "description": "政見內容（原文）"
           },
-          "interpellations": [
-            {
-              "topic": "質詢主題",
-              "date": "日期",
-              "followUp": "是否持續追蹤",
-              "source": "來源連結"
-            }
-          ]
-        },
-        "newcomer": {
-          "professionalBackground": "專業背景描述",
-          "publicParticipation": [
-            {
-              "activity": "公共參與活動",
-              "role": "角色",
-              "source": "來源連結"
-            }
-          ]
+          "bulletinUrl": {
+            "type": "string",
+            "description": "選舉公報 PDF 連結",
+            "required": true
+          },
+          "bulletinPage": {
+            "type": "number",
+            "description": "公報頁碼"
+          },
+          "asOf": {
+            "type": "string",
+            "description": "公報發布日期 (YYYY-MM-DD)"
+          }
         }
       },
-      "isSample": "標記為範例資料（正式上線時應移除）"
+      "pastRecords": {
+        "type": "array",
+        "description": "過去的施政/問政紀錄（曾任公職者）",
+        "itemFields": {
+          "title": {
+            "type": "string",
+            "description": "紀錄標題/摘要",
+            "required": true
+          },
+          "date": {
+            "type": "string",
+            "description": "日期 (YYYY-MM-DD 或 YYYY-MM)",
+            "required": true
+          },
+          "category": {
+            "type": "string",
+            "description": "類別（質詢、提案、會勘、其他）"
+          },
+          "description": {
+            "type": "string",
+            "description": "詳細說明"
+          },
+          "sourceUrl": {
+            "type": "string",
+            "description": "官方來源連結",
+            "required": true
+          },
+          "sourceName": {
+            "type": "string",
+            "description": "來源名稱（如：臺北市議會電子公報）"
+          }
+        }
+      },
+      "attendance": {
+        "type": "object",
+        "description": "出席紀錄",
+        "fields": {
+          "general": {
+            "type": "object",
+            "description": "大會出席",
+            "fields": {
+              "attended": {
+                "type": "number",
+                "description": "出席次數"
+              },
+              "total": {
+                "type": "number",
+                "description": "應出席次數"
+              },
+              "rate": {
+                "type": "string",
+                "description": "出席率（百分比字串，如 95%）"
+              },
+              "term": {
+                "type": "string",
+                "description": "屆期（如：第 14 屆）",
+                "required": true
+              },
+              "sessionPeriod": {
+                "type": "string",
+                "description": "會期期間（如：2022-12-25 至 2026-11-15）",
+                "required": true
+              },
+              "sourceUrl": {
+                "type": "string",
+                "description": "官方來源連結",
+                "required": true
+              },
+              "sourceName": {
+                "type": "string",
+                "description": "來源名稱"
+              },
+              "asOf": {
+                "type": "string",
+                "description": "資料截至日期 (YYYY-MM-DD)"
+              }
+            }
+          },
+          "committee": {
+            "type": "object",
+            "description": "委員會出席",
+            "fields": {
+              "attended": {
+                "type": "number",
+                "description": "出席次數"
+              },
+              "total": {
+                "type": "number",
+                "description": "應出席次數"
+              },
+              "rate": {
+                "type": "string",
+                "description": "出席率（百分比字串）"
+              },
+              "committeeName": {
+                "type": "string",
+                "description": "委員會名稱"
+              },
+              "term": {
+                "type": "string",
+                "description": "屆期",
+                "required": true
+              },
+              "sessionPeriod": {
+                "type": "string",
+                "description": "會期期間",
+                "required": true
+              },
+              "sourceUrl": {
+                "type": "string",
+                "description": "官方來源連結",
+                "required": true
+              },
+              "sourceName": {
+                "type": "string",
+                "description": "來源名稱"
+              },
+              "asOf": {
+                "type": "string",
+                "description": "資料截至日期"
+              }
+            }
+          }
+        }
+      },
+      "proposals": {
+        "type": "array",
+        "description": "提案紀錄",
+        "itemFields": {
+          "title": {
+            "type": "string",
+            "description": "提案標題",
+            "required": true
+          },
+          "date": {
+            "type": "string",
+            "description": "提案日期 (YYYY-MM-DD)",
+            "required": true
+          },
+          "status": {
+            "type": "string",
+            "description": "狀態（通過、待審、撤回、否決、其他）",
+            "required": true
+          },
+          "term": {
+            "type": "string",
+            "description": "屆期"
+          },
+          "sourceUrl": {
+            "type": "string",
+            "description": "官方來源連結",
+            "required": true
+          },
+          "sourceName": {
+            "type": "string",
+            "description": "來源名稱"
+          }
+        }
+      },
+      "proposalStats": {
+        "type": "object",
+        "description": "提案統計（由 proposals 欄位計算，不可自行填入）",
+        "computed": true,
+        "note": "此欄位由系統根據 proposals 計算，不應手動填寫"
+      },
+      "newcomerProfile": {
+        "type": "object",
+        "description": "新人候選人資料（無公職經歷者）",
+        "fields": {
+          "education": {
+            "type": "array",
+            "description": "學歷",
+            "itemFields": {
+              "degree": {
+                "type": "string",
+                "description": "學位/學歷"
+              },
+              "school": {
+                "type": "string",
+                "description": "學校"
+              },
+              "field": {
+                "type": "string",
+                "description": "科系"
+              },
+              "year": {
+                "type": "string",
+                "description": "畢業年份"
+              },
+              "sourceUrl": {
+                "type": "string",
+                "description": "來源連結（如：選舉公報）"
+              }
+            }
+          },
+          "experience": {
+            "type": "array",
+            "description": "經歷",
+            "itemFields": {
+              "title": {
+                "type": "string",
+                "description": "職稱",
+                "required": true
+              },
+              "organization": {
+                "type": "string",
+                "description": "機構/公司"
+              },
+              "period": {
+                "type": "string",
+                "description": "期間"
+              },
+              "sourceUrl": {
+                "type": "string",
+                "description": "來源連結"
+              }
+            }
+          },
+          "publicParticipation": {
+            "type": "array",
+            "description": "公共參與",
+            "itemFields": {
+              "activity": {
+                "type": "string",
+                "description": "活動名稱",
+                "required": true
+              },
+              "role": {
+                "type": "string",
+                "description": "角色"
+              },
+              "date": {
+                "type": "string",
+                "description": "日期/期間"
+              },
+              "sourceUrl": {
+                "type": "string",
+                "description": "來源連結"
+              },
+              "sourceName": {
+                "type": "string",
+                "description": "來源名稱"
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "candidates": [
-    {
-      "id": "sample-councilor-taipei-daan-1",
-      "name": "（範例）王小明",
-      "number": 1,
-      "party": "（範例黨）",
-      "position": "councilor-municipal",
-      "city": "臺北市",
-      "district": "第四選區（大安區）",
-      "bulletinUrl": null,
-      "officialSourceUrl": "https://info.cec.gov.tw/vote2026/",
-      "lastVerified": "2026-11-15",
-      "isIncumbent": true,
-      "checks": {
-        "incumbent": {
-          "councilAttendance": {
-            "general": "95%",
-            "committee": "90%",
-            "source": "https://www.tcc.gov.tw/",
-            "note": "此為範例數據"
-          },
-          "interpellations": [
-            {
-              "topic": "交通安全改善",
-              "date": "2025-05",
-              "followUp": true,
-              "source": "https://gaz.tcc.gov.tw/"
-            }
-          ]
-        }
-      },
-      "isSample": true,
-      "_comment": "此為範例資料，用於說明資料結構，正式資料請依中選會公告填入"
-    },
-    {
-      "id": "sample-councilor-taipei-daan-2",
-      "name": "（範例）李小華",
-      "number": 2,
-      "party": null,
-      "position": "councilor-municipal",
-      "city": "臺北市",
-      "district": "第四選區（大安區）",
-      "bulletinUrl": null,
-      "officialSourceUrl": "https://info.cec.gov.tw/vote2026/",
-      "lastVerified": "2026-11-15",
-      "isIncumbent": false,
-      "checks": {
-        "newcomer": {
-          "professionalBackground": "都市規劃師，10年經驗",
-          "publicParticipation": [
-            {
-              "activity": "社區改造計畫",
-              "role": "志工",
-              "source": null
-            }
-          ]
-        }
-      },
-      "isSample": true,
-      "_comment": "此為範例資料，用於說明資料結構，正式資料請依中選會公告填入"
-    }
-  ]
+  "candidates": []
 }
