@@ -112,12 +112,12 @@ const position = positions.positions.find(p => p.id === candidate.position);
 const positionName = position?.name || candidate.position;
 const shortName = position?.shortName || positionName;
 
-function getStatusBadge(status: string, registeredOn?: string): { label: string; class: string; fullLabel: string } {
+function getStatusBadge(status: string, registeredOn?: string): { label: string; class: string; fullLabel: string } | null {
   const neutralClass = 'border border-neutral-300 bg-neutral-100 text-neutral-600';
   if (status.includes('公告候選人')) {
     return { label: '已公告', class: neutralClass, fullLabel: '正式候選人（選委會已公告）' };
   } else if (status.includes('已抽籤')) {
-    return { label: '已抽籤', class: neutralClass, fullLabel: '已完成號次抽籤' };
+    return null;
   } else {
     const dateLabel = registeredOn ? ` (${registeredOn})` : '';
     return { label: '已登記', class: neutralClass, fullLabel: `已完成登記${dateLabel}` };
@@ -215,9 +215,11 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
           <span class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm">
             {partyDisplay}
           </span>
-          <span class={`px-3 py-1 rounded-full text-sm ${statusBadge.class}`}>
-            {statusBadge.label}
-          </span>
+          {statusBadge && (
+            <span class={`px-3 py-1 rounded-full text-sm ${statusBadge.class}`}>
+              {statusBadge.label}
+            </span>
+          )}
         </div>
       </div>
     </header>
@@ -226,10 +228,12 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
     <section class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
       <h2 class="font-medium text-neutral-700 mb-2">📋 候選人狀態</h2>
       <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-        <div>
-          <dt class="text-neutral-500">目前狀態</dt>
-          <dd class="text-neutral-800 font-medium">{statusBadge.fullLabel}</dd>
-        </div>
+        {statusBadge && (
+          <div>
+            <dt class="text-neutral-500">目前狀態</dt>
+            <dd class="text-neutral-800 font-medium">{statusBadge.fullLabel}</dd>
+          </div>
+        )}
         {candidate.registeredOn && (
           <div>
             <dt class="text-neutral-500">登記日期</dt>
