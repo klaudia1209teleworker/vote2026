@@ -1,0 +1,2125 @@
+{
+ "嘉義市|mayor-county|嘉義市|王義成|1": {
+  "county": "嘉義市",
+  "position": "mayor-county",
+  "district": "嘉義市",
+  "name": "王義成",
+  "ballotNumber": 1,
+  "nameAsPrinted": "王義成",
+  "platform": "一、嘉義人不再遠鄉離井找工作每年市府輔導提供300名創業名額設置柒仟萬創業貸款利息補貼\n設置特色夜市\n1.啟明路100號為中心點\n2.嘉義大學旁民生公園\n3.北港路市議會周圍區\n4.北興街400號左右百公尺\n5.金山路與玉山路主軸周圍\n以上均為初期後續按需求追加並由車站交通路口提供路線圖\n二、全齡友善照護智慧居家網路定期老者長照針灸伴養醫療\n三、幼兒全市增闢合格安全遊樂園地公立托兒所\n增加名額增設24小時公立托顧中心減輕年輕家庭的負擔嘉義市成居之者忘老宜居城市",
+  "platformFormat": "text",
+  "education": [],
+  "experience": [
+   "著作總數兩書冊",
+   "1. 天下第二，富裕之門",
+   "2. 新加坡逛吃悟"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "49年6月28日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/7776fb6c-7d6c-49c6-9528-8b8dee9f5d2d.pdf",
+  "sourceFileName": "嘉義市選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65774",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|mayor-county|嘉義市|陳愷璜|2": {
+  "county": "嘉義市",
+  "position": "mayor-county",
+  "district": "嘉義市",
+  "name": "陳愷璜",
+  "ballotNumber": 2,
+  "nameAsPrinted": "陳愷璜",
+  "platform": "數位孿生（Digital Twin）救嘉義：\n壹、四大支柱：從在地底蘊到人文智慧治理\n• 文化資本化：以嘉義市獨有稀缺人文生產要素，打破「文化即開發負擔」舊思維，將木都文化、畫都歷史與老木屋群轉化為高溢價 IP 品牌與\n沉浸式體驗，讓舊城區成為青年創業（不再需要外漂）與國際文創投資載體。建構美學產業化上位架構。\n• 精準科技治理（城市智慧經濟）：導入數位孿生（虛擬輔助系統）生成式 AI，全面數據化實體空間與經濟行為，對市場、園區、商圈進行人\n流、產值與碳足跡建模，政策落地前精準模擬，降低試錯與投資成本。進化公務倫理、去除系統性官僚化沈痾。\n• 適地總體經濟（投入產出模型）：導入投資產出模型，精確測算公共投資乘數與邊際效益，聚焦木都 ESG、基層服務業、全齡醫療照護與文\n創設計，導向高值化轉型並對接國際市場。\n• 引導型市場機制（智慧制度設計）：立足新制度經濟學，捨棄指令式管理，改採容積獎勵、地方創生引導基金與跨領域產業聯盟，在數位孿\n生預測下引導民間資金，共創公私協同效益。整全城市複合系統進化與創生。\n貳、美學新政：十大在地經濟學\n1.走路經濟學：建構人本步道串聯舊城商圈與無障礙空間，扶植街角微經濟。2.跨宗教經濟學：整合信仰建築、藝術與慶典，帶動深度宗教觀\n光。3.公園經濟學：導入全齡設施、特色遊具、公園IP化與綠色市集。4.木都經濟學：培育綠建材人才，老木屋對接ESG固碳並活化為新創旅\n宿。5.「諸羅顯影」經濟學：以虛擬光牆重現古城結界，設立影視音產製基地。6.「藝術圓夢中心」經濟學：建置實驗室、VR劇場與圓夢基\n金，打造全齡藝術產業鏈。7.「十字廊帶」經濟學：跨縣市縫合山海與人文樞紐，舉辦國際生活藝術節。 8.超低底盤運輸載具經濟學：導入低\n底盤電動公車與數據獲利，反饋免費搭乘。進化BRT爲Smart BRT（智慧BRT），20分鐘由市區到太保高鐵站。9.垃圾資源經濟學：建置高智\n慧資源中心、APP到府收運及有機廢棄物能源化。10.城市數位孿生（模組化）經濟學：開放平台吸引AI研發產業鏈進駐，發展元宇宙觀光與\n數位新創。\n參、高齡政策：全台高齡友善典範城市 1.設置跨局處「生活統籌事務官」，打破垂直行政斷層與落差，整合衛政、社政與都發資源。2.推動\n「空間特許豁免」，以物聯網感測替代僵化法規，保留木屋與常民記憶。3.擺脫量化 KPI，導入以尊嚴與幸福感為核心的質性評估；以AI輔助\n精緻管理。4.落實「風險共擔協議」，拒絕零風險禁錮，保障長輩生活自主權的舒適展開。 5.建立里鄰微型互助補貼，用信任與人情味織起在\n地安全網。 6.將美學納入（日照、長照）照護，以光影與木都紋理作為療癒處方。\n肆、婦幼政策：桃城孵夢所—全城共育與溫柔守護體系 1.產後身心修復：年享 6 次免費心理諮商與睡眠指導；提供 120 小時彈性到府臨托喘\n息。 2.醫療升級：建置夜間兒科視訊與急診綠色通道；全額補助 NIPT 基因檢測。3.空間友善：推動老城區推車無礙商圈認證；活化老屋打造\n自然美感共玩基地。4.職涯平衡：企業雇用產後重返職場女性最高補助 6 萬元；公幼課後延托全面覆蓋至晚間 7 點。 5.杜絕家庭、社群、校\n園、職場，霸凌與毒品氾濫。\n伍、寵物政策：桃城毛孩安老與共生特區—全齡陪伴支持體系 1.高齡共伴照護：補助長者飼養合格同伴動物，結合社區推動「人寵共融療癒據\n點」。2.醫療與保險補助：設立老齡寵物醫療基金，並推出「老人與老犬/老貓共生醫療險」補助。3.友善空間與托育：打造寵物友善公園與大\n眾運輸專區，結合在地社企提供短期托育。4.信託與安養支援：推動第三方監管之「寵物信託基金」與公辦民營安養中心，確保身故失能後餘\n生照護。\n這擺，咱賀嘉義變水！ 更多的政策請詳參官網：打開手機或是電腦中的瀏覽器 （輸入網址） https://114.35.221.187/",
+  "platformFormat": "text",
+  "education": [
+   "法國國立巴黎高等藝術學院碩士",
+   "國立臺藝專美術",
+   "嘉義高中"
+  ],
+  "experience": [
+   "北藝大系主任、所長、院長、學務長、校長退休",
+   "教育部藝術教育推動會法制組召集人",
+   "財團法人臺灣偏鄉兒童教育基金會董事",
+   "日本愛媛縣藝術三年祭國際評審",
+   "臺灣教師專業發展學會理事長",
+   "淡江大學土木系建築博士班"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "49年1月30日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/7776fb6c-7d6c-49c6-9528-8b8dee9f5d2d.pdf",
+  "sourceFileName": "嘉義市選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65774",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|mayor-county|嘉義市|張啓楷|3": {
+  "county": "嘉義市",
+  "position": "mayor-county",
+  "district": "嘉義市",
+  "name": "張啓楷",
+  "ballotNumber": 3,
+  "nameAsPrinted": "張啓楷",
+  "platform": "[1] 65歲以上長輩健保費全額補助。\n[2] 每月1200點敬老卡，放寬使用，可搭計程車、抵掛號費、可於特約超商、超市及農會消費。\n[3] 全國最優育兒政策。生育獎勵金：第一胎5萬，第二胎10萬，第三胎20萬。0-6歲每年2萬生日禮金，合計\n14萬。幼兒免費下課托育2小時，方便家長接送。\n[4] 爭取高鐵聯外軌道工程，即刻動工。\n[5] 闢建文化公園地下停車場，推展夜市觀光文化，方便民眾停車。\n[6] 增設國道3大雅路交流道、加速牛稠溪環快完工。\n[7] 水上機場恢復國際線航班，拓展國際觀光。\n[8] 商圈2+4。擴大文化路、二通商圈。增設四商圈，重振火車站站前商圈，延伸至後火車站，帶動區域經濟發展。\n[9] 加速推動北港路產業廊帶計畫，規劃高新產業園區，帶動產業轉型與城市繁榮發展。\n[10] 增加社會住宅戶數及可負擔宅，新婚優先，減少青年租屋、購屋成本，推動三代同堂。\n[11] 四年內科技執法紅單減半，車禍死傷減半；保護通學安全，倡議人本交通。\n[12] 拒絕毒油、黑心食品，嚴拒毒品進入校園，捍衛校園安全，守護食品安全。\n[13] 興建大巨蛋，打造城市新地標，導入演唱會、運動賽事與工商展覽，增加就業與稅收。\n[14] 承續完成黃敏惠市長十大旗艦計畫、穩定市府人事。\n[15] 嚴禁蘭潭設置光電板。",
+  "platformFormat": "text",
+  "education": [
+   "國立台灣大學政治學系碩士",
+   "國立中興大學社會學系學士",
+   "國立嘉義高級中學",
+   "嘉義市嘉華中學國中部"
+  ],
+  "experience": [
+   "第十一屆立法委員",
+   "TVBS、年代電視台政論節目主持人",
+   "年代新聞部副總編輯",
+   "中國時報國會記者、副主任",
+   "彰化縣工商發展投資策進會總幹事"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "51年12月21日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義縣",
+  "partyAsPrinted": "台灣民眾黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/7776fb6c-7d6c-49c6-9528-8b8dee9f5d2d.pdf",
+  "sourceFileName": "嘉義市選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65774",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|mayor-county|嘉義市|王美惠|4": {
+  "county": "嘉義市",
+  "position": "mayor-county",
+  "district": "嘉義市",
+  "name": "王美惠",
+  "ballotNumber": 4,
+  "nameAsPrinted": "王美惠",
+  "platform": "以市民為核心，以行動實現願景，讓嘉義的每一步改變，都能充分回應市民的期待。\n一、安心宜居･永續嘉義：營造森林城市增加綠化，串聯河川、水圳等城市藍帶。強化排水、防洪減災、推動資\n源循環、舊屋新活力，讓嘉義安全、宜居、有韌性。\n二、產業創新･經濟起飛：迎接台積電產業效應，打造百萬人口生活圈。推動北港路沿線開發、擴大後湖工業區\n及周邊發展，接續「大南方新矽谷」的國家資源。\n三、交通升級，安全暢行：加強高鐵站直達市區的便利性，擴大公車及公共自行車路網。善用鐵路高架化後沿線\n的都市空間，多管齊下解決市區停車問題。\n四、世代共好･活力全齡：建立全齡照顧體系，提供長輩交通津貼、敬老愛心車隊、健保費及假牙補助，改善居\n家安全並增加樂齡活力據點，興建婚育宅，完善托育服務，讓孩子健康成長、青年成家、長輩安心。\n五、教育扎根･國際接軌：加碼育兒補助與營養午餐經費，增加國中小外語學習能量，補助學童全民英檢報名費，\n支持青年出國參賽及表演，建置幼兒園書館及社區運動據點。\n六、文化觀光･城市品牌：成立跨域文化觀光發展推動委員會，以木都歷史、林業文化、美食及特色街區為核心，\n串聯森林鐵路與山海觀光。\n七、土地活化，價值提升：全面檢討公共設施保留地的必要性與公益性，盤點並釋出閒置土地，實現土地正義。\n八、AI科技･城市治理：將AI科技導入交通、長照醫療、教育及防災智慧監測等領域，讓城市更便民、更精準、\n更有效率。",
+  "platformFormat": "text",
+  "education": [
+   "國立嘉義大學管理學院碩士"
+  ],
+  "experience": [
+   "民主進步黨全國黨代表",
+   "立法院第10、11屆立法委員",
+   "立法院第十屆第四、五會期經費稽核委員會",
+   "立法院第十屆第6會期內政委員會召集委員",
+   "立法院第十屆第5會期民進黨黨團副書記長",
+   "嘉義市議會第7、8、9、10屆議員",
+   "前嘉義市議員江熙哲服務處主任"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "54年4月15日",
+  "gender": "女",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "民主進步黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/7776fb6c-7d6c-49c6-9528-8b8dee9f5d2d.pdf",
+  "sourceFileName": "嘉義市選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65774",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|mayor-county|嘉義市|黃宏成台灣阿成世界偉人財神總統|5": {
+  "county": "嘉義市",
+  "position": "mayor-county",
+  "district": "嘉義市",
+  "name": "黃宏成台灣阿成世界偉人財神總統",
+  "ballotNumber": 5,
+  "nameAsPrinted": "黃宏成台灣阿成世界偉人財神總統",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "東吳法律"
+  ],
+  "experience": [
+   "2014 嘉義縣長、2016 嘉義市立委、2018嘉義",
+   "市長、2020嘉義市立委、2022嘉義市長候選",
+   "人，美國維吉尼亞大學拿破崙希爾基金會進",
+   "修，青創總會17屆公關副主委，台北復旦校",
+   "友會監事，電台主持人，三輪車凸歸台灣，國",
+   "際知名行動藝術家，暢銷書作家，瑜伽神王者，",
+   "天堂永生天人合一，奉獻敬神，創造神蹟"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "57年3月20日",
+  "gender": "男",
+  "birthPlace": "桃園市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/7776fb6c-7d6c-49c6-9528-8b8dee9f5d2d.pdf",
+  "sourceFileName": "嘉義市選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65774",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|顏翎熹|1": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "顏翎熹",
+  "ballotNumber": 1,
+  "nameAsPrinted": "顏翎熹",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "真理大學運動資訊傳播學系"
+  ],
+  "experience": [
+   "傳說對決實習主播",
+   "專業主持",
+   "嘉義市第十一屆市議員",
+   "匹克球丙級裁判"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "78年7月6日",
+  "gender": "女",
+  "birthPlace": "新北市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|傅大偉|2": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "傅大偉",
+  "ballotNumber": 2,
+  "nameAsPrinted": "傅大偉",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "中正大學公共與國際事務碩士",
+   "南榮科技大學",
+   "蘭潭國中",
+   "民族國小"
+  ],
+  "experience": [
+   "東川里里長",
+   "救國團東區委員會會長",
+   "籃球推廣協會理事長",
+   "嘉義家職家長會會長",
+   "後指部東區輔導中心主任",
+   "警察志工大隊中隊長",
+   "東區扶輪社社長",
+   "諸羅山同濟會會長",
+   "嘉義市青創會理事長",
+   "中小企業跨業交流協會會長",
+   "文財殿附屬文通慈善會顧問",
+   "嘉義市消防局第二大隊顧問",
+   "諸羅山登山協會理事長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "layoutNotes": {
+   "exp": "此欄於公報中分左右兩欄排版，依左欄由上而下、再右欄由上而下排列"
+  },
+  "birthDateAsPrinted": "52年4月29日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "中國國民黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|黃露慧|3": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "黃露慧",
+  "ballotNumber": 3,
+  "nameAsPrinted": "黃露慧",
+  "platform": "我是最認真做事的「嘉義小太陽」黃露慧 LULUMI。\n深耕在地二十年，我堅持「實實在在做事，用政績與願景作為承諾」，對鄉親負責。\n一、實績說話：過往政績看得見！\n守護孩童：歷時15年發起4萬人連署，實現「國中、小學營養午餐免費」、更新兒童館、嘉\n大附小冷氣裝設、推動校園安全認證與1-4年級情緒教育課程。\n關懷長輩與弱勢：擴大敬老卡福利（運動中心扣點/特約計程車折抵）、創辦「愛在嘉義食\n物銀行」提供物資幫助邊緣戶。\n紮實建設：完成道路拓寬與東門圓環改建，短竹公園開闢、改善興村里淹水、落實東、西區\n寵物公園及東、西區各一座國民運動中心。\n二、未來承諾：四大幸福政見再升級！\n長輩福利：健保補助下修至65歲、補助免費假牙、敬老卡靈活直接扣點。\n情緒教育：國中小全面導入社會情緒教育（SEL），落實師資培訓與防霸凌。\n力挺青年：常態文創市集、培植電競產業與街舞文化、升級極限運動基地。\n全齡宜居：擴大智慧路口號誌，全力促成市立圖書總館於2030年完工。\n懇請支持黃露慧，讓我們用愛守護，嘉義「慧」更好！",
+  "platformFormat": "text",
+  "education": [
+   "國立中正大學管理研究所碩士",
+   "中華醫事技術專科學校醫檢科畢業(現為中華",
+   "醫事科技大學)"
+  ],
+  "experience": [
+   "1. 嘉義市第7~11屆5任市議員",
+   "2. 民進黨嘉義市黨部第14/18/19屆主任委員",
+   "3. 嘉義市兒童福利服務中心館長",
+   "4. 嘉義市愛在嘉義關懷協會理事長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "56年1月13日",
+  "gender": "女",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "民主進步黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|張敏琪|4": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "張敏琪",
+  "ballotNumber": 4,
+  "nameAsPrinted": "張敏琪",
+  "platform": "一、嘉義市議會第11屆第6次定期會提案：嘉義市政府全額負擔嘉義市65歲以上（原住民為55歲\n以上）長輩的健保費，落實高齡友善城市政策。\n二、生育補助提高至每胎5萬元以上。\n三、若財政狀況允許，提案發6000元，普發現金，還稅於民。\n四、拒絕黑心食品進入校園，守護食品安全，捍衛學童健康。",
+  "platformFormat": "text",
+  "education": [
+   "高中畢"
+  ],
+  "experience": [
+   "第七、八、九、十、十一屆市議員"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "62年4月27日",
+  "gender": "女",
+  "birthPlace": "高雄市",
+  "partyAsPrinted": "中國國民黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|洪斐昭|5": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "洪斐昭",
+  "ballotNumber": 5,
+  "nameAsPrinted": "洪斐昭",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "崇文國小",
+   "嘉華中學",
+   "大同高級商業職業學校"
+  ],
+  "experience": [
+   "1. 嘉義市行動聚落創業發",
+   "展協會第一屆理事長",
+   "2. 嘉義市魚類商業同業公",
+   "會首席顧問",
+   "3. 嘉義市體育會健美健身",
+   "委員會",
+   "4. 嘉義城隍廟維新社首席",
+   "顧問",
+   "5. 嘉義保南境榮譽首席顧",
+   "問",
+   "6. 北回培英文教協會顧問",
+   "7. 嘉義縣警察之友會顧問",
+   "8. 新莊警友辦事處副主任",
+   "9. 嘉義市商業會理事",
+   "10. 陽光扶輪社",
+   "11. 嘉泰獅子會"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "layoutNotes": {
+   "exp": "此欄於公報中分左右兩欄排版，依左欄由上而下、再右欄由上而下排列"
+  },
+  "birthDateAsPrinted": "71年1月7日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|黃盈智|6": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "黃盈智",
+  "ballotNumber": 6,
+  "nameAsPrinted": "黃盈智",
+  "platform": "1、嘉義市65歲以上老人免費裝全口假牙。\n2、監督市府做好路平，給市民安全回家的路。\n3、設置AI科技軟體園區，帶動嘉義市發展。\n4、監督市府做好鐵路高架化後都市縫合。\n5、以嘉義特有的林業文化，帶動觀光。\n6、為嘉義市原住民、新住民爭取權益。\n7、推動在地人文教育，環境生態保護。\n8、推動滿65歲市民免交健保費。\n9、推動老人共餐、日照服務，照顧年長者。",
+  "platformFormat": "text",
+  "education": [
+   "美國加州AU國貿博士",
+   "美國加州AU財管暨會計碩士",
+   "美國奧克拉荷馬州OKCU財管碩士",
+   "東海大學會計學士",
+   "協同高中",
+   "興華國中",
+   "師專附小"
+  ],
+  "experience": [
+   "第八、九、十一屆議員",
+   "民進黨嘉義市黨部執行委員",
+   "嘉義市黃氏宗親會理事長",
+   "嘉義市野鳥學會理事長",
+   "嘉義市小英之友會秘書長",
+   "嘉義市綵繪人生同濟會會長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "61年1月25日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "民主進步黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|郭定緯|7": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "郭定緯",
+  "ballotNumber": 7,
+  "nameAsPrinted": "郭定緯",
+  "platform": "「嘉倍幸福，一言為定」郭定緯以細膩、態度明確，站在第一線，把關市政、挺身捍衛市民\n權益，讓嘉義更宜居、更幸福。\n監督市政一定強：1. 堅持理性問政，捍衛公益與市民權益。\n2. 專業嚴審預算，為市民荷包把關。\n服務市民一定衝：勤奮走動基層，親力親為替市民發聲。\n青年就業一定穩：1. 放寬青年創業補助門檻，並發展創業募資平台，吸引青年回嘉創業。\n2. 閒置公有地增建青年住宅，讓青年返鄉買得起房。\n教育扎根一定好：增加重點體育學校經費，培育體育選手。\n文化傳承一定行：規劃特色公園，編織嘉義在地故事。\n高齡照護一定優：1. 爭取65歲以上長者免健保費。\n2. 爭取擴大敬老卡優惠及使用範圍。\n交通一定順：增設停車場，提高公共空間停車設施。",
+  "platformFormat": "text",
+  "education": [
+   "南華大學管理科學碩士"
+  ],
+  "experience": [
+   "嘉義市議會第9屆副議長郭明賓服務處主任",
+   "群智國際同濟會創會會長",
+   "玉山獅子會會員",
+   "真愛扶輪社社員"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "82年12月10日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "中國國民黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|陳玥妗|8": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "陳玥妗",
+  "ballotNumber": 8,
+  "nameAsPrinted": "陳玥妗",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "嘉義大學農業生物科技研究所碩士",
+   "玉山國中",
+   "垂楊國小"
+  ],
+  "experience": [
+   "中央研究院南部生技中心研究人員",
+   "國中理化老師",
+   "實驗教育師資",
+   "十",
+   "一",
+   "嘉義市第 屆立法委員候選人",
+   "親職講師",
+   "台語繪本講師"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "71年11月8日",
+  "gender": "女",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "小民參政歐巴桑聯盟",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|凌子楚|9": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "凌子楚",
+  "ballotNumber": 9,
+  "nameAsPrinted": "凌子楚",
+  "platform": "第一點、青年租屋，市府加碼：爭取市府加碼青年租屋補貼，減輕年輕世代負擔，建立青年宜居環境。\n第二點、弱勢看病，政府買單：推動弱勢族群醫療補助，爭取政府買單掛號費與部分負擔，落實基層\n照護。\n第三點、生娃紅包，有感加碼：爭取提高生育津貼，提供實質有感加碼，有效減輕家長壓力，緩解少\n子化。\n第四點、育兒救援，一鍵到家：推動數位育兒備援系統，臨托、喘息服務一鍵預約，實現貼心到宅救援。\n第五點、獨居長者，AI 守護：結合智慧物聯網與 AI 科技，建構居家安全與健康監測網，打造安心樂\n齡城市。\n第六點、補助假牙，聽力無礙：爭取全面補助長者假牙，加碼助聽器補貼與聽力篩檢，守護長者生活\n尊嚴。\n第七點、實驗學校，公辦民營：推動公立學校轉型並獎勵民間投資與公辦民營，增設實驗型幼稚園、\n小學及國中，打破傳統課綱框架，給予嘉義家長與孩子更多元、優質的教育選擇權。",
+  "platformFormat": "text",
+  "education": [
+   "國立台灣大學法學碩士"
+  ],
+  "experience": [
+   "林聰明沙鍋魚頭法務長",
+   "東石笨港口港口宮總幹事",
+   "嘉義市第10屆市議員",
+   "凌生有限公司負責人",
+   "文法解密套書作者",
+   "華視新聞廣場主持人",
+   "嘉義之音電台主持人"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "54年9月19日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "民主進步黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|柯莉絲汀|10": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "柯莉絲汀",
+  "ballotNumber": 10,
+  "nameAsPrinted": "柯莉絲汀",
+  "platform": "莉拚到底！嘉義會更好\n① 拚觀光：人潮湧進來，嘉義發大財\n• 監督市府大型活動串聯商圈、市場、旅宿及在地店家，讓遊客更常來、待更久、消費更多。\n• 針對各傳統市場需求，爭取環境、動線及周邊停車改善，讓市場更好逛、店家更好做生意。\n• 要求市府行銷資源擴大納入小吃、攤商及老店，讓更多在地好店被看見。\n② 挺青年：留在家鄉好好生活\n• 爭取青創補助更貼近小本創業，讓小店、工作室及微型創業拿得到實際資源。\n• 要求市府強化招商，引進優質企業、創造更多好工作，讓青年不用離鄉也有發展。\n• 爭取托育、親子及育兒支持，減輕年輕家庭成家負擔。\n③ 顧生活：路好走、車好停\n• 重視校園安全，督促改善學區危險路口、通學步道與接送動線，讓孩子安心上學。\n• 督促改善市場、商圈及住宅區停車問題，爭取增設停車空間。\n• 督促公園老舊設施汰換與安全改善，提升親子、銀髮及寵物友善環境。\n市民大小事，全力爭取、監督追到底！",
+  "platformFormat": "text",
+  "education": [
+   "國立嘉義大學數位系",
+   "宏仁女中",
+   "協同中學國中部"
+  ],
+  "experience": [
+   "• 嘉義青創工商聯盟理事長",
+   "• 柯莉絲汀行銷創辦人",
+   "• 113年嘉義市觀光宣傳大使",
+   "• 114年嘉義市警察局反詐宣導大使",
+   "• 115年嘉義優秀青年",
+   "• 嘉義市東公有零售市場顧問",
+   "• 嘉義在地美食自媒體經營8年",
+   "• 嘉義美食推廣代表，多次受邀參與全國美食節目",
+   "• 嘉義市政府衛生局食安金質獎推廣合作"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "79年10月9日",
+  "gender": "女",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|梁樹綸|11": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "梁樹綸",
+  "ballotNumber": 11,
+  "nameAsPrinted": "梁樹綸",
+  "platform": "1. 社會福利：聯合國制定永續發展目標(SDGs)，涵蓋各個層面，為我國所遵循。對嘉義市而言，當前最需努力：\n(1) 增加更多公托設施，減輕父母養兒育女花費。\n(2) 擴大敬老卡、愛心卡使用範圍，提升生活機能和便利性。\n(3) 增進身心障礙者食衣住行等各層面友善環境和就業機會。\n(4) 防範並減少家庭暴力、性騷擾，特別是加強維護婦女、孩童安全及權益。\n2. 教育：(1) 加強保障教師權益，避免遭受不當干擾和傷害。\n(2) 面對家暴、婚姻、子女權益乃至其他問題，除加強社會安全網外，更需從教育著手，加強家庭教育中\n心職能，預防更多問題產生。\n3. 法律及治安：(1) 用法律專業補強自治法規之不足。 (2) 敦促市政府加強防治詐騙、毒品和網路暴力問題。\n4. 都市發展：\n(1) 推動危險及老舊建築物重建。 (2) 檢視嘉義市危險角落，打造無障礙環境，實現真正世代宜居。\n(3) 市圖書館總館及忠孝路346巷是未來東區發展重點，敦促市政府就東邊排水溝景觀改造，並建立親水乾淨\n之環境。\n(4) 敦促市政府增加誘因，增進市區空地被利用及發展，特別是民國路空地，敦促市政府提出更完善計畫，帶\n動發展和建設，增進青年就業機會和返鄉打拼意願。\n5. 交通：(1) 增加 Youbike 站點。(2) 敦促市政府盡速完成人行道工程，減少交通壅塞、車道爭搶及事故發生。\n6. 體育：藉由嘉義市35座公園密度，添購更多運動器材，改善地面，增進市民休閒趣味和運動意願。",
+  "platformFormat": "text",
+  "education": [
+   "臺灣大學法律學系法學組",
+   "嘉義高中",
+   "興華中學國中部",
+   "民族國小",
+   "育才幼稚園"
+  ],
+  "experience": [
+   "梁龍法律事務所主持律師",
+   "勞動部認證勞資爭議調解人",
+   "嘉義市社會優秀青年代表全國表揚",
+   "嘉義市政府法律扶助顧問",
+   "嘉義市學生再申訴評議委員會主席",
+   "訴願審議、法規審查、勞資爭議調解、安全及衛",
+   "生防護、性騷擾申訴評議等委員",
+   "國民黨中央委員",
+   "嘉義市嘉邑行善團法律顧問"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "74年2月12日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "中國國民黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|吳宗泓|12": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "吳宗泓",
+  "ballotNumber": 12,
+  "nameAsPrinted": "吳宗泓",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "大葉大學工業工程與管理學所碩士",
+   "嘉義市私立嘉華中學高中部"
+  ],
+  "experience": [
+   "國際SAMPE尖端複合材料工程師證照",
+   "大葉大學複合材料與分析實驗室研究員",
+   "新鉅科技自動化發展中心工程師",
+   "天心工業研發部複合材料工程師"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "83年6月17日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|陳家平|13": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "陳家平",
+  "ballotNumber": 13,
+  "nameAsPrinted": "陳家平",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "國立嘉義大學管理學院 碩士"
+  ],
+  "experience": [
+   "國立嘉義大學企管研究所 博士生",
+   "嘉義市議會第10、11屆 議員",
+   "中國國民黨第22屆全國黨代表",
+   "立法委員 王育敏嘉義辦公室主任",
+   "嘉義市幼獅童軍教育基金會董事長",
+   "嘉義縣青年創業協會 理事長",
+   "嘉義市後備憲兵荷松協會常務理事",
+   "嘉義市新南派出所警友站 站長",
+   "蘭潭國小家長會長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "57年1月2日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "中國國民黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|郭文居|14": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "郭文居",
+  "ballotNumber": 14,
+  "nameAsPrinted": "郭文居",
+  "platform": "1. 活化軍輝橋下空間\n2. 振興商圈、打造東區觀光生活圈\n3. 改善忠孝北街交通與生活機能\n4. 活化閒置校舍、成立樂齡學院\n5. 建立安心校園\n6. 家庭教育走入社區\n7. 打造嘉義城市品牌\n8. 推動全民競技運動\n9. 活化室內運動空間\n10. 建置身障國民運動中心",
+  "platformFormat": "text",
+  "education": [
+   "私立輔仁大學體育系畢",
+   "國立中正大學戰略暨國際事務研究所",
+   "戰略暨國家安全碩士在職專班"
+  ],
+  "experience": [
+   "嘉義市第八屆長竹里里長",
+   "統一獅職業棒球隊投手",
+   "小鷹棒球俱樂部總教練",
+   "嘉義市長竹社區發展協會里事長",
+   "嘉義市東區第九屆市議員"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "66年10月20日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義縣",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|何苡睿|15": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "何苡睿",
+  "ballotNumber": 15,
+  "nameAsPrinted": "何苡睿",
+  "platform": "一、城市安全與風險預防\n1. 推動智慧型住宅火災警報器補助及老舊住宅電線安全健檢，改善老屋與社區公共安全。\n2.  導入長者智慧照護設備，延長長者自主生活能力。\n3.  建設救護車到院前交管機制，強化醫療救護生命線。\n4.  增加消防預算，維持消防相關基礎設施正常運作。\n二、青年發展與在地創業\n1.  增加青年創業店面租金補助，降低創業初期成本。\n2.  建立青年創業育成平台，結合嘉義大學及地方產業資源，提供創業輔導、品牌行銷與市場媒合。\n3.  推動農業創新及「六級產業發展」，協助返鄉青年運用科技、品牌與數位行銷提升農業附加價值，\n增加在地就業與創業機會。\n三、友善共融與社區支持\n1.  整合從家庭、社區到校園的反霸凌專業支持網及事件後心理輔導機制。\n2.  推動親子友善店家與公共空間，改善家庭使用城市設施的便利性。\n3.  結合市場、廟宇、社區及鄰里組織，建立具在地特色的社區互助網絡。\n4.  設立校園性暴力追蹤機制，避免「狼師」重入教育產業。\n四、專業問政與行政效率\n1.  落實議會監督、預算審查與制度改革，盤點低度使用公共設施並提升使用效益。\n2.  持續關注公共安全、青年發展、社會福利、城市建設及行政效率。\n3.  推動資訊公開、跨局處協調與政策執行追蹤，使公共資源配置更符合市民實際需求。",
+  "platformFormat": "text",
+  "education": [
+   "嘉南藥理科技大學醫藥化學系"
+  ],
+  "experience": [
+   "台南市唐儀靜議員助理",
+   "新北市板橋區張宏陸立法委員助理",
+   "嘉義市王浩議員辦公室主任"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "67年6月23日",
+  "gender": "女",
+  "birthPlace": "臺灣省雲林縣",
+  "partyAsPrinted": "台聯黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第1選舉區|林昱孜|16": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第1選舉區",
+  "name": "林昱孜",
+  "ballotNumber": 16,
+  "nameAsPrinted": "林昱孜",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "前鎮高中",
+   "輔英科技大學護理系"
+  ],
+  "experience": [
+   "台北醫學附設醫院急診室、開刀房護理師",
+   "雙和醫院心導管室護理師",
+   "王安祥、張啓楷立法委員團隊副主任",
+   "百合扶輪社社長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "79年12月10日",
+  "gender": "女",
+  "birthPlace": "高雄市",
+  "partyAsPrinted": "台灣民眾黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/2c83bb46-bee1-4de2-a808-ea4544eca0fe.pdf",
+  "sourceFileName": "第1選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|黃政融|1": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "黃政融",
+  "ballotNumber": 1,
+  "nameAsPrinted": "黃政融",
+  "platform": "【顧長者】擴大敬老卡使用範圍。\n【挺中壯】減輕三明治世代負擔，完善職涯與照護支援。\n【培青年】挺青年在地扎根，活絡地方創生。\n【愛幼兒】爭取普設公托場所，育兒免煩惱。\n【拚交通】堅決爭取高鐵聯外軌道，打通嘉義命脈。",
+  "platformFormat": "text",
+  "education": [
+   "日本亞細亞大學經營學碩士",
+   "昆士蘭科技大學學士",
+   "嘉義市私立輔仁中學",
+   "嘉義市蘭潭國民小學"
+  ],
+  "experience": [
+   "鑫國榮興業股份有限公司董事長特助"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "81年1月7日",
+  "gender": "男",
+  "birthPlace": "臺北市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|陳嘉弘|2": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "陳嘉弘",
+  "ballotNumber": 2,
+  "nameAsPrinted": "陳嘉弘",
+  "platform": "1、主張嘉義市編列經費補助65歲以上老人免費裝全口假牙。\n2、要求市府做好路平，保障市民行車安全。\n3、督促市府加強與鄰近縣市觀光資源結合，提高觀光產業，建構對外交通網路，打造嘉義市\n為雲嘉南觀光休閒旅遊中心。\n4、落實日照與長照政策，協助修法改善老人及弱勢族群安養問題。\n5、督促市府重視學生受教育權及教師尊嚴與福利權益。\n6、放寬青年創業補助門檻，強化國際交流，吸引青年回嘉創業。\n7、爭取經費照顧身障團體及清寒家庭。\n8、增加重點體育學校經費，培植優秀體育選手。\n9、鼓勵新婚生育、提高補助及優化育兒環境。",
+  "platformFormat": "text",
+  "education": [
+   "嘉義大學自然科教育學系",
+   "嘉義高中",
+   "輔仁中學",
+   "大同國小"
+  ],
+  "experience": [
+   "大同國小教師",
+   "大同國小合作社經理",
+   "大同國小生教組長",
+   "大同國小幼童軍團長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "68年11月23日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|鄭光宏|3": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "鄭光宏",
+  "ballotNumber": 3,
+  "nameAsPrinted": "鄭光宏",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "東海大學政治研究所（地方政治組）",
+   "輔仁大學歷史學系",
+   "嘉華高中",
+   "輔仁中學",
+   "大同國小"
+  ],
+  "experience": [
+   "嘉義市議員（第十一、十、九屆）",
+   "嘉義市體育會籃球委員會主任委員",
+   "嘉義市商業會顧問",
+   "嘉義市婦女會顧問",
+   "嘉義市不動產公會顧問",
+   "啟思民本基金會董事",
+   "中國時報記者"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "68年2月11日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "中國國民黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|林煒軒|4": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "林煒軒",
+  "ballotNumber": 4,
+  "nameAsPrinted": "林煒軒",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "淡江大學歷史學系",
+   "嘉義高工",
+   "北興國中",
+   "崇文國小"
+  ],
+  "experience": [
+   "嘉義市第11屆議員",
+   "民進黨嘉義市議會黨團總召",
+   "民進黨全國黨代表",
+   "立法委員助理",
+   "嘉義市小英之友會青年後援會會長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "85年6月10日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "民主進步黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|張秀華|5": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "張秀華",
+  "ballotNumber": 5,
+  "nameAsPrinted": "張秀華",
+  "platform": "1. 監督市政府施政品質與執行進度\n2. 加速推動北港路區段徵收\n3. 監督汙水下水道施工，打造親水城市\n4. 中央排水溝整治工作，提升市民生活品質\n5. 爭取嘉義高鐵站聯外軌道系統，提升交通便利性\n6. 提升公園環境品質，建設特色共融式遊具，打造全齡共享公園\n7. 爭取婦女福利政策，廣設公共托育，提升育嬰津貼\n8. 監督社會住宅設立，實現居住正義\n9. 爭取身心障礙者福利、老人福利，並全面優化愛心/敬老卡使用範圍\n10. 監督國中小營養午餐食材品質\n11. 督促設立總圖書館，推廣閱讀風氣\n12. 督促嘉義市政府加速活化公36\n13. 發展觀光產業，促進經濟發展並鼓勵青年返鄉就業\n14. 65歲以上長者免繳健保費\n15. 闢建羽球、桌球館\n16. 開闢文化公園地下停車場",
+  "platformFormat": "text",
+  "education": [
+   "國立台灣體育大學運動管理學系碩士",
+   "國立中正大學管理學院 EMBA 碩士"
+  ],
+  "experience": [
+   "市議會第六至十一屆議員",
+   "市議會黨團書記長",
+   "國際獅子會 300E-1 區 2019～2020 年度總監",
+   "警察志工中隊長",
+   "鳳凰志工、商業會、工業會、家扶基金會、不動產",
+   "開發公會、張廖簡宗親會、奉天宮、龍安宮、伏龍宮、",
+   "白蓮宮、世明慈惠堂、佛光會嘉太分會等顧問",
+   "中正大學 EMBA 校友會理事長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "46年9月26日",
+  "gender": "女",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "中國國民黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|李明燦|6": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "李明燦",
+  "ballotNumber": 6,
+  "nameAsPrinted": "李明燦",
+  "platform": "1.「嘉義書都」計畫協助在嘉義市成立至少4家獨立書店。\n2.「嘉義科技論壇」設立，促進在地就業，儲備嘉義人才庫。\n3.「城市義肺MAL」讓市民找回健康。\n4. 推動無菸害城市，推動校園管理周邊，人潮密集步行空間無菸熱區管理。\n5. 推廣「嘉義希望等候室」，以24小時心靈陪伴關懷不間斷。\n6. 推廣「嘉義上好店」讓嘉義實體小商店合作成立聯盟，公開透明媒合企業ESG及CSR資源。\n7. 推動大體捐獻研究與生命教育，本人已簽署捐予成功大學。\n8. 推動成立諾貝爾獎人才培育基金會，致力於人體疾病成因與跨領域科學研究。如本人疾病\n原始所示。\n9. 官網：https://www.chiayi2026.com\n10. 立志得三座諾貝爾獎。",
+  "platformFormat": "text",
+  "education": [
+   "清大電機系碩士",
+   "成大電機系學士",
+   "嘉義高中",
+   "水上國中",
+   "水上國小"
+  ],
+  "experience": [
+   "台灣美國中國25年半導體電子業聯電集團處長",
+   "疾病原始及心理原始作者",
+   "唐恩書店及台灣模型車博物館創辦人",
+   "台灣獨立書店文化協會監事",
+   "嘉義北回培英文教協會理事",
+   "水上國中校友會理事",
+   "成大電機系博士肄業"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "60年7月7日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義縣",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 1,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|黃思婷|7": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "黃思婷",
+  "ballotNumber": 7,
+  "nameAsPrinted": "黃思婷",
+  "platform": "思政全面  挺女子的\n1. 持續爭取及捍衛基層醫療同仁權益。\n2. 爭取提高設置公共托嬰中心，減輕家長負擔，並要求落實設置數位監視系統上傳監管雲。\n3. 持續關注動保議題，爭取毛孩結紮及疫苗注射補助。\n4. 持續爭取社會住宅，落實居住正義提高居住品質。\n5. 爭取提升身心障礙者相關福利，落實監督職場公平原則。\n6. 因應極端氣候，持續要求增設公園遮蔭。\n7. 通盤檢討相關育兒補助及政策並優化。\n8. 因應老年人口不斷攀升，優化培訓橘世代長者就業相關服務及各項健康促進。",
+  "platformFormat": "text",
+  "education": [
+   "台北醫學大學生技研究所",
+   "長庚大學護理系"
+  ],
+  "experience": [
+   "第十一屆嘉義市議員",
+   "第十屆嘉義市議員",
+   "長庚醫院護理師",
+   "嘉義基督教醫院護理師"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "76年12月30日",
+  "gender": "女",
+  "birthPlace": "新北市",
+  "partyAsPrinted": "中國國民黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|王浩|8": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "王浩",
+  "ballotNumber": 8,
+  "nameAsPrinted": "王    浩",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "國立臺灣大學新聞研究所碩士",
+   "國立臺灣大學農業化學系學士"
+  ],
+  "experience": [
+   "第65屆僑平國小家長會榮譽顧問",
+   "第15屆嘉義市獸醫師公會顧問",
+   "嘉義市警局民防八掌分隊榮譽顧問",
+   "救國團嘉義市西區團委會顧問",
+   "玉山青商公關行善主委",
+   "第12屆嘉嘉市臺大校友會監事",
+   "嘉義市放射師公會顧問",
+   "地方法院勞動調解委員"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "79年3月13日",
+  "gender": "男",
+  "birthPlace": "美國",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|李忠曆|9": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "李忠曆",
+  "ballotNumber": 9,
+  "nameAsPrinted": "李忠曆",
+  "platform": "一、忠實反映民意，嚴格監督市政。\n傾聽市民的聲音，落實基層服務，監督市政建設與預算執行，讓市民的需求獲得重視。\n二、發展觀光產業，創造在地商機。\n串聯木都、美食與特色商圈，推動深度旅遊及城市行銷，支持青年創業與在地店家，打造嘉義觀\n光新亮點。\n三、打造全齡共享，落實社會福利政策。\n關懷兒少、青年、婦女、身心障礙者及長輩需求，督促育兒、就業、居住、醫療、長照與社會福\n利政策落實，打造全齡共享、宜居幸福的嘉義市。\n四、推動城市建設，完善交通環境。\n因應全球極端氣候、強降雨機率倍增，將督促市府全面檢討市區雨水下水道系統，解決低窪地區\n排水問題，提高防洪標準，杜絕水患。\n五、守護校園安全，提升教育品質。\n爭取多元教育資源，支持體育、音樂、藝術與科技教育，為每個孩子創造展現自信的舞台。",
+  "platformFormat": "text",
+  "education": [
+   "垂楊國小、大業國中、嘉義高工",
+   "吳鳳科技大學附設專科進修學校（二年制）",
+   "國立中正大學高階主管管理碩士"
+  ],
+  "experience": [
+   "嘉義市第八、九、十、十一屆市議員",
+   "上井加油站負責人",
+   "曆基土木包工業負責人",
+   "嘉義縣加油站公會理事",
+   "湖內義消分隊副團長",
+   "垂楊國小家長會顧問",
+   "大業國中校友會理事",
+   "嘉義市棒委會主委"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "54年5月30日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|陳致愷|10": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "陳致愷",
+  "ballotNumber": 10,
+  "nameAsPrinted": "陳致愷",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "白河國小",
+   "白河國中",
+   "興國中學",
+   "新榮中學",
+   "後壁高中",
+   "崑山中學",
+   "實踐大學國際貿易學系畢業"
+  ],
+  "experience": [
+   "嘉義大學土木與水資源學系肄業",
+   "焦點時報社副社長兼總編輯",
+   "台灣好新聞雲嘉地方中心特派員",
+   "嘉義市新聞記者公會常務理事",
+   "嘉義市新聞記者公會總幹事",
+   "大臺南新聞記者公會理事"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "70年11月13日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|魏志軒|11": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "魏志軒",
+  "ballotNumber": 11,
+  "nameAsPrinted": "魏志軒",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "國立嘉義大學管理學碩士"
+  ],
+  "experience": [
+   "佑銓生技有限公司（負責人）",
+   "嘉義市玉山國中家長會會長",
+   "韓國瑜戰旗隊（隊長）"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "64年1月2日",
+  "gender": "男",
+  "birthPlace": "臺南市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": false
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|陳姿妏|12": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "陳姿妏",
+  "ballotNumber": 12,
+  "nameAsPrinted": "陳姿妏",
+  "platform": "監督市政　傾聽民意　一人當選　二人服務",
+  "platformFormat": "text",
+  "education": [
+   "國立嘉義大學體育與健康休閒學系碩士"
+  ],
+  "experience": [
+   "第9、10屆嘉義市西區市議員",
+   "第11屆嘉義市議長",
+   "第7-9屆嘉義市義勇消防總隊隊長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "51年8月19日",
+  "gender": "女",
+  "birthPlace": "臺中市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": false
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": false
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 2,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|蔡坤叡|13": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "蔡坤叡",
+  "ballotNumber": 13,
+  "nameAsPrinted": "蔡坤叡",
+  "platform": "校園安全：\n校園霸凌、暴力通報零時差\n校園反毒守門員，各式毒品遠離校園警調\n機關建立良好橫向溝通！\n基層運動：\n推動各式單項運動發展！\n優化各舊有場地並找尋市府閒置土地，增加新興單項運動的活動空間！\n市政監督：\n後火車站地區自辦都更運動！\n人行道改善工程、污水下水道接管工程、總圖書館設計...等等",
+  "platformFormat": "text",
+  "education": [
+   "嘉義市立崇文國小",
+   "嘉義市立北興國中",
+   "嘉義市私立輔仁高級中學",
+   "大葉大學人力資源暨公共關係學士"
+  ],
+  "experience": [
+   "朋百溝通國際股份有限公司",
+   "蔡榮豐市議員服務處主任",
+   "國際同濟會澎嘉南區新力量會第四屆會長",
+   "嘉義市議員第11屆市議員"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "75年2月28日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|黃敏修|14": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "黃敏修",
+  "ballotNumber": 14,
+  "nameAsPrinted": "黃敏修",
+  "platform": "1. 65歲以上健保費自付額由公費負擔。\n2. 督促興建朴子溪沿岸堤防工程，解決北新里、北湖里、下埤里、竹村里淹水問題。\n3. 還地於民：全面檢討都市計畫，解編不再使用的公共設施保留地。\n4. 協助公共工程計劃提案，爭取中央補助。\n5. 加速社會住宅興建時程及擴大規模。\n6. 提高焚化爐周邊環境回饋金。\n7. 催生提案紅瓦里、大溪里、北新里生活圈計劃。\n8. 催生嘉義市攤商管理自治條例。\n9. 信義路納入都市計畫道路，解決指定建築線的問題。\n10. 提案修改嘉義市自治條例，補助、獎勵停車場之設置，增設立體停車場。\n11. 協助農耕機械化：解決大溪里農地，無人機噴灌化肥之航高限制。\n12. 成立鐵路高架化橋下空間，活化、使用、促進暨監督委員會。",
+  "platformFormat": "text",
+  "education": [
+   "中原大學土木系",
+   "嘉義大學土木與水資源工程研究所"
+  ],
+  "experience": [
+   "土木技師高考及格",
+   "中華民國土木技師公會全國聯合會常務理事",
+   "行政院公共工程委員會評選採購專家學者",
+   "王美惠立委辦公室首席顧問",
+   "台灣營建仲裁協會仲裁人",
+   "嘉義市政府市政顧問",
+   "嘉義縣政府縣政顧問",
+   "嘉義市政府都市計畫委員",
+   "嘉邑行善團常務理事"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "56年12月2日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義縣",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|曾奕豪|15": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "曾奕豪",
+  "ballotNumber": 15,
+  "nameAsPrinted": "曾奕豪",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "東海大學政治研究所碩士",
+   "東海大學社會系學士",
+   "嘉義市私立輔仁高級中學",
+   "嘉義市立民生國民中學",
+   "嘉義市立大同國民小學"
+  ],
+  "experience": [
+   "立法委員蔡其昌國會辦公室特別助理",
+   "台中市議員施志昌服務處特別助理",
+   "2020蔡英文臺中競總青年軍副發言人",
+   "資策會社會與科技政策溝通平台專案助理"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "85年5月7日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "民主進步黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|孫貫志|16": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "孫貫志",
+  "ballotNumber": 16,
+  "nameAsPrinted": "孫貫志",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "長榮大學土地管理與開發學系研究所碩士"
+  ],
+  "experience": [
+   "嘉義市西區議員",
+   "嘉義市體育會榮譽理事長",
+   "嘉義市體育會青少年體",
+   "育委員會主委",
+   "台灣體育總會副總會長",
+   "全國縣市體育會聯合總",
+   "會副總會長",
+   "嘉義市警友會常務監事",
+   "嘉義下路頭武當山玄天",
+   "上帝廟前主任委員",
+   "中山大學法律實務碩士班",
+   "國家專業多張證照考試",
+   "及格",
+   "振興醫學中心資產顧問",
+   "遠東機械工業公司執行",
+   "副總"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "layoutNotes": {
+   "exp": "此欄於公報中分左右兩欄排版，依左欄由上而下、再右欄由上而下排列"
+  },
+  "birthDateAsPrinted": "49年3月3日",
+  "gender": "男",
+  "birthPlace": "高雄市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|蔡坤達|17": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "蔡坤達",
+  "ballotNumber": 17,
+  "nameAsPrinted": "蔡坤達",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "博愛國小",
+   "興華高級中學（國中部）",
+   "興華高級中學（高中部）"
+  ],
+  "experience": [
+   "嘉義市西區慶安社區發展協會第一屆理事長",
+   "嘉義市西區慶安社區發展協會第二屆理事長",
+   "嘉義市113年好人好事代表"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "65年2月17日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|黃大祐|18": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "黃大祐",
+  "ballotNumber": 18,
+  "nameAsPrinted": "黃大祐",
+  "platform": "嘉義前進力　大祐新主張\n1. 各里成立老人日照中心\n隨著國人健康餘命越來越長，老人的照護與照顧成為必然所需，大祐主張以里為單位，在各里里民活動中心，成立老人日照中心，以減輕年輕人照顧長輩的\n負擔與生活壓力，不用煩惱家中長輩無人照顧。\n2. 增設小黃公車-銀髮共乘平台，優化長輩外出時的道路安全\n高齡者外出多因為第一哩路或是最後100公尺對他造成困難，沒有辦法方便地接觸大眾運輸，多半用機車或電動車代步，往往造成交通安全上的隱憂。大\n祐主張，將計程車、小型車輛與公共運輸整合，設立「小黃公車-銀髮共乘平台」，透過電話、line預約，減少長輩自己騎車，降低高齡者事故，打造全齡共享\n的交通環境。\n3. 爭取增設私立幼兒園公共化\n當社會經濟發展愈成熟，物價消費、生養小孩的費用也隨之提高，直接或間接導致台灣新生兒人數降低，這不僅是經濟危機，更是國安危機。為減輕年輕夫\n妻的經濟負擔，大祐將推動協助私立幼兒園公共化，並爭取提高低收入戶與身心障礙家庭的教育補助。\n4. 爭取家戶廚餘機補助\n過去，廚餘可以透過養豬再利用，但從非洲豬瘟防疫到全面禁止廚餘養豬，北市鼠患爆發的社會安全事件來看，廚餘的去化方式已經成為城市必須面對的\n新課題。嘉義市目前每日約產生20公噸廚餘，政府除了持續完善廚餘再利用設施，更應該把處理的第一道防線往家庭端前移。因此，大祐主張爭取編列「家\n戶廚餘機補助」，鼓勵市民將廚餘在家中就地減量、乾燥或資源化。\n5. 推廣在地食物銀行計畫\n為減少食物浪費，珍惜食物，同時又能兼具照顧弱勢，建議由市府輔導成立東、西區食物銀行各一座，向廠商募集愛心食物、即期商品與生活用品，透過里辦\n公室協力，將社會多餘的資源，有效分送給弱勢家庭、街友等，以解決生活弱勢者短期膳食、生活需求，以健全本市的社會福利制度。\n6. 建立「嘉義交通安全通報平台」，滾動檢討交通措施\n交通安全不能只靠一次性的工程、宣導或取締，應該隨著事故數據與市民需求持續調整。大祐主張交通安全要滾動檢討，要求市府建立「嘉義交通安全通報\n平台」，讓市民參與，每季檢視事故數據、民眾陳情及道路使用情形。事故在哪裡，就優先改善哪裡。",
+  "platformFormat": "text",
+  "education": [
+   "美國奧克拉荷馬州立中央大學教育碩士",
+   "私立大同商專二專部",
+   "省立嘉義高級商業職業學校",
+   "北興國中",
+   "博愛國小"
+  ],
+  "experience": [
+   "1. 嘉義市第10/11屆市議員",
+   "2. 民進黨嘉義市黨部第16/17/20/21屆主任委員",
+   "3. 嘉義扶輪社第70屆社長",
+   "4. 嘉義市雲林同鄉會第十屆理事長",
+   "5. 嘉義市青年回嘉協會執行長",
+   "6. 博愛國小98學年度家長會長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "59年6月9日",
+  "gender": "男",
+  "birthPlace": "臺灣省嘉義市",
+  "partyAsPrinted": "民主進步黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 3,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|林詩涵|19": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "林詩涵",
+  "ballotNumber": 19,
+  "nameAsPrinted": "林詩涵",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "暨南國際大學社會政策與社會工作學系"
+  ],
+  "experience": [
+   "小民參政歐巴桑聯盟黨召集人",
+   "台灣圖書室文化協會常務理事",
+   "翻轉嘉義工作隊共同創辦人",
+   "島呼冊店共同創辦人",
+   "南華大學兼任講師",
+   "嘉義高中兼任講師",
+   "嘉義市第一和第二屆青年事務委員",
+   "嘉義彩虹生活節活動總統籌"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "70年11月1日",
+  "gender": "女",
+  "birthPlace": "臺中市",
+  "partyAsPrinted": "小民參政歐巴桑聯盟",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 4,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|林子淨|20": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "林子淨",
+  "ballotNumber": 20,
+  "nameAsPrinted": "林子淨",
+  "platform": null,
+  "platformFormat": "image",
+  "platformNote": "政見於公報中以圖片刊印，未擷取文字（OCR 品質不足，不發布）；請見公報原檔",
+  "education": [
+   "國立臺中科技大學副學士資訊管理科"
+  ],
+  "experience": [
+   "嘉義市議會第11屆議員蘇澤峰服務處秘書",
+   "嘉義市議會第10屆副議長蘇澤峰服務處秘書",
+   "嘉義市議會第09屆議員蘇澤峰服務處秘書"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "77年11月30日",
+  "gender": "女",
+  "birthPlace": "臺中市",
+  "partyAsPrinted": "無",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": true
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 4,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ },
+ "嘉義市|councilor-county|第2選舉區|陳品蓁|21": {
+  "county": "嘉義市",
+  "position": "councilor-county",
+  "district": "第2選舉區",
+  "name": "陳品蓁",
+  "ballotNumber": 21,
+  "nameAsPrinted": "陳品蓁",
+  "platform": "1. 推動警察、消防弟兄勤務合理化，加強裝備，爭取福利，落實治安交通，保障市民生命財\n產安全。\n2. 老人福利、經濟救助老人共餐，增設關懷據點。\n3. 關心勞工、失業及權益，提供青壯老年者不同的就業需求，提升再就業技能。\n4. 增加身心障礙者弱勢族群的就業機會及津貼。\n5. 關心認真，服務第一，重視市民服務，監督市政為民喉舌造福鄉里。\n6. 推動各里設置優質長照據點，每里均應有C級長照點及老人食堂，照顧並陪伴里內長者，\n讓銀髮族的退休生活更加充實。\n7. 推動增建社會住宅，讓年輕人或收入一般的鄉親也可以輕鬆租屋和購屋，真正落實居住正\n義，提升居住品質。\n8. 寵物公園，爭取改建「毛孩子大玩嘉」寵物野放公園，遛狗溜貓好嗨森。\n9. 監督都更，敦促鐵路高架化，都更計畫執行到位。\n10.推動防災治水政策，建置「災害熱區管理系統」找出問題，有效解決，增建「水撲滿」以\n提升都市蓄排水效能，建構綠色環保永續城市。",
+  "platformFormat": "text",
+  "education": [
+   "圓崇國小",
+   "竹崎國中",
+   "宏仁女中高中部"
+  ],
+  "experience": [
+   "嘉義大學企業管理",
+   "小英之友會會長",
+   "信賴後援會顧問",
+   "嘉義市黨部執評委員",
+   "中華民國全國道教總會理事",
+   "嘉義市道教會副理事長",
+   "頭港里何庄發展協會顧問",
+   "嘉義市道清慈善會理事長",
+   "嘉義市道光慈善會副理事長"
+  ],
+  "listNote": "education/experience 每個元素為公報上印出的一行；較長的項目可能折成兩行",
+  "birthDateAsPrinted": "52年4月1日",
+  "gender": "女",
+  "birthPlace": "臺灣省嘉義縣",
+  "partyAsPrinted": "民主進步黨",
+  "declarationsAsPrinted": [
+   {
+    "text": "候選人聲明確未在大陸地區設有戶籍（含大陸地區居民身分證及定居證）或領用大陸地區護照",
+    "checked": true
+   },
+   {
+    "text": "申請人聲明確不具中華民國以外國家國籍",
+    "checked": false
+   }
+  ],
+  "criminalRecordAsPrinted": null,
+  "criminalRecordSectionInBulletin": false,
+  "age": null,
+  "ageNote": "公報未印年齡（僅印出生年月日）",
+  "sourceUrl": "https://web.cec.gov.tw/api/file/3ff09b11-e53f-4cc9-9a50-feac32cf334a.pdf",
+  "sourceFileName": "第2選舉區",
+  "sourcePage": 4,
+  "sourceArticleUrl": "https://web.cec.gov.tw/cyec/article/65776",
+  "asOf": "2026-11-12",
+  "retrieved": "2026-11-15",
+  "ocr": false,
+  "extraction": "pdf-text-layer"
+ }
+}
