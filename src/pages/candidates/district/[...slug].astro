@@ -124,13 +124,14 @@ const positionName = position?.name || positionId;
 const shortName = position?.shortName || positionName;
 
 function getStatusBadge(status: string, registeredOn?: string): { label: string; class: string } {
+  const neutralClass = 'border border-neutral-300 bg-neutral-100 text-neutral-600';
   if (status.includes('公告候選人')) {
-    return { label: '已公告', class: 'bg-green-100 text-green-700' };
+    return { label: '已公告', class: neutralClass };
   } else if (status.includes('已抽籤')) {
-    return { label: '已抽籤', class: 'bg-blue-100 text-blue-700' };
+    return { label: '已抽籤', class: neutralClass };
   } else {
     const dateLabel = registeredOn ? `（${registeredOn.replace(/^\d{4}-/, '').replace('-', '/')}）` : '';
-    return { label: `已登記${dateLabel}`, class: 'bg-amber-100 text-amber-700' };
+    return { label: `已登記${dateLabel}`, class: neutralClass };
   }
 }
 
@@ -209,6 +210,13 @@ const councilDistrictsForCity = scope === 'city-councilor-index'
 const uniqueVillages = isVillageChief && scope === 'village'
   ? [...new Set(candidatesForPage.map(c => c.district))].sort((a, b) => a.localeCompare(b, 'zh-TW'))
   : [];
+
+const latestAsOf = hasCandidates 
+  ? candidatesForPage.reduce((latest, c) => {
+      if (c.asOf && (!latest || c.asOf > latest)) return c.asOf;
+      return latest;
+    }, '')
+  : '';
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -237,13 +245,11 @@ const uniqueVillages = isVillageChief && scope === 'village'
       )}
     </header>
 
-    {/* Data Source Banner */}
+    {/* Data Disclaimer Banner */}
     {hasCandidates && (
-      <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-        <p class="text-blue-800 text-sm">
-          <strong>📋 資料來源：</strong>中選會及各縣市選委會官方公告。
-          每筆資料皆附<a href="#sources" class="underline">來源連結</a>。
-          <span class="text-blue-600">更新日期：2026-11-15</span>
+      <div class="p-4 bg-neutral-100 border border-neutral-300 rounded-lg">
+        <p class="text-neutral-700 text-sm">
+          正式候選人名單以 11/17 中選會公告為準，本頁資料截至 {latestAsOf || '2026-11-15'}。
         </p>
       </div>
     )}
