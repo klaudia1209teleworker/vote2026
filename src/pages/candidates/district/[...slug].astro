@@ -217,6 +217,11 @@ const latestAsOf = hasCandidates
       return latest;
     }, '')
   : '';
+
+const pageUrl = `https://klaudia1209teleworker.github.io/vote2026/candidates/district/${slug}/`;
+const reportSubject = encodeURIComponent(`[勘誤] ${pageTitle}`);
+const reportBody = encodeURIComponent(`頁面網址：${pageUrl}\n\n哪裡有錯：\n\n正確內容：\n\n官方來源連結：\n`);
+const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${reportSubject}&body=${reportBody}`;
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -460,6 +465,17 @@ const latestAsOf = hasCandidates
         </p>
       </section>
     )}
+
+    {/* Report Error */}
+    <section class="flex flex-wrap items-center gap-3">
+      <a 
+        href={reportMailto}
+        class="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 border border-neutral-300 text-neutral-600 rounded-lg hover:bg-neutral-200 transition-colors text-sm"
+      >
+        ✉️ 回報資料錯誤
+      </a>
+      <span class="text-xs text-neutral-500">我們會以官方資料核對後修正</span>
+    </section>
 
     {/* Voting Tips */}
     <section class="p-6 bg-blue-50 border border-blue-200 rounded-xl">

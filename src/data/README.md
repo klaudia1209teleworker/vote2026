@@ -31,6 +31,46 @@
 - **來源**：中選會公告、選罷法
 - **用途**：首頁選票查詢結果的生成邏輯
 
+### `bulletin.json`
+**選舉公報資料**，包含政見、學歷、經歷等選舉公報刊載內容。
+
+- **最近更新**：2026-11-15
+- **涵蓋範圍**：嘉義市（市長 5 人、議員 37 人）
+- **資料格式**：以 `縣市|position|選區|姓名|號次` 為 key 的物件
+- **用途**：候選人詳細頁面顯示選舉公報內容
+- **政見格式**：
+  - `platformFormat: "text"`：純文字政見，以 `whitespace-pre-wrap` 保留原始排版
+  - `platformFormat: "image"`：圖片政見，對應 `/public/bulletin-pages/` 下的 WebP 圖檔
+
+**新增縣市時**：
+1. 從選委會下載選舉公報 PDF
+2. 解析候選人資料，依照現有 key 格式加入 `bulletin.json`
+3. 若有 `platformFormat: "image"` 的候選人，將 PDF 頁面轉為 WebP 並放入 `/public/bulletin-pages/`
+4. 圖檔命名規則：`{PDF UUID 前 8 碼}-p{頁數}.webp`
+
+### `incumbents.json`
+**現任議員資料**，包含任職狀態、質詢紀錄等。
+
+- **最近更新**：2026-11-15
+- **涵蓋範圍**：621 位比對為現任的議員候選人（跨 21 個議會）
+- **資料格式**：以 `縣市|position|選區|姓名|號次` 為 key 的物件
+- **用途**：候選人詳細頁面顯示「現任議員」標籤及「現任表現」區塊
+
+**發布規則**：
+- 僅顯示 `incumbency.publish: true` 的紀錄
+- `needsReview` 紀錄不顯示（異體字、選區編號位移等需人工確認）
+
+**質詢資料類型**（依各議會不同）：
+- 臺北市：書面質詢（gaz.tcc.gov.tw 公報系統）
+- 高雄市：市政總質詢排定時段（cissearch.kcc.gov.tw）
+- 臺中市：質詢影音紀錄（vod.tccc.gov.tw）
+- 新竹縣：定期會質詢資料 PDF（hcc.gov.tw）
+
+**出席率與提案**：
+- 顯示「議會未公開可統計資料」或「尚未整理」
+- 依 `attendance.reason` 和 `proposals.reason` 欄位判斷
+- 本站不計算或估算任何數據
+
 ### `positions.json`
 九種職位的詳細說明：職責、待遇、權限、評估標準等。
 
