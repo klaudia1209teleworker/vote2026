@@ -5,110 +5,79 @@ import BallotLookup from '../components/BallotLookup.astro';
 const baseUrl = import.meta.env.BASE_URL;
 ---
 
-<Layout title="首頁 - 我會拿到哪幾張票">
-  <div class="space-y-8">
-    <!-- Hero -->
-    <section class="text-center py-8 px-4 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl">
-      <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-4 text-balance">
-        2026 九合一地方選舉
+<Layout title="查詢選票">
+  <div class="space-y-6">
+    <!-- Election Header - specific, not generic -->
+    <header class="border-b border-neutral-200 pb-4">
+      <p class="text-sm text-neutral-500 mb-1">2026 年 11 月 28 日（六）08:00–16:00</p>
+      <h1 class="text-xl font-semibold text-neutral-800">
+        九合一地方公職人員選舉暨全國性公民投票
       </h1>
-      <p class="text-lg text-neutral-600 mb-2">
-        投票日：<strong class="text-primary-700">2026 年 11 月 28 日（六）</strong>
+      <p class="text-sm text-neutral-600 mt-1">
+        含公投第 22 案（18-19 歲僅投公投）
       </p>
-      <p class="text-neutral-500">
-        上午 8:00 至下午 4:00
-      </p>
-      <div class="mt-6 flex flex-wrap justify-center gap-3 text-sm">
-        <span class="px-3 py-1 bg-white rounded-full text-neutral-600 shadow-sm">同日公投第 22 案</span>
-        <span class="px-3 py-1 bg-white rounded-full text-neutral-600 shadow-sm">18-19 歲可投公投</span>
-      </div>
+    </header>
+
+    <!-- Ballot Lookup - the main feature -->
+    <BallotLookup />
+
+    <!-- Notices -->
+    <section class="text-sm space-y-2 text-neutral-600 border-t border-neutral-200 pt-4">
+      <p>投票所查詢 11/23 起開放：<a href="https://www.ris.gov.tw/info-electionVotePlaceQuery/app/aw0702VPQ/main/" target="_blank" rel="noopener" class="text-accent-600 underline">戶政司查詢系統</a></p>
+      <p>選舉公報預計 11/25 前送達各戶</p>
+      <p>民調禁令：11/18 起至投票結束，不得發布選舉民調</p>
+      <p>禁止攜帶手機進入圈票處拍照（選罷法 §65）</p>
     </section>
 
-    <!-- Ballot Lookup -->
-    <section>
-      <BallotLookup />
-    </section>
-
-    <!-- Video Explainer -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-2">🎬 選舉制度解說</h2>
-      <p class="text-sm text-neutral-600 mb-4">
-        本站職務說明參考自讀字生活頻道，完整影片深入介紹各職務的職責與權限。
-      </p>
-      <div class="relative w-full aspect-video rounded-lg overflow-hidden bg-neutral-100">
-        <iframe 
-          src="https://www.youtube-nocookie.com/embed/f6VOJumCwIg"
-          title="讀字生活 Ep02 - 九合一選舉各職務介紹"
-          loading="lazy"
-          allowfullscreen
-          class="absolute inset-0 w-full h-full"
-        ></iframe>
-      </div>
-      <p class="text-xs text-neutral-500 mt-3">
-        影片來源：<a href="https://www.youtube.com/@duzishenghuo" target="_blank" rel="noopener" class="text-primary-600 hover:underline">讀字生活</a> YouTube 頻道
-      </p>
-    </section>
-
-    <!-- Quick Links -->
-    <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <a href={`${baseUrl}positions/`} class="group block p-6 bg-white rounded-xl shadow-sm border border-neutral-200 hover:border-primary-300 hover:shadow-md transition-all">
-        <div class="text-2xl mb-3">📋</div>
-        <h2 class="text-lg font-semibold text-neutral-800 group-hover:text-primary-700 mb-2">職務介紹</h2>
-        <p class="text-sm text-neutral-600">了解市長、議員、里長等 9 種職務的職責與權限</p>
-      </a>
-      
-      <a href={`${baseUrl}how-to-judge/`} class="group block p-6 bg-white rounded-xl shadow-sm border border-neutral-200 hover:border-primary-300 hover:shadow-md transition-all">
-        <div class="text-2xl mb-3">🔍</div>
-        <h2 class="text-lg font-semibold text-neutral-800 group-hover:text-primary-700 mb-2">怎麼判斷候選人</h2>
-        <p class="text-sm text-neutral-600">學習如何查詢議員出席率、質詢紀錄，評估候選人</p>
-      </a>
-      
-      <a href={`${baseUrl}voting-day/`} class="group block p-6 bg-white rounded-xl shadow-sm border border-neutral-200 hover:border-primary-300 hover:shadow-md transition-all">
-        <div class="text-2xl mb-3">🗳️</div>
-        <h2 class="text-lg font-semibold text-neutral-800 group-hover:text-primary-700 mb-2">投票當天須知</h2>
-        <p class="text-sm text-neutral-600">攜帶證件、圈選方式、禁止事項等投票注意事項</p>
-      </a>
-      
-      <a href={`${baseUrl}cooperation/`} class="group block p-6 bg-white rounded-xl shadow-sm border border-neutral-200 hover:border-primary-300 hover:shadow-md transition-all">
-        <div class="text-2xl mb-3">🤝</div>
-        <h2 class="text-lg font-semibold text-neutral-800 group-hover:text-primary-700 mb-2">合作案例</h2>
-        <p class="text-sm text-neutral-600">透過萬華路燈案例，了解市長、議員、里長如何合作</p>
-      </a>
-      
-      <a href={`${baseUrl}candidates/`} class="group block p-6 bg-white rounded-xl shadow-sm border border-neutral-200 hover:border-primary-300 hover:shadow-md transition-all">
-        <div class="text-2xl mb-3">👤</div>
-        <h2 class="text-lg font-semibold text-neutral-800 group-hover:text-primary-700 mb-2">候選人資訊</h2>
-        <p class="text-sm text-neutral-600">查詢各選區候選人（正式名單 11/17 公告後更新）</p>
-      </a>
-      
-      <a href={`${baseUrl}about/`} class="group block p-6 bg-white rounded-xl shadow-sm border border-neutral-200 hover:border-primary-300 hover:shadow-md transition-all">
-        <div class="text-2xl mb-3">ℹ️</div>
-        <h2 class="text-lg font-semibold text-neutral-800 group-hover:text-primary-700 mb-2">關於本站</h2>
-        <p class="text-sm text-neutral-600">資料來源、免責聲明、更新紀錄</p>
-      </a>
-    </section>
-
-    <!-- Important Notice -->
-    <section class="p-6 bg-amber-50 border border-amber-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-amber-800 mb-3">📢 重要提醒</h2>
-      <ul class="space-y-2 text-sm text-amber-700">
-        <li class="flex items-start gap-2">
-          <span class="flex-shrink-0">•</span>
-          <span><strong>投票所查詢</strong>將於 11/23 起開放：<a href="https://www.ris.gov.tw/info-electionVotePlaceQuery/app/aw0702VPQ/main/" target="_blank" rel="noopener" class="underline hover:text-amber-900">戶政司查詢系統</a></span>
+    <!-- Secondary Links -->
+    <nav class="border-t border-neutral-200 pt-4">
+      <ul class="grid gap-px bg-neutral-200 sm:grid-cols-2 lg:grid-cols-4 rounded overflow-hidden">
+        <li>
+          <a href={`${baseUrl}positions/`} class="block bg-white px-4 py-3 hover:bg-neutral-50">
+            <span class="font-medium text-neutral-800">職務介紹</span>
+            <span class="block text-sm text-neutral-500 mt-0.5">市長、議員、里長等 9 種職務</span>
+          </a>
         </li>
-        <li class="flex items-start gap-2">
-          <span class="flex-shrink-0">•</span>
-          <span><strong>選舉公報</strong>預計 11/25 前送達各戶</span>
+        <li>
+          <a href={`${baseUrl}how-to-judge/`} class="block bg-white px-4 py-3 hover:bg-neutral-50">
+            <span class="font-medium text-neutral-800">判斷候選人</span>
+            <span class="block text-sm text-neutral-500 mt-0.5">查詢議員出席與質詢紀錄</span>
+          </a>
         </li>
-        <li class="flex items-start gap-2">
-          <span class="flex-shrink-0">•</span>
-          <span><strong>民調禁令</strong>：11/18 0 時起至投票結束，不得發布選舉民調</span>
+        <li>
+          <a href={`${baseUrl}voting-day/`} class="block bg-white px-4 py-3 hover:bg-neutral-50">
+            <span class="font-medium text-neutral-800">投票須知</span>
+            <span class="block text-sm text-neutral-500 mt-0.5">證件、圈選方式、禁止事項</span>
+          </a>
         </li>
-        <li class="flex items-start gap-2">
-          <span class="flex-shrink-0">•</span>
-          <span>投票時<strong>禁止攜帶手機進入圈票處拍照</strong>（選罷法 §65）</span>
+        <li>
+          <a href={`${baseUrl}candidates/`} class="block bg-white px-4 py-3 hover:bg-neutral-50">
+            <span class="font-medium text-neutral-800">候選人查詢</span>
+            <span class="block text-sm text-neutral-500 mt-0.5">正式名單 11/17 公告後更新</span>
+          </a>
         </li>
       </ul>
-    </section>
+    </nav>
+
+    <!-- Video - demoted, smaller -->
+    <details class="border border-neutral-200 rounded">
+      <summary class="px-4 py-3 cursor-pointer text-sm font-medium text-neutral-700 hover:bg-neutral-50 select-none">
+        選舉制度影片（讀字生活）
+      </summary>
+      <div class="p-4 pt-0">
+        <div class="relative w-full aspect-video bg-neutral-100 rounded overflow-hidden">
+          <iframe 
+            src="https://www.youtube-nocookie.com/embed/f6VOJumCwIg"
+            title="讀字生活 Ep02 - 九合一選舉各職務介紹"
+            loading="lazy"
+            allowfullscreen
+            class="absolute inset-0 w-full h-full"
+          ></iframe>
+        </div>
+        <p class="text-xs text-neutral-500 mt-2">
+          來源：<a href="https://www.youtube.com/@duzishenghuo" target="_blank" rel="noopener" class="underline">讀字生活</a> YouTube
+        </p>
+      </div>
+    </details>
   </div>
 </Layout>

@@ -177,119 +177,95 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 ---
 
 <Layout title={`${candidate.name} - ${positionName}候選人`} description={`${candidate.county}${candidate.district || ''} ${positionName}候選人 ${candidate.name}`}>
-  <article class="space-y-8">
-    <header>
-      <nav class="text-sm text-neutral-500 mb-4">
-        <a href={`${baseUrl}candidates/`} class="hover:text-primary-600">候選人資訊</a>
-        <span class="mx-2">›</span>
-        <a href={districtPageUrl} class="hover:text-primary-600">{candidate.county} {candidate.districtOfficial || candidate.district || ''}</a>
-        <span class="mx-2">›</span>
+  <article class="space-y-6">
+    <header class="border-b border-neutral-200 pb-4">
+      <nav class="text-xs text-neutral-500 mb-3">
+        <a href={`${baseUrl}candidates/`} class="hover:underline">候選人</a>
+        <span class="mx-1">/</span>
+        <a href={districtPageUrl} class="hover:underline">{candidate.county} {candidate.districtOfficial || candidate.district || ''}</a>
+        <span class="mx-1">/</span>
         <span class="text-neutral-700">{candidate.name}</span>
       </nav>
       
-      <div class="flex flex-wrap items-start gap-4 mb-4">
-        <div class="flex-1">
-          <div class="flex items-center gap-3 mb-2">
-            {candidate.number != null && (
-              <span class="text-3xl font-bold text-primary-600">{candidate.number}</span>
-            )}
-            <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800">
-              {candidate.name}
-            </h1>
-          </div>
-          <p class="text-neutral-600">
-            {candidate.county} {candidate.districtOfficial || candidate.district || ''} · {positionName}
-          </p>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          {incumbent && (
-            <span class="px-3 py-1 bg-neutral-200 text-neutral-700 rounded-full text-sm">
-              現任議員
-            </span>
-          )}
-          <span class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm">
-            {partyDisplay}
-          </span>
-          {statusBadge && (
-            <span class={`px-3 py-1 rounded-full text-sm ${statusBadge.class}`}>
-              {statusBadge.label}
-            </span>
-          )}
-        </div>
+      <div class="flex items-baseline gap-3">
+        {candidate.number != null && (
+          <span class="text-xl font-semibold text-neutral-500 tabular-nums">{candidate.number}</span>
+        )}
+        <h1 class="text-xl font-semibold text-neutral-800">
+          {candidate.name}
+        </h1>
+        {incumbent && (
+          <span class="text-xs text-neutral-500 bg-neutral-100 px-1.5 py-0.5 rounded">現任</span>
+        )}
       </div>
+      <p class="text-sm text-neutral-500 mt-1">
+        {candidate.county} {candidate.districtOfficial || candidate.district || ''} · {positionName} · {partyDisplay}
+      </p>
     </header>
 
     {/* Status Info */}
-    <section class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
-      <h2 class="font-medium text-neutral-700 mb-2">📋 候選人狀態</h2>
-      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-        {statusBadge && (
-          <div>
-            <dt class="text-neutral-500">目前狀態</dt>
-            <dd class="text-neutral-800 font-medium">{statusBadge.fullLabel}</dd>
-          </div>
-        )}
-        {candidate.registeredOn && (
-          <div>
-            <dt class="text-neutral-500">登記日期</dt>
-            <dd class="text-neutral-800">{candidate.registeredOn}</dd>
-          </div>
-        )}
-        {candidate.number != null && (
-          <div>
-            <dt class="text-neutral-500">號次</dt>
-            <dd class="text-neutral-800 font-bold text-lg">{candidate.number} 號</dd>
-          </div>
-        )}
-        <div>
-          <dt class="text-neutral-500">政黨/推薦</dt>
-          <dd class="text-neutral-800">{partyDisplay}</dd>
-        </div>
-      </dl>
+    <section class="border border-neutral-200 rounded overflow-hidden">
+      <table class="w-full text-sm">
+        <tbody class="divide-y divide-neutral-100">
+          {candidate.number != null && (
+            <tr>
+              <td class="px-3 py-2 text-neutral-500 w-24">號次</td>
+              <td class="px-3 py-2 text-neutral-800 tabular-nums">{candidate.number} 號</td>
+            </tr>
+          )}
+          <tr>
+            <td class="px-3 py-2 text-neutral-500 w-24">政黨</td>
+            <td class="px-3 py-2 text-neutral-800">{partyDisplay}</td>
+          </tr>
+          {candidate.registeredOn && (
+            <tr>
+              <td class="px-3 py-2 text-neutral-500 w-24">登記日期</td>
+              <td class="px-3 py-2 text-neutral-800">{candidate.registeredOn}</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </section>
 
     {/* Election Bulletin Content */}
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📜 選舉公報</h2>
+    <section class="border border-neutral-200 rounded overflow-hidden">
+      <div class="px-3 py-2 bg-neutral-50 border-b border-neutral-200">
+        <h2 class="text-sm font-medium text-neutral-700">選舉公報</h2>
+      </div>
       
       {bulletin ? (
-        <div class="space-y-6">
+        <div class="divide-y divide-neutral-100">
           {/* Basic Info from Bulletin */}
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-3">基本資料（選舉公報刊載）</h3>
-            <dl class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
-              {bulletin.birthDateAsPrinted && (
-                <div>
-                  <dt class="text-neutral-500">出生年月日</dt>
-                  <dd class="text-neutral-800">{bulletin.birthDateAsPrinted}</dd>
-                </div>
-              )}
-              {bulletin.gender && (
-                <div>
-                  <dt class="text-neutral-500">性別</dt>
-                  <dd class="text-neutral-800">{bulletin.gender}</dd>
-                </div>
-              )}
-              {bulletin.birthPlace && (
-                <div>
-                  <dt class="text-neutral-500">出生地</dt>
-                  <dd class="text-neutral-800">{bulletin.birthPlace}</dd>
-                </div>
-              )}
-              {bulletin.partyAsPrinted && (
-                <div>
-                  <dt class="text-neutral-500">推薦之政黨</dt>
-                  <dd class="text-neutral-800">{bulletin.partyAsPrinted}</dd>
-                </div>
-              )}
-            </dl>
+          <div class="px-3 py-3">
+            <table class="w-full text-sm">
+              <tbody>
+                {bulletin.birthDateAsPrinted && (
+                  <tr>
+                    <td class="text-neutral-500 pr-4 py-0.5">出生年月日</td>
+                    <td class="text-neutral-800">{bulletin.birthDateAsPrinted}</td>
+                  </tr>
+                )}
+                {bulletin.gender && (
+                  <tr>
+                    <td class="text-neutral-500 pr-4 py-0.5">性別</td>
+                    <td class="text-neutral-800">{bulletin.gender}</td>
+                  </tr>
+                )}
+                {bulletin.birthPlace && (
+                  <tr>
+                    <td class="text-neutral-500 pr-4 py-0.5">出生地</td>
+                    <td class="text-neutral-800">{bulletin.birthPlace}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
 
           {/* Platform */}
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-3">政見</h3>
+          <div class="px-3 py-3">
+            <h3 class="text-xs text-neutral-500 mb-2">政見</h3>
             {bulletin.platformFormat === 'text' ? (
-              <div class="text-neutral-800 whitespace-pre-wrap leading-relaxed font-sans text-sm sm:text-base">
+              <div class="text-neutral-800 whitespace-pre-wrap text-sm leading-relaxed">
                 {bulletin.platform}
               </div>
             ) : bulletinImagePath ? (
@@ -297,28 +273,23 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                 <img 
                   src={`${baseUrl}${bulletinImagePath.substring(1)}`}
                   alt="選舉公報政見原圖"
-                  class="max-w-full h-auto rounded border border-neutral-200"
+                  class="max-w-full h-auto border border-neutral-200"
                   loading="lazy"
                 />
-                <p class="text-xs text-neutral-500 mt-2">
-                  選舉公報第 {bulletin.sourcePage} 頁政見原圖
-                </p>
+                <p class="text-xs text-neutral-500 mt-1">公報第 {bulletin.sourcePage} 頁</p>
               </div>
             ) : (
-              <p class="text-neutral-600 italic">政見以圖片形式刊載，原圖處理中</p>
+              <p class="text-neutral-500 text-sm">政見以圖片刊載，處理中</p>
             )}
           </div>
 
           {/* Education */}
           {bulletin.education && bulletin.education.length > 0 && (
-            <div class="p-4 bg-neutral-50 rounded-lg">
-              <h3 class="font-medium text-neutral-700 mb-3">學歷</h3>
-              <ul class="space-y-1 text-neutral-800">
+            <div class="px-3 py-3">
+              <h3 class="text-xs text-neutral-500 mb-2">學歷</h3>
+              <ul class="text-sm text-neutral-800 space-y-0.5">
                 {bulletin.education.map(item => (
-                  <li class="flex items-start gap-2">
-                    <span class="text-neutral-400">•</span>
-                    <span class="whitespace-pre-wrap">{item}</span>
-                  </li>
+                  <li>· {item}</li>
                 ))}
               </ul>
             </div>
@@ -326,14 +297,11 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
           {/* Experience */}
           {bulletin.experience && bulletin.experience.length > 0 && (
-            <div class="p-4 bg-neutral-50 rounded-lg">
-              <h3 class="font-medium text-neutral-700 mb-3">經歷</h3>
-              <ul class="space-y-1 text-neutral-800">
+            <div class="px-3 py-3">
+              <h3 class="text-xs text-neutral-500 mb-2">經歷</h3>
+              <ul class="text-sm text-neutral-800 space-y-0.5">
                 {bulletin.experience.map(item => (
-                  <li class="flex items-start gap-2">
-                    <span class="text-neutral-400">•</span>
-                    <span class="whitespace-pre-wrap">{item}</span>
-                  </li>
+                  <li>· {item}</li>
                 ))}
               </ul>
             </div>
@@ -341,14 +309,12 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
           {/* Declarations */}
           {bulletin.declarationsAsPrinted && bulletin.declarationsAsPrinted.length > 0 && (
-            <div class="p-4 bg-neutral-50 rounded-lg">
-              <h3 class="font-medium text-neutral-700 mb-3">具結情形</h3>
-              <ul class="space-y-2 text-sm text-neutral-800">
+            <div class="px-3 py-3">
+              <h3 class="text-xs text-neutral-500 mb-2">具結情形</h3>
+              <ul class="text-sm text-neutral-700 space-y-1">
                 {bulletin.declarationsAsPrinted.map(decl => (
-                  <li class="flex items-start gap-2">
-                    <span class={`flex-shrink-0 w-5 h-5 flex items-center justify-center border rounded ${decl.checked ? 'bg-green-100 border-green-400 text-green-700' : 'bg-neutral-100 border-neutral-300 text-neutral-400'}`}>
-                      {decl.checked ? '✓' : ''}
-                    </span>
+                  <li class="flex items-start gap-1.5">
+                    <span class="text-neutral-400">{decl.checked ? '✓' : '○'}</span>
                     <span>{decl.text}</span>
                   </li>
                 ))}
@@ -357,41 +323,21 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
           )}
 
           {/* Source Citation */}
-          <div class="pt-4 border-t border-neutral-200">
+          <div class="px-3 py-2 bg-neutral-50">
             <p class="text-xs text-neutral-500">
-              資料來源：{bulletin.county}選委會選舉公報第 {bulletin.sourcePage} 頁（{bulletin.asOf}）
+              來源：{bulletin.county}選委會公報第 {bulletin.sourcePage} 頁（{bulletin.asOf}）
               {bulletin.sourceArticleUrl && (
-                <a 
-                  href={bulletin.sourceArticleUrl}
-                  target="_blank"
-                  rel="noopener"
-                  class="ml-1 text-primary-600 hover:underline"
-                >
-                  [公告連結]
-                </a>
+                <a href={bulletin.sourceArticleUrl} target="_blank" rel="noopener" class="underline ml-1">公告</a>
               )}
             </p>
           </div>
         </div>
       ) : (
-        <div class="p-4 bg-amber-50 rounded-lg border border-amber-200">
-          <p class="text-amber-700">
-            <strong>尚未整理</strong>
-          </p>
-          <p class="text-sm text-amber-600 mt-1">
-            選舉公報將於 2026/11/25 前陸續公告。本站會在公報發布後盡速整理候選人政見資料。
-          </p>
-          <p class="text-xs text-amber-500 mt-2">
-            您可前往
-            <a 
-              href="https://bulletin.cec.gov.tw/" 
-              target="_blank" 
-              rel="noopener"
-              class="underline hover:text-amber-700"
-            >
-              中選會選舉公報查詢系統
-            </a>
-            查看最新公報。
+        <div class="px-3 py-4 bg-neutral-50 text-sm text-neutral-600">
+          <p class="font-medium">尚未整理</p>
+          <p class="text-xs text-neutral-500 mt-1">
+            選舉公報於 2026/11/25 前陸續公告。
+            <a href="https://bulletin.cec.gov.tw/" target="_blank" rel="noopener" class="underline">中選會公報系統</a>
           </p>
         </div>
       )}
@@ -399,383 +345,211 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
     {/* Incumbent Performance - only for publish:true incumbents */}
     {incumbent && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-4">📊 現任表現</h2>
+      <details class="border border-neutral-200 rounded" open>
+        <summary class="px-3 py-2 cursor-pointer text-sm font-medium text-neutral-700 hover:bg-neutral-50 select-none">
+          現任表現
+        </summary>
         
-        <div class="space-y-6">
+        <div class="divide-y divide-neutral-100 border-t border-neutral-100">
           {/* Proposals */}
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-3">提案</h3>
+          <div class="px-3 py-3">
+            <h3 class="text-xs text-neutral-500 mb-2">提案</h3>
             
             {incumbent.proposals?.kind === 'unspecified' ? (
-              /* 臺北市: roles not split */
-              <div class="space-y-3">
-                <p class="text-sm text-neutral-600">
-                  共 {incumbent.proposals.count || 0} 筆
-                  {incumbent.proposals.note && (
-                    <span class="text-neutral-400 ml-1">（{incumbent.proposals.note}）</span>
-                  )}
-                </p>
+              <div class="text-sm">
+                <p class="text-neutral-700">{incumbent.proposals.count || 0} 筆</p>
                 {incumbent.proposals.sourceUrl && (
-                  <a 
-                    href={incumbent.proposals.sourceUrl}
-                    target="_blank"
-                    rel="noopener"
-                    class="inline-block text-sm text-primary-600 hover:underline"
-                  >
-                    查看議會議決案目錄 →
+                  <a href={incumbent.proposals.sourceUrl} target="_blank" rel="noopener" class="text-xs underline text-neutral-600">
+                    議會議決案目錄
                   </a>
                 )}
               </div>
             ) : incumbent.proposals?.asProposer || incumbent.proposals?.asCoSigner ? (
-              /* 高雄市, 臺南市, 新竹市: separate proposer and cosigner */
-              <div class="space-y-4">
-                {/* As Proposer */}
+              <div class="text-sm space-y-2">
                 {incumbent.proposals.asProposer && (
                   <div>
-                    <p class="text-sm font-medium text-neutral-700 mb-2">
-                      提案人（{incumbent.proposals.asProposer.count || 0} 筆）
-                    </p>
+                    <p class="text-neutral-700">提案人 {incumbent.proposals.asProposer.count || 0} 筆</p>
                     {incumbent.proposals.asProposer.items && incumbent.proposals.asProposer.items.length > 0 && (
-                      <ul class="space-y-3 text-sm">
-                        {incumbent.proposals.asProposer.items.slice(0, 5).map(item => (
-                          <li class="border-l-2 border-neutral-200 pl-3">
-                            {item.session && (
-                              <p class="text-neutral-500 text-xs">{item.session}</p>
-                            )}
-                            <p class="text-neutral-800">{item.title}</p>
-                            {item.outcome && (
-                              <div class="text-xs text-neutral-500 mt-1">
-                                {Object.entries(item.outcome).map(([key, value]) => (
-                                  value && <span class="mr-2">{key}：{value}</span>
-                                ))}
-                              </div>
-                            )}
-                            {item.sourceUrl && (
-                              <a href={item.sourceUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline text-xs">
-                                案件詳情 →
-                              </a>
-                            )}
-                          </li>
+                      <ul class="mt-1 space-y-1 text-xs text-neutral-600">
+                        {incumbent.proposals.asProposer.items.slice(0, 3).map(item => (
+                          <li class="pl-2 border-l border-neutral-200">{item.title}</li>
                         ))}
                       </ul>
                     )}
-                    {incumbent.proposals.asProposer.items && incumbent.proposals.asProposer.items.length > 5 && (
-                      <p class="text-xs text-neutral-500 mt-2">
-                        顯示前 5 筆，共 {incumbent.proposals.asProposer.items.length} 筆
-                      </p>
-                    )}
                     {incumbent.proposals.asProposer.sourceUrl && (
-                      <a 
-                        href={incumbent.proposals.asProposer.sourceUrl}
-                        target="_blank"
-                        rel="noopener"
-                        class="inline-block text-sm text-primary-600 hover:underline mt-2"
-                      >
-                        完整提案紀錄 →
+                      <a href={incumbent.proposals.asProposer.sourceUrl} target="_blank" rel="noopener" class="text-xs underline text-neutral-600 mt-1 inline-block">
+                        完整紀錄
                       </a>
                     )}
                   </div>
                 )}
-                
-                {/* As CoSigner */}
                 {incumbent.proposals.asCoSigner && incumbent.proposals.asCoSigner.count > 0 && (
-                  <div class="pt-3 border-t border-neutral-200">
-                    <p class="text-sm text-neutral-600">
-                      連署（{incumbent.proposals.asCoSigner.count} 筆）
-                      {incumbent.proposals.asCoSigner.sourceUrl && (
-                        <a 
-                          href={incumbent.proposals.asCoSigner.sourceUrl}
-                          target="_blank"
-                          rel="noopener"
-                          class="ml-2 text-primary-600 hover:underline"
-                        >
-                          查看連署紀錄 →
-                        </a>
-                      )}
-                    </p>
-                  </div>
+                  <p class="text-neutral-600">連署 {incumbent.proposals.asCoSigner.count} 筆</p>
                 )}
               </div>
             ) : (
-              <p class="text-neutral-500 text-sm">議會未公開可統計資料</p>
+              <p class="text-neutral-500 text-sm">無公開資料</p>
             )}
           </div>
 
           {/* Interpellations */}
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-3">
-              質詢紀錄
-              {incumbent.interpellation?.kind && (
-                <span class="ml-2 text-sm font-normal text-neutral-500">
-                  （{incumbent.interpellation.kind}）
-                </span>
-              )}
+          <div class="px-3 py-3">
+            <h3 class="text-xs text-neutral-500 mb-2">
+              質詢{incumbent.interpellation?.kind && `（${incumbent.interpellation.kind}）`}
             </h3>
             
             {incumbent.interpellation?.items && incumbent.interpellation.items.length > 0 ? (
-              <div class="space-y-4">
-                <p class="text-sm text-neutral-600">
-                  共 {incumbent.interpellation.count || incumbent.interpellation.items.length} 筆
-                  {incumbent.interpellation.note && (
-                    <span class="text-neutral-400 ml-1">（{incumbent.interpellation.note}）</span>
-                  )}
-                </p>
-                
-                <ul class="space-y-3 text-sm">
-                  {incumbent.interpellation.items.slice(0, 10).map(item => (
-                    <li class="border-l-2 border-neutral-200 pl-3">
-                      <div class="flex flex-wrap items-baseline gap-2">
-                        {item.date && (
-                          <span class="text-neutral-500">{item.date}</span>
-                        )}
-                        {item.session && (
-                          <span class="text-neutral-500">{item.session}</span>
-                        )}
-                      </div>
-                      {item.title && (
-                        <p class="text-neutral-800 mt-1">{item.title}</p>
-                      )}
-                      {item.listedAs && (
-                        <p class="text-neutral-700 mt-1">{item.listedAs}</p>
-                      )}
-                      <div class="flex flex-wrap gap-3 mt-2">
-                        {item.videoUrl && (
-                          <a href={item.videoUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline text-xs">
-                            影音紀錄 →
-                          </a>
-                        )}
-                        {item.documentUrl && (
-                          <a href={item.documentUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline text-xs">
-                            質詢資料 PDF →
-                          </a>
-                        )}
-                      </div>
+              <div class="text-sm">
+                <p class="text-neutral-700">{incumbent.interpellation.count || incumbent.interpellation.items.length} 筆</p>
+                <ul class="mt-1 space-y-1 text-xs text-neutral-600">
+                  {incumbent.interpellation.items.slice(0, 3).map(item => (
+                    <li class="pl-2 border-l border-neutral-200">
+                      {item.date && <span class="text-neutral-400">{item.date} </span>}
+                      {item.title || item.listedAs}
                     </li>
                   ))}
                 </ul>
-                
-                {incumbent.interpellation.items.length > 10 && (
-                  <p class="text-xs text-neutral-500">
-                    顯示前 10 筆，共 {incumbent.interpellation.items.length} 筆
-                  </p>
-                )}
-                
                 {incumbent.interpellation.sourceUrl && (
-                  <a 
-                    href={incumbent.interpellation.sourceUrl}
-                    target="_blank"
-                    rel="noopener"
-                    class="inline-block text-sm text-primary-600 hover:underline mt-2"
-                  >
-                    完整紀錄（議會官網）→
+                  <a href={incumbent.interpellation.sourceUrl} target="_blank" rel="noopener" class="text-xs underline text-neutral-600 mt-1 inline-block">
+                    完整紀錄
                   </a>
                 )}
               </div>
             ) : (
-              <p class="text-neutral-500 text-sm">議會未公開可統計資料</p>
+              <p class="text-neutral-500 text-sm">無公開資料</p>
             )}
           </div>
 
           {/* Source */}
-          <div class="pt-4 border-t border-neutral-200">
-            <p class="text-xs text-neutral-500">
-              現任資料來源：
-              {incumbent.incumbency.rosterSourceUrl && (
-                <a 
-                  href={incumbent.incumbency.rosterSourceUrl}
-                  target="_blank"
-                  rel="noopener"
-                  class="text-primary-600 hover:underline"
-                >
-                  {candidate.county}議會現任議員名冊
-                </a>
-              )}
-            </p>
-            <p class="text-xs text-neutral-400 mt-1">
-              問政資料取自各議會官網，標題與結果原文照錄，不計算任何比率或分數
-            </p>
+          <div class="px-3 py-2 bg-neutral-50 text-xs text-neutral-500">
+            {incumbent.incumbency.rosterSourceUrl && (
+              <a href={incumbent.incumbency.rosterSourceUrl} target="_blank" rel="noopener" class="underline">
+                {candidate.county}議會名冊
+              </a>
+            )}
+            <span class="ml-2">原文照錄</span>
           </div>
         </div>
-      </section>
+      </details>
     )}
 
     {/* Data Sources */}
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📎 資料來源</h2>
-      
-      <div class="space-y-4">
-        {candidate.sourceUrl && (
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-2">候選人公告</h3>
-            <a 
-              href={candidate.sourceUrl}
-              target="_blank"
-              rel="noopener"
-              class="text-primary-600 hover:underline break-all"
-            >
-              {candidate.sourceDoc || '選委會官方公告'} →
-            </a>
-            {candidate.asOf && (
-              <p class="text-xs text-neutral-500 mt-1">公告日期：{candidate.asOf}</p>
-            )}
-          </div>
-        )}
-        
-        {candidate.registrationSourceUrl && (
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-2">登記公告</h3>
-            <a 
-              href={candidate.registrationSourceUrl}
-              target="_blank"
-              rel="noopener"
-              class="text-primary-600 hover:underline break-all"
-            >
-              登記結果公告 →
-            </a>
-            {candidate.registeredOn && (
-              <p class="text-xs text-neutral-500 mt-1">登記日期：{candidate.registeredOn}</p>
-            )}
-          </div>
-        )}
-        
-        {candidate.drawSourceUrl && (
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-2">號次抽籤</h3>
-            <a 
-              href={candidate.drawSourceUrl}
-              target="_blank"
-              rel="noopener"
-              class="text-primary-600 hover:underline break-all"
-            >
-              抽籤結果公告 →
-            </a>
-          </div>
-        )}
-        
-        {candidate.sourceArticleUrl && (
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-2">選委會公告頁面</h3>
-            <a 
-              href={candidate.sourceArticleUrl}
-              target="_blank"
-              rel="noopener"
-              class="text-primary-600 hover:underline break-all"
-            >
-              選委會網站公告 →
-            </a>
-          </div>
-        )}
+    <section class="border border-neutral-200 rounded overflow-hidden">
+      <div class="px-3 py-2 bg-neutral-50 border-b border-neutral-200">
+        <h2 class="text-sm font-medium text-neutral-700">資料來源</h2>
       </div>
       
-      <p class="text-xs text-neutral-500 mt-4">
-        資料最後驗證：{candidate.lastVerified || candidate.asOf || '未記錄'}
-      </p>
+      <ul class="divide-y divide-neutral-100 text-sm">
+        {candidate.sourceUrl && (
+          <li class="px-3 py-2 flex justify-between items-center">
+            <span class="text-neutral-600">候選人公告</span>
+            <a href={candidate.sourceUrl} target="_blank" rel="noopener" class="underline text-neutral-700">
+              {candidate.sourceDoc || '官方公告'}
+            </a>
+          </li>
+        )}
+        {candidate.registrationSourceUrl && (
+          <li class="px-3 py-2 flex justify-between items-center">
+            <span class="text-neutral-600">登記公告</span>
+            <a href={candidate.registrationSourceUrl} target="_blank" rel="noopener" class="underline text-neutral-700">
+              查看
+            </a>
+          </li>
+        )}
+        {candidate.drawSourceUrl && (
+          <li class="px-3 py-2 flex justify-between items-center">
+            <span class="text-neutral-600">號次抽籤</span>
+            <a href={candidate.drawSourceUrl} target="_blank" rel="noopener" class="underline text-neutral-700">
+              查看
+            </a>
+          </li>
+        )}
+        {candidate.sourceArticleUrl && (
+          <li class="px-3 py-2 flex justify-between items-center">
+            <span class="text-neutral-600">選委會公告</span>
+            <a href={candidate.sourceArticleUrl} target="_blank" rel="noopener" class="underline text-neutral-700">
+              查看
+            </a>
+          </li>
+        )}
+      </ul>
+      
+      <div class="px-3 py-2 bg-neutral-50 border-t border-neutral-100">
+        <p class="text-xs text-neutral-500">
+          最後驗證：{candidate.lastVerified || candidate.asOf || '未記錄'}
+        </p>
+      </div>
     </section>
 
     {/* Official Resources */}
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🔗 官方資源</h2>
-      
-      <div class="grid gap-4 sm:grid-cols-2">
-        <a 
-          href="https://bulletin.cec.gov.tw/" 
-          target="_blank" 
-          rel="noopener"
-          class="p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors"
-        >
-          <p class="font-medium text-primary-700">選舉公報</p>
-          <p class="text-sm text-primary-600">查看候選人完整政見</p>
-        </a>
-        
+    <section class="text-sm">
+      <p class="text-xs text-neutral-500 mb-2">外部資源</p>
+      <ul class="space-y-1">
+        <li>
+          <a href="https://bulletin.cec.gov.tw/" target="_blank" rel="noopener" class="underline text-neutral-700">
+            選舉公報查詢
+          </a>
+        </li>
         {(candidate.position === 'mayor-municipal' || candidate.position === 'mayor-county' || 
           candidate.position === 'councilor-municipal' || candidate.position === 'councilor-county') && (
-          <a 
-            href="https://pdps-dec.cec.gov.tw/release/formal/HomePage.html" 
-            target="_blank" 
-            rel="noopener"
-            class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
-          >
-            <p class="font-medium text-neutral-700">財產申報</p>
-            <p class="text-sm text-neutral-500">查看候選人財產申報</p>
-          </a>
+          <li>
+            <a href="https://pdps-dec.cec.gov.tw/release/formal/HomePage.html" target="_blank" rel="noopener" class="underline text-neutral-700">
+              財產申報
+            </a>
+          </li>
         )}
-        
-        <a 
-          href="https://info.cec.gov.tw/vote2026/" 
-          target="_blank" 
-          rel="noopener"
-          class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
-        >
-          <p class="font-medium text-neutral-700">中選會選舉專區</p>
-          <p class="text-sm text-neutral-500">更多選舉資訊</p>
-        </a>
-      </div>
-      
-      {/* Judicial Court Search */}
-      <div class="mt-4 pt-4 border-t border-neutral-200">
-        <a 
-          href="https://judgment.judicial.gov.tw/FJUD/default.aspx"
-          target="_blank"
-          rel="noopener"
-          class="text-neutral-600 hover:text-neutral-800 hover:underline text-sm"
-        >
-          司法院裁判書查詢（外部網站）→
-        </a>
-        <p class="text-xs text-neutral-400 mt-1">同名同姓請自行查證，本站不標註</p>
-      </div>
+        <li>
+          <a href="https://info.cec.gov.tw/vote2026/" target="_blank" rel="noopener" class="underline text-neutral-700">
+            中選會選舉專區
+          </a>
+        </li>
+        <li>
+          <a href="https://judgment.judicial.gov.tw/FJUD/default.aspx" target="_blank" rel="noopener" class="underline text-neutral-600">
+            司法院裁判書查詢
+          </a>
+          <span class="text-neutral-400 text-xs ml-1">同名同姓請自行查證</span>
+        </li>
+      </ul>
     </section>
 
     {/* Evaluation Guide */}
-    <section class="p-6 bg-blue-50 border border-blue-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-blue-800 mb-3">
-        🗳️ 如何評估{shortName}候選人？
-      </h2>
-      {position?.checkpoints && (
-        <ul class="space-y-2 text-blue-700">
-          {position.checkpoints.slice(0, 4).map((checkpoint) => (
-            <li class="flex items-start gap-2">
-              <span class="text-blue-500">•</span>
-              <span>{checkpoint}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      <a 
-        href={`${baseUrl}how-to-judge/`}
-        class="mt-4 inline-flex items-center gap-1 text-blue-600 hover:underline"
-      >
-        查看完整評估指南 →
-      </a>
-    </section>
+    {position?.checkpoints && (
+      <details class="border border-neutral-200 rounded">
+        <summary class="px-3 py-2 cursor-pointer text-sm font-medium text-neutral-700 hover:bg-neutral-50 select-none">
+          如何評估{shortName}候選人
+        </summary>
+        <div class="px-3 py-2 border-t border-neutral-100">
+          <ul class="text-sm text-neutral-600 space-y-1">
+            {position.checkpoints.slice(0, 4).map((checkpoint) => (
+              <li>· {checkpoint}</li>
+            ))}
+          </ul>
+          <a href={`${baseUrl}how-to-judge/`} class="mt-2 inline-block text-xs underline text-neutral-600">
+            完整指南
+          </a>
+        </div>
+      </details>
+    )}
 
     {/* Disclaimer */}
-    <section class="p-4 bg-amber-50 border border-amber-200 rounded-lg">
-      <p class="text-sm text-amber-700">
-        <strong>⚠️ 資料說明：</strong>
-        本頁資料整理自官方公開來源，所有數據皆附有來源連結供查證。
-        如發現錯誤，歡迎提供官方來源協助修正。
-        本站不提供候選人評分、排名或比較。
-      </p>
-    </section>
+    <p class="text-xs text-neutral-500 border-t border-neutral-200 pt-4">
+      資料整理自官方公開來源，附有來源連結供查證。本站不提供評分、排名或比較。
+    </p>
 
     {/* Report Error */}
-    <section class="flex flex-wrap items-center gap-3">
-      <a 
-        href={reportMailto}
-        class="inline-flex items-center gap-2 px-4 py-2 bg-neutral-100 border border-neutral-300 text-neutral-600 rounded-lg hover:bg-neutral-200 transition-colors text-sm"
-      >
-        ✉️ 回報資料錯誤
+    <div class="flex items-center gap-2 text-xs">
+      <a href={reportMailto} class="text-neutral-600 underline hover:text-neutral-800">
+        回報資料錯誤
       </a>
-      <span class="text-xs text-neutral-500">我們會以官方資料核對後修正</span>
-    </section>
+      <span class="text-neutral-400">以官方資料核對後修正</span>
+    </div>
 
-    <nav class="flex justify-between pt-8 border-t border-neutral-200">
-      <a href={districtPageUrl} class="text-primary-600 hover:underline">
-        ← 返回選區候選人
+    <nav class="flex justify-between text-sm pt-4 border-t border-neutral-200">
+      <a href={districtPageUrl} class="text-neutral-600 underline hover:text-neutral-800">
+        ← 選區候選人
       </a>
-      <a href={`${baseUrl}how-to-judge/`} class="text-primary-600 hover:underline">
-        怎麼判斷候選人 →
+      <a href={`${baseUrl}how-to-judge/`} class="text-neutral-600 underline hover:text-neutral-800">
+        評估指南 →
       </a>
     </nav>
   </article>
