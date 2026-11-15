@@ -82,8 +82,8 @@ type BulletinEntry = {
 };
 
 function getBulletinKey(c: any): string {
-  const district = c.districtOfficial || c.district || c.county;
-  return `${c.county}|${c.position}|${district}|${c.name}|${c.number}`;
+  const district = c.district || c.county;
+  return `${c.county}|${c.position}|${district}|${c.name}|${c.number ?? ''}`;
 }
 
 function getBulletinImagePath(entry: BulletinEntry): string | null {
