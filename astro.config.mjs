@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kaychen.github.io',
+  site: 'https://klaudia1209teleworker.github.io',
   base: '/vote2026',
   output: 'static',
   build: {
