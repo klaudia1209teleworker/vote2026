@@ -4,6 +4,7 @@ import candidates from '../../data/candidates.json';
 import positions from '../../data/positions.json';
 import bulletinData from '../../data/bulletin.json';
 import incumbentsData from '../../data/incumbents.json';
+import { getCandidateKey } from '../../utils/candidateKey';
 
 const baseUrl = import.meta.env.BASE_URL;
 
@@ -81,10 +82,6 @@ type BulletinEntry = {
   asOf?: string;
 };
 
-function getBulletinKey(c: any): string {
-  const district = c.district || c.county;
-  return `${c.county}|${c.position}|${district}|${c.name}|${c.number ?? ''}`;
-}
 
 function getBulletinImagePath(entry: BulletinEntry): string | null {
   if (entry.platformFormat !== 'image' || !entry.sourceUrl || !entry.sourcePage) {
@@ -136,11 +133,11 @@ function getPartyDisplay(party: string | null, partyAsListed: string | null): st
 const statusBadge = getStatusBadge(candidate.status, candidate.registeredOn);
 const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
 
-const bulletinKey = getBulletinKey(candidate);
-const bulletin = (bulletinData as Record<string, BulletinEntry>)[bulletinKey] || null;
+const candidateKey = getCandidateKey(candidate);
+const bulletin = (bulletinData as Record<string, BulletinEntry>)[candidateKey] || null;
 const bulletinImagePath = bulletin ? getBulletinImagePath(bulletin) : null;
 
-const incumbentKey = bulletinKey;
+const incumbentKey = candidateKey;
 const incumbentRaw = (incumbentsData as Record<string, IncumbentEntry>)[incumbentKey];
 const incumbent = incumbentRaw?.incumbency?.publish ? incumbentRaw : null;
 
