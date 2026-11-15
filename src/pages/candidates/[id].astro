@@ -113,15 +113,7 @@ const positionName = position?.name || candidate.position;
 const shortName = position?.shortName || positionName;
 
 function getStatusBadge(status: string, registeredOn?: string): { label: string; class: string; fullLabel: string } | null {
-  const neutralClass = 'border border-neutral-300 bg-neutral-100 text-neutral-600';
-  if (status.includes('公告候選人')) {
-    return { label: '已公告', class: neutralClass, fullLabel: '正式候選人（選委會已公告）' };
-  } else if (status.includes('已抽籤')) {
-    return null;
-  } else {
-    const dateLabel = registeredOn ? ` (${registeredOn})` : '';
-    return { label: '已登記', class: neutralClass, fullLabel: `已完成登記${dateLabel}` };
-  }
+  return null;
 }
 
 function getPartyDisplay(party: string | null, partyAsListed: string | null): string {
