@@ -123,13 +123,32 @@ const position = positions.positions.find(p => p.id === positionId);
 const positionName = position?.name || positionId;
 const shortName = position?.shortName || positionName;
 
-const realCandidates = candidates.candidates.filter(c => {
-  if (c.isSample) return false;
+function getStatusBadge(status: string, registeredOn?: string): { label: string; class: string } {
+  const neutralClass = 'border border-neutral-300 bg-neutral-100 text-neutral-600';
+  if (status.includes('公告候選人')) {
+    return { label: '已公告', class: neutralClass };
+  } else if (status.includes('已抽籤')) {
+    return { label: '已抽籤', class: neutralClass };
+  } else {
+    const dateLabel = registeredOn ? `（${registeredOn.replace(/^\d{4}-/, '').replace('-', '/')}）` : '';
+    return { label: `已登記${dateLabel}`, class: neutralClass };
+  }
+}
+
+function getPartyDisplay(party: string | null, partyAsListed: string | null): string {
+  if (party) return party;
+  if (partyAsListed === '無' || partyAsListed === null) return '無黨籍推薦';
+  return partyAsListed;
+}
+
+const isVillageChief = positionId === 'village-chief';
+
+const candidatesForPage = (candidates as any[]).filter(c => {
   if (c.position !== positionId) return false;
-  if (c.city !== city) return false;
+  if (c.county !== city) return false;
   
   if (scope === 'electoral-district' && district) {
-    return c.district === district || c.district?.includes(district);
+    return c.districtOfficial === district || c.district?.includes(district);
   }
   if (scope === 'township' && township) {
     return c.district === township;
@@ -146,10 +165,13 @@ const realCandidates = candidates.candidates.filter(c => {
   if (a.number != null && b.number != null) return a.number - b.number;
   if (a.number != null) return -1;
   if (b.number != null) return 1;
+  const dateA = a.registeredOn || '9999';
+  const dateB = b.registeredOn || '9999';
+  if (dateA !== dateB) return dateA.localeCompare(dateB);
   return a.name.localeCompare(b.name, 'zh-TW');
 });
 
-const hasCandidates = realCandidates.length > 0;
+const hasCandidates = candidatesForPage.length > 0;
 
 let pageTitle = '';
 let pageDescription = '';
@@ -184,6 +206,17 @@ if (scope === 'city') {
 const councilDistrictsForCity = scope === 'city-councilor-index' 
   ? electoralDistricts.councilDistricts?.[city]?.districts || []
   : [];
+
+const uniqueVillages = isVillageChief && scope === 'village'
+  ? [...new Set(candidatesForPage.map(c => c.district))].sort((a, b) => a.localeCompare(b, 'zh-TW'))
+  : [];
+
+const latestAsOf = hasCandidates 
+  ? candidatesForPage.reduce((latest, c) => {
+      if (c.asOf && (!latest || c.asOf > latest)) return c.asOf;
+      return latest;
+    }, '')
+  : '';
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -206,37 +239,20 @@ const councilDistrictsForCity = scope === 'city-councilor-index'
           <a href={`${baseUrl}positions/${positionId}/`} class="text-primary-600 hover:underline">
             {positionName}
           </a>
-          {districtData?.seats && ` • 應選 ${districtData.seats} 名`}
+          {districtData?.seats && ` · 應選 ${districtData.seats} 名`}
+          {hasCandidates && ` · 共 ${candidatesForPage.length} 位候選人`}
         </p>
       )}
     </header>
 
-    {/* Announcement Banner */}
-    <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg">
-      <p class="text-amber-800">
-        <strong>📢 候選人名單更新說明</strong><br />
-        正式候選人名單將於 <strong>2026 年 11 月 17 日</strong> 由中選會公告。
-        本頁將在公告後更新實際候選人資料。
-      </p>
-      <div class="mt-3 flex flex-wrap gap-3">
-        <a 
-          href="https://info.cec.gov.tw/vote2026/" 
-          target="_blank" 
-          rel="noopener"
-          class="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-md hover:bg-amber-200 text-sm"
-        >
-          中選會選舉專區 →
-        </a>
-        <a 
-          href="https://bulletin.cec.gov.tw/" 
-          target="_blank" 
-          rel="noopener"
-          class="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-md hover:bg-amber-200 text-sm"
-        >
-          選舉公報 →
-        </a>
+    {/* Data Disclaimer Banner */}
+    {hasCandidates && (
+      <div class="p-4 bg-neutral-100 border border-neutral-300 rounded-lg">
+        <p class="text-neutral-700 text-sm">
+          正式候選人名單以 11/17 中選會公告為準，本頁資料截至 {latestAsOf || '2026-11-15'}。
+        </p>
       </div>
-    </div>
+    )}
 
     {/* City Councilor Index - List All Districts */}
     {scope === 'city-councilor-index' && councilDistrictsForCity.length > 0 && (
@@ -273,75 +289,147 @@ const councilDistrictsForCity = scope === 'city-councilor-index'
       </section>
     )}
 
+    {/* Village Chief with Village Filter */}
+    {isVillageChief && scope === 'village' && hasCandidates && uniqueVillages.length > 1 && (
+      <section class="p-4 bg-neutral-50 rounded-lg border border-neutral-200">
+        <label for="village-filter" class="block text-sm font-medium text-neutral-700 mb-2">
+          依村里篩選：
+        </label>
+        <select 
+          id="village-filter" 
+          class="w-full sm:w-auto px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        >
+          <option value="">全部村里（{uniqueVillages.length} 個）</option>
+          {uniqueVillages.map(v => (
+            <option value={v}>{v}</option>
+          ))}
+        </select>
+      </section>
+    )}
+
     {/* Candidate List */}
     {scope !== 'city-councilor-index' && (
       <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
         {hasCandidates ? (
-          <div class="space-y-4">
-            {realCandidates.map((candidate) => (
-              <div class="flex items-start gap-4 p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
-                {candidate.number && (
-                  <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold text-lg">
-                    {candidate.number}
-                  </span>
-                )}
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="font-semibold text-lg text-neutral-800">
-                      {candidate.name}
-                    </span>
-                    {candidate.party && (
-                      <span class="text-sm px-2 py-0.5 bg-neutral-200 text-neutral-600 rounded">
-                        {candidate.party}
+          <div class="space-y-4" id="candidate-list">
+            {isVillageChief && scope === 'village' ? (
+              // Village Chief: Group by village
+              uniqueVillages.map(village => {
+                const villageCandidates = candidatesForPage.filter(c => c.district === village);
+                return (
+                  <div class="village-group" data-village={village}>
+                    <h3 class="font-medium text-neutral-700 mb-3 pb-2 border-b border-neutral-200">
+                      {village}
+                      <span class="text-sm text-neutral-500 font-normal ml-2">
+                        ({villageCandidates.length} 位候選人)
                       </span>
-                    )}
-                    {candidate.isIncumbent && (
-                      <span class="text-xs px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded">
-                        現任
-                      </span>
-                    )}
+                    </h3>
+                    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mb-4">
+                      {villageCandidates.map((candidate) => {
+                        const statusBadge = getStatusBadge(candidate.status, candidate.registeredOn);
+                        const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
+                        return (
+                          <div class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+                            <div class="flex items-center gap-3 mb-2">
+                              {candidate.number != null && (
+                                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold text-sm">
+                                  {candidate.number}
+                                </span>
+                              )}
+                              <div class="min-w-0">
+                                <p class="font-semibold text-neutral-800 truncate">
+                                  {candidate.name}
+                                </p>
+                                <p class="text-xs text-neutral-500">
+                                  {partyDisplay}
+                                </p>
+                              </div>
+                            </div>
+                            <div class="flex flex-wrap gap-2 items-center">
+                              <span class={`text-xs px-2 py-0.5 rounded ${statusBadge.class}`}>
+                                {statusBadge.label}
+                              </span>
+                              {candidate.sourceUrl && (
+                                <a 
+                                  href={candidate.sourceUrl} 
+                                  target="_blank" 
+                                  rel="noopener"
+                                  class="text-xs text-primary-600 hover:underline"
+                                  title="官方來源"
+                                >
+                                  📄
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                  
-                  {candidate.bulletinUrl && (
-                    <a 
-                      href={candidate.bulletinUrl}
-                      target="_blank"
-                      rel="noopener"
-                      class="mt-2 inline-flex items-center gap-1 text-sm text-primary-600 hover:underline"
-                    >
-                      📄 選舉公報
-                    </a>
-                  )}
-                  
-                  {candidate.officialSourceUrl && (
-                    <p class="mt-1 text-xs text-neutral-400">
-                      資料來源：
-                      <a href={candidate.officialSourceUrl} target="_blank" rel="noopener" class="hover:underline">
-                        官方連結
-                      </a>
-                      {candidate.lastVerified && ` (${candidate.lastVerified} 驗證)`}
-                    </p>
-                  )}
-                </div>
+                );
+              })
+            ) : (
+              // Non-village-chief: Regular list with links to detail pages
+              candidatesForPage.map((candidate) => {
+                const statusBadge = getStatusBadge(candidate.status, candidate.registeredOn);
+                const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
+                const candidateId = `${candidate.county}-${candidate.position}-${candidate.district || candidate.districtOfficial || ''}-${candidate.name}`.replace(/[^a-zA-Z0-9\u4e00-\u9fff-]/g, '').toLowerCase();
                 
-                {/* Link to candidate detail page if exists */}
-                <a 
-                  href={`${baseUrl}candidates/${candidate.id}/`}
-                  class="flex-shrink-0 px-3 py-1.5 text-sm text-primary-600 border border-primary-200 rounded-md hover:bg-primary-50"
-                >
-                  詳細資料 →
-                </a>
-              </div>
-            ))}
+                return (
+                  <div class="flex items-start gap-4 p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+                    {candidate.number != null && (
+                      <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold text-lg">
+                        {candidate.number}
+                      </span>
+                    )}
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2 flex-wrap mb-1">
+                        <span class="font-semibold text-lg text-neutral-800">
+                          {candidate.name}
+                        </span>
+                        <span class="text-sm px-2 py-0.5 bg-neutral-200 text-neutral-600 rounded">
+                          {partyDisplay}
+                        </span>
+                        <span class={`text-xs px-2 py-0.5 rounded ${statusBadge.class}`}>
+                          {statusBadge.label}
+                        </span>
+                      </div>
+                      
+                      {candidate.sourceUrl && (
+                        <p class="text-xs text-neutral-500">
+                          資料來源：
+                          <a 
+                            href={candidate.sourceUrl} 
+                            target="_blank" 
+                            rel="noopener" 
+                            class="text-primary-600 hover:underline"
+                          >
+                            官方公告
+                          </a>
+                          {candidate.asOf && ` (${candidate.asOf})`}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <a 
+                      href={`${baseUrl}candidates/${encodeURIComponent(candidateId)}/`}
+                      class="flex-shrink-0 px-3 py-1.5 text-sm text-primary-600 border border-primary-200 rounded-md hover:bg-primary-50"
+                    >
+                      詳細 →
+                    </a>
+                  </div>
+                );
+              })
+            )}
           </div>
         ) : (
           <div class="text-center py-12">
             <p class="text-5xl mb-4">📋</p>
             <p class="text-lg font-medium text-neutral-600 mb-2">
-              候選人名單尚未公告
+              此選區尚無候選人資料
             </p>
             <p class="text-neutral-500 mb-4">
-              中選會將於 2026/11/17 公告正式候選人名單，届時本頁將更新。
+              可能原因：登記尚未開始、無人登記參選、或資料尚待更新。
             </p>
             <div class="flex flex-wrap justify-center gap-3">
               <a 
@@ -355,6 +443,21 @@ const councilDistrictsForCity = scope === 'city-councilor-index'
             </div>
           </div>
         )}
+      </section>
+    )}
+
+    {/* Source Info */}
+    {hasCandidates && (
+      <section id="sources" class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+        <h3 class="font-medium text-neutral-700 mb-2">📎 資料來源說明</h3>
+        <ul class="text-sm text-neutral-600 space-y-1">
+          <li>• <strong>已公告</strong>：選委會已公告正式候選人名單</li>
+          <li>• <strong>已抽籤</strong>：已完成號次抽籤，但尚未公告正式名單</li>
+          <li>• <strong>已登記</strong>：已完成登記，待抽籤或公告</li>
+        </ul>
+        <p class="text-xs text-neutral-500 mt-2">
+          本站資料整理自中選會及各縣市選委會官方公告，點擊「📄」圖示可查看原始來源。
+        </p>
       </section>
     )}
 
@@ -392,3 +495,27 @@ const councilDistrictsForCity = scope === 'city-councilor-index'
     </nav>
   </article>
 </Layout>
+
+{/* Village filter script */}
+{isVillageChief && scope === 'village' && hasCandidates && (
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const filter = document.getElementById('village-filter') as HTMLSelectElement;
+      const groups = document.querySelectorAll('.village-group');
+      
+      if (filter && groups.length > 0) {
+        filter.addEventListener('change', () => {
+          const selected = filter.value;
+          groups.forEach(group => {
+            const village = (group as HTMLElement).dataset.village;
+            if (!selected || village === selected) {
+              (group as HTMLElement).style.display = '';
+            } else {
+              (group as HTMLElement).style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
+)}
