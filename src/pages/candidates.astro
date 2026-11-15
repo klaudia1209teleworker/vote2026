@@ -1,9 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import candidates from '../data/candidates.json';
+import districts from '../data/districts.json';
+import positions from '../data/positions.json';
 
 const baseUrl = import.meta.env.BASE_URL;
 const sampleCandidates = candidates.candidates.filter(c => c.isSample);
+
+const directMunicipalities = districts.directMunicipalities.list;
+const provincialCities = districts.provincialCities.list;
+const counties = districts.counties.list;
 ---
 
 <Layout title="候選人資訊" description="各選區候選人資訊（正式名單待 11/17 公告後更新）">
@@ -19,6 +25,64 @@ const sampleCandidates = candidates.candidates.filter(c => c.isSample);
         </p>
       </div>
     </header>
+
+    <!-- Quick Access by City -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🗺️ 依縣市查看候選人</h2>
+      <p class="text-neutral-600 mb-4">
+        選擇縣市快速查看各職位候選人名單。或者回到<a href={baseUrl} class="text-primary-600 hover:underline">首頁查詢您的選票</a>，直接連結到對應選區。
+      </p>
+      
+      <div class="space-y-6">
+        <!-- 六都 -->
+        <div>
+          <h3 class="text-sm font-medium text-neutral-500 mb-2">直轄市（六都）</h3>
+          <div class="grid gap-2 sm:grid-cols-3">
+            {directMunicipalities.map(city => (
+              <a 
+                href={`${baseUrl}candidates/district/mayor-municipal/${city}/`}
+                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors"
+              >
+                <span class="font-medium text-neutral-800">{city}</span>
+                <span class="text-neutral-400 ml-1">→</span>
+              </a>
+            ))}
+          </div>
+        </div>
+        
+        <!-- 省轄市 -->
+        <div>
+          <h3 class="text-sm font-medium text-neutral-500 mb-2">省轄市</h3>
+          <div class="grid gap-2 sm:grid-cols-3">
+            {provincialCities.map(city => (
+              <a 
+                href={`${baseUrl}candidates/district/mayor-county/${city}/`}
+                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors"
+              >
+                <span class="font-medium text-neutral-800">{city}</span>
+                <span class="text-neutral-400 ml-1">→</span>
+              </a>
+            ))}
+          </div>
+        </div>
+        
+        <!-- 縣 -->
+        <div>
+          <h3 class="text-sm font-medium text-neutral-500 mb-2">縣</h3>
+          <div class="grid gap-2 sm:grid-cols-3 lg:grid-cols-4">
+            {counties.map(city => (
+              <a 
+                href={`${baseUrl}candidates/district/mayor-county/${city}/`}
+                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors"
+              >
+                <span class="font-medium text-neutral-800">{city}</span>
+                <span class="text-neutral-400 ml-1">→</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Official Sources -->
     <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">

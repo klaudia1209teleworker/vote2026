@@ -1,11 +1,13 @@
 ---
 import districts from '../data/districts.json';
 import ballotRules from '../data/ballotRules.json';
+import electoralDistricts from '../data/electoralDistricts.json';
 
 const cities = Object.keys(districts.cities);
 const directMunicipalities = districts.directMunicipalities.list;
 const provincialCities = districts.provincialCities.list;
 const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <div class="bg-white rounded-xl shadow-sm border border-neutral-200 p-6">
@@ -104,7 +106,7 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
   </div>
 </div>
 
-<script define:vars={{ districts, ballotRules, mountainIndigenousDistricts, directMunicipalities, provincialCities }}>
+<script define:vars={{ districts, ballotRules, mountainIndigenousDistricts, directMunicipalities, provincialCities, electoralDistricts, baseUrl }}>
   const citySelect = document.getElementById('city-select');
   const districtSelect = document.getElementById('district-select');
   const districtSection = document.getElementById('district-section');
@@ -114,6 +116,20 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
   const form = document.getElementById('ballot-form');
   const resultsSection = document.getElementById('ballot-results');
   const resultsContent = document.getElementById('results-content');
+  
+  function getCouncilorDistrictUrl(city, adminDistrict, positionId, indigenousType) {
+    const mapping = electoralDistricts.adminToElectoralMapping?.[positionId]?.[city]?.[adminDistrict];
+    if (mapping) {
+      return `${baseUrl}candidates/district/${positionId}/${city}/${mapping.districtName}/`;
+    }
+    if (indigenousType === 'plains') {
+      return `${baseUrl}candidates/district/${positionId}/${city}/平地原住民選區/`;
+    }
+    if (indigenousType === 'mountain') {
+      return `${baseUrl}candidates/district/${positionId}/${city}/山地原住民選區/`;
+    }
+    return `${baseUrl}candidates/district/${positionId}/${city}/`;
+  }
 
   citySelect.addEventListener('change', () => {
     const city = citySelect.value;
@@ -166,14 +182,20 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
         name: '直轄市長',
         color: '白色',
         scope: `${city}全市`,
-        link: '/vote2026/positions/mayor-municipal/'
+        positionLink: `${baseUrl}positions/mayor-municipal/`,
+        candidateListUrl: `${baseUrl}candidates/district/mayor-municipal/${city}/`
       });
+      
+      const councilDistrictUrl = district 
+        ? getCouncilorDistrictUrl(city, district, 'councilor-municipal', null)
+        : `${baseUrl}candidates/district/councilor-municipal/${city}/`;
       
       ballots.push({
         name: '直轄市議員',
         color: '綠色',
         scope: district ? `${city}${district}所屬選區` : '依戶籍所在選區',
-        link: '/vote2026/positions/councilor-municipal/',
+        positionLink: `${baseUrl}positions/councilor-municipal/`,
+        candidateListUrl: councilDistrictUrl,
         note: cityData?.notes ? '待確認' : null
       });
       
@@ -182,14 +204,16 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
           name: '平地原住民議員',
           color: '黃色',
           scope: `${city}全市`,
-          link: '/vote2026/positions/councilor-municipal/'
+          positionLink: `${baseUrl}positions/councilor-municipal/`,
+          candidateListUrl: `${baseUrl}candidates/district/councilor-municipal/${city}/平地原住民選區/`
         });
       } else if (indigenous === 'mountain') {
         ballots.push({
           name: '山地原住民議員',
           color: '藍色',
           scope: `${city}全市`,
-          link: '/vote2026/positions/councilor-municipal/'
+          positionLink: `${baseUrl}positions/councilor-municipal/`,
+          candidateListUrl: `${baseUrl}candidates/district/councilor-municipal/${city}/山地原住民選區/`
         });
       }
       
@@ -198,14 +222,16 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
           name: '區長',
           color: '依公告',
           scope: `${city}${district}`,
-          link: '/vote2026/positions/district-mayor/',
+          positionLink: `${baseUrl}positions/district-mayor/`,
+          candidateListUrl: `${baseUrl}candidates/district/district-mayor/${city}/${district}/`,
           special: true
         });
         ballots.push({
           name: '區民代表',
           color: '依公告',
           scope: `${district}所屬選區`,
-          link: '/vote2026/positions/district-representative/',
+          positionLink: `${baseUrl}positions/district-representative/`,
+          candidateListUrl: `${baseUrl}candidates/district/district-representative/${city}/${district}/`,
           special: true
         });
       }
@@ -214,7 +240,8 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
         name: '里長',
         color: '白色或粉紅色',
         scope: '戶籍所在里',
-        link: '/vote2026/positions/village-chief/'
+        positionLink: `${baseUrl}positions/village-chief/`,
+        candidateListUrl: district ? `${baseUrl}candidates/district/village-chief/${city}/${district}/` : null
       });
       
     } else if (provincialCities.includes(city)) {
@@ -222,14 +249,16 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
         name: '市長',
         color: '白色',
         scope: `${city}全市`,
-        link: '/vote2026/positions/mayor-county/'
+        positionLink: `${baseUrl}positions/mayor-county/`,
+        candidateListUrl: `${baseUrl}candidates/district/mayor-county/${city}/`
       });
       
       ballots.push({
         name: '市議員',
         color: '綠色',
         scope: district ? `${city}${district}所屬選區` : '依戶籍所在選區',
-        link: '/vote2026/positions/councilor-county/'
+        positionLink: `${baseUrl}positions/councilor-county/`,
+        candidateListUrl: `${baseUrl}candidates/district/councilor-county/${city}/`
       });
       
       if (indigenous !== 'none') {
@@ -237,7 +266,8 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
           name: indigenous === 'plains' ? '平地原住民議員' : '山地原住民議員',
           color: indigenous === 'plains' ? '黃色' : '藍色',
           scope: '如有名額',
-          link: '/vote2026/positions/councilor-county/',
+          positionLink: `${baseUrl}positions/councilor-county/`,
+          candidateListUrl: `${baseUrl}candidates/district/councilor-county/${city}/`,
           note: '待確認'
         });
       }
@@ -246,7 +276,8 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
         name: '里長',
         color: '白色或粉紅色',
         scope: '戶籍所在里',
-        link: '/vote2026/positions/village-chief/'
+        positionLink: `${baseUrl}positions/village-chief/`,
+        candidateListUrl: district ? `${baseUrl}candidates/district/village-chief/${city}/${district}/` : null
       });
       
     } else {
@@ -254,14 +285,16 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
         name: '縣長',
         color: '白色',
         scope: `${city}全縣`,
-        link: '/vote2026/positions/mayor-county/'
+        positionLink: `${baseUrl}positions/mayor-county/`,
+        candidateListUrl: `${baseUrl}candidates/district/mayor-county/${city}/`
       });
       
       ballots.push({
         name: '縣議員',
         color: '綠色',
         scope: district ? `${city}${district}所屬選區` : '依戶籍所在選區',
-        link: '/vote2026/positions/councilor-county/'
+        positionLink: `${baseUrl}positions/councilor-county/`,
+        candidateListUrl: `${baseUrl}candidates/district/councilor-county/${city}/`
       });
       
       if (indigenous !== 'none') {
@@ -269,7 +302,8 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
           name: indigenous === 'plains' ? '平地原住民議員' : '山地原住民議員',
           color: indigenous === 'plains' ? '黃色' : '藍色',
           scope: '如有名額',
-          link: '/vote2026/positions/councilor-county/',
+          positionLink: `${baseUrl}positions/councilor-county/`,
+          candidateListUrl: `${baseUrl}candidates/district/councilor-county/${city}/`,
           note: '待確認'
         });
       }
@@ -278,21 +312,24 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
         name: '鄉（鎮、市）長',
         color: '白色',
         scope: district || '戶籍所在鄉鎮市',
-        link: '/vote2026/positions/township-mayor/'
+        positionLink: `${baseUrl}positions/township-mayor/`,
+        candidateListUrl: district ? `${baseUrl}candidates/district/township-mayor/${city}/${district}/` : null
       });
       
       ballots.push({
         name: '鄉（鎮、市）民代表',
         color: '依公告',
         scope: district ? `${district}所屬選區` : '戶籍所在選區',
-        link: '/vote2026/positions/township-representative/'
+        positionLink: `${baseUrl}positions/township-representative/`,
+        candidateListUrl: district ? `${baseUrl}candidates/district/township-representative/${city}/${district}/` : null
       });
       
       ballots.push({
         name: '村（里）長',
         color: '白色或粉紅色',
         scope: '戶籍所在村里',
-        link: '/vote2026/positions/village-chief/'
+        positionLink: `${baseUrl}positions/village-chief/`,
+        candidateListUrl: district ? `${baseUrl}candidates/district/village-chief/${city}/${district}/` : null
       });
     }
     
@@ -301,7 +338,8 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
       color: '黃色',
       scope: '全國',
       isReferendum: true,
-      question: ballotRules.referendum.question
+      question: ballotRules.referendum.question,
+      referendumLink: `${baseUrl}voting-day/#公投第-22-案`
     });
     
     let html = `
@@ -317,15 +355,18 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
                       'bg-neutral-50 border-neutral-200';
       const noteHtml = ballot.note ? `<span class="ml-2 text-xs text-amber-600 bg-amber-100 px-2 py-0.5 rounded">⚠️ ${ballot.note}</span>` : '';
       
+      const candidateUrl = ballot.isReferendum ? ballot.referendumLink : ballot.candidateListUrl;
+      const linkText = ballot.isReferendum ? '公投說明 →' : '查看候選人 →';
+      
       html += `
-        <div class="flex items-start gap-4 p-4 ${bgColor} border rounded-lg">
+        <div class="flex items-start gap-4 p-4 ${bgColor} border rounded-lg hover:shadow-sm transition-shadow">
           <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-white rounded-full text-sm font-medium text-neutral-600 border border-neutral-200">
             ${index + 1}
           </span>
-          <div class="flex-1">
+          <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 flex-wrap">
               <span class="font-medium text-neutral-800">
-                ${ballot.link ? `<a href="${ballot.link}" class="hover:text-primary-600 underline underline-offset-2">${ballot.name}</a>` : ballot.name}
+                ${ballot.positionLink ? `<a href="${ballot.positionLink}" class="hover:text-primary-600 underline underline-offset-2">${ballot.name}</a>` : ballot.name}
               </span>
               <span class="text-xs px-2 py-0.5 bg-white border rounded">票色：${ballot.color}</span>
               ${noteHtml}
@@ -334,6 +375,15 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
               選舉範圍：${ballot.scope}
             </p>
             ${ballot.question ? `<p class="text-sm text-neutral-600 mt-2 italic">「${ballot.question}」</p>` : ''}
+            ${candidateUrl ? `
+              <a href="${candidateUrl}" class="mt-3 inline-flex items-center gap-1 px-3 py-1.5 bg-primary-600 text-white text-sm font-medium rounded-md hover:bg-primary-700 transition-colors">
+                ${linkText}
+              </a>
+            ` : `
+              <p class="mt-3 text-xs text-neutral-400">
+                請選擇鄉鎮市區以查看候選人
+              </p>
+            `}
           </div>
         </div>
       `;

@@ -1,0 +1,394 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import candidates from '../../../data/candidates.json';
+import positions from '../../../data/positions.json';
+import districts from '../../../data/districts.json';
+import electoralDistricts from '../../../data/electoralDistricts.json';
+
+const baseUrl = import.meta.env.BASE_URL;
+
+export function getStaticPaths() {
+  const paths: Array<{ params: { slug: string }, props: any }> = [];
+  const allCities = Object.keys(districts.cities);
+  
+  const positionTypes = [
+    { id: 'mayor-municipal', scope: 'city', cityTypes: ['直轄市'] },
+    { id: 'mayor-county', scope: 'city', cityTypes: ['縣', '省轄市'] },
+    { id: 'councilor-municipal', scope: 'electoral-district', cityTypes: ['直轄市'] },
+    { id: 'councilor-county', scope: 'electoral-district', cityTypes: ['縣', '省轄市'] },
+    { id: 'township-mayor', scope: 'township', cityTypes: ['縣'] },
+    { id: 'township-representative', scope: 'township', cityTypes: ['縣'] },
+    { id: 'district-mayor', scope: 'mountain-district', cityTypes: ['直轄市'] },
+    { id: 'district-representative', scope: 'mountain-district', cityTypes: ['直轄市'] },
+    { id: 'village-chief', scope: 'village', cityTypes: ['直轄市', '縣', '省轄市'] },
+  ];
+  
+  for (const posType of positionTypes) {
+    for (const city of allCities) {
+      const cityData = districts.cities[city];
+      if (!cityData || !posType.cityTypes.includes(cityData.type)) continue;
+      
+      if (posType.scope === 'city') {
+        paths.push({
+          params: { slug: `${posType.id}/${city}` },
+          props: { 
+            positionId: posType.id, 
+            city, 
+            district: null,
+            township: null,
+            scope: 'city'
+          }
+        });
+      } else if (posType.scope === 'electoral-district' && posType.id.startsWith('councilor')) {
+        const councilData = electoralDistricts.councilDistricts?.[city];
+        if (councilData?.districts) {
+          for (const dist of councilData.districts) {
+            paths.push({
+              params: { slug: `${posType.id}/${city}/${dist.name}` },
+              props: {
+                positionId: posType.id,
+                city,
+                district: dist.name,
+                districtId: dist.id,
+                township: null,
+                scope: 'electoral-district',
+                districtData: dist
+              }
+            });
+          }
+        }
+        paths.push({
+          params: { slug: `${posType.id}/${city}` },
+          props: {
+            positionId: posType.id,
+            city,
+            district: null,
+            township: null,
+            scope: 'city-councilor-index'
+          }
+        });
+      } else if (posType.scope === 'township' && cityData.districts) {
+        for (const township of cityData.districts) {
+          paths.push({
+            params: { slug: `${posType.id}/${city}/${township}` },
+            props: {
+              positionId: posType.id,
+              city,
+              district: null,
+              township,
+              scope: 'township'
+            }
+          });
+        }
+      } else if (posType.scope === 'mountain-district') {
+        const mountainDistricts = districts.mountainIndigenousDistricts.list.filter(
+          md => md.city === city
+        );
+        for (const md of mountainDistricts) {
+          paths.push({
+            params: { slug: `${posType.id}/${city}/${md.district}` },
+            props: {
+              positionId: posType.id,
+              city,
+              district: md.district,
+              township: null,
+              scope: 'mountain-district'
+            }
+          });
+        }
+      } else if (posType.scope === 'village' && cityData.districts) {
+        for (const township of cityData.districts) {
+          paths.push({
+            params: { slug: `${posType.id}/${city}/${township}` },
+            props: {
+              positionId: posType.id,
+              city,
+              district: null,
+              township,
+              scope: 'village'
+            }
+          });
+        }
+      }
+    }
+  }
+  
+  return paths;
+}
+
+const { slug } = Astro.params;
+const { positionId, city, district, township, scope, districtData } = Astro.props;
+
+const position = positions.positions.find(p => p.id === positionId);
+const positionName = position?.name || positionId;
+const shortName = position?.shortName || positionName;
+
+const realCandidates = candidates.candidates.filter(c => {
+  if (c.isSample) return false;
+  if (c.position !== positionId) return false;
+  if (c.city !== city) return false;
+  
+  if (scope === 'electoral-district' && district) {
+    return c.district === district || c.district?.includes(district);
+  }
+  if (scope === 'township' && township) {
+    return c.district === township;
+  }
+  if (scope === 'mountain-district' && district) {
+    return c.district === district;
+  }
+  if (scope === 'village' && township) {
+    return c.district?.startsWith(township) || c.district === township;
+  }
+  
+  return true;
+}).sort((a, b) => {
+  if (a.number != null && b.number != null) return a.number - b.number;
+  if (a.number != null) return -1;
+  if (b.number != null) return 1;
+  return a.name.localeCompare(b.name, 'zh-TW');
+});
+
+const hasCandidates = realCandidates.length > 0;
+
+let pageTitle = '';
+let pageDescription = '';
+let locationLabel = city;
+
+if (scope === 'city') {
+  pageTitle = `${city}${shortName}候選人`;
+  pageDescription = `${city}${positionName}候選人名單`;
+  locationLabel = city;
+} else if (scope === 'electoral-district') {
+  pageTitle = `${city}${shortName}${district}候選人`;
+  pageDescription = `${city}${positionName}${district}候選人名單`;
+  locationLabel = `${city} ${district}`;
+} else if (scope === 'city-councilor-index') {
+  pageTitle = `${city}${shortName}選區一覽`;
+  pageDescription = `${city}${positionName}各選區候選人名單連結`;
+  locationLabel = city;
+} else if (scope === 'township') {
+  pageTitle = `${city}${township}${shortName}候選人`;
+  pageDescription = `${city}${township}${positionName}候選人名單`;
+  locationLabel = `${city} ${township}`;
+} else if (scope === 'mountain-district') {
+  pageTitle = `${city}${district}${shortName}候選人`;
+  pageDescription = `${city}${district}${positionName}候選人名單`;
+  locationLabel = `${city} ${district}`;
+} else if (scope === 'village') {
+  pageTitle = `${city}${township}村里長候選人`;
+  pageDescription = `${city}${township}各里里長候選人名單`;
+  locationLabel = `${city} ${township}`;
+}
+
+const councilDistrictsForCity = scope === 'city-councilor-index' 
+  ? electoralDistricts.councilDistricts?.[city]?.districts || []
+  : [];
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <article class="space-y-6">
+    <header>
+      <nav class="text-sm text-neutral-500 mb-4">
+        <a href={`${baseUrl}`} class="hover:text-primary-600">首頁</a>
+        <span class="mx-2">›</span>
+        <a href={`${baseUrl}candidates/`} class="hover:text-primary-600">候選人</a>
+        <span class="mx-2">›</span>
+        <span class="text-neutral-700">{locationLabel}</span>
+      </nav>
+      
+      <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-2">
+        {pageTitle}
+      </h1>
+      
+      {position && (
+        <p class="text-neutral-600">
+          <a href={`${baseUrl}positions/${positionId}/`} class="text-primary-600 hover:underline">
+            {positionName}
+          </a>
+          {districtData?.seats && ` • 應選 ${districtData.seats} 名`}
+        </p>
+      )}
+    </header>
+
+    {/* Announcement Banner */}
+    <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+      <p class="text-amber-800">
+        <strong>📢 候選人名單更新說明</strong><br />
+        正式候選人名單將於 <strong>2026 年 11 月 17 日</strong> 由中選會公告。
+        本頁將在公告後更新實際候選人資料。
+      </p>
+      <div class="mt-3 flex flex-wrap gap-3">
+        <a 
+          href="https://info.cec.gov.tw/vote2026/" 
+          target="_blank" 
+          rel="noopener"
+          class="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-md hover:bg-amber-200 text-sm"
+        >
+          中選會選舉專區 →
+        </a>
+        <a 
+          href="https://bulletin.cec.gov.tw/" 
+          target="_blank" 
+          rel="noopener"
+          class="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-md hover:bg-amber-200 text-sm"
+        >
+          選舉公報 →
+        </a>
+      </div>
+    </div>
+
+    {/* City Councilor Index - List All Districts */}
+    {scope === 'city-councilor-index' && councilDistrictsForCity.length > 0 && (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        <h2 class="text-lg font-semibold text-neutral-800 mb-4">
+          {city}{shortName}選區
+        </h2>
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {councilDistrictsForCity.map((dist) => (
+            <a 
+              href={`${baseUrl}candidates/district/${positionId}/${city}/${dist.name}/`}
+              class="flex items-center justify-between p-4 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors"
+            >
+              <div>
+                <span class="font-medium text-neutral-800">{dist.name}</span>
+                {dist.seats && (
+                  <span class="ml-2 text-sm text-neutral-500">應選 {dist.seats} 名</span>
+                )}
+                {dist.isIndigenous && (
+                  <span class="ml-2 text-xs px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded">
+                    {dist.indigenousType === 'plains' ? '平地原住民' : '山地原住民'}
+                  </span>
+                )}
+              </div>
+              <span class="text-primary-600">→</span>
+            </a>
+          ))}
+        </div>
+        {councilDistrictsForCity.some(d => d.note) && (
+          <p class="mt-4 text-sm text-neutral-500">
+            * 部分選區依里劃分，詳見中選會公告
+          </p>
+        )}
+      </section>
+    )}
+
+    {/* Candidate List */}
+    {scope !== 'city-councilor-index' && (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        {hasCandidates ? (
+          <div class="space-y-4">
+            {realCandidates.map((candidate) => (
+              <div class="flex items-start gap-4 p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+                {candidate.number && (
+                  <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold text-lg">
+                    {candidate.number}
+                  </span>
+                )}
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-semibold text-lg text-neutral-800">
+                      {candidate.name}
+                    </span>
+                    {candidate.party && (
+                      <span class="text-sm px-2 py-0.5 bg-neutral-200 text-neutral-600 rounded">
+                        {candidate.party}
+                      </span>
+                    )}
+                    {candidate.isIncumbent && (
+                      <span class="text-xs px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded">
+                        現任
+                      </span>
+                    )}
+                  </div>
+                  
+                  {candidate.bulletinUrl && (
+                    <a 
+                      href={candidate.bulletinUrl}
+                      target="_blank"
+                      rel="noopener"
+                      class="mt-2 inline-flex items-center gap-1 text-sm text-primary-600 hover:underline"
+                    >
+                      📄 選舉公報
+                    </a>
+                  )}
+                  
+                  {candidate.officialSourceUrl && (
+                    <p class="mt-1 text-xs text-neutral-400">
+                      資料來源：
+                      <a href={candidate.officialSourceUrl} target="_blank" rel="noopener" class="hover:underline">
+                        官方連結
+                      </a>
+                      {candidate.lastVerified && ` (${candidate.lastVerified} 驗證)`}
+                    </p>
+                  )}
+                </div>
+                
+                {/* Link to candidate detail page if exists */}
+                <a 
+                  href={`${baseUrl}candidates/${candidate.id}/`}
+                  class="flex-shrink-0 px-3 py-1.5 text-sm text-primary-600 border border-primary-200 rounded-md hover:bg-primary-50"
+                >
+                  詳細資料 →
+                </a>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="text-center py-12">
+            <p class="text-5xl mb-4">📋</p>
+            <p class="text-lg font-medium text-neutral-600 mb-2">
+              候選人名單尚未公告
+            </p>
+            <p class="text-neutral-500 mb-4">
+              中選會將於 2026/11/17 公告正式候選人名單，届時本頁將更新。
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+              <a 
+                href="https://info.cec.gov.tw/vote2026/" 
+                target="_blank" 
+                rel="noopener"
+                class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
+              >
+                前往中選會查詢
+              </a>
+            </div>
+          </div>
+        )}
+      </section>
+    )}
+
+    {/* Voting Tips */}
+    <section class="p-6 bg-blue-50 border border-blue-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-blue-800 mb-3">
+        🗳️ 如何評估{shortName}候選人？
+      </h2>
+      {position?.checkpoints && (
+        <ul class="space-y-2 text-blue-700">
+          {position.checkpoints.slice(0, 4).map((checkpoint) => (
+            <li class="flex items-start gap-2">
+              <span class="text-blue-500">•</span>
+              <span>{checkpoint}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <a 
+        href={`${baseUrl}how-to-judge/`}
+        class="mt-4 inline-flex items-center gap-1 text-blue-600 hover:underline"
+      >
+        查看完整評估指南 →
+      </a>
+    </section>
+
+    {/* Navigation */}
+    <nav class="flex flex-wrap justify-between gap-4 pt-6 border-t border-neutral-200">
+      <a href={`${baseUrl}`} class="text-primary-600 hover:underline">
+        ← 返回首頁重新查詢
+      </a>
+      <a href={`${baseUrl}positions/${positionId}/`} class="text-primary-600 hover:underline">
+        了解{positionName}職責 →
+      </a>
+    </nav>
+  </article>
+</Layout>
