@@ -23,41 +23,44 @@ type IncumbentInterpellationItem = {
   documentUrl?: string;
 };
 
+type ProposalItem = {
+  session?: string;
+  title?: string;
+  outcome?: Record<string, string | null>;
+  sourceUrl?: string;
+};
+
 type IncumbentEntry = {
-  county: string;
-  position: string;
-  district: string;
-  name: string;
-  number: number;
   incumbency: {
-    status: 'matched' | 'needsReview' | 'notFound';
     publish: boolean;
+    matchMethod?: string;
     rosterName?: string;
     rosterDistrict?: string;
+    rosterNote?: string;
     rosterSourceUrl?: string;
     profileUrl?: string;
-    checkedOn?: string;
   };
   interpellation?: {
-    status: 'available' | 'missing';
     kind?: string;
-    term?: string;
-    totalCount?: number;
-    totalCountNote?: string;
+    count?: number;
     sourceUrl?: string;
-    asOf?: string;
-    reason?: string;
+    note?: string;
     items?: IncumbentInterpellationItem[];
   };
-  attendance?: {
-    status: 'available' | 'missing';
-    reason?: string;
-    checkedOn?: string;
-  };
   proposals?: {
-    status: 'available' | 'missing';
-    reason?: string;
-    checkedOn?: string;
+    kind?: string;
+    note?: string;
+    count?: number;
+    sourceUrl?: string;
+    asProposer?: {
+      count?: number;
+      sourceUrl?: string;
+      items?: ProposalItem[];
+    };
+    asCoSigner?: {
+      count?: number;
+      sourceUrl?: string;
+    };
   };
 };
 
@@ -400,6 +403,105 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
         <h2 class="text-lg font-semibold text-neutral-800 mb-4">📊 現任表現</h2>
         
         <div class="space-y-6">
+          {/* Proposals */}
+          <div class="p-4 bg-neutral-50 rounded-lg">
+            <h3 class="font-medium text-neutral-700 mb-3">提案</h3>
+            
+            {incumbent.proposals?.kind === 'unspecified' ? (
+              /* 臺北市: roles not split */
+              <div class="space-y-3">
+                <p class="text-sm text-neutral-600">
+                  共 {incumbent.proposals.count || 0} 筆
+                  {incumbent.proposals.note && (
+                    <span class="text-neutral-400 ml-1">（{incumbent.proposals.note}）</span>
+                  )}
+                </p>
+                {incumbent.proposals.sourceUrl && (
+                  <a 
+                    href={incumbent.proposals.sourceUrl}
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-block text-sm text-primary-600 hover:underline"
+                  >
+                    查看議會議決案目錄 →
+                  </a>
+                )}
+              </div>
+            ) : incumbent.proposals?.asProposer || incumbent.proposals?.asCoSigner ? (
+              /* 高雄市, 臺南市, 新竹市: separate proposer and cosigner */
+              <div class="space-y-4">
+                {/* As Proposer */}
+                {incumbent.proposals.asProposer && (
+                  <div>
+                    <p class="text-sm font-medium text-neutral-700 mb-2">
+                      提案人（{incumbent.proposals.asProposer.count || 0} 筆）
+                    </p>
+                    {incumbent.proposals.asProposer.items && incumbent.proposals.asProposer.items.length > 0 && (
+                      <ul class="space-y-3 text-sm">
+                        {incumbent.proposals.asProposer.items.slice(0, 5).map(item => (
+                          <li class="border-l-2 border-neutral-200 pl-3">
+                            {item.session && (
+                              <p class="text-neutral-500 text-xs">{item.session}</p>
+                            )}
+                            <p class="text-neutral-800">{item.title}</p>
+                            {item.outcome && (
+                              <div class="text-xs text-neutral-500 mt-1">
+                                {Object.entries(item.outcome).map(([key, value]) => (
+                                  value && <span class="mr-2">{key}：{value}</span>
+                                ))}
+                              </div>
+                            )}
+                            {item.sourceUrl && (
+                              <a href={item.sourceUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline text-xs">
+                                案件詳情 →
+                              </a>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {incumbent.proposals.asProposer.items && incumbent.proposals.asProposer.items.length > 5 && (
+                      <p class="text-xs text-neutral-500 mt-2">
+                        顯示前 5 筆，共 {incumbent.proposals.asProposer.items.length} 筆
+                      </p>
+                    )}
+                    {incumbent.proposals.asProposer.sourceUrl && (
+                      <a 
+                        href={incumbent.proposals.asProposer.sourceUrl}
+                        target="_blank"
+                        rel="noopener"
+                        class="inline-block text-sm text-primary-600 hover:underline mt-2"
+                      >
+                        完整提案紀錄 →
+                      </a>
+                    )}
+                  </div>
+                )}
+                
+                {/* As CoSigner */}
+                {incumbent.proposals.asCoSigner && incumbent.proposals.asCoSigner.count > 0 && (
+                  <div class="pt-3 border-t border-neutral-200">
+                    <p class="text-sm text-neutral-600">
+                      連署（{incumbent.proposals.asCoSigner.count} 筆）
+                      {incumbent.proposals.asCoSigner.sourceUrl && (
+                        <a 
+                          href={incumbent.proposals.asCoSigner.sourceUrl}
+                          target="_blank"
+                          rel="noopener"
+                          class="ml-2 text-primary-600 hover:underline"
+                        >
+                          查看連署紀錄 →
+                        </a>
+                      )}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p class="text-neutral-500 text-sm">議會未公開可統計資料</p>
+            )}
+          </div>
+
           {/* Interpellations */}
           <div class="p-4 bg-neutral-50 rounded-lg">
             <h3 class="font-medium text-neutral-700 mb-3">
@@ -411,19 +513,14 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
               )}
             </h3>
             
-            {incumbent.interpellation?.status === 'available' && incumbent.interpellation.items && incumbent.interpellation.items.length > 0 ? (
+            {incumbent.interpellation?.items && incumbent.interpellation.items.length > 0 ? (
               <div class="space-y-4">
-                {incumbent.interpellation.term && (
-                  <p class="text-sm text-neutral-600">
-                    {incumbent.interpellation.term}
-                    {incumbent.interpellation.totalCount != null && (
-                      <span>，共 {incumbent.interpellation.totalCount} 筆</span>
-                    )}
-                    {incumbent.interpellation.totalCountNote && (
-                      <span class="text-neutral-400 ml-1">（{incumbent.interpellation.totalCountNote}）</span>
-                    )}
-                  </p>
-                )}
+                <p class="text-sm text-neutral-600">
+                  共 {incumbent.interpellation.count || incumbent.interpellation.items.length} 筆
+                  {incumbent.interpellation.note && (
+                    <span class="text-neutral-400 ml-1">（{incumbent.interpellation.note}）</span>
+                  )}
+                </p>
                 
                 <ul class="space-y-3 text-sm">
                   {incumbent.interpellation.items.slice(0, 10).map(item => (
@@ -431,9 +528,6 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                       <div class="flex flex-wrap items-baseline gap-2">
                         {item.date && (
                           <span class="text-neutral-500">{item.date}</span>
-                        )}
-                        {item.time && (
-                          <span class="text-neutral-400">{item.time}</span>
                         )}
                         {item.session && (
                           <span class="text-neutral-500">{item.session}</span>
@@ -445,18 +539,10 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                       {item.listedAs && (
                         <p class="text-neutral-700 mt-1">{item.listedAs}</p>
                       )}
-                      {item.department && (
-                        <p class="text-neutral-500 text-xs mt-1">部門：{item.department}</p>
-                      )}
                       <div class="flex flex-wrap gap-3 mt-2">
                         {item.videoUrl && (
                           <a href={item.videoUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline text-xs">
                             影音紀錄 →
-                          </a>
-                        )}
-                        {item.transcriptUrl && (
-                          <a href={item.transcriptUrl} target="_blank" rel="noopener" class="text-primary-600 hover:underline text-xs">
-                            逐字稿 →
                           </a>
                         )}
                         {item.documentUrl && (
@@ -486,36 +572,8 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                   </a>
                 )}
               </div>
-            ) : incumbent.interpellation?.status === 'missing' ? (
-              <p class="text-neutral-500 text-sm">
-                {incumbent.interpellation.reason?.includes('未擷取') ? '尚未整理' : '議會未公開可統計資料'}
-              </p>
             ) : (
-              <p class="text-neutral-500 text-sm">尚未整理</p>
-            )}
-          </div>
-
-          {/* Attendance */}
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-3">出席率</h3>
-            {incumbent.attendance?.status === 'available' ? (
-              <p class="text-neutral-800">（資料處理中）</p>
-            ) : (
-              <p class="text-neutral-500 text-sm">
-                {incumbent.attendance?.reason?.includes('未找到') ? '議會未公開可統計資料' : '尚未整理'}
-              </p>
-            )}
-          </div>
-
-          {/* Proposals */}
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <h3 class="font-medium text-neutral-700 mb-3">提案</h3>
-            {incumbent.proposals?.status === 'available' ? (
-              <p class="text-neutral-800">（資料處理中）</p>
-            ) : (
-              <p class="text-neutral-500 text-sm">
-                {incumbent.proposals?.reason?.includes('未擷取') ? '尚未整理' : '議會未公開可統計資料'}
-              </p>
+              <p class="text-neutral-500 text-sm">議會未公開可統計資料</p>
             )}
           </div>
 
@@ -530,12 +588,12 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                   rel="noopener"
                   class="text-primary-600 hover:underline"
                 >
-                  {incumbent.county}議會現任議員名冊
+                  {candidate.county}議會現任議員名冊
                 </a>
               )}
-              {incumbent.incumbency.checkedOn && (
-                <span>（{incumbent.incumbency.checkedOn} 查核）</span>
-              )}
+            </p>
+            <p class="text-xs text-neutral-400 mt-1">
+              問政資料取自各議會官網，標題與結果原文照錄，不計算任何比率或分數
             </p>
           </div>
         </div>
