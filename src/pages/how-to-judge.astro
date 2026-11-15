@@ -1,0 +1,315 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<Layout title="怎麼判斷候選人" description="學習如何評估候選人：設定底線、查詢出席率與質詢紀錄、觀察里長">
+  <article class="space-y-8">
+    <header>
+      <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-4">
+        🔍 怎麼判斷候選人
+      </h1>
+      <p class="text-neutral-600">
+        根據影片「讀字生活 Ep02」的建議，以下是評估候選人的方法與資源。
+      </p>
+      <p class="text-xs text-neutral-500 mt-2">
+        資料來源：<a href="https://www.youtube.com/watch?v=f6VOJumCwIg" target="_blank" rel="noopener" class="underline">讀字生活｜Se2 Ep02 九合一選舉到底選什麼？</a>
+      </p>
+    </header>
+
+    <!-- Step 1 -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">1</span>
+        先畫好你的底線
+      </h2>
+      <p class="text-neutral-600 mb-4">
+        不可能找到百分之百滿意的候選人，但你可以設定「絕對不能接受」的底線：
+      </p>
+      <div class="space-y-3">
+        <div class="p-4 bg-red-50 rounded-lg">
+          <p class="text-red-700 font-medium mb-2">設定 2-3 條底線，例如：</p>
+          <ul class="space-y-1 text-sm text-red-600">
+            <li>• 國防安全立場（如：不能傾向敵國）</li>
+            <li>• 特定議題的態度（如：兒童安全、食品安全）</li>
+            <li>• 基本誠信（如：不能有貪污紀錄）</li>
+          </ul>
+        </div>
+        <p class="text-sm text-neutral-500">
+          底線是「絕對不投」的標準，其他的則可以權衡比較。
+        </p>
+      </div>
+    </section>
+
+    <!-- Step 2 -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">2</span>
+        抓 2-3 件你最在乎的事
+      </h2>
+      <p class="text-neutral-600 mb-4">
+        從你的生活出發，找出最在乎的議題，看候選人在這些議題上的表現：
+      </p>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <div class="p-4 bg-neutral-50 rounded-lg">
+          <p class="font-medium text-neutral-700 mb-2">可能的關注議題</p>
+          <ul class="space-y-1 text-sm text-neutral-600">
+            <li>• 交通安全、行人路權</li>
+            <li>• 居住問題、房價</li>
+            <li>• 教育品質</li>
+            <li>• 長照與社會福利</li>
+            <li>• 環境保護</li>
+            <li>• 危機準備（災害、戰爭）</li>
+          </ul>
+        </div>
+        <div class="p-4 bg-blue-50 rounded-lg">
+          <p class="font-medium text-blue-700 mb-2">根據議題找候選人</p>
+          <ul class="space-y-1 text-sm text-blue-600">
+            <li>• 看選舉公報的政見</li>
+            <li>• 看候選人的社群媒體發言</li>
+            <li>• 現任者：查質詢紀錄</li>
+            <li>• 新人：查專業背景、公共參與</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: For Incumbents -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">3</span>
+        現任議員：查出席率與質詢
+      </h2>
+      <p class="text-neutral-600 mb-4">
+        爭取連任的議員，可以從以下管道查詢過去表現：
+      </p>
+      
+      <div class="space-y-4">
+        <div class="p-4 bg-green-50 rounded-lg">
+          <h3 class="font-medium text-green-800 mb-2">📊 查什麼？</h3>
+          <ul class="space-y-2 text-sm text-green-700">
+            <li class="flex items-start gap-2">
+              <span>✓</span>
+              <span><strong>大會出席率</strong>：是否常常出席議會</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>✓</span>
+              <span><strong>委員會出席率</strong>：是否參與專業審查</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>✓</span>
+              <span><strong>質詢主題</strong>：在問什麼問題？跟你在乎的議題相關嗎？</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>✓</span>
+              <span><strong>是否持續追蹤</strong>：質詢後有沒有繼續追進度？還是問完就算了？</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="p-4 bg-neutral-50 rounded-lg">
+          <h3 class="font-medium text-neutral-800 mb-3">🔗 查詢資源</h3>
+          <div class="space-y-3 text-sm">
+            <div>
+              <p class="font-medium text-neutral-700">地方議會議事錄總庫</p>
+              <a href="https://journal.th.gov.tw/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                https://journal.th.gov.tw/
+              </a>
+              <p class="text-neutral-500">→ 可連結到各縣市議會的紀錄系統</p>
+            </div>
+            <div>
+              <p class="font-medium text-neutral-700">臺北市議會</p>
+              <ul class="space-y-1 text-neutral-600">
+                <li>• <a href="https://www.tcc.gov.tw/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">議會官網</a> → 會議紀錄</li>
+                <li>• <a href="https://gaz.tcc.gov.tw/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">電子公報</a> → 質詢全文檢索</li>
+                <li>• <a href="https://ifddoc2.tcc.gov.tw/TCCMIS_Front" target="_blank" rel="noopener" class="text-primary-600 hover:underline">議事資訊系統</a> → 影音</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-neutral-700">高雄市議會</p>
+              <a href="https://cissearch.kcc.gov.tw/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                議事資訊整合查詢系統
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 bg-amber-50 rounded-lg">
+          <h3 class="font-medium text-amber-800 mb-2">⚠️ 注意事項</h3>
+          <ul class="space-y-1 text-sm text-amber-700">
+            <li>• 監督品質不是看短影音剪得多精彩</li>
+            <li>• 刪預算多少 ≠ 認真（亂刪也可能癱瘓市政）</li>
+            <li>• 喊得大聲 ≠ 有追蹤到結果</li>
+            <li>• 提案很多 ≠ 有推動成功</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 4: For Newcomers -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">4</span>
+        新人候選人：查背景與公共參與
+      </h2>
+      <p class="text-neutral-600 mb-4">
+        首次參選的人沒有議會紀錄可查，但可以從以下方面了解：
+      </p>
+      
+      <div class="space-y-3">
+        <div class="p-4 bg-neutral-50 rounded-lg">
+          <ul class="space-y-2 text-sm text-neutral-700">
+            <li class="flex items-start gap-2">
+              <span>•</span>
+              <span><strong>專業背景</strong>：工作經歷是否與關注議題相關？</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>•</span>
+              <span><strong>公共參與</strong>：過去有沒有參與公共事務、倡議、志工？</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>•</span>
+              <span><strong>社群發言</strong>：看他過去的文章、發言，了解思考方式</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>•</span>
+              <span><strong>選舉公報</strong>：政見是否具體？有沒有說明如何執行？</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="p-4 bg-red-50 rounded-lg">
+          <p class="text-red-700 font-medium mb-2">要小心的狀況</p>
+          <ul class="space-y-1 text-sm text-red-600">
+            <li>• 從來沒有公共參與紀錄，突然要選議員</li>
+            <li>• 可能是「因為是誰的兒子/女兒才出來選」</li>
+            <li>• 不是自己的政治意願，較難期待認真問政</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 5: Village Chief -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">5</span>
+        里長：觀察日常生活
+      </h2>
+      <p class="text-neutral-600 mb-4">
+        里長是最貼近生活的選舉，最重要的是日常觀察：
+      </p>
+      
+      <div class="space-y-3">
+        <div class="p-4 bg-neutral-50 rounded-lg">
+          <ul class="space-y-2 text-sm text-neutral-700">
+            <li class="flex items-start gap-2">
+              <span>☐</span>
+              <span>平常看不看得到他在里內走動？</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>☐</span>
+              <span>公布欄資訊有沒有及時更新？</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>☐</span>
+              <span>需要時聯絡得到嗎？</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>☐</span>
+              <span>是否關心所有居民，還是只跟特定人互動？</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>☐</span>
+              <span>對新住戶、年輕人有關注嗎？</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span>☐</span>
+              <span>里鄰工作會報有公開嗎？經費透明嗎？</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="p-4 bg-blue-50 rounded-lg">
+          <p class="text-blue-700 font-medium mb-2">可以詢問鄰居</p>
+          <p class="text-sm text-blue-600">
+            如果你是新住戶或上班時間無法觀察，可以跟倒垃圾時遇到的鄰居打聽里長候選人的評價。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What NOT to do -->
+    <section class="p-6 bg-amber-50 border border-amber-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-amber-800 mb-4">⚠️ 不要做的事</h2>
+      <div class="space-y-4">
+        <div class="p-4 bg-white rounded-lg">
+          <h3 class="font-medium text-neutral-800 mb-2">不要為了分裂而分裂投票</h3>
+          <p class="text-sm text-neutral-600">
+            「市長投 A 黨，議員故意投 B 黨來制衡」——這不是好主意。
+            你的一票沒有這麼精準的力量可以「設計」出制衡局面。
+            不如投給你真正認同的人，日後監督他是否認真。
+          </p>
+        </div>
+        
+        <div class="p-4 bg-white rounded-lg">
+          <h3 class="font-medium text-neutral-800 mb-2">不要只看婚喪喜慶出席</h3>
+          <p class="text-sm text-neutral-600">
+            認真做議會監督的議員很忙，不一定有空跑紅白帖。
+            「常在婚喪喜慶看到」不等於「有在認真做事」。
+            2026 年了，標準該更新。
+          </p>
+        </div>
+        
+        <div class="p-4 bg-white rounded-lg">
+          <h3 class="font-medium text-neutral-800 mb-2">不要不投票</h3>
+          <p class="text-sm text-neutral-600">
+            「找不到完美的候選人」不是不投的理由。
+            你不決定，別人會幫你決定。你家門口的路還是要走，垃圾還是要倒。
+            公民參與是處理自己生活的方式。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="p-6 bg-primary-50 border border-primary-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-primary-800 mb-4">📋 簡易檢查清單</h2>
+      <div class="space-y-2 text-primary-700">
+        <p class="flex items-start gap-2">
+          <span>☐</span>
+          <span>我有設定 2-3 條絕對不接受的底線</span>
+        </p>
+        <p class="flex items-start gap-2">
+          <span>☐</span>
+          <span>我有找出 2-3 個我最在乎的議題</span>
+        </p>
+        <p class="flex items-start gap-2">
+          <span>☐</span>
+          <span>現任議員：我查了出席率與質詢紀錄</span>
+        </p>
+        <p class="flex items-start gap-2">
+          <span>☐</span>
+          <span>新人：我了解他的專業背景與公共參與</span>
+        </p>
+        <p class="flex items-start gap-2">
+          <span>☐</span>
+          <span>里長：我平常有觀察或詢問鄰居</span>
+        </p>
+        <p class="flex items-start gap-2">
+          <span>☐</span>
+          <span>我沒有「為分裂而分裂」投票</span>
+        </p>
+      </div>
+    </section>
+
+    <nav class="flex justify-between pt-8 border-t border-neutral-200">
+      <a href={`${baseUrl}positions/`} class="text-primary-600 hover:underline">
+        ← 職務介紹
+      </a>
+      <a href={`${baseUrl}voting-day/`} class="text-primary-600 hover:underline">
+        投票當天須知 →
+      </a>
+    </nav>
+  </article>
+</Layout>

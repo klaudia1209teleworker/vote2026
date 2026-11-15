@@ -1,0 +1,324 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<Layout title="投票當天須知" description="2026年11月28日投票日注意事項：時間、證件、圈選工具、禁止事項">
+  <article class="space-y-8">
+    <header>
+      <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-4">
+        🗳️ 投票當天須知
+      </h1>
+      <div class="p-6 bg-primary-50 border border-primary-200 rounded-xl">
+        <p class="text-2xl font-bold text-primary-700 mb-2">
+          2026 年 11 月 28 日（星期六）
+        </p>
+        <p class="text-lg text-primary-600">
+          上午 8:00 至下午 4:00
+        </p>
+        <p class="text-sm text-primary-500 mt-2">
+          同日舉行：全國性公民投票案第 22 案
+        </p>
+      </div>
+    </header>
+
+    <!-- Polling Station -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📍 我的投票所在哪裡？</h2>
+      
+      <div class="p-4 bg-blue-50 rounded-lg mb-4">
+        <p class="text-blue-700 font-medium mb-2">線上查詢（11/23 起開放）</p>
+        <a 
+          href="https://www.ris.gov.tw/info-electionVotePlaceQuery/app/aw0702VPQ/main/" 
+          target="_blank" 
+          rel="noopener"
+          class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          戶政司投票所查詢系統 →
+        </a>
+        <p class="text-sm text-blue-600 mt-2">
+          服務時間：115 年 11 月 23 日 08:00 至 11 月 28 日 17:30
+        </p>
+      </div>
+      
+      <div class="p-4 bg-neutral-50 rounded-lg">
+        <p class="text-neutral-600 text-sm">
+          <strong>投票通知單</strong>：選舉公報與投票通知單預計於 11/25 前送達各戶，
+          上面會註明您的投票所地點。
+        </p>
+      </div>
+    </section>
+
+    <!-- What to Bring -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📋 攜帶證件</h2>
+      
+      <div class="space-y-4">
+        <div class="p-4 bg-green-50 rounded-lg">
+          <p class="text-green-700 font-medium mb-2">必須攜帶（三選一）</p>
+          <ul class="space-y-1 text-green-600">
+            <li>✓ 國民身分證</li>
+            <li>✓ 有效期間內之駕駛執照</li>
+            <li>✓ 有效期間內之護照</li>
+          </ul>
+        </div>
+        
+        <div class="p-4 bg-amber-50 rounded-lg">
+          <p class="text-amber-700 font-medium mb-2">⚠️ 注意</p>
+          <ul class="space-y-1 text-sm text-amber-600">
+            <li>• 健保卡<strong>不能</strong>當作投票證件</li>
+            <li>• 身分證若遺失，請儘速至戶政事務所補辦</li>
+            <li>• 戶籍地與現居地不同者，須回戶籍地投票</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Voting Process -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🚶 投票流程</h2>
+      
+      <div class="space-y-4">
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold">1</span>
+          <div>
+            <p class="font-medium text-neutral-700">出示證件、領取選票</p>
+            <p class="text-sm text-neutral-500">依序領取各類選票及公投票</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold">2</span>
+          <div>
+            <p class="font-medium text-neutral-700">進入圈票處</p>
+            <p class="text-sm text-neutral-500">圈票處內僅限一人進入</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold">3</span>
+          <div>
+            <p class="font-medium text-neutral-700">使用圈選工具圈選</p>
+            <p class="text-sm text-neutral-500">必須使用投票所提供的圈選工具，在候選人姓名欄圈選</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full font-bold">4</span>
+          <div>
+            <p class="font-medium text-neutral-700">投入票匭</p>
+            <p class="text-sm text-neutral-500">將選票折疊後，依序投入對應的票匭</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Valid/Invalid Ballots -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">✅ 有效票 vs ❌ 無效票</h2>
+      
+      <div class="grid gap-4 sm:grid-cols-2 mb-4">
+        <div class="p-4 bg-green-50 rounded-lg">
+          <p class="text-green-700 font-medium mb-2">有效票</p>
+          <ul class="space-y-1 text-sm text-green-600">
+            <li>✓ 使用圈選工具在候選人姓名欄圈選</li>
+            <li>✓ 圈選一人（或公投圈一個選項）</li>
+            <li>✓ 圈選完整清楚</li>
+          </ul>
+        </div>
+        <div class="p-4 bg-red-50 rounded-lg">
+          <p class="text-red-700 font-medium mb-2">無效票（選罷法 §64）</p>
+          <ul class="space-y-1 text-sm text-red-600">
+            <li>✗ 圈選兩人以上</li>
+            <li>✗ 不用投票所提供的圈選工具</li>
+            <li>✗ 在選票上簽名、蓋章、按指印</li>
+            <li>✗ 塗改選票</li>
+            <li>✗ 撕破選票致不完整</li>
+            <li>✗ 未圈選任何人（空白票）</li>
+          </ul>
+        </div>
+      </div>
+      
+      <a 
+        href="https://info.cec.gov.tw/vote2026/static/file/fb2c5ff658f6446b84b6b9479dd69da3.pdf" 
+        target="_blank" 
+        rel="noopener"
+        class="inline-flex items-center gap-2 text-primary-600 hover:underline"
+      >
+        📄 查看官方有效／無效票範例圖（PDF）
+      </a>
+    </section>
+
+    <!-- Prohibited Actions -->
+    <section class="p-6 bg-red-50 border border-red-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-red-800 mb-4">🚫 禁止事項</h2>
+      
+      <div class="space-y-4">
+        <div class="p-4 bg-white rounded-lg">
+          <p class="font-medium text-red-700 mb-2">禁止攜帶手機進入圈票處拍照</p>
+          <p class="text-sm text-neutral-600 mb-2">
+            依選罷法 §65 規定，選舉人進入投票所後，<strong>不得將行動電話或攝影器材攜入圈票處</strong>。
+          </p>
+          <p class="text-sm text-red-600">
+            ⚠️ 違者處一年以下有期徒刑、拘役或科新臺幣三萬元以下罰金
+          </p>
+        </div>
+        
+        <div class="p-4 bg-white rounded-lg">
+          <p class="font-medium text-red-700 mb-2">其他禁止事項</p>
+          <ul class="space-y-1 text-sm text-neutral-600">
+            <li>• 不得刺探他人圈選內容</li>
+            <li>• 不得在投票所內宣傳或勸誘</li>
+            <li>• 不得撕毀選票</li>
+            <li>• 不得將選票攜出投票所</li>
+          </ul>
+        </div>
+      </div>
+      
+      <p class="text-xs text-red-600 mt-4">
+        法規來源：<a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=D0020010&flno=65" target="_blank" rel="noopener" class="underline">選罷法 §65</a>
+      </p>
+    </section>
+
+    <!-- Referendum -->
+    <section class="p-6 bg-amber-50 border border-amber-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-amber-800 mb-4">🗳️ 公投第 22 案</h2>
+      
+      <div class="p-4 bg-white rounded-lg mb-4">
+        <p class="font-medium text-neutral-800 mb-2">公投主文</p>
+        <p class="text-neutral-700 italic">
+          「你是否支持政府使用『核電』振興經濟，以廢除『非核家園』的能源政策？」
+        </p>
+      </div>
+      
+      <div class="space-y-3">
+        <div class="p-4 bg-white rounded-lg">
+          <p class="font-medium text-amber-700 mb-2">投票資格</p>
+          <ul class="space-y-1 text-sm text-neutral-600">
+            <li>• 年滿 <strong>18 歲</strong>（比選舉的 20 歲更低）</li>
+            <li>• 在中華民國繼續居住 6 個月以上</li>
+            <li>• 未受監護宣告</li>
+          </ul>
+        </div>
+        
+        <div class="p-4 bg-blue-50 rounded-lg">
+          <p class="text-blue-700 font-medium">
+            📌 18-19 歲公民：可投公投票，<strong>不能</strong>投九合一選舉票
+          </p>
+        </div>
+      </div>
+      
+      <div class="mt-4 space-y-2 text-sm">
+        <a 
+          href="https://bulletin.cec.gov.tw/02公民投票公報/全國性公民投票/115第22案/紙本公報/全國性公民投票案第22案公民投票公報.pdf" 
+          target="_blank" 
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-primary-600 hover:underline"
+        >
+          📄 公投公報 PDF
+        </a>
+        <br />
+        <a 
+          href="https://info.cec.gov.tw/vote2026/static/file/ebook/index.html" 
+          target="_blank" 
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-primary-600 hover:underline"
+        >
+          📖 公投公報電子書
+        </a>
+      </div>
+    </section>
+
+    <!-- Accessibility -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">♿ 無障礙投票</h2>
+      
+      <p class="text-neutral-600 mb-4">
+        身心障礙或因故行動不便者，可申請協助。
+      </p>
+      
+      <div class="space-y-2 text-sm">
+        <a 
+          href="https://info.cec.gov.tw/vote2026/static/file/8d9c49aa26824dbcaa97f579f3c48b15.pdf" 
+          target="_blank" 
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-primary-600 hover:underline"
+        >
+          📄 易讀版投票指南
+        </a>
+        <br />
+        <a 
+          href="https://info.cec.gov.tw/vote2026/static/file/75c6113f956147888648972eb0de5568.pdf" 
+          target="_blank" 
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-primary-600 hover:underline"
+        >
+          📄 投票溝通圖卡
+        </a>
+        <br />
+        <a 
+          href="https://info.cec.gov.tw/vote2026/static/file/bb497fd15e1042b7ba31f9ea16eff9e7.pdf" 
+          target="_blank" 
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-primary-600 hover:underline"
+        >
+          📄 身心障礙投票協助說明
+        </a>
+      </div>
+    </section>
+
+    <!-- Official Resources -->
+    <section class="p-6 bg-neutral-100 border border-neutral-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🔗 官方資源</h2>
+      
+      <div class="grid gap-4 sm:grid-cols-2">
+        <a 
+          href="https://info.cec.gov.tw/vote2026/" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-white rounded-lg hover:shadow-md transition-shadow"
+        >
+          <p class="font-medium text-primary-600">中選會 115 選舉專區</p>
+          <p class="text-sm text-neutral-500">官方入口、候選人查詢</p>
+        </a>
+        
+        <a 
+          href="https://bulletin.cec.gov.tw/" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-white rounded-lg hover:shadow-md transition-shadow"
+        >
+          <p class="font-medium text-primary-600">選舉公報</p>
+          <p class="text-sm text-neutral-500">候選人政見完整版</p>
+        </a>
+        
+        <a 
+          href="https://www.ris.gov.tw/info-electionVotePlaceQuery/app/aw0702VPQ/main/" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-white rounded-lg hover:shadow-md transition-shadow"
+        >
+          <p class="font-medium text-primary-600">投票所查詢</p>
+          <p class="text-sm text-neutral-500">11/23 起開放</p>
+        </a>
+        
+        <a 
+          href="https://info.cec.gov.tw/vote2026/static/file/9a7c9277a04643fd97ec785e5806dae6.pdf" 
+          target="_blank" 
+          rel="noopener"
+          class="p-4 bg-white rounded-lg hover:shadow-md transition-shadow"
+        >
+          <p class="font-medium text-primary-600">投開票所工作手冊</p>
+          <p class="text-sm text-neutral-500">完整投票規則說明</p>
+        </a>
+      </div>
+    </section>
+
+    <nav class="flex justify-between pt-8 border-t border-neutral-200">
+      <a href={`${baseUrl}how-to-judge/`} class="text-primary-600 hover:underline">
+        ← 怎麼判斷候選人
+      </a>
+      <a href={`${baseUrl}cooperation/`} class="text-primary-600 hover:underline">
+        合作案例 →
+      </a>
+    </nav>
+  </article>
+</Layout>

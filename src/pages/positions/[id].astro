@@ -1,0 +1,341 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import positions from '../../data/positions.json';
+
+export function getStaticPaths() {
+  return positions.positions.map(position => ({
+    params: { id: position.id },
+    props: { position }
+  }));
+}
+
+const { position } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL;
+
+function formatMoney(num: number): string {
+  return new Intl.NumberFormat('zh-TW').format(num);
+}
+---
+
+<Layout title={position.name} description={position.description}>
+  <article class="space-y-8">
+    <header>
+      <nav class="text-sm text-neutral-500 mb-4">
+        <a href={`${baseUrl}positions/`} class="hover:text-primary-600">職務介紹</a>
+        <span class="mx-2">›</span>
+        <span class="text-neutral-700">{position.name}</span>
+      </nav>
+      
+      <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-4">
+        {position.name}
+      </h1>
+      
+      <div class="flex flex-wrap gap-3 text-sm">
+        <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full">
+          {position.category}級
+        </span>
+        <span class="px-3 py-1 bg-neutral-100 text-neutral-600 rounded-full">
+          任期 {position.term} {position.termUnit}
+        </span>
+        {position.applicableTo && (
+          <span class="px-3 py-1 bg-neutral-100 text-neutral-600 rounded-full">
+            適用：{Array.isArray(position.applicableTo) ? position.applicableTo.join('、') : position.applicableTo}
+          </span>
+        )}
+      </div>
+    </header>
+
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-3">📖 職位說明</h2>
+      <p class="text-neutral-600">{position.description}</p>
+      
+      {position.areas && (
+        <div class="mt-4 p-4 bg-purple-50 rounded-lg">
+          <p class="text-sm text-purple-700">
+            <strong>適用區域：</strong>{position.areas.join('、')}
+          </p>
+        </div>
+      )}
+      
+      {position.notApplicableTo && (
+        <div class="mt-4 p-4 bg-amber-50 rounded-lg">
+          <p class="text-sm text-amber-700">
+            <strong>不適用：</strong>{position.notApplicableTo.join('、')}（這些地區無此職位選舉）
+          </p>
+        </div>
+      )}
+    </section>
+
+    {position.salary && (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        <h2 class="text-lg font-semibold text-neutral-800 mb-3">💰 待遇</h2>
+        
+        {position.salary.type === '無給職' ? (
+          <div>
+            <p class="text-neutral-600 mb-3">
+              法律上為<strong>無給職</strong>，但有事務補助費。
+            </p>
+            {position.salary.allowance && (
+              <div class="p-4 bg-green-50 rounded-lg">
+                <p class="text-green-700">
+                  <strong>{position.salary.allowance.name}：</strong>
+                  約 {formatMoney(position.salary.allowance.monthly)} 元/月
+                </p>
+                {position.salary.allowance.note && (
+                  <p class="text-sm text-green-600 mt-1">（{position.salary.allowance.note}）</p>
+                )}
+              </div>
+            )}
+          </div>
+        ) : position.salary.monthly ? (
+          <div>
+            <div class="p-4 bg-green-50 rounded-lg mb-4">
+              <p class="text-green-700 text-lg">
+                <strong>{position.salary.name || '月薪'}：</strong>
+                約 {formatMoney(position.salary.monthly)} 元/月
+              </p>
+              {position.salary.note && (
+                <p class="text-sm text-green-600 mt-1">（{position.salary.note}）</p>
+              )}
+            </div>
+            
+            {position.salary.additionalAllowances && (
+              <div class="space-y-2">
+                <p class="text-sm font-medium text-neutral-700">其他津貼與補助：</p>
+                {position.salary.additionalAllowances.map(allowance => (
+                  <div class="flex justify-between p-3 bg-neutral-50 rounded">
+                    <span class="text-neutral-600">{allowance.name}</span>
+                    <span class="text-neutral-800">{formatMoney(allowance.monthly)} 元/月</span>
+                  </div>
+                ))}
+                {position.salary.totalTeamCost && (
+                  <div class="mt-3 p-3 bg-blue-50 rounded">
+                    <p class="text-blue-700 font-medium">
+                      團隊總成本：{position.salary.totalTeamCost}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ) : (
+          <p class="text-neutral-600">{position.salary.note || '依各縣市規定'}</p>
+        )}
+        
+        {position.salary.source && (
+          <p class="text-xs text-neutral-500 mt-3">資料來源：{position.salary.source}</p>
+        )}
+      </section>
+    )}
+
+    {position.appointmentPower && (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        <h2 class="text-lg font-semibold text-neutral-800 mb-3">👥 可任命的職位</h2>
+        <p class="text-neutral-600 mb-4">{position.appointmentPower.description}</p>
+        
+        <div class="space-y-2">
+          {position.appointmentPower.positions.map(pos => (
+            <div class="flex justify-between items-center p-3 bg-neutral-50 rounded">
+              <div>
+                <span class="font-medium text-neutral-700">{pos.title}</span>
+                <span class="text-neutral-500 ml-2">× {pos.count}</span>
+                {pos.note && <p class="text-xs text-neutral-500">{pos.note}</p>}
+              </div>
+              {pos.monthlySalary && (
+                <span class="text-neutral-600">{formatMoney(pos.monthlySalary)} 元/月</span>
+              )}
+            </div>
+          ))}
+        </div>
+        
+        {position.appointmentPower.totalMonthlyCost && (
+          <div class="mt-4 p-4 bg-amber-50 rounded-lg">
+            <p class="text-amber-800">
+              <strong>總計每月薪資支出：</strong>{position.appointmentPower.totalMonthlyCost}
+            </p>
+            {position.appointmentPower.note && (
+              <p class="text-sm text-amber-600 mt-1">{position.appointmentPower.note}</p>
+            )}
+          </div>
+        )}
+      </section>
+    )}
+
+    {position.budget && (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        <h2 class="text-lg font-semibold text-neutral-800 mb-3">💵 可調度預算</h2>
+        
+        {position.budget.example && (
+          <p class="text-neutral-600">{position.budget.example}</p>
+        )}
+        
+        {position.budget.taipei_example && (
+          <div class="mt-3 space-y-2">
+            <div class="flex justify-between p-3 bg-neutral-50 rounded">
+              <span class="text-neutral-600">里鄰建設服務經費</span>
+              <span class="text-neutral-800">{formatMoney(position.budget.taipei_example.construction)} 元/年</span>
+            </div>
+            <div class="flex justify-between p-3 bg-neutral-50 rounded">
+              <span class="text-neutral-600">敦親睦鄰活動經費</span>
+              <span class="text-neutral-800">{formatMoney(position.budget.taipei_example.neighborhoodActivity)} 元/年</span>
+            </div>
+            <p class="text-sm text-neutral-500 mt-2">{position.budget.note}</p>
+            {position.budget.usage && (
+              <p class="text-sm text-neutral-600 mt-2">
+                <strong>經費用途：</strong>{position.budget.usage}
+              </p>
+            )}
+          </div>
+        )}
+      </section>
+    )}
+
+    {position.responsibilities && (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        <h2 class="text-lg font-semibold text-neutral-800 mb-3">✅ 職責</h2>
+        <ul class="space-y-2">
+          {position.responsibilities.map(resp => (
+            <li class="flex items-start gap-3 text-neutral-600">
+              <span class="flex-shrink-0 w-5 h-5 flex items-center justify-center bg-green-100 text-green-600 rounded-full text-xs">✓</span>
+              <span>{resp}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {position.cannotDo && (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        <h2 class="text-lg font-semibold text-neutral-800 mb-3">❌ 不能做的事</h2>
+        <ul class="space-y-2">
+          {position.cannotDo.map(item => (
+            <li class="flex items-start gap-3 text-neutral-600">
+              <span class="flex-shrink-0 w-5 h-5 flex items-center justify-center bg-red-100 text-red-600 rounded-full text-xs">✗</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {position.civilDefense && (
+      <section class="p-6 bg-amber-50 border border-amber-200 rounded-xl">
+        <h2 class="text-lg font-semibold text-amber-800 mb-3">🚨 民防角色：{position.civilDefense.role}</h2>
+        <p class="text-amber-700 mb-3">{position.civilDefense.importance}</p>
+        <ul class="space-y-1">
+          {position.civilDefense.duties.map(duty => (
+            <li class="text-sm text-amber-600">• {duty}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {position.team && (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        <h2 class="text-lg font-semibold text-neutral-800 mb-3">👥 團隊成員</h2>
+        <div class="space-y-3">
+          {position.team.map(member => (
+            <div class="p-4 bg-neutral-50 rounded-lg">
+              <h3 class="font-medium text-neutral-800">{member.role}</h3>
+              <p class="text-sm text-neutral-600 mt-1">{member.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {position.checkpoints && (
+      <section class="p-6 bg-primary-50 border border-primary-200 rounded-xl">
+        <h2 class="text-lg font-semibold text-primary-800 mb-3">🔍 如何選擇候選人</h2>
+        <ul class="space-y-2">
+          {position.checkpoints.map(checkpoint => (
+            <li class="flex items-start gap-3 text-primary-700">
+              <span class="flex-shrink-0">☐</span>
+              <span>{checkpoint}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {position.whereToCheck && (
+      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+        <h2 class="text-lg font-semibold text-neutral-800 mb-3">📚 查詢資源</h2>
+        <div class="space-y-3">
+          {position.whereToCheck.taipei && (
+            <div class="p-4 bg-neutral-50 rounded-lg">
+              <h3 class="font-medium text-neutral-800">{position.whereToCheck.taipei.name}</h3>
+              <div class="mt-2 space-y-1 text-sm">
+                <p><a href={position.whereToCheck.taipei.records} target="_blank" rel="noopener" class="text-primary-600 hover:underline">會議紀錄</a></p>
+                {position.whereToCheck.taipei.gazette && (
+                  <p><a href={position.whereToCheck.taipei.gazette} target="_blank" rel="noopener" class="text-primary-600 hover:underline">電子公報（質詢全文）</a></p>
+                )}
+                {position.whereToCheck.taipei.video && (
+                  <p><a href={position.whereToCheck.taipei.video} target="_blank" rel="noopener" class="text-primary-600 hover:underline">議事影音</a></p>
+                )}
+              </div>
+            </div>
+          )}
+          {position.whereToCheck.general && (
+            <div class="p-4 bg-neutral-50 rounded-lg">
+              <h3 class="font-medium text-neutral-800">{position.whereToCheck.general.name}</h3>
+              <p class="mt-1 text-sm">
+                <a href={position.whereToCheck.general.url} target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                  {position.whereToCheck.general.url}
+                </a>
+              </p>
+              <p class="text-xs text-neutral-500 mt-1">可查詢全國各縣市議會紀錄</p>
+            </div>
+          )}
+          {position.whereToCheck.villageOffice && (
+            <div class="p-4 bg-neutral-50 rounded-lg">
+              <h3 class="font-medium text-neutral-800">{position.whereToCheck.villageOffice.name}</h3>
+              <p class="text-sm text-neutral-600">{position.whereToCheck.villageOffice.note}</p>
+            </div>
+          )}
+          {position.whereToCheck.moiDirectory && (
+            <div class="p-4 bg-neutral-50 rounded-lg">
+              <h3 class="font-medium text-neutral-800">{position.whereToCheck.moiDirectory.name}</h3>
+              <p class="mt-1 text-sm">
+                <a href={position.whereToCheck.moiDirectory.url} target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                  查詢現任村里長
+                </a>
+              </p>
+              <p class="text-xs text-neutral-500 mt-1">{position.whereToCheck.moiDirectory.note}</p>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    {position.relatedLaws && (
+      <section class="p-4 bg-neutral-100 rounded-lg">
+        <p class="text-sm text-neutral-600">
+          <strong>相關法規：</strong>
+          {position.relatedLaws.map((law, i) => (
+            <span>
+              {i > 0 && '、'}
+              <a 
+                href={`https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0040003`} 
+                target="_blank" 
+                rel="noopener"
+                class="text-primary-600 hover:underline"
+              >
+                {law.name} §{law.articles.join('、§')}
+              </a>
+            </span>
+          ))}
+        </p>
+      </section>
+    )}
+
+    <nav class="flex justify-between pt-8 border-t border-neutral-200">
+      <a href={`${baseUrl}positions/`} class="text-primary-600 hover:underline">
+        ← 返回職務列表
+      </a>
+      <a href={`${baseUrl}how-to-judge/`} class="text-primary-600 hover:underline">
+        怎麼判斷候選人 →
+      </a>
+    </nav>
+  </article>
+</Layout>

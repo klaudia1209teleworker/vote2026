@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-11-15",
+    "sources": [
+      {
+        "name": "中選會 115 年地方選舉公告",
+        "url": "https://info.cec.gov.tw/vote2026/"
+      },
+      {
+        "name": "公投第 22 案公告",
+        "url": "https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg032161/ch02/type3/gov15/num3/Eg.pdf"
+      }
+    ]
+  },
+  "referendum": {
+    "id": 22,
+    "title": "全國性公民投票案第 22 案",
+    "question": "你是否支持政府使用「核電」振興經濟，以廢除「非核家園」的能源政策？",
+    "eligibility": "年滿 18 歲，在中華民國繼續居住 6 個月以上，未受監護宣告",
+    "note": "18-19 歲公民僅可投公投票，不能投九合一選舉票",
+    "source": "https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg032161/ch02/type3/gov15/num3/Eg.pdf"
+  },
+  "eligibility": {
+    "election": {
+      "age": 20,
+      "residency": "在選舉區繼續居住 4 個月以上",
+      "source": "https://www.moi.gov.tw/News_Content.aspx?n=4&s=343110"
+    },
+    "referendum": {
+      "age": 18,
+      "residency": "在中華民國繼續居住 6 個月以上",
+      "note": "18-19 歲可投公投，不可投選舉"
+    }
+  },
+  "indigenousStatus": {
+    "none": {
+      "label": "無原住民身分",
+      "description": "投區域選舉票"
+    },
+    "plains": {
+      "label": "平地原住民",
+      "description": "除區域票外，另投平地原住民議員（或代表）票"
+    },
+    "mountain": {
+      "label": "山地原住民",
+      "description": "除區域票外，另投山地原住民議員（或代表）票"
+    }
+  },
+  "ballotTypes": {
+    "directMunicipality": {
+      "description": "直轄市（六都）選民",
+      "regular": [
+        {
+          "position": "直轄市長",
+          "color": "白色",
+          "scope": "全市一選區"
+        },
+        {
+          "position": "直轄市議員",
+          "color": "綠色",
+          "scope": "依戶籍所在選區"
+        },
+        {
+          "position": "里長",
+          "color": "白色或粉紅色",
+          "scope": "戶籍所在里",
+          "note": "票色由各市選委會決定"
+        }
+      ],
+      "indigenous": {
+        "plains": {
+          "position": "平地原住民議員",
+          "color": "黃色",
+          "scope": "全市一選區（平地原住民身分）"
+        },
+        "mountain": {
+          "position": "山地原住民議員",
+          "color": "藍色",
+          "scope": "全市一選區（山地原住民身分）"
+        }
+      },
+      "mountainDistrictExtra": {
+        "description": "戶籍在直轄市山地原住民區（烏來、復興、和平、那瑪夏、桃源、茂林）者額外可選",
+        "ballots": [
+          {
+            "position": "區長",
+            "color": "依公告",
+            "scope": "該山地原住民區"
+          },
+          {
+            "position": "區民代表",
+            "color": "依公告",
+            "scope": "依戶籍所在選區"
+          }
+        ]
+      }
+    },
+    "provincialCity": {
+      "description": "省轄市（基隆市、新竹市、嘉義市）選民",
+      "regular": [
+        {
+          "position": "市長",
+          "color": "白色",
+          "scope": "全市一選區"
+        },
+        {
+          "position": "市議員",
+          "color": "綠色",
+          "scope": "依戶籍所在選區"
+        },
+        {
+          "position": "里長",
+          "color": "白色或粉紅色",
+          "scope": "戶籍所在里"
+        }
+      ],
+      "indigenous": {
+        "plains": {
+          "position": "平地原住民議員",
+          "color": "黃色",
+          "scope": "全市（如有名額）",
+          "note": "部分省轄市可能無原住民議員名額"
+        },
+        "mountain": {
+          "position": "山地原住民議員",
+          "color": "藍色",
+          "scope": "全市（如有名額）",
+          "note": "部分省轄市可能無原住民議員名額"
+        }
+      }
+    },
+    "county": {
+      "description": "縣選民（含鄉鎮市區）",
+      "regular": [
+        {
+          "position": "縣長",
+          "color": "白色",
+          "scope": "全縣一選區"
+        },
+        {
+          "position": "縣議員",
+          "color": "綠色",
+          "scope": "依戶籍所在選區"
+        },
+        {
+          "position": "鄉（鎮、市）長",
+          "color": "依公告",
+          "scope": "戶籍所在鄉鎮市"
+        },
+        {
+          "position": "鄉（鎮、市）民代表",
+          "color": "依公告",
+          "scope": "依戶籍所在選區"
+        },
+        {
+          "position": "村（里）長",
+          "color": "白色或粉紅色",
+          "scope": "戶籍所在村里"
+        }
+      ],
+      "indigenous": {
+        "plains": {
+          "position": "平地原住民議員",
+          "color": "黃色",
+          "scope": "全縣（如有名額）"
+        },
+        "mountain": {
+          "position": "山地原住民議員",
+          "color": "藍色",
+          "scope": "全縣（如有名額）"
+        }
+      }
+    }
+  },
+  "ballotColors": {
+    "source": "https://info.cec.gov.tw/vote2026/static/contentJson/article/A0038.json",
+    "legend": {
+      "縣市長": "白色",
+      "區域議員": "綠色",
+      "平地原住民議員": "黃色",
+      "山地原住民議員": "藍色",
+      "鄉鎮市長": "白色",
+      "鄉鎮市民代表": "依各縣市公告",
+      "村里長": "白色或粉紅色（依各縣市公告）",
+      "區長": "依公告",
+      "區民代表": "依公告",
+      "公投": "黃色"
+    }
+  }
+}

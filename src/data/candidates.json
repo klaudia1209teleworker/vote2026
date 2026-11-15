@@ -1,0 +1,126 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-11-15",
+    "status": "scaffold",
+    "officialListDate": "2026-11-17",
+    "note": "候選人正式名單預計於 11/17 公告，此檔案為資料架構示範，包含標記為範例的測試資料",
+    "sources": [
+      {
+        "name": "中選會選舉專區",
+        "url": "https://info.cec.gov.tw/vote2026/"
+      },
+      {
+        "name": "選舉公報",
+        "url": "https://bulletin.cec.gov.tw/"
+      }
+    ]
+  },
+  "schema": {
+    "description": "每位候選人的資料結構",
+    "fields": {
+      "id": "唯一識別碼（建議格式：position-city-district-number）",
+      "name": "姓名",
+      "number": "號次（抽籤後填入）",
+      "party": "政黨（無黨籍填 null）",
+      "position": "參選職位（對應 positions.json 中的 id）",
+      "city": "縣市",
+      "district": "選區（可能是行政區、里、或選區編號）",
+      "bulletinUrl": "選舉公報連結",
+      "officialSourceUrl": "官方來源連結",
+      "lastVerified": "最後驗證日期 (YYYY-MM-DD)",
+      "isIncumbent": "是否為現任",
+      "checks": {
+        "description": "依據影片建議的候選人評估資料",
+        "incumbent": {
+          "councilAttendance": {
+            "general": "大會出席率",
+            "committee": "委員會出席率",
+            "source": "議會紀錄來源連結"
+          },
+          "interpellations": [
+            {
+              "topic": "質詢主題",
+              "date": "日期",
+              "followUp": "是否持續追蹤",
+              "source": "來源連結"
+            }
+          ]
+        },
+        "newcomer": {
+          "professionalBackground": "專業背景描述",
+          "publicParticipation": [
+            {
+              "activity": "公共參與活動",
+              "role": "角色",
+              "source": "來源連結"
+            }
+          ]
+        }
+      },
+      "isSample": "標記為範例資料（正式上線時應移除）"
+    }
+  },
+  "candidates": [
+    {
+      "id": "sample-councilor-taipei-daan-1",
+      "name": "（範例）王小明",
+      "number": 1,
+      "party": "（範例黨）",
+      "position": "councilor-municipal",
+      "city": "臺北市",
+      "district": "第四選區（大安區）",
+      "bulletinUrl": null,
+      "officialSourceUrl": "https://info.cec.gov.tw/vote2026/",
+      "lastVerified": "2026-11-15",
+      "isIncumbent": true,
+      "checks": {
+        "incumbent": {
+          "councilAttendance": {
+            "general": "95%",
+            "committee": "90%",
+            "source": "https://www.tcc.gov.tw/",
+            "note": "此為範例數據"
+          },
+          "interpellations": [
+            {
+              "topic": "交通安全改善",
+              "date": "2025-05",
+              "followUp": true,
+              "source": "https://gaz.tcc.gov.tw/"
+            }
+          ]
+        }
+      },
+      "isSample": true,
+      "_comment": "此為範例資料，用於說明資料結構，正式資料請依中選會公告填入"
+    },
+    {
+      "id": "sample-councilor-taipei-daan-2",
+      "name": "（範例）李小華",
+      "number": 2,
+      "party": null,
+      "position": "councilor-municipal",
+      "city": "臺北市",
+      "district": "第四選區（大安區）",
+      "bulletinUrl": null,
+      "officialSourceUrl": "https://info.cec.gov.tw/vote2026/",
+      "lastVerified": "2026-11-15",
+      "isIncumbent": false,
+      "checks": {
+        "newcomer": {
+          "professionalBackground": "都市規劃師，10年經驗",
+          "publicParticipation": [
+            {
+              "activity": "社區改造計畫",
+              "role": "志工",
+              "source": null
+            }
+          ]
+        }
+      },
+      "isSample": true,
+      "_comment": "此為範例資料，用於說明資料結構，正式資料請依中選會公告填入"
+    }
+  ]
+}

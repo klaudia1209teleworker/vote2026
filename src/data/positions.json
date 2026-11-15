@@ -1,0 +1,375 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-11-15",
+    "sources": [
+      {
+        "name": "地方制度法",
+        "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0040003"
+      },
+      {
+        "name": "公職人員選舉罷免法",
+        "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0020010"
+      },
+      {
+        "name": "讀字生活 Ep02 影片",
+        "url": "https://www.youtube.com/watch?v=f6VOJumCwIg"
+      }
+    ],
+    "disclaimer": "部分待遇數字引用自台北市 2025-2026 年資料，僅供參考，各縣市實際待遇依當地規定"
+  },
+  "positions": [
+    {
+      "id": "mayor-municipal",
+      "name": "直轄市長",
+      "shortName": "市長",
+      "category": "首長",
+      "level": 1,
+      "applicableTo": ["直轄市"],
+      "description": "直轄市最高行政首長，領導市政府團隊，負責市政方向與重大決策",
+      "term": 4,
+      "termUnit": "年",
+      "salary": {
+        "monthly": 220000,
+        "note": "以台北市 2025-2026 年待遇表為例，各直轄市可能略有不同",
+        "source": "台北市政府待遇表"
+      },
+      "responsibilities": [
+        "決定市政方向與施政優先順序",
+        "編列市政府年度預算",
+        "任命副市長（最多 3 人）及各局處首長",
+        "主持市政會議，協調各局處",
+        "簽署市府重要公文與契約",
+        "代表市政府對外",
+        "都市計劃、土地使用分區等重大決策"
+      ],
+      "cannotDo": [
+        "直接增加議會預算（須由市府提案）",
+        "違法動支預算或繞過議會監督",
+        "任意變更已簽約的工程契約",
+        "干預司法或選舉",
+        "利用職權圖利特定人士"
+      ],
+      "appointmentPower": {
+        "description": "市長可直接任命的職位（以台北市為例）",
+        "positions": [
+          { "title": "副市長", "count": 3, "monthlySalary": 200000 },
+          { "title": "一般局處首長", "count": 26, "monthlySalary": 150000 },
+          { "title": "機要人員", "count": "約 50+", "note": "市本部最多 5 人，各局處最多 2 人" }
+        ],
+        "totalMonthlyCost": "約 1,000 萬元（含市長本人）",
+        "note": "以台北市 2025-2026 年編制為例，含市長找進來的團隊全部薪資",
+        "source": "讀字生活 Ep02"
+      },
+      "budget": {
+        "example": "台北市 2027 年度總預算約 2,389 億元",
+        "source": "台北市議會通過之年度總預算"
+      },
+      "checkpoints": [
+        "政見是否具體可行？有沒有說明錢從哪裡來？",
+        "是否能組建有能力的團隊？身邊是否有各領域人才？",
+        "過去的行政經驗如何？有無重大爭議？",
+        "面對質疑時的態度——能否接受批評並改進？",
+        "對危機處理（災害、防疫）有無準備？",
+        "是否願意與不同意見的人合作？"
+      ],
+      "relatedLaws": [
+        { "name": "地方制度法", "articles": ["55", "56", "57"] }
+      ]
+    },
+    {
+      "id": "mayor-county",
+      "name": "縣（市）長",
+      "shortName": "縣市長",
+      "category": "首長",
+      "level": 1,
+      "applicableTo": ["縣", "省轄市"],
+      "description": "縣或省轄市最高行政首長，職責與直轄市長類似但規模較小",
+      "term": 4,
+      "termUnit": "年",
+      "salary": {
+        "note": "依各縣市規定，一般低於直轄市長",
+        "source": "各縣市政府待遇規定"
+      },
+      "responsibilities": [
+        "決定縣市政方向與施政優先順序",
+        "編列縣市政府年度預算",
+        "任命副縣市長及各局處首長",
+        "主持縣市政會議",
+        "代表縣市政府對外"
+      ],
+      "cannotDo": [
+        "直接增加議會預算",
+        "違法動支預算",
+        "干預鄉鎮市公所運作（鄉鎮市長由民選）"
+      ],
+      "checkpoints": [
+        "政見是否切合當地需求？",
+        "是否熟悉地方事務？",
+        "團隊組成是否多元有能力？"
+      ]
+    },
+    {
+      "id": "township-mayor",
+      "name": "鄉（鎮、市）長",
+      "shortName": "鄉鎮市長",
+      "category": "首長",
+      "level": 2,
+      "applicableTo": ["縣"],
+      "notApplicableTo": ["直轄市", "省轄市"],
+      "description": "鄉、鎮、縣轄市的行政首長，負責該鄉鎮市的地方事務",
+      "term": 4,
+      "termUnit": "年",
+      "salary": {
+        "note": "依各縣規定"
+      },
+      "responsibilities": [
+        "執行鄉鎮市自治事項",
+        "編列鄉鎮市公所預算",
+        "管理鄉鎮市公共設施",
+        "辦理民政、社政等地方事務"
+      ],
+      "cannotDo": [
+        "處理縣級以上的事務",
+        "違反上級機關法令"
+      ],
+      "checkpoints": [
+        "是否熟悉當地鄉鎮事務？",
+        "過去的服務紀錄如何？",
+        "是否能有效協調地方需求？"
+      ]
+    },
+    {
+      "id": "district-mayor",
+      "name": "直轄市山地原住民區區長",
+      "shortName": "區長",
+      "category": "首長",
+      "level": 2,
+      "applicableTo": ["直轄市山地原住民區"],
+      "areas": ["新北市烏來區", "桃園市復興區", "臺中市和平區", "高雄市那瑪夏區", "高雄市桃源區", "高雄市茂林區"],
+      "description": "直轄市山地原住民區的行政首長，由區民直選",
+      "term": 4,
+      "termUnit": "年",
+      "responsibilities": [
+        "執行區自治事項",
+        "管理區公共設施",
+        "辦理原住民地區事務"
+      ],
+      "note": "一般直轄市的區長為官派，僅山地原住民區區長為民選"
+    },
+    {
+      "id": "councilor-municipal",
+      "name": "直轄市議員",
+      "shortName": "市議員",
+      "category": "民意代表",
+      "level": 1,
+      "applicableTo": ["直轄市"],
+      "description": "代表市民監督市政府，審查預算、質詢市府團隊、制定地方法規",
+      "term": 4,
+      "termUnit": "年",
+      "salary": {
+        "monthly": 150000,
+        "name": "研究費",
+        "note": "以台北市 2026 年為例",
+        "additionalAllowances": [
+          { "name": "為民服務費", "monthly": 40000 },
+          { "name": "公費助理補助", "monthly": 320000, "note": "須聘用至少 6 位助理，此款非議員本人可領取" },
+          { "name": "助理保險退休加班費等", "monthly": 64000 }
+        ],
+        "totalTeamCost": "約 50 萬元/月（含議員及其團隊）",
+        "source": "讀字生活 Ep02"
+      },
+      "responsibilities": [
+        "審查市政府年度預算（可刪減，不可增加）",
+        "質詢市長及各局處首長",
+        "審議地方自治法規",
+        "接受市民陳情，協助反映問題",
+        "監督市府施政成效",
+        "參與各委員會審查專業議題"
+      ],
+      "cannotDo": [
+        "直接增加預算（只能刪減或凍結）",
+        "直接指揮市府局處",
+        "要求公務員違法通融（如消罰單）",
+        "干預採購發包",
+        "詐領助理費（助理費須實際聘用助理）"
+      ],
+      "committees": "議員會參與至少一個委員會（如教育、交通、財政等），進行專業審查",
+      "checkpoints": [
+        "過去質詢紀錄（爭取連任者）——在問什麼問題？有沒有持續追蹤？",
+        "大會與委員會出席率——有沒有認真出席？",
+        "關注的議題是否與你在意的事情相符？",
+        "是否有清楚的專業背景或公共參與經驗？",
+        "是否願意在同黨市長犯錯時仍進行監督？"
+      ],
+      "whereToCheck": {
+        "taipei": {
+          "name": "臺北市議會",
+          "records": "https://www.tcc.gov.tw/",
+          "gazette": "https://gaz.tcc.gov.tw/",
+          "video": "https://ifddoc2.tcc.gov.tw/TCCMIS_Front"
+        },
+        "general": {
+          "name": "地方議會議事錄總庫",
+          "url": "https://journal.th.gov.tw/"
+        }
+      },
+      "relatedLaws": [
+        { "name": "地方制度法", "articles": ["33", "35", "36"] }
+      ]
+    },
+    {
+      "id": "councilor-county",
+      "name": "縣（市）議員",
+      "shortName": "縣市議員",
+      "category": "民意代表",
+      "level": 1,
+      "applicableTo": ["縣", "省轄市"],
+      "description": "代表縣市民監督縣市政府，職責與直轄市議員類似",
+      "term": 4,
+      "termUnit": "年",
+      "responsibilities": [
+        "審查縣市政府年度預算",
+        "質詢縣市長及各局處首長",
+        "審議地方自治法規",
+        "接受市民陳情"
+      ],
+      "cannotDo": [
+        "直接增加預算",
+        "干預行政機關運作"
+      ],
+      "checkpoints": [
+        "出席率與質詢紀錄",
+        "關注議題是否與地方需求相符",
+        "是否有持續追蹤問政"
+      ]
+    },
+    {
+      "id": "township-representative",
+      "name": "鄉（鎮、市）民代表",
+      "shortName": "鄉鎮市代表",
+      "category": "民意代表",
+      "level": 2,
+      "applicableTo": ["縣"],
+      "notApplicableTo": ["直轄市", "省轄市"],
+      "description": "代表鄉鎮市民監督鄉鎮市公所，審查鄉鎮市預算",
+      "term": 4,
+      "termUnit": "年",
+      "responsibilities": [
+        "審查鄉鎮市公所預算",
+        "質詢鄉鎮市長",
+        "審議鄉鎮市自治法規"
+      ],
+      "checkpoints": [
+        "是否了解地方事務？",
+        "過去有無公共服務經驗？"
+      ]
+    },
+    {
+      "id": "district-representative",
+      "name": "直轄市山地原住民區區民代表",
+      "shortName": "區民代表",
+      "category": "民意代表",
+      "level": 2,
+      "applicableTo": ["直轄市山地原住民區"],
+      "areas": ["新北市烏來區", "桃園市復興區", "臺中市和平區", "高雄市那瑪夏區", "高雄市桃源區", "高雄市茂林區"],
+      "description": "代表山地原住民區區民監督區公所",
+      "term": 4,
+      "termUnit": "年",
+      "responsibilities": [
+        "審查區公所預算",
+        "質詢區長",
+        "審議區自治法規"
+      ]
+    },
+    {
+      "id": "village-chief",
+      "name": "村（里）長",
+      "shortName": "村里長",
+      "category": "基層",
+      "level": 3,
+      "applicableTo": ["全國"],
+      "description": "最貼近居民生活的民選代表，負責村里公共事務、居民聯繫、緊急應變",
+      "term": 4,
+      "termUnit": "年",
+      "salary": {
+        "type": "無給職",
+        "allowance": {
+          "name": "事務補助費",
+          "monthly": 50000,
+          "note": "以台北市 2026 年為例，各縣市不同"
+        },
+        "note": "法律上為無給職，但有事務補助費",
+        "source": "讀字生活 Ep02"
+      },
+      "budget": {
+        "taipei_example": {
+          "construction": 350000,
+          "neighborhoodActivity": 80000,
+          "total": 430000,
+          "unit": "年"
+        },
+        "note": "以台北市基本額度為例，各里實際經費依區域有加成",
+        "usage": "里鄰建設服務經費可用於防火巷清潔、簡易照明、警示標示、小型零星工程等"
+      },
+      "responsibilities": [
+        "聯繫居民、傳達公告資訊",
+        "發現環境問題（路燈故障、排水堵塞等）並通報相關單位",
+        "關心獨居長者、弱勢家庭等高風險居民",
+        "協調鄰里糾紛、整合居民意見",
+        "召開里民大會、里鄰工作會報",
+        "協助居民申請補助、轉介社福資源",
+        "管理里鄰建設服務經費",
+        "災害發生時擔任民防分團長，協助疏散與物資分配"
+      ],
+      "cannotDo": [
+        "決定誰可以領補助（資格由主管機關審定）",
+        "自行花用里鄰經費（須經里鄰工作會報審議、區公所核定）",
+        "要求公務員違法處理事務"
+      ],
+      "civilDefense": {
+        "role": "民防分團分團長",
+        "duties": [
+          "災害時協助家戶防護",
+          "物資分配與資訊傳遞",
+          "協助防空避難",
+          "配合消防、警察等單位進行緊急應變"
+        ],
+        "importance": "里長是災害發生時最先能到達的基層指揮人員"
+      },
+      "team": [
+        {
+          "role": "里幹事",
+          "description": "區公所編制人員，協助里長辦理里務，不隨里長更換而更換"
+        },
+        {
+          "role": "鄰長",
+          "description": "協助里長聯繫各鄰居民、傳達資訊、彙整需求"
+        }
+      ],
+      "checkpoints": [
+        "平常看不看得到他？是否常在鄰里間走動？",
+        "公布欄資訊是否及時更新？",
+        "聯絡得到他嗎？有沒有公開聯絡方式？",
+        "是否關心所有居民，還是只跟特定一群人互動？",
+        "對新住戶、年輕人是否也有關注？",
+        "里鄰工作會報有沒有公開？經費用途是否透明？",
+        "災害發生時的應變能力與組織能力如何？"
+      ],
+      "whereToCheck": {
+        "villageOffice": {
+          "name": "里辦公處網站",
+          "note": "可查詢里鄰工作會報紀錄、經費公告"
+        },
+        "moiDirectory": {
+          "name": "內政部地方公職人員資訊專區",
+          "url": "https://www.moi.gov.tw/LocalOfficial.aspx?n=577&TYP=KND0007",
+          "note": "現任村里長名錄"
+        }
+      },
+      "relatedLaws": [
+        { "name": "地方制度法", "articles": ["59"] }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<Layout title="關於本站與資料來源" description="資料來源、免責聲明、更新紀錄">
+  <article class="space-y-8">
+    <header>
+      <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-4">
+        ℹ️ 關於本站與資料來源
+      </h1>
+    </header>
+
+    <!-- Disclaimer -->
+    <section class="p-6 bg-red-50 border-2 border-red-300 rounded-xl">
+      <h2 class="text-lg font-bold text-red-800 mb-4">⚠️ 重要聲明</h2>
+      <div class="space-y-3 text-red-700">
+        <p class="font-medium">
+          本站非中央選舉委員會官方網站。
+        </p>
+        <p>
+          所有選舉相關資訊，包括但不限於候選人名單、選區劃分、投票規則，
+          均以<a href="https://www.cec.gov.tw/" target="_blank" rel="noopener" class="underline font-medium">中選會官方公告</a>為準。
+        </p>
+        <p>
+          本站僅提供資訊整理與解說，不代表任何政黨立場，
+          不提供候選人推薦、排名或民調資訊。
+        </p>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📖 關於本站</h2>
+      <div class="space-y-4 text-neutral-600">
+        <p>
+          本站為 2026 年 11 月 28 日九合一地方選舉的公民資訊網站，
+          目的是協助首投族與一般選民了解：
+        </p>
+        <ul class="space-y-2 ml-4">
+          <li>• 根據戶籍地，會領到哪些選票</li>
+          <li>• 市長、議員、里長等各職位的職責與權限</li>
+          <li>• 如何查詢並評估候選人</li>
+          <li>• 投票當天的注意事項</li>
+        </ul>
+        <p>
+          <strong>製作者：</strong>Kay Chen
+        </p>
+        <p>
+          <strong>最後更新：</strong>2026-11-15
+        </p>
+      </div>
+    </section>
+
+    <!-- Data Sources -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📚 資料來源</h2>
+      
+      <div class="space-y-6">
+        <div>
+          <h3 class="font-medium text-neutral-700 mb-3">選舉與公投公告</h3>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://info.cec.gov.tw/vote2026/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                中選會 115 年選舉專區
+              </a>
+              <span class="text-neutral-500">（官方入口、投票須知）</span>
+            </li>
+            <li>
+              <a href="https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg032154/ch02/type3/gov15/num2/Eg.pdf" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                行政院公報：選舉日期公告
+              </a>
+              <span class="text-neutral-500">（2026-08-20）</span>
+            </li>
+            <li>
+              <a href="https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg032161/ch02/type3/gov15/num3/Eg.pdf" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                行政院公報：公投第 22 案公告
+              </a>
+              <span class="text-neutral-500">（2026-08-28）</span>
+            </li>
+            <li>
+              <a href="https://bulletin.cec.gov.tw/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                選舉及公民投票公報
+              </a>
+              <span class="text-neutral-500">（候選人政見）</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-medium text-neutral-700 mb-3">選區劃分</h3>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://info.cec.gov.tw/vote2026/static/file/2074fdd683844689b5bbdfe0e3ac48b3.pdf" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                市長/議員選舉區劃分公告 PDF
+              </a>
+            </li>
+            <li>
+              <a href="https://web.cec.gov.tw/central/article/63644" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                基層選舉公告（區長、代表、村里長）
+              </a>
+            </li>
+            <li>
+              <a href="https://api.nlsc.gov.tw/other/ListVillage/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                內政部村里代碼 API
+              </a>
+              <span class="text-neutral-500">（村里名稱對照）</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-medium text-neutral-700 mb-3">投票規則</h3>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0020010" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                公職人員選舉罷免法
+              </a>
+              <span class="text-neutral-500">（選罷法）</span>
+            </li>
+            <li>
+              <a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=A0040003" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                地方制度法
+              </a>
+            </li>
+            <li>
+              <a href="https://info.cec.gov.tw/vote2026/static/file/fb2c5ff658f6446b84b6b9479dd69da3.pdf" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                有效/無效票圖例 PDF
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-medium text-neutral-700 mb-3">議會紀錄查詢</h3>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://journal.th.gov.tw/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                地方議會議事錄總庫
+              </a>
+              <span class="text-neutral-500">（全國各縣市議會連結）</span>
+            </li>
+            <li>
+              <a href="https://gaz.tcc.gov.tw/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                臺北市議會電子公報
+              </a>
+              <span class="text-neutral-500">（質詢全文檢索）</span>
+            </li>
+            <li>
+              <a href="https://cissearch.kcc.gov.tw/" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                高雄市議會議事資訊系統
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-medium text-neutral-700 mb-3">村里長/里辦資訊</h3>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://www.moi.gov.tw/LocalOfficial.aspx?n=577&TYP=KND0007" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                內政部地方公職人員資訊專區 - 村里長
+              </a>
+            </li>
+            <li>
+              <a href="https://www.moi.gov.tw/LocalOfficial.aspx?n=583&TYP=KND0011" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                內政部地方公職人員資訊專區 - 村里幹事
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-medium text-neutral-700 mb-3">職務說明參考</h3>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://www.youtube.com/watch?v=f6VOJumCwIg" target="_blank" rel="noopener" class="text-primary-600 hover:underline">
+                讀字生活｜Se2 Ep02 九合一選舉到底選什麼？
+              </a>
+              <span class="text-neutral-500">（秦客的烹讀筆記）</span>
+            </li>
+            <li class="text-neutral-500 text-xs ml-4">
+              ⚠️ 影片中部分數字以台北市為例，不代表全國；市長任期為 4 年（影片口誤已修正）
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- What We Don't Do -->
+    <section class="p-6 bg-amber-50 border border-amber-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-amber-800 mb-4">🚫 本站不提供</h2>
+      <ul class="space-y-2 text-amber-700">
+        <li class="flex items-start gap-2">
+          <span>✗</span>
+          <span>候選人推薦或排名</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span>✗</span>
+          <span>選舉民調資訊（11/18 起至投票結束，依法不得發布民調）</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span>✗</span>
+          <span>主觀評價或政治立場表態</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span>✗</span>
+          <span>未經驗證的資訊</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Data Verification Status -->
+    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">✅ 資料驗證狀態</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-neutral-300">
+              <th class="text-left py-2 px-3">資料項目</th>
+              <th class="text-left py-2 px-3">狀態</th>
+              <th class="text-left py-2 px-3">說明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-neutral-200">
+              <td class="py-2 px-3">六都選區劃分</td>
+              <td class="py-2 px-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已驗證</span></td>
+              <td class="py-2 px-3 text-neutral-500">依據 8/20 公告</td>
+            </tr>
+            <tr class="border-b border-neutral-200">
+              <td class="py-2 px-3">縣選區劃分</td>
+              <td class="py-2 px-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已驗證</span></td>
+              <td class="py-2 px-3 text-neutral-500">依據 8/20 公告</td>
+            </tr>
+            <tr class="border-b border-neutral-200">
+              <td class="py-2 px-3">村里級選區（竹北、新竹市等）</td>
+              <td class="py-2 px-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-xs">待確認</span></td>
+              <td class="py-2 px-3 text-neutral-500">部分選區以村里劃分，需進一步核對</td>
+            </tr>
+            <tr class="border-b border-neutral-200">
+              <td class="py-2 px-3">原住民議員選區</td>
+              <td class="py-2 px-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-xs">待確認</span></td>
+              <td class="py-2 px-3 text-neutral-500">各縣市名額不同</td>
+            </tr>
+            <tr class="border-b border-neutral-200">
+              <td class="py-2 px-3">山地原住民區</td>
+              <td class="py-2 px-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已驗證</span></td>
+              <td class="py-2 px-3 text-neutral-500">6 區：烏來、復興、和平、那瑪夏、桃源、茂林</td>
+            </tr>
+            <tr class="border-b border-neutral-200">
+              <td class="py-2 px-3">候選人名單</td>
+              <td class="py-2 px-3"><span class="px-2 py-0.5 bg-neutral-100 text-neutral-600 rounded text-xs">待公告</span></td>
+              <td class="py-2 px-3 text-neutral-500">正式名單預計 11/17 公告</td>
+            </tr>
+            <tr class="border-b border-neutral-200">
+              <td class="py-2 px-3">投票規則</td>
+              <td class="py-2 px-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已驗證</span></td>
+              <td class="py-2 px-3 text-neutral-500">依據選罷法、中選會公告</td>
+            </tr>
+            <tr class="border-b border-neutral-200">
+              <td class="py-2 px-3">公投第 22 案</td>
+              <td class="py-2 px-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已驗證</span></td>
+              <td class="py-2 px-3 text-neutral-500">依據行政院公報</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- License -->
+    <section class="p-6 bg-neutral-100 border border-neutral-200 rounded-xl">
+      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📜 授權說明</h2>
+      <div class="text-sm text-neutral-600 space-y-2">
+        <p>
+          本站程式碼以 MIT License 授權。
+        </p>
+        <p>
+          資料內容整理自政府公開資料，依
+          <a href="https://data.gov.tw/license" target="_blank" rel="noopener" class="text-primary-600 hover:underline">政府資料開放授權條款第 1 版</a>
+          利用。
+        </p>
+        <p>
+          引用內容請標示來源並連結至官方原始公告。
+        </p>
+      </div>
+    </section>
+
+    <nav class="flex justify-between pt-8 border-t border-neutral-200">
+      <a href={`${baseUrl}candidates/`} class="text-primary-600 hover:underline">
+        ← 候選人資訊
+      </a>
+      <a href={baseUrl} class="text-primary-600 hover:underline">
+        返回首頁 →
+      </a>
+    </nav>
+  </article>
+</Layout>
