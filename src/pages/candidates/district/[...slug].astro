@@ -138,15 +138,7 @@ const positionName = position?.name || positionId;
 const shortName = position?.shortName || positionName;
 
 function getStatusBadge(status: string, registeredOn?: string): { label: string; class: string } | null {
-  const neutralClass = 'border border-neutral-300 bg-neutral-100 text-neutral-600';
-  if (status.includes('公告候選人')) {
-    return { label: '已公告', class: neutralClass };
-  } else if (status.includes('已抽籤')) {
-    return null;
-  } else {
-    const dateLabel = registeredOn ? `（${registeredOn.replace(/^\d{4}-/, '').replace('-', '/')}）` : '';
-    return { label: `已登記${dateLabel}`, class: neutralClass };
-  }
+  return null;
 }
 
 function getPartyDisplay(party: string | null, partyAsListed: string | null): string {
@@ -481,11 +473,7 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
     {hasCandidates && (
       <section id="sources" class="p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
         <h3 class="font-medium text-neutral-700 mb-2">📎 資料來源說明</h3>
-        <ul class="text-sm text-neutral-600 space-y-1">
-          <li>• <strong>已公告</strong>：選委會已公告正式候選人名單</li>
-          <li>• <strong>已登記</strong>：已完成登記，待抽籤或公告</li>
-        </ul>
-        <p class="text-xs text-neutral-500 mt-2">
+        <p class="text-sm text-neutral-600">
           本站資料整理自中選會及各縣市選委會官方公告，點擊「📄」圖示可查看原始來源。
         </p>
       </section>
