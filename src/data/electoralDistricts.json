@@ -19,49 +19,69 @@
         {
           "id": "taipei-1",
           "name": "第1選舉區",
-          "adminDistricts": ["北投區", "士林區"],
+          "adminDistricts": [
+            "北投區",
+            "士林區"
+          ],
           "seats": 12,
           "womenQuota": 3
         },
         {
           "id": "taipei-2",
           "name": "第2選舉區",
-          "adminDistricts": ["內湖區", "南港區"],
+          "adminDistricts": [
+            "內湖區",
+            "南港區"
+          ],
           "seats": 9,
           "womenQuota": 2
         },
         {
           "id": "taipei-3",
           "name": "第3選舉區",
-          "adminDistricts": ["松山區", "信義區"],
+          "adminDistricts": [
+            "松山區",
+            "信義區"
+          ],
           "seats": 9,
           "womenQuota": 2
         },
         {
           "id": "taipei-4",
           "name": "第4選舉區",
-          "adminDistricts": ["中山區", "大同區"],
+          "adminDistricts": [
+            "中山區",
+            "大同區"
+          ],
           "seats": 8,
           "womenQuota": 2
         },
         {
           "id": "taipei-5",
           "name": "第5選舉區",
-          "adminDistricts": ["中正區", "萬華區"],
+          "adminDistricts": [
+            "中正區",
+            "萬華區"
+          ],
           "seats": 8,
           "womenQuota": 2
         },
         {
           "id": "taipei-6",
           "name": "第6選舉區",
-          "adminDistricts": ["大安區", "文山區"],
+          "adminDistricts": [
+            "大安區",
+            "文山區"
+          ],
           "seats": 13,
           "womenQuota": 3
         },
         {
           "id": "taipei-7",
           "name": "第7選舉區",
-          "adminDistricts": ["臺北市"],
+          "adminDistricts": [
+            "臺北市"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -71,7 +91,9 @@
         {
           "id": "taipei-8",
           "name": "第8選舉區",
-          "adminDistricts": ["臺北市"],
+          "adminDistricts": [
+            "臺北市"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -91,84 +113,126 @@
         {
           "id": "newtaipei-1",
           "name": "第1選舉區",
-          "adminDistricts": ["石門區", "三芝區", "淡水區", "八里區"],
+          "adminDistricts": [
+            "石門區",
+            "三芝區",
+            "淡水區",
+            "八里區"
+          ],
           "seats": 4,
           "womenQuota": 1
         },
         {
           "id": "newtaipei-2",
           "name": "第2選舉區",
-          "adminDistricts": ["林口區", "五股區", "泰山區"],
+          "adminDistricts": [
+            "林口區",
+            "五股區",
+            "泰山區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "newtaipei-3",
           "name": "第3選舉區",
-          "adminDistricts": ["新莊區"],
+          "adminDistricts": [
+            "新莊區"
+          ],
           "seats": 7,
           "womenQuota": 1
         },
         {
           "id": "newtaipei-4",
           "name": "第4選舉區",
-          "adminDistricts": ["蘆洲區", "三重區"],
+          "adminDistricts": [
+            "蘆洲區",
+            "三重區"
+          ],
           "seats": 9,
           "womenQuota": 2
         },
         {
           "id": "newtaipei-5",
           "name": "第5選舉區",
-          "adminDistricts": ["板橋區"],
+          "adminDistricts": [
+            "板橋區"
+          ],
           "seats": 9,
           "womenQuota": 2
         },
         {
           "id": "newtaipei-6",
           "name": "第6選舉區",
-          "adminDistricts": ["中和區"],
+          "adminDistricts": [
+            "中和區"
+          ],
           "seats": 6,
           "womenQuota": 1
         },
         {
           "id": "newtaipei-7",
           "name": "第7選舉區",
-          "adminDistricts": ["永和區"],
+          "adminDistricts": [
+            "永和區"
+          ],
           "seats": 3,
           "womenQuota": 0
         },
         {
           "id": "newtaipei-8",
           "name": "第8選舉區",
-          "adminDistricts": ["樹林區", "鶯歌區", "土城區", "三峽區"],
+          "adminDistricts": [
+            "樹林區",
+            "鶯歌區",
+            "土城區",
+            "三峽區"
+          ],
           "seats": 9,
           "womenQuota": 2
         },
         {
           "id": "newtaipei-9",
           "name": "第9選舉區",
-          "adminDistricts": ["新店區", "深坑區", "石碇區", "坪林區", "烏來區"],
+          "adminDistricts": [
+            "新店區",
+            "深坑區",
+            "石碇區",
+            "坪林區",
+            "烏來區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "newtaipei-10",
           "name": "第10選舉區",
-          "adminDistricts": ["平溪區", "瑞芳區", "雙溪區", "貢寮區"],
+          "adminDistricts": [
+            "平溪區",
+            "瑞芳區",
+            "雙溪區",
+            "貢寮區"
+          ],
           "seats": 1,
           "womenQuota": 0
         },
         {
           "id": "newtaipei-11",
           "name": "第11選舉區",
-          "adminDistricts": ["金山區", "萬里區", "汐止區"],
+          "adminDistricts": [
+            "金山區",
+            "萬里區",
+            "汐止區"
+          ],
           "seats": 4,
           "womenQuota": 1
         },
         {
           "id": "newtaipei-12",
           "name": "第12選舉區",
-          "adminDistricts": ["新北市"],
+          "adminDistricts": [
+            "新北市"
+          ],
           "seats": 4,
           "womenQuota": 1,
           "isIndigenous": true,
@@ -178,7 +242,9 @@
         {
           "id": "newtaipei-13",
           "name": "第13選舉區",
-          "adminDistricts": ["新北市"],
+          "adminDistricts": [
+            "新北市"
+          ],
           "seats": 2,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -198,91 +264,118 @@
         {
           "id": "taoyuan-1",
           "name": "第1選舉區",
-          "adminDistricts": ["桃園區"],
+          "adminDistricts": [
+            "桃園區"
+          ],
           "seats": 12,
           "womenQuota": 3
         },
         {
           "id": "taoyuan-2",
           "name": "第2選舉區",
-          "adminDistricts": ["龜山區"],
+          "adminDistricts": [
+            "龜山區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "taoyuan-3",
           "name": "第3選舉區",
-          "adminDistricts": ["八德區"],
+          "adminDistricts": [
+            "八德區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "taoyuan-4",
           "name": "第4選舉區",
-          "adminDistricts": ["蘆竹區"],
+          "adminDistricts": [
+            "蘆竹區"
+          ],
           "seats": 4,
           "womenQuota": 1
         },
         {
           "id": "taoyuan-5",
           "name": "第5選舉區",
-          "adminDistricts": ["大園區"],
+          "adminDistricts": [
+            "大園區"
+          ],
           "seats": 2,
           "womenQuota": 0
         },
         {
           "id": "taoyuan-6",
           "name": "第6選舉區",
-          "adminDistricts": ["大溪區", "復興區"],
+          "adminDistricts": [
+            "大溪區",
+            "復興區"
+          ],
           "seats": 2,
           "womenQuota": 0
         },
         {
           "id": "taoyuan-7",
           "name": "第7選舉區",
-          "adminDistricts": ["中壢區"],
+          "adminDistricts": [
+            "中壢區"
+          ],
           "seats": 11,
           "womenQuota": 2
         },
         {
           "id": "taoyuan-8",
           "name": "第8選舉區",
-          "adminDistricts": ["平鎮區"],
+          "adminDistricts": [
+            "平鎮區"
+          ],
           "seats": 6,
           "womenQuota": 1
         },
         {
           "id": "taoyuan-9",
           "name": "第9選舉區",
-          "adminDistricts": ["楊梅區"],
+          "adminDistricts": [
+            "楊梅區"
+          ],
           "seats": 4,
           "womenQuota": 1
         },
         {
           "id": "taoyuan-10",
           "name": "第10選舉區",
-          "adminDistricts": ["龍潭區"],
+          "adminDistricts": [
+            "龍潭區"
+          ],
           "seats": 3,
           "womenQuota": 0
         },
         {
           "id": "taoyuan-11",
           "name": "第11選舉區",
-          "adminDistricts": ["新屋區"],
+          "adminDistricts": [
+            "新屋區"
+          ],
           "seats": 1,
           "womenQuota": 0
         },
         {
           "id": "taoyuan-12",
           "name": "第12選舉區",
-          "adminDistricts": ["觀音區"],
+          "adminDistricts": [
+            "觀音區"
+          ],
           "seats": 2,
           "womenQuota": 0
         },
         {
           "id": "taoyuan-13",
           "name": "第13選舉區",
-          "adminDistricts": ["桃園市"],
+          "adminDistricts": [
+            "桃園市"
+          ],
           "seats": 4,
           "womenQuota": 1,
           "isIndigenous": true,
@@ -292,7 +385,9 @@
         {
           "id": "taoyuan-14",
           "name": "第14選舉區",
-          "adminDistricts": ["桃園市"],
+          "adminDistricts": [
+            "桃園市"
+          ],
           "seats": 4,
           "womenQuota": 1,
           "isIndigenous": true,
@@ -312,105 +407,150 @@
         {
           "id": "taichung-1",
           "name": "第1選舉區",
-          "adminDistricts": ["大甲區", "大安區", "外埔區"],
+          "adminDistricts": [
+            "大甲區",
+            "大安區",
+            "外埔區"
+          ],
           "seats": 3,
           "womenQuota": 0
         },
         {
           "id": "taichung-2",
           "name": "第2選舉區",
-          "adminDistricts": ["清水區", "梧棲區", "沙鹿區"],
+          "adminDistricts": [
+            "清水區",
+            "梧棲區",
+            "沙鹿區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "taichung-3",
           "name": "第3選舉區",
-          "adminDistricts": ["龍井區", "大肚區", "烏日區"],
+          "adminDistricts": [
+            "龍井區",
+            "大肚區",
+            "烏日區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "taichung-4",
           "name": "第4選舉區",
-          "adminDistricts": ["后里區", "豐原區"],
+          "adminDistricts": [
+            "后里區",
+            "豐原區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "taichung-5",
           "name": "第5選舉區",
-          "adminDistricts": ["神岡區", "大雅區", "潭子區"],
+          "adminDistricts": [
+            "神岡區",
+            "大雅區",
+            "潭子區"
+          ],
           "seats": 6,
           "womenQuota": 1
         },
         {
           "id": "taichung-6",
           "name": "第6選舉區",
-          "adminDistricts": ["西屯區"],
+          "adminDistricts": [
+            "西屯區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "taichung-7",
           "name": "第7選舉區",
-          "adminDistricts": ["南屯區"],
+          "adminDistricts": [
+            "南屯區"
+          ],
           "seats": 4,
           "womenQuota": 1
         },
         {
           "id": "taichung-8",
           "name": "第8選舉區",
-          "adminDistricts": ["北屯區"],
+          "adminDistricts": [
+            "北屯區"
+          ],
           "seats": 7,
           "womenQuota": 1
         },
         {
           "id": "taichung-9",
           "name": "第9選舉區",
-          "adminDistricts": ["北區"],
+          "adminDistricts": [
+            "北區"
+          ],
           "seats": 3,
           "womenQuota": 0
         },
         {
           "id": "taichung-10",
           "name": "第10選舉區",
-          "adminDistricts": ["中區", "西區"],
+          "adminDistricts": [
+            "中區",
+            "西區"
+          ],
           "seats": 3,
           "womenQuota": 0
         },
         {
           "id": "taichung-11",
           "name": "第11選舉區",
-          "adminDistricts": ["東區", "南區"],
+          "adminDistricts": [
+            "東區",
+            "南區"
+          ],
           "seats": 4,
           "womenQuota": 1
         },
         {
           "id": "taichung-12",
           "name": "第12選舉區",
-          "adminDistricts": ["太平區"],
+          "adminDistricts": [
+            "太平區"
+          ],
           "seats": 4,
           "womenQuota": 1
         },
         {
           "id": "taichung-13",
           "name": "第13選舉區",
-          "adminDistricts": ["大里區", "霧峰區"],
+          "adminDistricts": [
+            "大里區",
+            "霧峰區"
+          ],
           "seats": 6,
           "womenQuota": 1
         },
         {
           "id": "taichung-14",
           "name": "第14選舉區",
-          "adminDistricts": ["東勢區", "石岡區", "新社區", "和平區"],
+          "adminDistricts": [
+            "東勢區",
+            "石岡區",
+            "新社區",
+            "和平區"
+          ],
           "seats": 2,
           "womenQuota": 0
         },
         {
           "id": "taichung-15",
           "name": "第15選舉區",
-          "adminDistricts": ["臺中市"],
+          "adminDistricts": [
+            "臺中市"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -420,7 +560,21 @@
         {
           "id": "taichung-16",
           "name": "第16選舉區",
-          "adminDistricts": ["和平區", "大甲區", "大安區", "外埔區", "清水區", "后里區", "豐原區", "神岡區", "大雅區", "潭子區", "東勢區", "石岡區", "新社區"],
+          "adminDistricts": [
+            "和平區",
+            "大甲區",
+            "大安區",
+            "外埔區",
+            "清水區",
+            "后里區",
+            "豐原區",
+            "神岡區",
+            "大雅區",
+            "潭子區",
+            "東勢區",
+            "石岡區",
+            "新社區"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -430,7 +584,24 @@
         {
           "id": "taichung-17",
           "name": "第17選舉區",
-          "adminDistricts": ["梧棲區", "沙鹿區", "龍井區", "大肚區", "烏日區", "西屯區", "南屯區", "北屯區", "北區", "中區", "西區", "東區", "南區", "太平區", "大里區", "霧峰區"],
+          "adminDistricts": [
+            "梧棲區",
+            "沙鹿區",
+            "龍井區",
+            "大肚區",
+            "烏日區",
+            "西屯區",
+            "南屯區",
+            "北屯區",
+            "北區",
+            "中區",
+            "西區",
+            "東區",
+            "南區",
+            "太平區",
+            "大里區",
+            "霧峰區"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -450,84 +621,134 @@
         {
           "id": "tainan-1",
           "name": "第1選舉區",
-          "adminDistricts": ["後壁區", "白河區", "東山區", "鹽水區", "新營區", "柳營區"],
+          "adminDistricts": [
+            "後壁區",
+            "白河區",
+            "東山區",
+            "鹽水區",
+            "新營區",
+            "柳營區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "tainan-2",
           "name": "第2選舉區",
-          "adminDistricts": ["北門區", "學甲區", "將軍區", "七股區", "佳里區", "西港區"],
+          "adminDistricts": [
+            "北門區",
+            "學甲區",
+            "將軍區",
+            "七股區",
+            "佳里區",
+            "西港區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "tainan-3",
           "name": "第3選舉區",
-          "adminDistricts": ["下營區", "六甲區", "麻豆區", "官田區", "大內區"],
+          "adminDistricts": [
+            "下營區",
+            "六甲區",
+            "麻豆區",
+            "官田區",
+            "大內區"
+          ],
           "seats": 3,
           "womenQuota": 0
         },
         {
           "id": "tainan-4",
           "name": "第4選舉區",
-          "adminDistricts": ["楠西區", "南化區", "玉井區", "左鎮區"],
+          "adminDistricts": [
+            "楠西區",
+            "南化區",
+            "玉井區",
+            "左鎮區"
+          ],
           "seats": 1,
           "womenQuota": 0
         },
         {
           "id": "tainan-5",
           "name": "第5選舉區",
-          "adminDistricts": ["善化區", "安定區", "新市區", "山上區", "新化區"],
+          "adminDistricts": [
+            "善化區",
+            "安定區",
+            "新市區",
+            "山上區",
+            "新化區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "tainan-6",
           "name": "第6選舉區",
-          "adminDistricts": ["安南區"],
+          "adminDistricts": [
+            "安南區"
+          ],
           "seats": 6,
           "womenQuota": 1
         },
         {
           "id": "tainan-7",
           "name": "第7選舉區",
-          "adminDistricts": ["永康區"],
+          "adminDistricts": [
+            "永康區"
+          ],
           "seats": 7,
           "womenQuota": 1
         },
         {
           "id": "tainan-8",
           "name": "第8選舉區",
-          "adminDistricts": ["北區", "中西區"],
+          "adminDistricts": [
+            "北區",
+            "中西區"
+          ],
           "seats": 6,
           "womenQuota": 1
         },
         {
           "id": "tainan-9",
           "name": "第9選舉區",
-          "adminDistricts": ["安平區", "南區"],
+          "adminDistricts": [
+            "安平區",
+            "南區"
+          ],
           "seats": 6,
           "womenQuota": 1
         },
         {
           "id": "tainan-10",
           "name": "第10選舉區",
-          "adminDistricts": ["東區"],
+          "adminDistricts": [
+            "東區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "tainan-11",
           "name": "第11選舉區",
-          "adminDistricts": ["仁德區", "歸仁區", "關廟區", "龍崎區"],
+          "adminDistricts": [
+            "仁德區",
+            "歸仁區",
+            "關廟區",
+            "龍崎區"
+          ],
           "seats": 6,
           "womenQuota": 1
         },
         {
           "id": "tainan-12",
           "name": "第12選舉區",
-          "adminDistricts": ["臺南市"],
+          "adminDistricts": [
+            "臺南市"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -537,7 +758,9 @@
         {
           "id": "tainan-13",
           "name": "第13選舉區",
-          "adminDistricts": ["臺南市"],
+          "adminDistricts": [
+            "臺南市"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -557,84 +780,135 @@
         {
           "id": "kaohsiung-1",
           "name": "第1選舉區",
-          "adminDistricts": ["桃源區", "那瑪夏區", "甲仙區", "六龜區", "杉林區", "內門區", "旗山區", "美濃區", "茂林區"],
+          "adminDistricts": [
+            "桃源區",
+            "那瑪夏區",
+            "甲仙區",
+            "六龜區",
+            "杉林區",
+            "內門區",
+            "旗山區",
+            "美濃區",
+            "茂林區"
+          ],
           "seats": 3,
           "womenQuota": 0
         },
         {
           "id": "kaohsiung-2",
           "name": "第2選舉區",
-          "adminDistricts": ["茄萣區", "湖內區", "路竹區", "阿蓮區", "田寮區"],
+          "adminDistricts": [
+            "茄萣區",
+            "湖內區",
+            "路竹區",
+            "阿蓮區",
+            "田寮區"
+          ],
           "seats": 3,
           "womenQuota": 0
         },
         {
           "id": "kaohsiung-3",
           "name": "第3選舉區",
-          "adminDistricts": ["永安區", "岡山區", "燕巢區", "彌陀區", "梓官區", "橋頭區"],
+          "adminDistricts": [
+            "永安區",
+            "岡山區",
+            "燕巢區",
+            "彌陀區",
+            "梓官區",
+            "橋頭區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "kaohsiung-4",
           "name": "第4選舉區",
-          "adminDistricts": ["楠梓區", "左營區"],
+          "adminDistricts": [
+            "楠梓區",
+            "左營區"
+          ],
           "seats": 9,
           "womenQuota": 2
         },
         {
           "id": "kaohsiung-5",
           "name": "第5選舉區",
-          "adminDistricts": ["大社區", "仁武區", "鳥松區", "大樹區"],
+          "adminDistricts": [
+            "大社區",
+            "仁武區",
+            "鳥松區",
+            "大樹區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "kaohsiung-6",
           "name": "第6選舉區",
-          "adminDistricts": ["鼓山區", "鹽埕區", "旗津區"],
+          "adminDistricts": [
+            "鼓山區",
+            "鹽埕區",
+            "旗津區"
+          ],
           "seats": 4,
           "womenQuota": 1
         },
         {
           "id": "kaohsiung-7",
           "name": "第7選舉區",
-          "adminDistricts": ["三民區"],
+          "adminDistricts": [
+            "三民區"
+          ],
           "seats": 8,
           "womenQuota": 2
         },
         {
           "id": "kaohsiung-8",
           "name": "第8選舉區",
-          "adminDistricts": ["前金區", "新興區", "苓雅區"],
+          "adminDistricts": [
+            "前金區",
+            "新興區",
+            "苓雅區"
+          ],
           "seats": 5,
           "womenQuota": 1
         },
         {
           "id": "kaohsiung-9",
           "name": "第9選舉區",
-          "adminDistricts": ["鳳山區"],
+          "adminDistricts": [
+            "鳳山區"
+          ],
           "seats": 8,
           "womenQuota": 2
         },
         {
           "id": "kaohsiung-10",
           "name": "第10選舉區",
-          "adminDistricts": ["前鎮區", "小港區"],
+          "adminDistricts": [
+            "前鎮區",
+            "小港區"
+          ],
           "seats": 7,
           "womenQuota": 1
         },
         {
           "id": "kaohsiung-11",
           "name": "第11選舉區",
-          "adminDistricts": ["大寮區", "林園區"],
+          "adminDistricts": [
+            "大寮區",
+            "林園區"
+          ],
           "seats": 4,
           "womenQuota": 1
         },
         {
           "id": "kaohsiung-12",
           "name": "第12選舉區",
-          "adminDistricts": ["高雄市"],
+          "adminDistricts": [
+            "高雄市"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -644,7 +918,22 @@
         {
           "id": "kaohsiung-13",
           "name": "第13選舉區",
-          "adminDistricts": ["那瑪夏區", "甲仙區", "杉林區", "內門區", "旗山區", "茄萣區", "湖內區", "路竹區", "永安區", "彌陀區", "梓官區", "楠梓區", "左營區", "三民區"],
+          "adminDistricts": [
+            "那瑪夏區",
+            "甲仙區",
+            "杉林區",
+            "內門區",
+            "旗山區",
+            "茄萣區",
+            "湖內區",
+            "路竹區",
+            "永安區",
+            "彌陀區",
+            "梓官區",
+            "楠梓區",
+            "左營區",
+            "三民區"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -654,7 +943,20 @@
         {
           "id": "kaohsiung-14",
           "name": "第14選舉區",
-          "adminDistricts": ["桃源區", "六龜區", "美濃區", "阿蓮區", "田寮區", "岡山區", "燕巢區", "橋頭區", "鼓山區", "鹽埕區", "前金區", "新興區"],
+          "adminDistricts": [
+            "桃源區",
+            "六龜區",
+            "美濃區",
+            "阿蓮區",
+            "田寮區",
+            "岡山區",
+            "燕巢區",
+            "橋頭區",
+            "鼓山區",
+            "鹽埕區",
+            "前金區",
+            "新興區"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -664,7 +966,20 @@
         {
           "id": "kaohsiung-15",
           "name": "第15選舉區",
-          "adminDistricts": ["茂林區", "大社區", "大樹區", "仁武區", "鳥松區", "鳳山區", "大寮區", "旗津區", "苓雅區", "前鎮區", "小港區", "林園區"],
+          "adminDistricts": [
+            "茂林區",
+            "大社區",
+            "大樹區",
+            "仁武區",
+            "鳥松區",
+            "鳳山區",
+            "大寮區",
+            "旗津區",
+            "苓雅區",
+            "前鎮區",
+            "小港區",
+            "林園區"
+          ],
           "seats": 1,
           "womenQuota": 0,
           "isIndigenous": true,
@@ -681,15 +996,93 @@
       "plainsIndigenousSeats": 1,
       "mountainIndigenousSeats": 1,
       "districts": [
-        { "id": "keelung-1", "name": "第1選舉區", "adminDistricts": ["中正區"], "seats": 4, "womenQuota": 1 },
-        { "id": "keelung-2", "name": "第2選舉區", "adminDistricts": ["信義區"], "seats": 5, "womenQuota": 1 },
-        { "id": "keelung-3", "name": "第3選舉區", "adminDistricts": ["仁愛區"], "seats": 3, "womenQuota": 0 },
-        { "id": "keelung-4", "name": "第4選舉區", "adminDistricts": ["中山區"], "seats": 4, "womenQuota": 1 },
-        { "id": "keelung-5", "name": "第5選舉區", "adminDistricts": ["安樂區"], "seats": 7, "womenQuota": 1 },
-        { "id": "keelung-6", "name": "第6選舉區", "adminDistricts": ["暖暖區"], "seats": 3, "womenQuota": 0 },
-        { "id": "keelung-7", "name": "第7選舉區", "adminDistricts": ["七堵區"], "seats": 4, "womenQuota": 1 },
-        { "id": "keelung-8", "name": "第8選舉區", "adminDistricts": ["基隆市"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "基隆市之平地原住民" },
-        { "id": "keelung-9", "name": "第9選舉區", "adminDistricts": ["基隆市"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "基隆市之山地原住民" }
+        {
+          "id": "keelung-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "中正區"
+          ],
+          "seats": 4,
+          "womenQuota": 1
+        },
+        {
+          "id": "keelung-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "信義區"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "keelung-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "仁愛區"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "keelung-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "中山區"
+          ],
+          "seats": 4,
+          "womenQuota": 1
+        },
+        {
+          "id": "keelung-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "安樂區"
+          ],
+          "seats": 7,
+          "womenQuota": 1
+        },
+        {
+          "id": "keelung-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "暖暖區"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "keelung-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "七堵區"
+          ],
+          "seats": 4,
+          "womenQuota": 1
+        },
+        {
+          "id": "keelung-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "基隆市"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "基隆市之平地原住民"
+        },
+        {
+          "id": "keelung-9",
+          "name": "第9選舉區",
+          "adminDistricts": [
+            "基隆市"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "基隆市之山地原住民"
+        }
       ]
     },
     "新竹市": {
@@ -701,13 +1094,80 @@
       "mountainIndigenousSeats": 1,
       "note": "新竹市選區依里劃分，詳見中選會公告 A0046",
       "districts": [
-        { "id": "hsinchu-city-1", "name": "第1選舉區", "adminDistricts": ["東區（部分）"], "seats": 12, "womenQuota": 3, "note": "東門里等36里" },
-        { "id": "hsinchu-city-2", "name": "第2選舉區", "adminDistricts": ["東區（部分）"], "seats": 4, "womenQuota": 1, "note": "南門里等17里" },
-        { "id": "hsinchu-city-3", "name": "第3選舉區", "adminDistricts": ["東區（部分）"], "seats": 2, "womenQuota": 0, "note": "客雅里等15里" },
-        { "id": "hsinchu-city-4", "name": "第4選舉區", "adminDistricts": ["北區"], "seats": 9, "womenQuota": 2, "note": "北門里等30里" },
-        { "id": "hsinchu-city-5", "name": "第5選舉區", "adminDistricts": ["香山區"], "seats": 6, "womenQuota": 1, "note": "頂埔里等24里" },
-        { "id": "hsinchu-city-6", "name": "第6選舉區", "adminDistricts": ["新竹市"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "新竹市之平地原住民" },
-        { "id": "hsinchu-city-7", "name": "第7選舉區", "adminDistricts": ["新竹市"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "新竹市之山地原住民" }
+        {
+          "id": "hsinchu-city-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "東區（部分）"
+          ],
+          "seats": 12,
+          "womenQuota": 3,
+          "note": "東門里等36里"
+        },
+        {
+          "id": "hsinchu-city-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "東區（部分）"
+          ],
+          "seats": 4,
+          "womenQuota": 1,
+          "note": "南門里等17里"
+        },
+        {
+          "id": "hsinchu-city-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "東區（部分）"
+          ],
+          "seats": 2,
+          "womenQuota": 0,
+          "note": "客雅里等15里"
+        },
+        {
+          "id": "hsinchu-city-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "北區"
+          ],
+          "seats": 9,
+          "womenQuota": 2,
+          "note": "北門里等30里"
+        },
+        {
+          "id": "hsinchu-city-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "香山區"
+          ],
+          "seats": 6,
+          "womenQuota": 1,
+          "note": "頂埔里等24里"
+        },
+        {
+          "id": "hsinchu-city-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "新竹市"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "新竹市之平地原住民"
+        },
+        {
+          "id": "hsinchu-city-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "新竹市"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "新竹市之山地原住民"
+        }
       ]
     },
     "嘉義市": {
@@ -718,8 +1178,24 @@
       "plainsIndigenousSeats": 0,
       "mountainIndigenousSeats": 0,
       "districts": [
-        { "id": "chiayi-city-1", "name": "第1選舉區", "adminDistricts": ["東區"], "seats": 10, "womenQuota": 2 },
-        { "id": "chiayi-city-2", "name": "第2選舉區", "adminDistricts": ["西區"], "seats": 13, "womenQuota": 3 }
+        {
+          "id": "chiayi-city-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "東區"
+          ],
+          "seats": 10,
+          "womenQuota": 2
+        },
+        {
+          "id": "chiayi-city-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "西區"
+          ],
+          "seats": 13,
+          "womenQuota": 3
+        }
       ]
     },
     "新竹縣": {
@@ -731,20 +1207,157 @@
       "mountainIndigenousSeats": 2,
       "note": "竹北市選區依里劃分，詳見中選會公告 A0046",
       "districts": [
-        { "id": "hsinchu-county-1", "name": "第1選舉區", "adminDistricts": ["竹北市（部分）"], "seats": 4, "womenQuota": 1, "note": "尚義里等15里" },
-        { "id": "hsinchu-county-2", "name": "第2選舉區", "adminDistricts": ["竹北市（部分）"], "seats": 9, "womenQuota": 2, "note": "竹北里等19里" },
-        { "id": "hsinchu-county-3", "name": "第3選舉區", "adminDistricts": ["湖口鄉"], "seats": 5, "womenQuota": 1 },
-        { "id": "hsinchu-county-4", "name": "第4選舉區", "adminDistricts": ["新豐鄉"], "seats": 3, "womenQuota": 0 },
-        { "id": "hsinchu-county-5", "name": "第5選舉區", "adminDistricts": ["關西鎮"], "seats": 2, "womenQuota": 0 },
-        { "id": "hsinchu-county-6", "name": "第6選舉區", "adminDistricts": ["新埔鎮"], "seats": 2, "womenQuota": 0 },
-        { "id": "hsinchu-county-7", "name": "第7選舉區", "adminDistricts": ["橫山鄉", "尖石鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "hsinchu-county-8", "name": "第8選舉區", "adminDistricts": ["芎林鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "hsinchu-county-9", "name": "第9選舉區", "adminDistricts": ["竹東鎮", "五峰鄉"], "seats": 5, "womenQuota": 1 },
-        { "id": "hsinchu-county-10", "name": "第10選舉區", "adminDistricts": ["寶山鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "hsinchu-county-11", "name": "第11選舉區", "adminDistricts": ["北埔鄉", "峨眉鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "hsinchu-county-12", "name": "第12選舉區", "adminDistricts": ["新竹縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "新竹縣之平地原住民" },
-        { "id": "hsinchu-county-13", "name": "第13選舉區", "adminDistricts": ["尖石鄉", "竹北市", "湖口鄉", "新豐鄉", "關西鎮", "新埔鎮", "橫山鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "尖石鄉及竹北市、湖口鄉、新豐鄉、關西鎮、新埔鎮、橫山鄉之山地原住民" },
-        { "id": "hsinchu-county-14", "name": "第14選舉區", "adminDistricts": ["五峰鄉", "芎林鄉", "竹東鎮", "寶山鄉", "北埔鄉", "峨眉鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "五峰鄉及芎林鄉、竹東鎮、寶山鄉、北埔鄉、峨眉鄉之山地原住民" }
+        {
+          "id": "hsinchu-county-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "竹北市（部分）"
+          ],
+          "seats": 4,
+          "womenQuota": 1,
+          "note": "尚義里等15里"
+        },
+        {
+          "id": "hsinchu-county-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "竹北市（部分）"
+          ],
+          "seats": 9,
+          "womenQuota": 2,
+          "note": "竹北里等19里"
+        },
+        {
+          "id": "hsinchu-county-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "湖口鄉"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "hsinchu-county-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "新豐鄉"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "hsinchu-county-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "關西鎮"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "hsinchu-county-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "新埔鎮"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "hsinchu-county-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "橫山鄉",
+            "尖石鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "hsinchu-county-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "芎林鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "hsinchu-county-9",
+          "name": "第9選舉區",
+          "adminDistricts": [
+            "竹東鎮",
+            "五峰鄉"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "hsinchu-county-10",
+          "name": "第10選舉區",
+          "adminDistricts": [
+            "寶山鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "hsinchu-county-11",
+          "name": "第11選舉區",
+          "adminDistricts": [
+            "北埔鄉",
+            "峨眉鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "hsinchu-county-12",
+          "name": "第12選舉區",
+          "adminDistricts": [
+            "新竹縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "新竹縣之平地原住民"
+        },
+        {
+          "id": "hsinchu-county-13",
+          "name": "第13選舉區",
+          "adminDistricts": [
+            "尖石鄉",
+            "竹北市",
+            "湖口鄉",
+            "新豐鄉",
+            "關西鎮",
+            "新埔鎮",
+            "橫山鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "尖石鄉及竹北市、湖口鄉、新豐鄉、關西鎮、新埔鎮、橫山鄉之山地原住民"
+        },
+        {
+          "id": "hsinchu-county-14",
+          "name": "第14選舉區",
+          "adminDistricts": [
+            "五峰鄉",
+            "芎林鄉",
+            "竹東鎮",
+            "寶山鄉",
+            "北埔鄉",
+            "峨眉鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "五峰鄉及芎林鄉、竹東鎮、寶山鄉、北埔鄉、峨眉鄉之山地原住民"
+        }
       ]
     },
     "苗栗縣": {
@@ -755,14 +1368,96 @@
       "plainsIndigenousSeats": 1,
       "mountainIndigenousSeats": 1,
       "districts": [
-        { "id": "miaoli-1", "name": "第1選舉區", "adminDistricts": ["苗栗市", "公館鄉", "頭屋鄉"], "seats": 9, "womenQuota": 2 },
-        { "id": "miaoli-2", "name": "第2選舉區", "adminDistricts": ["銅鑼鄉", "三義鄉", "西湖鄉"], "seats": 3, "womenQuota": 0 },
-        { "id": "miaoli-3", "name": "第3選舉區", "adminDistricts": ["通霄鎮", "苑裡鎮"], "seats": 5, "womenQuota": 1 },
-        { "id": "miaoli-4", "name": "第4選舉區", "adminDistricts": ["後龍鎮", "造橋鄉", "竹南鎮"], "seats": 9, "womenQuota": 2 },
-        { "id": "miaoli-5", "name": "第5選舉區", "adminDistricts": ["頭份市", "三灣鄉", "南庄鄉"], "seats": 8, "womenQuota": 2 },
-        { "id": "miaoli-6", "name": "第6選舉區", "adminDistricts": ["大湖鄉", "獅潭鄉", "卓蘭鎮", "泰安鄉"], "seats": 2, "womenQuota": 0 },
-        { "id": "miaoli-7", "name": "第7選舉區", "adminDistricts": ["苗栗縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "苗栗縣之平地原住民" },
-        { "id": "miaoli-8", "name": "第8選舉區", "adminDistricts": ["苗栗縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "苗栗縣之山地原住民" }
+        {
+          "id": "miaoli-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "苗栗市",
+            "公館鄉",
+            "頭屋鄉"
+          ],
+          "seats": 9,
+          "womenQuota": 2
+        },
+        {
+          "id": "miaoli-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "銅鑼鄉",
+            "三義鄉",
+            "西湖鄉"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "miaoli-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "通霄鎮",
+            "苑裡鎮"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "miaoli-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "後龍鎮",
+            "造橋鄉",
+            "竹南鎮"
+          ],
+          "seats": 9,
+          "womenQuota": 2
+        },
+        {
+          "id": "miaoli-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "頭份市",
+            "三灣鄉",
+            "南庄鄉"
+          ],
+          "seats": 8,
+          "womenQuota": 2
+        },
+        {
+          "id": "miaoli-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "大湖鄉",
+            "獅潭鄉",
+            "卓蘭鎮",
+            "泰安鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "miaoli-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "苗栗縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "苗栗縣之平地原住民"
+        },
+        {
+          "id": "miaoli-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "苗栗縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "苗栗縣之山地原住民"
+        }
       ]
     },
     "彰化縣": {
@@ -773,16 +1468,120 @@
       "plainsIndigenousSeats": 1,
       "mountainIndigenousSeats": 1,
       "districts": [
-        { "id": "changhua-1", "name": "第1選舉區", "adminDistricts": ["彰化市", "花壇鄉", "芬園鄉"], "seats": 12, "womenQuota": 3 },
-        { "id": "changhua-2", "name": "第2選舉區", "adminDistricts": ["鹿港鎮", "福興鄉", "秀水鄉"], "seats": 7, "womenQuota": 1 },
-        { "id": "changhua-3", "name": "第3選舉區", "adminDistricts": ["和美鎮", "伸港鄉", "線西鄉"], "seats": 6, "womenQuota": 1 },
-        { "id": "changhua-4", "name": "第4選舉區", "adminDistricts": ["員林市", "大村鄉", "永靖鄉"], "seats": 9, "womenQuota": 2 },
-        { "id": "changhua-5", "name": "第5選舉區", "adminDistricts": ["溪湖鎮", "埔鹽鄉", "埔心鄉"], "seats": 5, "womenQuota": 1 },
-        { "id": "changhua-6", "name": "第6選舉區", "adminDistricts": ["田中鎮", "社頭鄉", "二水鄉"], "seats": 4, "womenQuota": 1 },
-        { "id": "changhua-7", "name": "第7選舉區", "adminDistricts": ["北斗鎮", "田尾鄉", "埤頭鄉", "溪州鄉"], "seats": 5, "womenQuota": 1 },
-        { "id": "changhua-8", "name": "第8選舉區", "adminDistricts": ["二林鎮", "大城鄉", "芳苑鄉", "竹塘鄉"], "seats": 5, "womenQuota": 1 },
-        { "id": "changhua-9", "name": "第9選舉區", "adminDistricts": ["彰化縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "彰化縣之平地原住民" },
-        { "id": "changhua-10", "name": "第10選舉區", "adminDistricts": ["彰化縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "彰化縣之山地原住民" }
+        {
+          "id": "changhua-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "彰化市",
+            "花壇鄉",
+            "芬園鄉"
+          ],
+          "seats": 12,
+          "womenQuota": 3
+        },
+        {
+          "id": "changhua-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "鹿港鎮",
+            "福興鄉",
+            "秀水鄉"
+          ],
+          "seats": 7,
+          "womenQuota": 1
+        },
+        {
+          "id": "changhua-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "和美鎮",
+            "伸港鄉",
+            "線西鄉"
+          ],
+          "seats": 6,
+          "womenQuota": 1
+        },
+        {
+          "id": "changhua-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "員林市",
+            "大村鄉",
+            "永靖鄉"
+          ],
+          "seats": 9,
+          "womenQuota": 2
+        },
+        {
+          "id": "changhua-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "溪湖鎮",
+            "埔鹽鄉",
+            "埔心鄉"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "changhua-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "田中鎮",
+            "社頭鄉",
+            "二水鄉"
+          ],
+          "seats": 4,
+          "womenQuota": 1
+        },
+        {
+          "id": "changhua-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "北斗鎮",
+            "田尾鄉",
+            "埤頭鄉",
+            "溪州鄉"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "changhua-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "二林鎮",
+            "大城鄉",
+            "芳苑鄉",
+            "竹塘鄉"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "changhua-9",
+          "name": "第9選舉區",
+          "adminDistricts": [
+            "彰化縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "彰化縣之平地原住民"
+        },
+        {
+          "id": "changhua-10",
+          "name": "第10選舉區",
+          "adminDistricts": [
+            "彰化縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "彰化縣之山地原住民"
+        }
       ]
     },
     "南投縣": {
@@ -793,14 +1592,106 @@
       "plainsIndigenousSeats": 1,
       "mountainIndigenousSeats": 2,
       "districts": [
-        { "id": "nantou-1", "name": "第1選舉區", "adminDistricts": ["南投市", "名間鄉"], "seats": 10, "womenQuota": 2 },
-        { "id": "nantou-2", "name": "第2選舉區", "adminDistricts": ["草屯鎮", "中寮鄉"], "seats": 9, "womenQuota": 2 },
-        { "id": "nantou-3", "name": "第3選舉區", "adminDistricts": ["集集鎮", "水里鄉", "魚池鄉", "信義鄉"], "seats": 3, "womenQuota": 0 },
-        { "id": "nantou-4", "name": "第4選舉區", "adminDistricts": ["竹山鎮", "鹿谷鄉"], "seats": 5, "womenQuota": 1 },
-        { "id": "nantou-5", "name": "第5選舉區", "adminDistricts": ["埔里鎮", "國姓鄉", "仁愛鄉"], "seats": 7, "womenQuota": 1 },
-        { "id": "nantou-6", "name": "第6選舉區", "adminDistricts": ["南投縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "南投縣之平地原住民" },
-        { "id": "nantou-7", "name": "第7選舉區", "adminDistricts": ["信義鄉", "南投市", "竹山鎮", "集集鎮", "名間鄉", "鹿谷鄉", "水里鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "信義鄉及南投市、竹山鎮、集集鎮、名間鄉、鹿谷鄉、水里鄉之山地原住民" },
-        { "id": "nantou-8", "name": "第8選舉區", "adminDistricts": ["仁愛鄉", "草屯鎮", "中寮鄉", "魚池鄉", "國姓鄉", "埔里鎮"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "仁愛鄉及草屯鎮、中寮鄉、魚池鄉、國姓鄉、埔里鎮之山地原住民" }
+        {
+          "id": "nantou-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "南投市",
+            "名間鄉"
+          ],
+          "seats": 10,
+          "womenQuota": 2
+        },
+        {
+          "id": "nantou-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "草屯鎮",
+            "中寮鄉"
+          ],
+          "seats": 9,
+          "womenQuota": 2
+        },
+        {
+          "id": "nantou-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "集集鎮",
+            "水里鄉",
+            "魚池鄉",
+            "信義鄉"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "nantou-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "竹山鎮",
+            "鹿谷鄉"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "nantou-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "埔里鎮",
+            "國姓鄉",
+            "仁愛鄉"
+          ],
+          "seats": 7,
+          "womenQuota": 1
+        },
+        {
+          "id": "nantou-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "南投縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "南投縣之平地原住民"
+        },
+        {
+          "id": "nantou-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "信義鄉",
+            "南投市",
+            "竹山鎮",
+            "集集鎮",
+            "名間鄉",
+            "鹿谷鄉",
+            "水里鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "信義鄉及南投市、竹山鎮、集集鎮、名間鄉、鹿谷鄉、水里鄉之山地原住民"
+        },
+        {
+          "id": "nantou-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "仁愛鄉",
+            "草屯鎮",
+            "中寮鄉",
+            "魚池鄉",
+            "國姓鄉",
+            "埔里鎮"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "仁愛鄉及草屯鎮、中寮鄉、魚池鄉、國姓鄉、埔里鎮之山地原住民"
+        }
       ]
     },
     "雲林縣": {
@@ -811,14 +1702,98 @@
       "plainsIndigenousSeats": 1,
       "mountainIndigenousSeats": 1,
       "districts": [
-        { "id": "yunlin-1", "name": "第1選舉區", "adminDistricts": ["斗六市", "莿桐鄉", "林內鄉"], "seats": 10, "womenQuota": 2 },
-        { "id": "yunlin-2", "name": "第2選舉區", "adminDistricts": ["斗南鎮", "古坑鄉", "大埤鄉"], "seats": 6, "womenQuota": 1 },
-        { "id": "yunlin-3", "name": "第3選舉區", "adminDistricts": ["虎尾鎮", "土庫鎮", "褒忠鄉", "元長鄉"], "seats": 9, "womenQuota": 2 },
-        { "id": "yunlin-4", "name": "第4選舉區", "adminDistricts": ["西螺鎮", "二崙鄉", "崙背鄉"], "seats": 6, "womenQuota": 1 },
-        { "id": "yunlin-5", "name": "第5選舉區", "adminDistricts": ["臺西鄉", "麥寮鄉", "東勢鄉", "四湖鄉"], "seats": 7, "womenQuota": 1 },
-        { "id": "yunlin-6", "name": "第6選舉區", "adminDistricts": ["北港鎮", "口湖鄉", "水林鄉"], "seats": 5, "womenQuota": 1 },
-        { "id": "yunlin-7", "name": "第7選舉區", "adminDistricts": ["雲林縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "雲林縣之平地原住民" },
-        { "id": "yunlin-8", "name": "第8選舉區", "adminDistricts": ["雲林縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "雲林縣之山地原住民" }
+        {
+          "id": "yunlin-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "斗六市",
+            "莿桐鄉",
+            "林內鄉"
+          ],
+          "seats": 10,
+          "womenQuota": 2
+        },
+        {
+          "id": "yunlin-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "斗南鎮",
+            "古坑鄉",
+            "大埤鄉"
+          ],
+          "seats": 6,
+          "womenQuota": 1
+        },
+        {
+          "id": "yunlin-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "虎尾鎮",
+            "土庫鎮",
+            "褒忠鄉",
+            "元長鄉"
+          ],
+          "seats": 9,
+          "womenQuota": 2
+        },
+        {
+          "id": "yunlin-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "西螺鎮",
+            "二崙鄉",
+            "崙背鄉"
+          ],
+          "seats": 6,
+          "womenQuota": 1
+        },
+        {
+          "id": "yunlin-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "臺西鄉",
+            "麥寮鄉",
+            "東勢鄉",
+            "四湖鄉"
+          ],
+          "seats": 7,
+          "womenQuota": 1
+        },
+        {
+          "id": "yunlin-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "北港鎮",
+            "口湖鄉",
+            "水林鄉"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "yunlin-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "雲林縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "雲林縣之平地原住民"
+        },
+        {
+          "id": "yunlin-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "雲林縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "雲林縣之山地原住民"
+        }
       ]
     },
     "嘉義縣": {
@@ -829,13 +1804,84 @@
       "plainsIndigenousSeats": 0,
       "mountainIndigenousSeats": 1,
       "districts": [
-        { "id": "chiayi-county-1", "name": "第1選舉區", "adminDistricts": ["鹿草鄉", "太保市", "水上鄉"], "seats": 8, "womenQuota": 2 },
-        { "id": "chiayi-county-2", "name": "第2選舉區", "adminDistricts": ["民雄鄉", "新港鄉"], "seats": 8, "womenQuota": 2 },
-        { "id": "chiayi-county-3", "name": "第3選舉區", "adminDistricts": ["大林鎮", "溪口鄉", "梅山鄉"], "seats": 4, "womenQuota": 1 },
-        { "id": "chiayi-county-4", "name": "第4選舉區", "adminDistricts": ["朴子市", "六腳鄉", "東石鄉"], "seats": 6, "womenQuota": 1 },
-        { "id": "chiayi-county-5", "name": "第5選舉區", "adminDistricts": ["布袋鎮", "義竹鄉"], "seats": 3, "womenQuota": 0 },
-        { "id": "chiayi-county-6", "name": "第6選舉區", "adminDistricts": ["中埔鄉", "竹崎鄉", "番路鄉", "大埔鄉", "阿里山鄉"], "seats": 7, "womenQuota": 1 },
-        { "id": "chiayi-county-7", "name": "第7選舉區", "adminDistricts": ["嘉義縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "嘉義縣之山地原住民" }
+        {
+          "id": "chiayi-county-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "鹿草鄉",
+            "太保市",
+            "水上鄉"
+          ],
+          "seats": 8,
+          "womenQuota": 2
+        },
+        {
+          "id": "chiayi-county-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "民雄鄉",
+            "新港鄉"
+          ],
+          "seats": 8,
+          "womenQuota": 2
+        },
+        {
+          "id": "chiayi-county-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "大林鎮",
+            "溪口鄉",
+            "梅山鄉"
+          ],
+          "seats": 4,
+          "womenQuota": 1
+        },
+        {
+          "id": "chiayi-county-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "朴子市",
+            "六腳鄉",
+            "東石鄉"
+          ],
+          "seats": 6,
+          "womenQuota": 1
+        },
+        {
+          "id": "chiayi-county-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "布袋鎮",
+            "義竹鄉"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "chiayi-county-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "中埔鄉",
+            "竹崎鄉",
+            "番路鄉",
+            "大埔鄉",
+            "阿里山鄉"
+          ],
+          "seats": 7,
+          "womenQuota": 1
+        },
+        {
+          "id": "chiayi-county-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "嘉義縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "嘉義縣之山地原住民"
+        }
       ]
     },
     "屏東縣": {
@@ -846,22 +1892,228 @@
       "plainsIndigenousSeats": 1,
       "mountainIndigenousSeats": 8,
       "districts": [
-        { "id": "pingtung-1", "name": "第1選舉區", "adminDistricts": ["屏東市"], "seats": 12, "womenQuota": 3 },
-        { "id": "pingtung-2", "name": "第2選舉區", "adminDistricts": ["長治鄉", "麟洛鄉", "九如鄉", "里港鄉", "鹽埔鄉", "高樹鄉", "三地門鄉", "霧臺鄉", "瑪家鄉"], "seats": 8, "womenQuota": 2 },
-        { "id": "pingtung-3", "name": "第3選舉區", "adminDistricts": ["潮州鎮", "萬巒鄉", "內埔鄉", "竹田鄉", "新埤鄉", "枋寮鄉", "泰武鄉", "來義鄉", "春日鄉"], "seats": 10, "womenQuota": 2 },
-        { "id": "pingtung-4", "name": "第4選舉區", "adminDistricts": ["東港鎮", "新園鄉", "萬丹鄉"], "seats": 8, "womenQuota": 2 },
-        { "id": "pingtung-5", "name": "第5選舉區", "adminDistricts": ["崁頂鄉", "林邊鄉", "南州鄉", "佳冬鄉"], "seats": 4, "womenQuota": 1 },
-        { "id": "pingtung-6", "name": "第6選舉區", "adminDistricts": ["恆春鎮", "車城鄉", "滿州鄉", "枋山鄉", "獅子鄉", "牡丹鄉"], "seats": 3, "womenQuota": 0 },
-        { "id": "pingtung-7", "name": "第7選舉區", "adminDistricts": ["琉球鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "pingtung-8", "name": "第8選舉區", "adminDistricts": ["屏東縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "屏東縣之平地原住民" },
-        { "id": "pingtung-9", "name": "第9選舉區", "adminDistricts": ["三地門鄉", "九如鄉", "里港鄉", "鹽埔鄉", "高樹鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "三地門鄉及九如鄉、里港鄉、鹽埔鄉、高樹鄉之山地原住民" },
-        { "id": "pingtung-10", "name": "第10選舉區", "adminDistricts": ["瑪家鄉", "屏東市", "長治鄉", "麟洛鄉", "內埔鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "瑪家鄉及屏東市、長治鄉、麟洛鄉、內埔鄉之山地原住民" },
-        { "id": "pingtung-11", "name": "第11選舉區", "adminDistricts": ["泰武鄉", "萬丹鄉", "萬巒鄉", "竹田鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "泰武鄉及萬丹鄉、萬巒鄉、竹田鄉之山地原住民" },
-        { "id": "pingtung-12", "name": "第12選舉區", "adminDistricts": ["來義鄉", "潮州鎮", "新埤鄉", "新園鄉", "崁頂鄉", "南州鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "來義鄉及潮州鎮、新埤鄉、新園鄉、崁頂鄉、南州鄉之山地原住民" },
-        { "id": "pingtung-13", "name": "第13選舉區", "adminDistricts": ["春日鄉", "東港鎮", "枋寮鄉", "林邊鄉", "佳冬鄉", "琉球鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "春日鄉及東港鎮、枋寮鄉、林邊鄉、佳冬鄉、琉球鄉之山地原住民" },
-        { "id": "pingtung-14", "name": "第14選舉區", "adminDistricts": ["獅子鄉", "枋山鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "獅子鄉及枋山鄉之山地原住民" },
-        { "id": "pingtung-15", "name": "第15選舉區", "adminDistricts": ["牡丹鄉", "恆春鎮", "車城鄉", "滿州鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "牡丹鄉及恆春鎮、車城鄉、滿州鄉之山地原住民" },
-        { "id": "pingtung-16", "name": "第16選舉區", "adminDistricts": ["霧臺鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "霧臺鄉之山地原住民" }
+        {
+          "id": "pingtung-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "屏東市"
+          ],
+          "seats": 12,
+          "womenQuota": 3
+        },
+        {
+          "id": "pingtung-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "長治鄉",
+            "麟洛鄉",
+            "九如鄉",
+            "里港鄉",
+            "鹽埔鄉",
+            "高樹鄉",
+            "三地門鄉",
+            "霧臺鄉",
+            "瑪家鄉"
+          ],
+          "seats": 8,
+          "womenQuota": 2
+        },
+        {
+          "id": "pingtung-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "潮州鎮",
+            "萬巒鄉",
+            "內埔鄉",
+            "竹田鄉",
+            "新埤鄉",
+            "枋寮鄉",
+            "泰武鄉",
+            "來義鄉",
+            "春日鄉"
+          ],
+          "seats": 10,
+          "womenQuota": 2
+        },
+        {
+          "id": "pingtung-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "東港鎮",
+            "新園鄉",
+            "萬丹鄉"
+          ],
+          "seats": 8,
+          "womenQuota": 2
+        },
+        {
+          "id": "pingtung-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "崁頂鄉",
+            "林邊鄉",
+            "南州鄉",
+            "佳冬鄉"
+          ],
+          "seats": 4,
+          "womenQuota": 1
+        },
+        {
+          "id": "pingtung-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "恆春鎮",
+            "車城鄉",
+            "滿州鄉",
+            "枋山鄉",
+            "獅子鄉",
+            "牡丹鄉"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "pingtung-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "琉球鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "pingtung-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "屏東縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "屏東縣之平地原住民"
+        },
+        {
+          "id": "pingtung-9",
+          "name": "第9選舉區",
+          "adminDistricts": [
+            "三地門鄉",
+            "九如鄉",
+            "里港鄉",
+            "鹽埔鄉",
+            "高樹鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "三地門鄉及九如鄉、里港鄉、鹽埔鄉、高樹鄉之山地原住民"
+        },
+        {
+          "id": "pingtung-10",
+          "name": "第10選舉區",
+          "adminDistricts": [
+            "瑪家鄉",
+            "屏東市",
+            "長治鄉",
+            "麟洛鄉",
+            "內埔鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "瑪家鄉及屏東市、長治鄉、麟洛鄉、內埔鄉之山地原住民"
+        },
+        {
+          "id": "pingtung-11",
+          "name": "第11選舉區",
+          "adminDistricts": [
+            "泰武鄉",
+            "萬丹鄉",
+            "萬巒鄉",
+            "竹田鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "泰武鄉及萬丹鄉、萬巒鄉、竹田鄉之山地原住民"
+        },
+        {
+          "id": "pingtung-12",
+          "name": "第12選舉區",
+          "adminDistricts": [
+            "來義鄉",
+            "潮州鎮",
+            "新埤鄉",
+            "新園鄉",
+            "崁頂鄉",
+            "南州鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "來義鄉及潮州鎮、新埤鄉、新園鄉、崁頂鄉、南州鄉之山地原住民"
+        },
+        {
+          "id": "pingtung-13",
+          "name": "第13選舉區",
+          "adminDistricts": [
+            "春日鄉",
+            "東港鎮",
+            "枋寮鄉",
+            "林邊鄉",
+            "佳冬鄉",
+            "琉球鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "春日鄉及東港鎮、枋寮鄉、林邊鄉、佳冬鄉、琉球鄉之山地原住民"
+        },
+        {
+          "id": "pingtung-14",
+          "name": "第14選舉區",
+          "adminDistricts": [
+            "獅子鄉",
+            "枋山鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "獅子鄉及枋山鄉之山地原住民"
+        },
+        {
+          "id": "pingtung-15",
+          "name": "第15選舉區",
+          "adminDistricts": [
+            "牡丹鄉",
+            "恆春鎮",
+            "車城鄉",
+            "滿州鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "牡丹鄉及恆春鎮、車城鄉、滿州鄉之山地原住民"
+        },
+        {
+          "id": "pingtung-16",
+          "name": "第16選舉區",
+          "adminDistricts": [
+            "霧臺鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "霧臺鄉之山地原住民"
+        }
       ]
     },
     "宜蘭縣": {
@@ -872,19 +2124,144 @@
       "plainsIndigenousSeats": 1,
       "mountainIndigenousSeats": 2,
       "districts": [
-        { "id": "yilan-1", "name": "第1選舉區", "adminDistricts": ["宜蘭市"], "seats": 7, "womenQuota": 1 },
-        { "id": "yilan-2", "name": "第2選舉區", "adminDistricts": ["頭城鎮"], "seats": 2, "womenQuota": 0 },
-        { "id": "yilan-3", "name": "第3選舉區", "adminDistricts": ["礁溪鄉"], "seats": 3, "womenQuota": 0 },
-        { "id": "yilan-4", "name": "第4選舉區", "adminDistricts": ["員山鄉"], "seats": 2, "womenQuota": 0 },
-        { "id": "yilan-5", "name": "第5選舉區", "adminDistricts": ["壯圍鄉"], "seats": 2, "womenQuota": 0 },
-        { "id": "yilan-6", "name": "第6選舉區", "adminDistricts": ["羅東鎮"], "seats": 5, "womenQuota": 1 },
-        { "id": "yilan-7", "name": "第7選舉區", "adminDistricts": ["五結鄉"], "seats": 3, "womenQuota": 0 },
-        { "id": "yilan-8", "name": "第8選舉區", "adminDistricts": ["冬山鄉"], "seats": 4, "womenQuota": 1 },
-        { "id": "yilan-9", "name": "第9選舉區", "adminDistricts": ["三星鄉", "大同鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "yilan-10", "name": "第10選舉區", "adminDistricts": ["蘇澳鎮", "南澳鄉"], "seats": 2, "womenQuota": 0 },
-        { "id": "yilan-11", "name": "第11選舉區", "adminDistricts": ["宜蘭縣"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "宜蘭縣之平地原住民" },
-        { "id": "yilan-12", "name": "第12選舉區", "adminDistricts": ["大同鄉", "宜蘭市", "頭城鎮", "礁溪鄉", "員山鄉", "壯圍鄉", "三星鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "大同鄉及宜蘭市、頭城鎮、礁溪鄉、員山鄉、壯圍鄉、三星鄉之山地原住民" },
-        { "id": "yilan-13", "name": "第13選舉區", "adminDistricts": ["南澳鄉", "羅東鎮", "五結鄉", "冬山鄉", "蘇澳鎮"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "南澳鄉及羅東鎮、五結鄉、冬山鄉、蘇澳鎮之山地原住民" }
+        {
+          "id": "yilan-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "宜蘭市"
+          ],
+          "seats": 7,
+          "womenQuota": 1
+        },
+        {
+          "id": "yilan-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "頭城鎮"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "yilan-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "礁溪鄉"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "yilan-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "員山鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "yilan-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "壯圍鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "yilan-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "羅東鎮"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "yilan-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "五結鄉"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "yilan-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "冬山鄉"
+          ],
+          "seats": 4,
+          "womenQuota": 1
+        },
+        {
+          "id": "yilan-9",
+          "name": "第9選舉區",
+          "adminDistricts": [
+            "三星鄉",
+            "大同鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "yilan-10",
+          "name": "第10選舉區",
+          "adminDistricts": [
+            "蘇澳鎮",
+            "南澳鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "yilan-11",
+          "name": "第11選舉區",
+          "adminDistricts": [
+            "宜蘭縣"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "宜蘭縣之平地原住民"
+        },
+        {
+          "id": "yilan-12",
+          "name": "第12選舉區",
+          "adminDistricts": [
+            "大同鄉",
+            "宜蘭市",
+            "頭城鎮",
+            "礁溪鄉",
+            "員山鄉",
+            "壯圍鄉",
+            "三星鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "大同鄉及宜蘭市、頭城鎮、礁溪鄉、員山鄉、壯圍鄉、三星鄉之山地原住民"
+        },
+        {
+          "id": "yilan-13",
+          "name": "第13選舉區",
+          "adminDistricts": [
+            "南澳鄉",
+            "羅東鎮",
+            "五結鄉",
+            "冬山鄉",
+            "蘇澳鎮"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "南澳鄉及羅東鎮、五結鄉、冬山鄉、蘇澳鎮之山地原住民"
+        }
       ]
     },
     "花蓮縣": {
@@ -895,16 +2272,143 @@
       "plainsIndigenousSeats": 7,
       "mountainIndigenousSeats": 3,
       "districts": [
-        { "id": "hualien-1", "name": "第1選舉區", "adminDistricts": ["花蓮市"], "seats": 9, "womenQuota": 2 },
-        { "id": "hualien-2", "name": "第2選舉區", "adminDistricts": ["新城鄉", "秀林鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "hualien-3", "name": "第3選舉區", "adminDistricts": ["吉安鄉", "壽豐鄉", "鳳林鎮", "光復鄉", "豐濱鄉", "萬榮鄉"], "seats": 10, "womenQuota": 2 },
-        { "id": "hualien-4", "name": "第4選舉區", "adminDistricts": ["瑞穗鄉", "玉里鎮", "富里鄉", "卓溪鄉"], "seats": 3, "womenQuota": 0 },
-        { "id": "hualien-5", "name": "第5選舉區", "adminDistricts": ["花蓮市", "新城鄉", "秀林鄉", "吉安鄉"], "seats": 4, "womenQuota": 1, "isIndigenous": true, "indigenousType": "plains", "note": "花蓮市、新城鄉、秀林鄉、吉安鄉之平地原住民" },
-        { "id": "hualien-6", "name": "第6選舉區", "adminDistricts": ["壽豐鄉", "鳳林鎮", "萬榮鄉", "光復鄉", "豐濱鄉"], "seats": 2, "womenQuota": 1, "isIndigenous": true, "indigenousType": "plains", "note": "壽豐鄉、鳳林鎮、萬榮鄉、光復鄉、豐濱鄉之平地原住民" },
-        { "id": "hualien-7", "name": "第7選舉區", "adminDistricts": ["瑞穗鄉", "玉里鎮", "富里鄉", "卓溪鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "瑞穗鄉、玉里鎮、富里鄉、卓溪鄉之平地原住民" },
-        { "id": "hualien-8", "name": "第8選舉區", "adminDistricts": ["秀林鄉", "花蓮市", "新城鄉", "吉安鄉", "壽豐鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "秀林鄉及花蓮市、新城鄉、吉安鄉、壽豐鄉之山地原住民" },
-        { "id": "hualien-9", "name": "第9選舉區", "adminDistricts": ["萬榮鄉", "鳳林鎮", "光復鄉", "豐濱鄉", "瑞穗鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "萬榮鄉及鳳林鎮、光復鄉、豐濱鄉、瑞穗鄉之山地原住民" },
-        { "id": "hualien-10", "name": "第10選舉區", "adminDistricts": ["卓溪鄉", "玉里鎮", "富里鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "卓溪鄉及玉里鎮、富里鄉之山地原住民" }
+        {
+          "id": "hualien-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "花蓮市"
+          ],
+          "seats": 9,
+          "womenQuota": 2
+        },
+        {
+          "id": "hualien-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "新城鄉",
+            "秀林鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "hualien-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "吉安鄉",
+            "壽豐鄉",
+            "鳳林鎮",
+            "光復鄉",
+            "豐濱鄉",
+            "萬榮鄉"
+          ],
+          "seats": 10,
+          "womenQuota": 2
+        },
+        {
+          "id": "hualien-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "瑞穗鄉",
+            "玉里鎮",
+            "富里鄉",
+            "卓溪鄉"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "hualien-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "花蓮市",
+            "新城鄉",
+            "秀林鄉",
+            "吉安鄉"
+          ],
+          "seats": 4,
+          "womenQuota": 1,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "花蓮市、新城鄉、秀林鄉、吉安鄉之平地原住民"
+        },
+        {
+          "id": "hualien-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "壽豐鄉",
+            "鳳林鎮",
+            "萬榮鄉",
+            "光復鄉",
+            "豐濱鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 1,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "壽豐鄉、鳳林鎮、萬榮鄉、光復鄉、豐濱鄉之平地原住民"
+        },
+        {
+          "id": "hualien-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "瑞穗鄉",
+            "玉里鎮",
+            "富里鄉",
+            "卓溪鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "瑞穗鄉、玉里鎮、富里鄉、卓溪鄉之平地原住民"
+        },
+        {
+          "id": "hualien-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "秀林鄉",
+            "花蓮市",
+            "新城鄉",
+            "吉安鄉",
+            "壽豐鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "秀林鄉及花蓮市、新城鄉、吉安鄉、壽豐鄉之山地原住民"
+        },
+        {
+          "id": "hualien-9",
+          "name": "第9選舉區",
+          "adminDistricts": [
+            "萬榮鄉",
+            "鳳林鎮",
+            "光復鄉",
+            "豐濱鄉",
+            "瑞穗鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "萬榮鄉及鳳林鎮、光復鄉、豐濱鄉、瑞穗鄉之山地原住民"
+        },
+        {
+          "id": "hualien-10",
+          "name": "第10選舉區",
+          "adminDistricts": [
+            "卓溪鄉",
+            "玉里鎮",
+            "富里鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "卓溪鄉及玉里鎮、富里鄉之山地原住民"
+        }
       ]
     },
     "臺東縣": {
@@ -915,22 +2419,212 @@
       "plainsIndigenousSeats": 8,
       "mountainIndigenousSeats": 5,
       "districts": [
-        { "id": "taitung-1", "name": "第1選舉區", "adminDistricts": ["臺東市", "蘭嶼鄉"], "seats": 10, "womenQuota": 2 },
-        { "id": "taitung-2", "name": "第2選舉區", "adminDistricts": ["卑南鄉", "延平鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "taitung-3", "name": "第3選舉區", "adminDistricts": ["東河鄉", "成功鎮", "長濱鄉"], "seats": 2, "womenQuota": 0 },
-        { "id": "taitung-4", "name": "第4選舉區", "adminDistricts": ["鹿野鄉", "關山鎮", "海端鄉", "池上鄉"], "seats": 2, "womenQuota": 0 },
-        { "id": "taitung-5", "name": "第5選舉區", "adminDistricts": ["太麻里鄉", "金峰鄉", "達仁鄉", "大武鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "taitung-6", "name": "第6選舉區", "adminDistricts": ["綠島鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "taitung-7", "name": "第7選舉區", "adminDistricts": ["臺東市"], "seats": 3, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "臺東市之平地原住民" },
-        { "id": "taitung-8", "name": "第8選舉區", "adminDistricts": ["卑南鄉", "蘭嶼鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "卑南鄉、蘭嶼鄉之平地原住民" },
-        { "id": "taitung-9", "name": "第9選舉區", "adminDistricts": ["太麻里鄉", "金峰鄉", "達仁鄉", "大武鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "太麻里鄉、金峰鄉、達仁鄉、大武鄉之平地原住民" },
-        { "id": "taitung-10", "name": "第10選舉區", "adminDistricts": ["鹿野鄉", "延平鄉", "關山鎮", "海端鄉", "池上鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "鹿野鄉、延平鄉、關山鎮、海端鄉、池上鄉之平地原住民" },
-        { "id": "taitung-11", "name": "第11選舉區", "adminDistricts": ["東河鄉", "綠島鄉", "成功鎮", "長濱鄉"], "seats": 2, "womenQuota": 0, "isIndigenous": true, "indigenousType": "plains", "note": "東河鄉、綠島鄉、成功鎮、長濱鄉之平地原住民" },
-        { "id": "taitung-12", "name": "第12選舉區", "adminDistricts": ["延平鄉", "卑南鄉", "東河鄉", "成功鎮", "長濱鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "延平鄉及卑南鄉、東河鄉、成功鎮、長濱鄉之山地原住民" },
-        { "id": "taitung-13", "name": "第13選舉區", "adminDistricts": ["海端鄉", "鹿野鄉", "關山鎮", "池上鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "海端鄉及鹿野鄉、關山鎮、池上鄉之山地原住民" },
-        { "id": "taitung-14", "name": "第14選舉區", "adminDistricts": ["金峰鄉", "太麻里鄉", "臺東市", "綠島鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "金峰鄉及太麻里鄉、臺東市、綠島鄉之山地原住民" },
-        { "id": "taitung-15", "name": "第15選舉區", "adminDistricts": ["達仁鄉", "大武鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "達仁鄉及大武鄉之山地原住民" },
-        { "id": "taitung-16", "name": "第16選舉區", "adminDistricts": ["蘭嶼鄉"], "seats": 1, "womenQuota": 0, "isIndigenous": true, "indigenousType": "mountain", "note": "蘭嶼鄉之山地原住民" }
+        {
+          "id": "taitung-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "臺東市",
+            "蘭嶼鄉"
+          ],
+          "seats": 10,
+          "womenQuota": 2
+        },
+        {
+          "id": "taitung-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "卑南鄉",
+            "延平鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "taitung-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "東河鄉",
+            "成功鎮",
+            "長濱鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "taitung-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "鹿野鄉",
+            "關山鎮",
+            "海端鄉",
+            "池上鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "taitung-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "太麻里鄉",
+            "金峰鄉",
+            "達仁鄉",
+            "大武鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "taitung-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "綠島鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "taitung-7",
+          "name": "第7選舉區",
+          "adminDistricts": [
+            "臺東市"
+          ],
+          "seats": 3,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "臺東市之平地原住民"
+        },
+        {
+          "id": "taitung-8",
+          "name": "第8選舉區",
+          "adminDistricts": [
+            "卑南鄉",
+            "蘭嶼鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "卑南鄉、蘭嶼鄉之平地原住民"
+        },
+        {
+          "id": "taitung-9",
+          "name": "第9選舉區",
+          "adminDistricts": [
+            "太麻里鄉",
+            "金峰鄉",
+            "達仁鄉",
+            "大武鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "太麻里鄉、金峰鄉、達仁鄉、大武鄉之平地原住民"
+        },
+        {
+          "id": "taitung-10",
+          "name": "第10選舉區",
+          "adminDistricts": [
+            "鹿野鄉",
+            "延平鄉",
+            "關山鎮",
+            "海端鄉",
+            "池上鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "鹿野鄉、延平鄉、關山鎮、海端鄉、池上鄉之平地原住民"
+        },
+        {
+          "id": "taitung-11",
+          "name": "第11選舉區",
+          "adminDistricts": [
+            "東河鄉",
+            "綠島鄉",
+            "成功鎮",
+            "長濱鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "plains",
+          "note": "東河鄉、綠島鄉、成功鎮、長濱鄉之平地原住民"
+        },
+        {
+          "id": "taitung-12",
+          "name": "第12選舉區",
+          "adminDistricts": [
+            "延平鄉",
+            "卑南鄉",
+            "東河鄉",
+            "成功鎮",
+            "長濱鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "延平鄉及卑南鄉、東河鄉、成功鎮、長濱鄉之山地原住民"
+        },
+        {
+          "id": "taitung-13",
+          "name": "第13選舉區",
+          "adminDistricts": [
+            "海端鄉",
+            "鹿野鄉",
+            "關山鎮",
+            "池上鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "海端鄉及鹿野鄉、關山鎮、池上鄉之山地原住民"
+        },
+        {
+          "id": "taitung-14",
+          "name": "第14選舉區",
+          "adminDistricts": [
+            "金峰鄉",
+            "太麻里鄉",
+            "臺東市",
+            "綠島鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "金峰鄉及太麻里鄉、臺東市、綠島鄉之山地原住民"
+        },
+        {
+          "id": "taitung-15",
+          "name": "第15選舉區",
+          "adminDistricts": [
+            "達仁鄉",
+            "大武鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "達仁鄉及大武鄉之山地原住民"
+        },
+        {
+          "id": "taitung-16",
+          "name": "第16選舉區",
+          "adminDistricts": [
+            "蘭嶼鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0,
+          "isIndigenous": true,
+          "indigenousType": "mountain",
+          "note": "蘭嶼鄉之山地原住民"
+        }
       ]
     },
     "澎湖縣": {
@@ -941,12 +2635,60 @@
       "plainsIndigenousSeats": 0,
       "mountainIndigenousSeats": 0,
       "districts": [
-        { "id": "penghu-1", "name": "第1選舉區", "adminDistricts": ["馬公市"], "seats": 11, "womenQuota": 2 },
-        { "id": "penghu-2", "name": "第2選舉區", "adminDistricts": ["湖西鄉"], "seats": 3, "womenQuota": 0 },
-        { "id": "penghu-3", "name": "第3選舉區", "adminDistricts": ["白沙鄉"], "seats": 2, "womenQuota": 0 },
-        { "id": "penghu-4", "name": "第4選舉區", "adminDistricts": ["西嶼鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "penghu-5", "name": "第5選舉區", "adminDistricts": ["望安鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "penghu-6", "name": "第6選舉區", "adminDistricts": ["七美鄉"], "seats": 1, "womenQuota": 0 }
+        {
+          "id": "penghu-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "馬公市"
+          ],
+          "seats": 11,
+          "womenQuota": 2
+        },
+        {
+          "id": "penghu-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "湖西鄉"
+          ],
+          "seats": 3,
+          "womenQuota": 0
+        },
+        {
+          "id": "penghu-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "白沙鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "penghu-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "西嶼鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "penghu-5",
+          "name": "第5選舉區",
+          "adminDistricts": [
+            "望安鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "penghu-6",
+          "name": "第6選舉區",
+          "adminDistricts": [
+            "七美鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        }
       ]
     },
     "金門縣": {
@@ -957,9 +2699,36 @@
       "plainsIndigenousSeats": 0,
       "mountainIndigenousSeats": 0,
       "districts": [
-        { "id": "kinmen-1", "name": "第1選舉區", "adminDistricts": ["金城鎮", "金寧鄉", "烏坵鄉"], "seats": 10, "womenQuota": 2 },
-        { "id": "kinmen-2", "name": "第2選舉區", "adminDistricts": ["金湖鎮", "金沙鎮"], "seats": 7, "womenQuota": 1 },
-        { "id": "kinmen-3", "name": "第3選舉區", "adminDistricts": ["烈嶼鄉"], "seats": 2, "womenQuota": 0 }
+        {
+          "id": "kinmen-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "金城鎮",
+            "金寧鄉",
+            "烏坵鄉"
+          ],
+          "seats": 10,
+          "womenQuota": 2
+        },
+        {
+          "id": "kinmen-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "金湖鎮",
+            "金沙鎮"
+          ],
+          "seats": 7,
+          "womenQuota": 1
+        },
+        {
+          "id": "kinmen-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "烈嶼鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        }
       ]
     },
     "連江縣": {
@@ -970,60 +2739,1963 @@
       "plainsIndigenousSeats": 0,
       "mountainIndigenousSeats": 0,
       "districts": [
-        { "id": "lienchiang-1", "name": "第1選舉區", "adminDistricts": ["南竿鄉"], "seats": 5, "womenQuota": 1 },
-        { "id": "lienchiang-2", "name": "第2選舉區", "adminDistricts": ["北竿鄉"], "seats": 2, "womenQuota": 0 },
-        { "id": "lienchiang-3", "name": "第3選舉區", "adminDistricts": ["莒光鄉"], "seats": 1, "womenQuota": 0 },
-        { "id": "lienchiang-4", "name": "第4選舉區", "adminDistricts": ["東引鄉"], "seats": 1, "womenQuota": 0 }
+        {
+          "id": "lienchiang-1",
+          "name": "第1選舉區",
+          "adminDistricts": [
+            "南竿鄉"
+          ],
+          "seats": 5,
+          "womenQuota": 1
+        },
+        {
+          "id": "lienchiang-2",
+          "name": "第2選舉區",
+          "adminDistricts": [
+            "北竿鄉"
+          ],
+          "seats": 2,
+          "womenQuota": 0
+        },
+        {
+          "id": "lienchiang-3",
+          "name": "第3選舉區",
+          "adminDistricts": [
+            "莒光鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        },
+        {
+          "id": "lienchiang-4",
+          "name": "第4選舉區",
+          "adminDistricts": [
+            "東引鄉"
+          ],
+          "seats": 1,
+          "womenQuota": 0
+        }
       ]
     }
   },
   "adminToElectoralMapping": {
-    "description": "行政區到選舉區的快速查詢對照表（直轄市議員、縣市議員）",
+    "description": "Maps administrative districts (鄉鎮市區) to council electoral districts. Generated from councilDistricts data.",
     "councilor-municipal": {
       "臺北市": {
-        "北投區": { "districtId": "taipei-1", "districtName": "第1選舉區" },
-        "士林區": { "districtId": "taipei-1", "districtName": "第1選舉區" },
-        "內湖區": { "districtId": "taipei-2", "districtName": "第2選舉區" },
-        "南港區": { "districtId": "taipei-2", "districtName": "第2選舉區" },
-        "松山區": { "districtId": "taipei-3", "districtName": "第3選舉區" },
-        "信義區": { "districtId": "taipei-3", "districtName": "第3選舉區" },
-        "中山區": { "districtId": "taipei-4", "districtName": "第4選舉區" },
-        "大同區": { "districtId": "taipei-4", "districtName": "第4選舉區" },
-        "中正區": { "districtId": "taipei-5", "districtName": "第5選舉區" },
-        "萬華區": { "districtId": "taipei-5", "districtName": "第5選舉區" },
-        "大安區": { "districtId": "taipei-6", "districtName": "第6選舉區" },
-        "文山區": { "districtId": "taipei-6", "districtName": "第6選舉區" }
+        "北投區": {
+          "districtId": "taipei-1",
+          "districtName": "第1選舉區",
+          "seats": 12
+        },
+        "士林區": {
+          "districtId": "taipei-1",
+          "districtName": "第1選舉區",
+          "seats": 12
+        },
+        "內湖區": {
+          "districtId": "taipei-2",
+          "districtName": "第2選舉區",
+          "seats": 9
+        },
+        "南港區": {
+          "districtId": "taipei-2",
+          "districtName": "第2選舉區",
+          "seats": 9
+        },
+        "松山區": {
+          "districtId": "taipei-3",
+          "districtName": "第3選舉區",
+          "seats": 9
+        },
+        "信義區": {
+          "districtId": "taipei-3",
+          "districtName": "第3選舉區",
+          "seats": 9
+        },
+        "中山區": {
+          "districtId": "taipei-4",
+          "districtName": "第4選舉區",
+          "seats": 8
+        },
+        "大同區": {
+          "districtId": "taipei-4",
+          "districtName": "第4選舉區",
+          "seats": 8
+        },
+        "中正區": {
+          "districtId": "taipei-5",
+          "districtName": "第5選舉區",
+          "seats": 8
+        },
+        "萬華區": {
+          "districtId": "taipei-5",
+          "districtName": "第5選舉區",
+          "seats": 8
+        },
+        "大安區": {
+          "districtId": "taipei-6",
+          "districtName": "第6選舉區",
+          "seats": 13
+        },
+        "文山區": {
+          "districtId": "taipei-6",
+          "districtName": "第6選舉區",
+          "seats": 13
+        }
       },
       "新北市": {
-        "石門區": { "districtId": "newtaipei-1", "districtName": "第1選舉區" },
-        "三芝區": { "districtId": "newtaipei-1", "districtName": "第1選舉區" },
-        "淡水區": { "districtId": "newtaipei-1", "districtName": "第1選舉區" },
-        "八里區": { "districtId": "newtaipei-1", "districtName": "第1選舉區" },
-        "林口區": { "districtId": "newtaipei-2", "districtName": "第2選舉區" },
-        "五股區": { "districtId": "newtaipei-2", "districtName": "第2選舉區" },
-        "泰山區": { "districtId": "newtaipei-2", "districtName": "第2選舉區" },
-        "新莊區": { "districtId": "newtaipei-3", "districtName": "第3選舉區" },
-        "蘆洲區": { "districtId": "newtaipei-4", "districtName": "第4選舉區" },
-        "三重區": { "districtId": "newtaipei-4", "districtName": "第4選舉區" },
-        "板橋區": { "districtId": "newtaipei-5", "districtName": "第5選舉區" },
-        "中和區": { "districtId": "newtaipei-6", "districtName": "第6選舉區" },
-        "永和區": { "districtId": "newtaipei-7", "districtName": "第7選舉區" },
-        "樹林區": { "districtId": "newtaipei-8", "districtName": "第8選舉區" },
-        "鶯歌區": { "districtId": "newtaipei-8", "districtName": "第8選舉區" },
-        "土城區": { "districtId": "newtaipei-8", "districtName": "第8選舉區" },
-        "三峽區": { "districtId": "newtaipei-8", "districtName": "第8選舉區" },
-        "新店區": { "districtId": "newtaipei-9", "districtName": "第9選舉區" },
-        "深坑區": { "districtId": "newtaipei-9", "districtName": "第9選舉區" },
-        "石碇區": { "districtId": "newtaipei-9", "districtName": "第9選舉區" },
-        "坪林區": { "districtId": "newtaipei-9", "districtName": "第9選舉區" },
-        "烏來區": { "districtId": "newtaipei-9", "districtName": "第9選舉區" },
-        "平溪區": { "districtId": "newtaipei-10", "districtName": "第10選舉區" },
-        "瑞芳區": { "districtId": "newtaipei-10", "districtName": "第10選舉區" },
-        "雙溪區": { "districtId": "newtaipei-10", "districtName": "第10選舉區" },
-        "貢寮區": { "districtId": "newtaipei-10", "districtName": "第10選舉區" },
-        "金山區": { "districtId": "newtaipei-11", "districtName": "第11選舉區" },
-        "萬里區": { "districtId": "newtaipei-11", "districtName": "第11選舉區" },
-        "汐止區": { "districtId": "newtaipei-11", "districtName": "第11選舉區" }
+        "石門區": {
+          "districtId": "newtaipei-1",
+          "districtName": "第1選舉區",
+          "seats": 4
+        },
+        "三芝區": {
+          "districtId": "newtaipei-1",
+          "districtName": "第1選舉區",
+          "seats": 4
+        },
+        "淡水區": {
+          "districtId": "newtaipei-1",
+          "districtName": "第1選舉區",
+          "seats": 4
+        },
+        "八里區": {
+          "districtId": "newtaipei-1",
+          "districtName": "第1選舉區",
+          "seats": 4
+        },
+        "林口區": {
+          "districtId": "newtaipei-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "五股區": {
+          "districtId": "newtaipei-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "泰山區": {
+          "districtId": "newtaipei-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "新莊區": {
+          "districtId": "newtaipei-3",
+          "districtName": "第3選舉區",
+          "seats": 7
+        },
+        "蘆洲區": {
+          "districtId": "newtaipei-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "三重區": {
+          "districtId": "newtaipei-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "板橋區": {
+          "districtId": "newtaipei-5",
+          "districtName": "第5選舉區",
+          "seats": 9
+        },
+        "中和區": {
+          "districtId": "newtaipei-6",
+          "districtName": "第6選舉區",
+          "seats": 6
+        },
+        "永和區": {
+          "districtId": "newtaipei-7",
+          "districtName": "第7選舉區",
+          "seats": 3
+        },
+        "樹林區": {
+          "districtId": "newtaipei-8",
+          "districtName": "第8選舉區",
+          "seats": 9
+        },
+        "鶯歌區": {
+          "districtId": "newtaipei-8",
+          "districtName": "第8選舉區",
+          "seats": 9
+        },
+        "土城區": {
+          "districtId": "newtaipei-8",
+          "districtName": "第8選舉區",
+          "seats": 9
+        },
+        "三峽區": {
+          "districtId": "newtaipei-8",
+          "districtName": "第8選舉區",
+          "seats": 9
+        },
+        "新店區": {
+          "districtId": "newtaipei-9",
+          "districtName": "第9選舉區",
+          "seats": 5
+        },
+        "深坑區": {
+          "districtId": "newtaipei-9",
+          "districtName": "第9選舉區",
+          "seats": 5
+        },
+        "石碇區": {
+          "districtId": "newtaipei-9",
+          "districtName": "第9選舉區",
+          "seats": 5
+        },
+        "坪林區": {
+          "districtId": "newtaipei-9",
+          "districtName": "第9選舉區",
+          "seats": 5
+        },
+        "烏來區": {
+          "districtId": "newtaipei-9",
+          "districtName": "第9選舉區",
+          "seats": 5
+        },
+        "平溪區": {
+          "districtId": "newtaipei-10",
+          "districtName": "第10選舉區",
+          "seats": 1
+        },
+        "瑞芳區": {
+          "districtId": "newtaipei-10",
+          "districtName": "第10選舉區",
+          "seats": 1
+        },
+        "雙溪區": {
+          "districtId": "newtaipei-10",
+          "districtName": "第10選舉區",
+          "seats": 1
+        },
+        "貢寮區": {
+          "districtId": "newtaipei-10",
+          "districtName": "第10選舉區",
+          "seats": 1
+        },
+        "金山區": {
+          "districtId": "newtaipei-11",
+          "districtName": "第11選舉區",
+          "seats": 4
+        },
+        "萬里區": {
+          "districtId": "newtaipei-11",
+          "districtName": "第11選舉區",
+          "seats": 4
+        },
+        "汐止區": {
+          "districtId": "newtaipei-11",
+          "districtName": "第11選舉區",
+          "seats": 4
+        }
+      },
+      "桃園市": {
+        "桃園區": {
+          "districtId": "taoyuan-1",
+          "districtName": "第1選舉區",
+          "seats": 12
+        },
+        "龜山區": {
+          "districtId": "taoyuan-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "八德區": {
+          "districtId": "taoyuan-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "蘆竹區": {
+          "districtId": "taoyuan-4",
+          "districtName": "第4選舉區",
+          "seats": 4
+        },
+        "大園區": {
+          "districtId": "taoyuan-5",
+          "districtName": "第5選舉區",
+          "seats": 2
+        },
+        "大溪區": {
+          "districtId": "taoyuan-6",
+          "districtName": "第6選舉區",
+          "seats": 2
+        },
+        "復興區": {
+          "districtId": "taoyuan-6",
+          "districtName": "第6選舉區",
+          "seats": 2
+        },
+        "中壢區": {
+          "districtId": "taoyuan-7",
+          "districtName": "第7選舉區",
+          "seats": 11
+        },
+        "平鎮區": {
+          "districtId": "taoyuan-8",
+          "districtName": "第8選舉區",
+          "seats": 6
+        },
+        "楊梅區": {
+          "districtId": "taoyuan-9",
+          "districtName": "第9選舉區",
+          "seats": 4
+        },
+        "龍潭區": {
+          "districtId": "taoyuan-10",
+          "districtName": "第10選舉區",
+          "seats": 3
+        },
+        "新屋區": {
+          "districtId": "taoyuan-11",
+          "districtName": "第11選舉區",
+          "seats": 1
+        },
+        "觀音區": {
+          "districtId": "taoyuan-12",
+          "districtName": "第12選舉區",
+          "seats": 2
+        }
+      },
+      "臺中市": {
+        "大甲區": {
+          "districtId": "taichung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "大安區": {
+          "districtId": "taichung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "外埔區": {
+          "districtId": "taichung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "清水區": {
+          "districtId": "taichung-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "梧棲區": {
+          "districtId": "taichung-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "沙鹿區": {
+          "districtId": "taichung-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "龍井區": {
+          "districtId": "taichung-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "大肚區": {
+          "districtId": "taichung-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "烏日區": {
+          "districtId": "taichung-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "后里區": {
+          "districtId": "taichung-4",
+          "districtName": "第4選舉區",
+          "seats": 5
+        },
+        "豐原區": {
+          "districtId": "taichung-4",
+          "districtName": "第4選舉區",
+          "seats": 5
+        },
+        "神岡區": {
+          "districtId": "taichung-5",
+          "districtName": "第5選舉區",
+          "seats": 6
+        },
+        "大雅區": {
+          "districtId": "taichung-5",
+          "districtName": "第5選舉區",
+          "seats": 6
+        },
+        "潭子區": {
+          "districtId": "taichung-5",
+          "districtName": "第5選舉區",
+          "seats": 6
+        },
+        "西屯區": {
+          "districtId": "taichung-6",
+          "districtName": "第6選舉區",
+          "seats": 5
+        },
+        "南屯區": {
+          "districtId": "taichung-7",
+          "districtName": "第7選舉區",
+          "seats": 4
+        },
+        "北屯區": {
+          "districtId": "taichung-8",
+          "districtName": "第8選舉區",
+          "seats": 7
+        },
+        "北區": {
+          "districtId": "taichung-9",
+          "districtName": "第9選舉區",
+          "seats": 3
+        },
+        "中區": {
+          "districtId": "taichung-10",
+          "districtName": "第10選舉區",
+          "seats": 3
+        },
+        "西區": {
+          "districtId": "taichung-10",
+          "districtName": "第10選舉區",
+          "seats": 3
+        },
+        "東區": {
+          "districtId": "taichung-11",
+          "districtName": "第11選舉區",
+          "seats": 4
+        },
+        "南區": {
+          "districtId": "taichung-11",
+          "districtName": "第11選舉區",
+          "seats": 4
+        },
+        "太平區": {
+          "districtId": "taichung-12",
+          "districtName": "第12選舉區",
+          "seats": 4
+        },
+        "大里區": {
+          "districtId": "taichung-13",
+          "districtName": "第13選舉區",
+          "seats": 6
+        },
+        "霧峰區": {
+          "districtId": "taichung-13",
+          "districtName": "第13選舉區",
+          "seats": 6
+        },
+        "東勢區": {
+          "districtId": "taichung-14",
+          "districtName": "第14選舉區",
+          "seats": 2
+        },
+        "石岡區": {
+          "districtId": "taichung-14",
+          "districtName": "第14選舉區",
+          "seats": 2
+        },
+        "新社區": {
+          "districtId": "taichung-14",
+          "districtName": "第14選舉區",
+          "seats": 2
+        },
+        "和平區": {
+          "districtId": "taichung-14",
+          "districtName": "第14選舉區",
+          "seats": 2
+        }
+      },
+      "臺南市": {
+        "後壁區": {
+          "districtId": "tainan-1",
+          "districtName": "第1選舉區",
+          "seats": 5
+        },
+        "白河區": {
+          "districtId": "tainan-1",
+          "districtName": "第1選舉區",
+          "seats": 5
+        },
+        "東山區": {
+          "districtId": "tainan-1",
+          "districtName": "第1選舉區",
+          "seats": 5
+        },
+        "鹽水區": {
+          "districtId": "tainan-1",
+          "districtName": "第1選舉區",
+          "seats": 5
+        },
+        "新營區": {
+          "districtId": "tainan-1",
+          "districtName": "第1選舉區",
+          "seats": 5
+        },
+        "柳營區": {
+          "districtId": "tainan-1",
+          "districtName": "第1選舉區",
+          "seats": 5
+        },
+        "北門區": {
+          "districtId": "tainan-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "學甲區": {
+          "districtId": "tainan-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "將軍區": {
+          "districtId": "tainan-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "七股區": {
+          "districtId": "tainan-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "佳里區": {
+          "districtId": "tainan-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "西港區": {
+          "districtId": "tainan-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "下營區": {
+          "districtId": "tainan-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "六甲區": {
+          "districtId": "tainan-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "麻豆區": {
+          "districtId": "tainan-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "官田區": {
+          "districtId": "tainan-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "大內區": {
+          "districtId": "tainan-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "楠西區": {
+          "districtId": "tainan-4",
+          "districtName": "第4選舉區",
+          "seats": 1
+        },
+        "南化區": {
+          "districtId": "tainan-4",
+          "districtName": "第4選舉區",
+          "seats": 1
+        },
+        "玉井區": {
+          "districtId": "tainan-4",
+          "districtName": "第4選舉區",
+          "seats": 1
+        },
+        "左鎮區": {
+          "districtId": "tainan-4",
+          "districtName": "第4選舉區",
+          "seats": 1
+        },
+        "善化區": {
+          "districtId": "tainan-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "安定區": {
+          "districtId": "tainan-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "新市區": {
+          "districtId": "tainan-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "山上區": {
+          "districtId": "tainan-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "新化區": {
+          "districtId": "tainan-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "安南區": {
+          "districtId": "tainan-6",
+          "districtName": "第6選舉區",
+          "seats": 6
+        },
+        "永康區": {
+          "districtId": "tainan-7",
+          "districtName": "第7選舉區",
+          "seats": 7
+        },
+        "北區": {
+          "districtId": "tainan-8",
+          "districtName": "第8選舉區",
+          "seats": 6
+        },
+        "中西區": {
+          "districtId": "tainan-8",
+          "districtName": "第8選舉區",
+          "seats": 6
+        },
+        "安平區": {
+          "districtId": "tainan-9",
+          "districtName": "第9選舉區",
+          "seats": 6
+        },
+        "南區": {
+          "districtId": "tainan-9",
+          "districtName": "第9選舉區",
+          "seats": 6
+        },
+        "東區": {
+          "districtId": "tainan-10",
+          "districtName": "第10選舉區",
+          "seats": 5
+        },
+        "仁德區": {
+          "districtId": "tainan-11",
+          "districtName": "第11選舉區",
+          "seats": 6
+        },
+        "歸仁區": {
+          "districtId": "tainan-11",
+          "districtName": "第11選舉區",
+          "seats": 6
+        },
+        "關廟區": {
+          "districtId": "tainan-11",
+          "districtName": "第11選舉區",
+          "seats": 6
+        },
+        "龍崎區": {
+          "districtId": "tainan-11",
+          "districtName": "第11選舉區",
+          "seats": 6
+        }
+      },
+      "高雄市": {
+        "桃源區": {
+          "districtId": "kaohsiung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "那瑪夏區": {
+          "districtId": "kaohsiung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "甲仙區": {
+          "districtId": "kaohsiung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "六龜區": {
+          "districtId": "kaohsiung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "杉林區": {
+          "districtId": "kaohsiung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "內門區": {
+          "districtId": "kaohsiung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "旗山區": {
+          "districtId": "kaohsiung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "美濃區": {
+          "districtId": "kaohsiung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "茂林區": {
+          "districtId": "kaohsiung-1",
+          "districtName": "第1選舉區",
+          "seats": 3
+        },
+        "茄萣區": {
+          "districtId": "kaohsiung-2",
+          "districtName": "第2選舉區",
+          "seats": 3
+        },
+        "湖內區": {
+          "districtId": "kaohsiung-2",
+          "districtName": "第2選舉區",
+          "seats": 3
+        },
+        "路竹區": {
+          "districtId": "kaohsiung-2",
+          "districtName": "第2選舉區",
+          "seats": 3
+        },
+        "阿蓮區": {
+          "districtId": "kaohsiung-2",
+          "districtName": "第2選舉區",
+          "seats": 3
+        },
+        "田寮區": {
+          "districtId": "kaohsiung-2",
+          "districtName": "第2選舉區",
+          "seats": 3
+        },
+        "永安區": {
+          "districtId": "kaohsiung-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "岡山區": {
+          "districtId": "kaohsiung-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "燕巢區": {
+          "districtId": "kaohsiung-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "彌陀區": {
+          "districtId": "kaohsiung-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "梓官區": {
+          "districtId": "kaohsiung-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "橋頭區": {
+          "districtId": "kaohsiung-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "楠梓區": {
+          "districtId": "kaohsiung-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "左營區": {
+          "districtId": "kaohsiung-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "大社區": {
+          "districtId": "kaohsiung-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "仁武區": {
+          "districtId": "kaohsiung-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "鳥松區": {
+          "districtId": "kaohsiung-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "大樹區": {
+          "districtId": "kaohsiung-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "鼓山區": {
+          "districtId": "kaohsiung-6",
+          "districtName": "第6選舉區",
+          "seats": 4
+        },
+        "鹽埕區": {
+          "districtId": "kaohsiung-6",
+          "districtName": "第6選舉區",
+          "seats": 4
+        },
+        "旗津區": {
+          "districtId": "kaohsiung-6",
+          "districtName": "第6選舉區",
+          "seats": 4
+        },
+        "三民區": {
+          "districtId": "kaohsiung-7",
+          "districtName": "第7選舉區",
+          "seats": 8
+        },
+        "前金區": {
+          "districtId": "kaohsiung-8",
+          "districtName": "第8選舉區",
+          "seats": 5
+        },
+        "新興區": {
+          "districtId": "kaohsiung-8",
+          "districtName": "第8選舉區",
+          "seats": 5
+        },
+        "苓雅區": {
+          "districtId": "kaohsiung-8",
+          "districtName": "第8選舉區",
+          "seats": 5
+        },
+        "鳳山區": {
+          "districtId": "kaohsiung-9",
+          "districtName": "第9選舉區",
+          "seats": 8
+        },
+        "前鎮區": {
+          "districtId": "kaohsiung-10",
+          "districtName": "第10選舉區",
+          "seats": 7
+        },
+        "小港區": {
+          "districtId": "kaohsiung-10",
+          "districtName": "第10選舉區",
+          "seats": 7
+        },
+        "大寮區": {
+          "districtId": "kaohsiung-11",
+          "districtName": "第11選舉區",
+          "seats": 4
+        },
+        "林園區": {
+          "districtId": "kaohsiung-11",
+          "districtName": "第11選舉區",
+          "seats": 4
+        }
+      }
+    },
+    "councilor-county": {
+      "基隆市": {
+        "中正區": {
+          "districtId": "keelung-1",
+          "districtName": "第1選舉區",
+          "seats": 4
+        },
+        "信義區": {
+          "districtId": "keelung-2",
+          "districtName": "第2選舉區",
+          "seats": 5
+        },
+        "仁愛區": {
+          "districtId": "keelung-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "中山區": {
+          "districtId": "keelung-4",
+          "districtName": "第4選舉區",
+          "seats": 4
+        },
+        "安樂區": {
+          "districtId": "keelung-5",
+          "districtName": "第5選舉區",
+          "seats": 7
+        },
+        "暖暖區": {
+          "districtId": "keelung-6",
+          "districtName": "第6選舉區",
+          "seats": 3
+        },
+        "七堵區": {
+          "districtId": "keelung-7",
+          "districtName": "第7選舉區",
+          "seats": 4
+        }
+      },
+      "新竹市": {
+        "東區": {
+          "isSplit": true,
+          "districts": [
+            {
+              "districtId": "hsinchu-city-1",
+              "districtName": "第1選舉區",
+              "seats": 12,
+              "note": "東門里等36里"
+            },
+            {
+              "districtId": "hsinchu-city-2",
+              "districtName": "第2選舉區",
+              "seats": 4,
+              "note": "南門里等17里"
+            },
+            {
+              "districtId": "hsinchu-city-3",
+              "districtName": "第3選舉區",
+              "seats": 2,
+              "note": "客雅里等15里"
+            }
+          ]
+        },
+        "北區": {
+          "districtId": "hsinchu-city-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "香山區": {
+          "districtId": "hsinchu-city-5",
+          "districtName": "第5選舉區",
+          "seats": 6
+        }
+      },
+      "嘉義市": {
+        "東區": {
+          "districtId": "chiayi-city-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "西區": {
+          "districtId": "chiayi-city-2",
+          "districtName": "第2選舉區",
+          "seats": 13
+        }
+      },
+      "新竹縣": {
+        "竹北市": {
+          "isSplit": true,
+          "districts": [
+            {
+              "districtId": "hsinchu-county-1",
+              "districtName": "第1選舉區",
+              "seats": 4,
+              "note": "尚義里等15里"
+            },
+            {
+              "districtId": "hsinchu-county-2",
+              "districtName": "第2選舉區",
+              "seats": 9,
+              "note": "竹北里等19里"
+            }
+          ]
+        },
+        "湖口鄉": {
+          "districtId": "hsinchu-county-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "新豐鄉": {
+          "districtId": "hsinchu-county-4",
+          "districtName": "第4選舉區",
+          "seats": 3
+        },
+        "關西鎮": {
+          "districtId": "hsinchu-county-5",
+          "districtName": "第5選舉區",
+          "seats": 2
+        },
+        "新埔鎮": {
+          "districtId": "hsinchu-county-6",
+          "districtName": "第6選舉區",
+          "seats": 2
+        },
+        "橫山鄉": {
+          "districtId": "hsinchu-county-7",
+          "districtName": "第7選舉區",
+          "seats": 1
+        },
+        "尖石鄉": {
+          "districtId": "hsinchu-county-7",
+          "districtName": "第7選舉區",
+          "seats": 1
+        },
+        "芎林鄉": {
+          "districtId": "hsinchu-county-8",
+          "districtName": "第8選舉區",
+          "seats": 1
+        },
+        "竹東鎮": {
+          "districtId": "hsinchu-county-9",
+          "districtName": "第9選舉區",
+          "seats": 5
+        },
+        "五峰鄉": {
+          "districtId": "hsinchu-county-9",
+          "districtName": "第9選舉區",
+          "seats": 5
+        },
+        "寶山鄉": {
+          "districtId": "hsinchu-county-10",
+          "districtName": "第10選舉區",
+          "seats": 1
+        },
+        "北埔鄉": {
+          "districtId": "hsinchu-county-11",
+          "districtName": "第11選舉區",
+          "seats": 1
+        },
+        "峨眉鄉": {
+          "districtId": "hsinchu-county-11",
+          "districtName": "第11選舉區",
+          "seats": 1
+        }
+      },
+      "苗栗縣": {
+        "苗栗市": {
+          "districtId": "miaoli-1",
+          "districtName": "第1選舉區",
+          "seats": 9
+        },
+        "公館鄉": {
+          "districtId": "miaoli-1",
+          "districtName": "第1選舉區",
+          "seats": 9
+        },
+        "頭屋鄉": {
+          "districtId": "miaoli-1",
+          "districtName": "第1選舉區",
+          "seats": 9
+        },
+        "銅鑼鄉": {
+          "districtId": "miaoli-2",
+          "districtName": "第2選舉區",
+          "seats": 3
+        },
+        "三義鄉": {
+          "districtId": "miaoli-2",
+          "districtName": "第2選舉區",
+          "seats": 3
+        },
+        "西湖鄉": {
+          "districtId": "miaoli-2",
+          "districtName": "第2選舉區",
+          "seats": 3
+        },
+        "通霄鎮": {
+          "districtId": "miaoli-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "苑裡鎮": {
+          "districtId": "miaoli-3",
+          "districtName": "第3選舉區",
+          "seats": 5
+        },
+        "後龍鎮": {
+          "districtId": "miaoli-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "造橋鄉": {
+          "districtId": "miaoli-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "竹南鎮": {
+          "districtId": "miaoli-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "頭份市": {
+          "districtId": "miaoli-5",
+          "districtName": "第5選舉區",
+          "seats": 8
+        },
+        "三灣鄉": {
+          "districtId": "miaoli-5",
+          "districtName": "第5選舉區",
+          "seats": 8
+        },
+        "南庄鄉": {
+          "districtId": "miaoli-5",
+          "districtName": "第5選舉區",
+          "seats": 8
+        },
+        "大湖鄉": {
+          "districtId": "miaoli-6",
+          "districtName": "第6選舉區",
+          "seats": 2
+        },
+        "獅潭鄉": {
+          "districtId": "miaoli-6",
+          "districtName": "第6選舉區",
+          "seats": 2
+        },
+        "卓蘭鎮": {
+          "districtId": "miaoli-6",
+          "districtName": "第6選舉區",
+          "seats": 2
+        },
+        "泰安鄉": {
+          "districtId": "miaoli-6",
+          "districtName": "第6選舉區",
+          "seats": 2
+        }
+      },
+      "彰化縣": {
+        "彰化市": {
+          "districtId": "changhua-1",
+          "districtName": "第1選舉區",
+          "seats": 12
+        },
+        "花壇鄉": {
+          "districtId": "changhua-1",
+          "districtName": "第1選舉區",
+          "seats": 12
+        },
+        "芬園鄉": {
+          "districtId": "changhua-1",
+          "districtName": "第1選舉區",
+          "seats": 12
+        },
+        "鹿港鎮": {
+          "districtId": "changhua-2",
+          "districtName": "第2選舉區",
+          "seats": 7
+        },
+        "福興鄉": {
+          "districtId": "changhua-2",
+          "districtName": "第2選舉區",
+          "seats": 7
+        },
+        "秀水鄉": {
+          "districtId": "changhua-2",
+          "districtName": "第2選舉區",
+          "seats": 7
+        },
+        "和美鎮": {
+          "districtId": "changhua-3",
+          "districtName": "第3選舉區",
+          "seats": 6
+        },
+        "伸港鄉": {
+          "districtId": "changhua-3",
+          "districtName": "第3選舉區",
+          "seats": 6
+        },
+        "線西鄉": {
+          "districtId": "changhua-3",
+          "districtName": "第3選舉區",
+          "seats": 6
+        },
+        "員林市": {
+          "districtId": "changhua-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "大村鄉": {
+          "districtId": "changhua-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "永靖鄉": {
+          "districtId": "changhua-4",
+          "districtName": "第4選舉區",
+          "seats": 9
+        },
+        "溪湖鎮": {
+          "districtId": "changhua-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "埔鹽鄉": {
+          "districtId": "changhua-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "埔心鄉": {
+          "districtId": "changhua-5",
+          "districtName": "第5選舉區",
+          "seats": 5
+        },
+        "田中鎮": {
+          "districtId": "changhua-6",
+          "districtName": "第6選舉區",
+          "seats": 4
+        },
+        "社頭鄉": {
+          "districtId": "changhua-6",
+          "districtName": "第6選舉區",
+          "seats": 4
+        },
+        "二水鄉": {
+          "districtId": "changhua-6",
+          "districtName": "第6選舉區",
+          "seats": 4
+        },
+        "北斗鎮": {
+          "districtId": "changhua-7",
+          "districtName": "第7選舉區",
+          "seats": 5
+        },
+        "田尾鄉": {
+          "districtId": "changhua-7",
+          "districtName": "第7選舉區",
+          "seats": 5
+        },
+        "埤頭鄉": {
+          "districtId": "changhua-7",
+          "districtName": "第7選舉區",
+          "seats": 5
+        },
+        "溪州鄉": {
+          "districtId": "changhua-7",
+          "districtName": "第7選舉區",
+          "seats": 5
+        },
+        "二林鎮": {
+          "districtId": "changhua-8",
+          "districtName": "第8選舉區",
+          "seats": 5
+        },
+        "大城鄉": {
+          "districtId": "changhua-8",
+          "districtName": "第8選舉區",
+          "seats": 5
+        },
+        "芳苑鄉": {
+          "districtId": "changhua-8",
+          "districtName": "第8選舉區",
+          "seats": 5
+        },
+        "竹塘鄉": {
+          "districtId": "changhua-8",
+          "districtName": "第8選舉區",
+          "seats": 5
+        }
+      },
+      "南投縣": {
+        "南投市": {
+          "districtId": "nantou-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "名間鄉": {
+          "districtId": "nantou-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "草屯鎮": {
+          "districtId": "nantou-2",
+          "districtName": "第2選舉區",
+          "seats": 9
+        },
+        "中寮鄉": {
+          "districtId": "nantou-2",
+          "districtName": "第2選舉區",
+          "seats": 9
+        },
+        "集集鎮": {
+          "districtId": "nantou-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "水里鄉": {
+          "districtId": "nantou-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "魚池鄉": {
+          "districtId": "nantou-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "信義鄉": {
+          "districtId": "nantou-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "竹山鎮": {
+          "districtId": "nantou-4",
+          "districtName": "第4選舉區",
+          "seats": 5
+        },
+        "鹿谷鄉": {
+          "districtId": "nantou-4",
+          "districtName": "第4選舉區",
+          "seats": 5
+        },
+        "埔里鎮": {
+          "districtId": "nantou-5",
+          "districtName": "第5選舉區",
+          "seats": 7
+        },
+        "國姓鄉": {
+          "districtId": "nantou-5",
+          "districtName": "第5選舉區",
+          "seats": 7
+        },
+        "仁愛鄉": {
+          "districtId": "nantou-5",
+          "districtName": "第5選舉區",
+          "seats": 7
+        }
+      },
+      "雲林縣": {
+        "斗六市": {
+          "districtId": "yunlin-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "莿桐鄉": {
+          "districtId": "yunlin-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "林內鄉": {
+          "districtId": "yunlin-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "斗南鎮": {
+          "districtId": "yunlin-2",
+          "districtName": "第2選舉區",
+          "seats": 6
+        },
+        "古坑鄉": {
+          "districtId": "yunlin-2",
+          "districtName": "第2選舉區",
+          "seats": 6
+        },
+        "大埤鄉": {
+          "districtId": "yunlin-2",
+          "districtName": "第2選舉區",
+          "seats": 6
+        },
+        "虎尾鎮": {
+          "districtId": "yunlin-3",
+          "districtName": "第3選舉區",
+          "seats": 9
+        },
+        "土庫鎮": {
+          "districtId": "yunlin-3",
+          "districtName": "第3選舉區",
+          "seats": 9
+        },
+        "褒忠鄉": {
+          "districtId": "yunlin-3",
+          "districtName": "第3選舉區",
+          "seats": 9
+        },
+        "元長鄉": {
+          "districtId": "yunlin-3",
+          "districtName": "第3選舉區",
+          "seats": 9
+        },
+        "西螺鎮": {
+          "districtId": "yunlin-4",
+          "districtName": "第4選舉區",
+          "seats": 6
+        },
+        "二崙鄉": {
+          "districtId": "yunlin-4",
+          "districtName": "第4選舉區",
+          "seats": 6
+        },
+        "崙背鄉": {
+          "districtId": "yunlin-4",
+          "districtName": "第4選舉區",
+          "seats": 6
+        },
+        "臺西鄉": {
+          "districtId": "yunlin-5",
+          "districtName": "第5選舉區",
+          "seats": 7
+        },
+        "麥寮鄉": {
+          "districtId": "yunlin-5",
+          "districtName": "第5選舉區",
+          "seats": 7
+        },
+        "東勢鄉": {
+          "districtId": "yunlin-5",
+          "districtName": "第5選舉區",
+          "seats": 7
+        },
+        "四湖鄉": {
+          "districtId": "yunlin-5",
+          "districtName": "第5選舉區",
+          "seats": 7
+        },
+        "北港鎮": {
+          "districtId": "yunlin-6",
+          "districtName": "第6選舉區",
+          "seats": 5
+        },
+        "口湖鄉": {
+          "districtId": "yunlin-6",
+          "districtName": "第6選舉區",
+          "seats": 5
+        },
+        "水林鄉": {
+          "districtId": "yunlin-6",
+          "districtName": "第6選舉區",
+          "seats": 5
+        }
+      },
+      "嘉義縣": {
+        "鹿草鄉": {
+          "districtId": "chiayi-county-1",
+          "districtName": "第1選舉區",
+          "seats": 8
+        },
+        "太保市": {
+          "districtId": "chiayi-county-1",
+          "districtName": "第1選舉區",
+          "seats": 8
+        },
+        "水上鄉": {
+          "districtId": "chiayi-county-1",
+          "districtName": "第1選舉區",
+          "seats": 8
+        },
+        "民雄鄉": {
+          "districtId": "chiayi-county-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "新港鄉": {
+          "districtId": "chiayi-county-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "大林鎮": {
+          "districtId": "chiayi-county-3",
+          "districtName": "第3選舉區",
+          "seats": 4
+        },
+        "溪口鄉": {
+          "districtId": "chiayi-county-3",
+          "districtName": "第3選舉區",
+          "seats": 4
+        },
+        "梅山鄉": {
+          "districtId": "chiayi-county-3",
+          "districtName": "第3選舉區",
+          "seats": 4
+        },
+        "朴子市": {
+          "districtId": "chiayi-county-4",
+          "districtName": "第4選舉區",
+          "seats": 6
+        },
+        "六腳鄉": {
+          "districtId": "chiayi-county-4",
+          "districtName": "第4選舉區",
+          "seats": 6
+        },
+        "東石鄉": {
+          "districtId": "chiayi-county-4",
+          "districtName": "第4選舉區",
+          "seats": 6
+        },
+        "布袋鎮": {
+          "districtId": "chiayi-county-5",
+          "districtName": "第5選舉區",
+          "seats": 3
+        },
+        "義竹鄉": {
+          "districtId": "chiayi-county-5",
+          "districtName": "第5選舉區",
+          "seats": 3
+        },
+        "中埔鄉": {
+          "districtId": "chiayi-county-6",
+          "districtName": "第6選舉區",
+          "seats": 7
+        },
+        "竹崎鄉": {
+          "districtId": "chiayi-county-6",
+          "districtName": "第6選舉區",
+          "seats": 7
+        },
+        "番路鄉": {
+          "districtId": "chiayi-county-6",
+          "districtName": "第6選舉區",
+          "seats": 7
+        },
+        "大埔鄉": {
+          "districtId": "chiayi-county-6",
+          "districtName": "第6選舉區",
+          "seats": 7
+        },
+        "阿里山鄉": {
+          "districtId": "chiayi-county-6",
+          "districtName": "第6選舉區",
+          "seats": 7
+        }
+      },
+      "屏東縣": {
+        "屏東市": {
+          "districtId": "pingtung-1",
+          "districtName": "第1選舉區",
+          "seats": 12
+        },
+        "長治鄉": {
+          "districtId": "pingtung-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "麟洛鄉": {
+          "districtId": "pingtung-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "九如鄉": {
+          "districtId": "pingtung-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "里港鄉": {
+          "districtId": "pingtung-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "鹽埔鄉": {
+          "districtId": "pingtung-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "高樹鄉": {
+          "districtId": "pingtung-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "三地門鄉": {
+          "districtId": "pingtung-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "霧臺鄉": {
+          "districtId": "pingtung-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "瑪家鄉": {
+          "districtId": "pingtung-2",
+          "districtName": "第2選舉區",
+          "seats": 8
+        },
+        "潮州鎮": {
+          "districtId": "pingtung-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "萬巒鄉": {
+          "districtId": "pingtung-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "內埔鄉": {
+          "districtId": "pingtung-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "竹田鄉": {
+          "districtId": "pingtung-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "新埤鄉": {
+          "districtId": "pingtung-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "枋寮鄉": {
+          "districtId": "pingtung-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "泰武鄉": {
+          "districtId": "pingtung-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "來義鄉": {
+          "districtId": "pingtung-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "春日鄉": {
+          "districtId": "pingtung-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "東港鎮": {
+          "districtId": "pingtung-4",
+          "districtName": "第4選舉區",
+          "seats": 8
+        },
+        "新園鄉": {
+          "districtId": "pingtung-4",
+          "districtName": "第4選舉區",
+          "seats": 8
+        },
+        "萬丹鄉": {
+          "districtId": "pingtung-4",
+          "districtName": "第4選舉區",
+          "seats": 8
+        },
+        "崁頂鄉": {
+          "districtId": "pingtung-5",
+          "districtName": "第5選舉區",
+          "seats": 4
+        },
+        "林邊鄉": {
+          "districtId": "pingtung-5",
+          "districtName": "第5選舉區",
+          "seats": 4
+        },
+        "南州鄉": {
+          "districtId": "pingtung-5",
+          "districtName": "第5選舉區",
+          "seats": 4
+        },
+        "佳冬鄉": {
+          "districtId": "pingtung-5",
+          "districtName": "第5選舉區",
+          "seats": 4
+        },
+        "恆春鎮": {
+          "districtId": "pingtung-6",
+          "districtName": "第6選舉區",
+          "seats": 3
+        },
+        "車城鄉": {
+          "districtId": "pingtung-6",
+          "districtName": "第6選舉區",
+          "seats": 3
+        },
+        "滿州鄉": {
+          "districtId": "pingtung-6",
+          "districtName": "第6選舉區",
+          "seats": 3
+        },
+        "枋山鄉": {
+          "districtId": "pingtung-6",
+          "districtName": "第6選舉區",
+          "seats": 3
+        },
+        "獅子鄉": {
+          "districtId": "pingtung-6",
+          "districtName": "第6選舉區",
+          "seats": 3
+        },
+        "牡丹鄉": {
+          "districtId": "pingtung-6",
+          "districtName": "第6選舉區",
+          "seats": 3
+        },
+        "琉球鄉": {
+          "districtId": "pingtung-7",
+          "districtName": "第7選舉區",
+          "seats": 1
+        }
+      },
+      "宜蘭縣": {
+        "宜蘭市": {
+          "districtId": "yilan-1",
+          "districtName": "第1選舉區",
+          "seats": 7
+        },
+        "頭城鎮": {
+          "districtId": "yilan-2",
+          "districtName": "第2選舉區",
+          "seats": 2
+        },
+        "礁溪鄉": {
+          "districtId": "yilan-3",
+          "districtName": "第3選舉區",
+          "seats": 3
+        },
+        "員山鄉": {
+          "districtId": "yilan-4",
+          "districtName": "第4選舉區",
+          "seats": 2
+        },
+        "壯圍鄉": {
+          "districtId": "yilan-5",
+          "districtName": "第5選舉區",
+          "seats": 2
+        },
+        "羅東鎮": {
+          "districtId": "yilan-6",
+          "districtName": "第6選舉區",
+          "seats": 5
+        },
+        "五結鄉": {
+          "districtId": "yilan-7",
+          "districtName": "第7選舉區",
+          "seats": 3
+        },
+        "冬山鄉": {
+          "districtId": "yilan-8",
+          "districtName": "第8選舉區",
+          "seats": 4
+        },
+        "三星鄉": {
+          "districtId": "yilan-9",
+          "districtName": "第9選舉區",
+          "seats": 1
+        },
+        "大同鄉": {
+          "districtId": "yilan-9",
+          "districtName": "第9選舉區",
+          "seats": 1
+        },
+        "蘇澳鎮": {
+          "districtId": "yilan-10",
+          "districtName": "第10選舉區",
+          "seats": 2
+        },
+        "南澳鄉": {
+          "districtId": "yilan-10",
+          "districtName": "第10選舉區",
+          "seats": 2
+        }
+      },
+      "花蓮縣": {
+        "花蓮市": {
+          "districtId": "hualien-1",
+          "districtName": "第1選舉區",
+          "seats": 9
+        },
+        "新城鄉": {
+          "districtId": "hualien-2",
+          "districtName": "第2選舉區",
+          "seats": 1
+        },
+        "秀林鄉": {
+          "districtId": "hualien-2",
+          "districtName": "第2選舉區",
+          "seats": 1
+        },
+        "吉安鄉": {
+          "districtId": "hualien-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "壽豐鄉": {
+          "districtId": "hualien-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "鳳林鎮": {
+          "districtId": "hualien-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "光復鄉": {
+          "districtId": "hualien-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "豐濱鄉": {
+          "districtId": "hualien-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "萬榮鄉": {
+          "districtId": "hualien-3",
+          "districtName": "第3選舉區",
+          "seats": 10
+        },
+        "瑞穗鄉": {
+          "districtId": "hualien-4",
+          "districtName": "第4選舉區",
+          "seats": 3
+        },
+        "玉里鎮": {
+          "districtId": "hualien-4",
+          "districtName": "第4選舉區",
+          "seats": 3
+        },
+        "富里鄉": {
+          "districtId": "hualien-4",
+          "districtName": "第4選舉區",
+          "seats": 3
+        },
+        "卓溪鄉": {
+          "districtId": "hualien-4",
+          "districtName": "第4選舉區",
+          "seats": 3
+        }
+      },
+      "臺東縣": {
+        "臺東市": {
+          "districtId": "taitung-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "蘭嶼鄉": {
+          "districtId": "taitung-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "卑南鄉": {
+          "districtId": "taitung-2",
+          "districtName": "第2選舉區",
+          "seats": 1
+        },
+        "延平鄉": {
+          "districtId": "taitung-2",
+          "districtName": "第2選舉區",
+          "seats": 1
+        },
+        "東河鄉": {
+          "districtId": "taitung-3",
+          "districtName": "第3選舉區",
+          "seats": 2
+        },
+        "成功鎮": {
+          "districtId": "taitung-3",
+          "districtName": "第3選舉區",
+          "seats": 2
+        },
+        "長濱鄉": {
+          "districtId": "taitung-3",
+          "districtName": "第3選舉區",
+          "seats": 2
+        },
+        "鹿野鄉": {
+          "districtId": "taitung-4",
+          "districtName": "第4選舉區",
+          "seats": 2
+        },
+        "關山鎮": {
+          "districtId": "taitung-4",
+          "districtName": "第4選舉區",
+          "seats": 2
+        },
+        "海端鄉": {
+          "districtId": "taitung-4",
+          "districtName": "第4選舉區",
+          "seats": 2
+        },
+        "池上鄉": {
+          "districtId": "taitung-4",
+          "districtName": "第4選舉區",
+          "seats": 2
+        },
+        "太麻里鄉": {
+          "districtId": "taitung-5",
+          "districtName": "第5選舉區",
+          "seats": 1
+        },
+        "金峰鄉": {
+          "districtId": "taitung-5",
+          "districtName": "第5選舉區",
+          "seats": 1
+        },
+        "達仁鄉": {
+          "districtId": "taitung-5",
+          "districtName": "第5選舉區",
+          "seats": 1
+        },
+        "大武鄉": {
+          "districtId": "taitung-5",
+          "districtName": "第5選舉區",
+          "seats": 1
+        },
+        "綠島鄉": {
+          "districtId": "taitung-6",
+          "districtName": "第6選舉區",
+          "seats": 1
+        }
+      },
+      "澎湖縣": {
+        "馬公市": {
+          "districtId": "penghu-1",
+          "districtName": "第1選舉區",
+          "seats": 11
+        },
+        "湖西鄉": {
+          "districtId": "penghu-2",
+          "districtName": "第2選舉區",
+          "seats": 3
+        },
+        "白沙鄉": {
+          "districtId": "penghu-3",
+          "districtName": "第3選舉區",
+          "seats": 2
+        },
+        "西嶼鄉": {
+          "districtId": "penghu-4",
+          "districtName": "第4選舉區",
+          "seats": 1
+        },
+        "望安鄉": {
+          "districtId": "penghu-5",
+          "districtName": "第5選舉區",
+          "seats": 1
+        },
+        "七美鄉": {
+          "districtId": "penghu-6",
+          "districtName": "第6選舉區",
+          "seats": 1
+        }
+      },
+      "金門縣": {
+        "金城鎮": {
+          "districtId": "kinmen-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "金寧鄉": {
+          "districtId": "kinmen-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "烏坵鄉": {
+          "districtId": "kinmen-1",
+          "districtName": "第1選舉區",
+          "seats": 10
+        },
+        "金湖鎮": {
+          "districtId": "kinmen-2",
+          "districtName": "第2選舉區",
+          "seats": 7
+        },
+        "金沙鎮": {
+          "districtId": "kinmen-2",
+          "districtName": "第2選舉區",
+          "seats": 7
+        },
+        "烈嶼鄉": {
+          "districtId": "kinmen-3",
+          "districtName": "第3選舉區",
+          "seats": 2
+        }
+      },
+      "連江縣": {
+        "南竿鄉": {
+          "districtId": "lienchiang-1",
+          "districtName": "第1選舉區",
+          "seats": 5
+        },
+        "北竿鄉": {
+          "districtId": "lienchiang-2",
+          "districtName": "第2選舉區",
+          "seats": 2
+        },
+        "莒光鄉": {
+          "districtId": "lienchiang-3",
+          "districtName": "第3選舉區",
+          "seats": 1
+        },
+        "東引鄉": {
+          "districtId": "lienchiang-4",
+          "districtName": "第4選舉區",
+          "seats": 1
+        }
       }
     }
   }
