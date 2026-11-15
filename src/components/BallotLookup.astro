@@ -1,0 +1,363 @@
+---
+import districts from '../data/districts.json';
+import ballotRules from '../data/ballotRules.json';
+
+const cities = Object.keys(districts.cities);
+const directMunicipalities = districts.directMunicipalities.list;
+const provincialCities = districts.provincialCities.list;
+const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
+---
+
+<div class="bg-white rounded-xl shadow-sm border border-neutral-200 p-6">
+  <h2 class="text-xl font-semibold text-neutral-800 mb-6">
+    🗳️ 查詢我會拿到哪幾張票
+  </h2>
+  
+  <form id="ballot-form" class="space-y-6">
+    <!-- Step 1: Select City -->
+    <div>
+      <label for="city-select" class="block text-sm font-medium text-neutral-700 mb-2">
+        1️⃣ 您的戶籍所在縣市
+      </label>
+      <select 
+        id="city-select" 
+        name="city"
+        class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-base"
+        required
+      >
+        <option value="">請選擇縣市</option>
+        <optgroup label="直轄市（六都）">
+          {directMunicipalities.map(city => (
+            <option value={city}>{city}</option>
+          ))}
+        </optgroup>
+        <optgroup label="省轄市">
+          {provincialCities.map(city => (
+            <option value={city}>{city}</option>
+          ))}
+        </optgroup>
+        <optgroup label="縣">
+          {districts.counties.list.map(city => (
+            <option value={city}>{city}</option>
+          ))}
+        </optgroup>
+      </select>
+    </div>
+
+    <!-- Step 2: Select District -->
+    <div id="district-section" class="hidden">
+      <label for="district-select" class="block text-sm font-medium text-neutral-700 mb-2">
+        2️⃣ 您的戶籍所在鄉鎮市區
+      </label>
+      <select 
+        id="district-select" 
+        name="district"
+        class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-base"
+      >
+        <option value="">請先選擇縣市</option>
+      </select>
+      <p id="district-note" class="mt-2 text-sm text-amber-600 hidden">
+        ⚠️ 部分選區以村里為單位劃分，議員選區可能需進一步確認
+      </p>
+    </div>
+
+    <!-- Step 3: Indigenous Status -->
+    <div id="indigenous-section" class="hidden">
+      <label class="block text-sm font-medium text-neutral-700 mb-2">
+        3️⃣ 您的原住民身分
+      </label>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <label class="flex items-center gap-3 p-3 border border-neutral-200 rounded-lg cursor-pointer hover:bg-neutral-50 has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50">
+          <input type="radio" name="indigenous" value="none" class="w-4 h-4 text-primary-600" checked />
+          <span class="text-sm">無原住民身分</span>
+        </label>
+        <label class="flex items-center gap-3 p-3 border border-neutral-200 rounded-lg cursor-pointer hover:bg-neutral-50 has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50">
+          <input type="radio" name="indigenous" value="plains" class="w-4 h-4 text-primary-600" />
+          <span class="text-sm">平地原住民</span>
+        </label>
+        <label class="flex items-center gap-3 p-3 border border-neutral-200 rounded-lg cursor-pointer hover:bg-neutral-50 has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50">
+          <input type="radio" name="indigenous" value="mountain" class="w-4 h-4 text-primary-600" />
+          <span class="text-sm">山地原住民</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div id="submit-section" class="hidden">
+      <button 
+        type="submit" 
+        class="w-full sm:w-auto px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
+      >
+        查詢我的選票
+      </button>
+    </div>
+  </form>
+
+  <!-- Results -->
+  <div id="ballot-results" class="hidden mt-8 pt-8 border-t border-neutral-200">
+    <h3 class="text-lg font-semibold text-neutral-800 mb-4">
+      📋 您將領取以下選票
+    </h3>
+    <div id="results-content" class="space-y-4">
+      <!-- Results will be inserted here -->
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ districts, ballotRules, mountainIndigenousDistricts, directMunicipalities, provincialCities }}>
+  const citySelect = document.getElementById('city-select');
+  const districtSelect = document.getElementById('district-select');
+  const districtSection = document.getElementById('district-section');
+  const districtNote = document.getElementById('district-note');
+  const indigenousSection = document.getElementById('indigenous-section');
+  const submitSection = document.getElementById('submit-section');
+  const form = document.getElementById('ballot-form');
+  const resultsSection = document.getElementById('ballot-results');
+  const resultsContent = document.getElementById('results-content');
+
+  citySelect.addEventListener('change', () => {
+    const city = citySelect.value;
+    if (!city) {
+      districtSection.classList.add('hidden');
+      indigenousSection.classList.add('hidden');
+      submitSection.classList.add('hidden');
+      resultsSection.classList.add('hidden');
+      return;
+    }
+
+    const cityData = districts.cities[city];
+    if (cityData && cityData.districts) {
+      districtSelect.innerHTML = '<option value="">請選擇鄉鎮市區</option>' +
+        cityData.districts.map(d => `<option value="${d}">${d}</option>`).join('');
+      districtSection.classList.remove('hidden');
+      
+      if (cityData.notes) {
+        districtNote.textContent = `⚠️ ${cityData.notes}`;
+        districtNote.classList.remove('hidden');
+      } else {
+        districtNote.classList.add('hidden');
+      }
+    }
+    
+    indigenousSection.classList.remove('hidden');
+    submitSection.classList.remove('hidden');
+    resultsSection.classList.add('hidden');
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const city = citySelect.value;
+    const district = districtSelect.value;
+    const indigenous = document.querySelector('input[name="indigenous"]:checked').value;
+    
+    if (!city) return;
+    
+    const ballots = [];
+    const cityData = districts.cities[city];
+    const cityType = cityData?.type;
+    
+    const isMountainDistrict = mountainIndigenousDistricts.some(
+      md => md.city === city && md.district === district
+    );
+    
+    if (directMunicipalities.includes(city)) {
+      ballots.push({
+        name: '直轄市長',
+        color: '白色',
+        scope: `${city}全市`,
+        link: '/vote2026/positions/mayor-municipal/'
+      });
+      
+      ballots.push({
+        name: '直轄市議員',
+        color: '綠色',
+        scope: district ? `${city}${district}所屬選區` : '依戶籍所在選區',
+        link: '/vote2026/positions/councilor-municipal/',
+        note: cityData?.notes ? '待確認' : null
+      });
+      
+      if (indigenous === 'plains') {
+        ballots.push({
+          name: '平地原住民議員',
+          color: '黃色',
+          scope: `${city}全市`,
+          link: '/vote2026/positions/councilor-municipal/'
+        });
+      } else if (indigenous === 'mountain') {
+        ballots.push({
+          name: '山地原住民議員',
+          color: '藍色',
+          scope: `${city}全市`,
+          link: '/vote2026/positions/councilor-municipal/'
+        });
+      }
+      
+      if (isMountainDistrict) {
+        ballots.push({
+          name: '區長',
+          color: '依公告',
+          scope: `${city}${district}`,
+          link: '/vote2026/positions/district-mayor/',
+          special: true
+        });
+        ballots.push({
+          name: '區民代表',
+          color: '依公告',
+          scope: `${district}所屬選區`,
+          link: '/vote2026/positions/district-representative/',
+          special: true
+        });
+      }
+      
+      ballots.push({
+        name: '里長',
+        color: '白色或粉紅色',
+        scope: '戶籍所在里',
+        link: '/vote2026/positions/village-chief/'
+      });
+      
+    } else if (provincialCities.includes(city)) {
+      ballots.push({
+        name: '市長',
+        color: '白色',
+        scope: `${city}全市`,
+        link: '/vote2026/positions/mayor-county/'
+      });
+      
+      ballots.push({
+        name: '市議員',
+        color: '綠色',
+        scope: district ? `${city}${district}所屬選區` : '依戶籍所在選區',
+        link: '/vote2026/positions/councilor-county/'
+      });
+      
+      if (indigenous !== 'none') {
+        ballots.push({
+          name: indigenous === 'plains' ? '平地原住民議員' : '山地原住民議員',
+          color: indigenous === 'plains' ? '黃色' : '藍色',
+          scope: '如有名額',
+          link: '/vote2026/positions/councilor-county/',
+          note: '待確認'
+        });
+      }
+      
+      ballots.push({
+        name: '里長',
+        color: '白色或粉紅色',
+        scope: '戶籍所在里',
+        link: '/vote2026/positions/village-chief/'
+      });
+      
+    } else {
+      ballots.push({
+        name: '縣長',
+        color: '白色',
+        scope: `${city}全縣`,
+        link: '/vote2026/positions/mayor-county/'
+      });
+      
+      ballots.push({
+        name: '縣議員',
+        color: '綠色',
+        scope: district ? `${city}${district}所屬選區` : '依戶籍所在選區',
+        link: '/vote2026/positions/councilor-county/'
+      });
+      
+      if (indigenous !== 'none') {
+        ballots.push({
+          name: indigenous === 'plains' ? '平地原住民議員' : '山地原住民議員',
+          color: indigenous === 'plains' ? '黃色' : '藍色',
+          scope: '如有名額',
+          link: '/vote2026/positions/councilor-county/',
+          note: '待確認'
+        });
+      }
+      
+      ballots.push({
+        name: '鄉（鎮、市）長',
+        color: '白色',
+        scope: district || '戶籍所在鄉鎮市',
+        link: '/vote2026/positions/township-mayor/'
+      });
+      
+      ballots.push({
+        name: '鄉（鎮、市）民代表',
+        color: '依公告',
+        scope: district ? `${district}所屬選區` : '戶籍所在選區',
+        link: '/vote2026/positions/township-representative/'
+      });
+      
+      ballots.push({
+        name: '村（里）長',
+        color: '白色或粉紅色',
+        scope: '戶籍所在村里',
+        link: '/vote2026/positions/village-chief/'
+      });
+    }
+    
+    ballots.push({
+      name: '公投第 22 案',
+      color: '黃色',
+      scope: '全國',
+      isReferendum: true,
+      question: ballotRules.referendum.question
+    });
+    
+    let html = `
+      <p class="text-sm text-neutral-600 mb-4">
+        根據您的戶籍地（${city}${district ? ` ${district}` : ''}）${indigenous !== 'none' ? `及${indigenous === 'plains' ? '平地' : '山地'}原住民身分` : ''}，您將領取以下選票：
+      </p>
+      <div class="grid gap-3">
+    `;
+    
+    ballots.forEach((ballot, index) => {
+      const bgColor = ballot.isReferendum ? 'bg-amber-50 border-amber-200' : 
+                      ballot.special ? 'bg-purple-50 border-purple-200' : 
+                      'bg-neutral-50 border-neutral-200';
+      const noteHtml = ballot.note ? `<span class="ml-2 text-xs text-amber-600 bg-amber-100 px-2 py-0.5 rounded">⚠️ ${ballot.note}</span>` : '';
+      
+      html += `
+        <div class="flex items-start gap-4 p-4 ${bgColor} border rounded-lg">
+          <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-white rounded-full text-sm font-medium text-neutral-600 border border-neutral-200">
+            ${index + 1}
+          </span>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-medium text-neutral-800">
+                ${ballot.link ? `<a href="${ballot.link}" class="hover:text-primary-600 underline underline-offset-2">${ballot.name}</a>` : ballot.name}
+              </span>
+              <span class="text-xs px-2 py-0.5 bg-white border rounded">票色：${ballot.color}</span>
+              ${noteHtml}
+            </div>
+            <p class="text-sm text-neutral-600 mt-1">
+              選舉範圍：${ballot.scope}
+            </p>
+            ${ballot.question ? `<p class="text-sm text-neutral-600 mt-2 italic">「${ballot.question}」</p>` : ''}
+          </div>
+        </div>
+      `;
+    });
+    
+    html += `
+      </div>
+      <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <p class="text-sm text-blue-800">
+          <strong>📌 提醒：</strong>
+          實際選票以投票當日領取為準。議員選區若標示「待確認」，請參閱
+          <a href="https://info.cec.gov.tw/vote2026/" target="_blank" rel="noopener" class="underline hover:text-blue-600">中選會官方公告</a>。
+        </p>
+      </div>
+      <div class="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+        <p class="text-sm text-amber-800">
+          <strong>🗳️ 18-19 歲公民注意：</strong>
+          年滿 18 歲但未滿 20 歲者，僅可投公民投票票（第 22 案），不能投九合一選舉票。
+        </p>
+      </div>
+    `;
+    
+    resultsContent.innerHTML = html;
+    resultsSection.classList.remove('hidden');
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
