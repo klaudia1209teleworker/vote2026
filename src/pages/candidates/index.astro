@@ -3,12 +3,15 @@ import Layout from '../../layouts/Layout.astro';
 import candidates from '../../data/candidates.json';
 import districts from '../../data/districts.json';
 import positions from '../../data/positions.json';
+import { cityHubPath, getCityCandidateNav, positionEntryPath } from '../../utils/cityCandidateNav';
 
 const baseUrl = import.meta.env.BASE_URL;
 
-const directMunicipalities = districts.directMunicipalities.list;
-const provincialCities = districts.provincialCities.list;
-const counties = districts.counties.list;
+const cityGroups = [
+  { title: '直轄市（六都）', cities: districts.directMunicipalities.list },
+  { title: '省轄市', cities: districts.provincialCities.list },
+  { title: '縣', cities: districts.counties.list },
+];
 
 const positionCounts = (candidates as any[]).reduce((acc, c) => {
   acc[c.position] = (acc[c.position] || 0) + 1;
@@ -33,7 +36,7 @@ function getPositionName(positionId: string): string {
 <Layout title="候選人資訊" description="2026 九合一選舉各選區候選人資訊">
   <article class="space-y-8">
     <header>
-      <h1 class="text-2xl sm:text-3xl font-bold text-neutral-800 mb-4">
+      <h1 class="page-title mb-4">
         👤 候選人資訊
       </h1>
       <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
@@ -66,53 +69,40 @@ function getPositionName(positionId: string): string {
       </p>
       
       <div class="space-y-6">
-        {/* 六都 */}
-        <div>
-          <h3 class="text-sm font-medium text-neutral-500 mb-2">直轄市（六都）</h3>
-          <div class="grid gap-2 sm:grid-cols-3">
-            {directMunicipalities.map(city => (
-              <a 
-                href={`${baseUrl}candidates/district/mayor-municipal/${encodeURIComponent(city)}/`}
-                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors flex justify-between items-center"
-              >
-                <span class="font-medium text-neutral-800">{city}</span>
-                <span class="text-sm text-neutral-500">{candidatesByCity[city] || 0} 人</span>
-              </a>
-            ))}
+        {cityGroups.map((group) => (
+          <div>
+            <h3 class="text-sm font-medium text-neutral-500 mb-2">{group.title}</h3>
+            <div class="grid gap-3 sm:grid-cols-2">
+              {group.cities.map((city) => {
+                const nav = getCityCandidateNav(city);
+                return (
+                  <div class="p-3 bg-neutral-50 border border-neutral-200 rounded-lg">
+                    <a
+                      href={`${baseUrl}${cityHubPath(city)}`}
+                      class="flex justify-between items-center gap-3 hover:text-primary-700"
+                    >
+                      <span class="font-medium text-neutral-800">{city}</span>
+                      <span class="text-sm text-neutral-500">{(nav?.total ?? candidatesByCity[city] ?? 0).toLocaleString()} 人</span>
+                    </a>
+                    {nav && (
+                      <div class="flex flex-wrap gap-1.5 mt-2">
+                        {nav.positions.map((position) => (
+                          <a
+                            href={`${baseUrl}${positionEntryPath(city, position)}`}
+                            class="text-xs px-2 py-1 bg-white border border-neutral-200 rounded hover:border-primary-300 hover:bg-primary-50"
+                          >
+                            {position.shortName}
+                            <span class="text-neutral-500 tabular-nums"> {position.count.toLocaleString()}</span>
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-        
-        {/* 省轄市 */}
-        <div>
-          <h3 class="text-sm font-medium text-neutral-500 mb-2">省轄市</h3>
-          <div class="grid gap-2 sm:grid-cols-3">
-            {provincialCities.map(city => (
-              <a 
-                href={`${baseUrl}candidates/district/mayor-county/${encodeURIComponent(city)}/`}
-                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors flex justify-between items-center"
-              >
-                <span class="font-medium text-neutral-800">{city}</span>
-                <span class="text-sm text-neutral-500">{candidatesByCity[city] || 0} 人</span>
-              </a>
-            ))}
-          </div>
-        </div>
-        
-        {/* 縣 */}
-        <div>
-          <h3 class="text-sm font-medium text-neutral-500 mb-2">縣</h3>
-          <div class="grid gap-2 sm:grid-cols-3 lg:grid-cols-4">
-            {counties.map(city => (
-              <a 
-                href={`${baseUrl}candidates/district/mayor-county/${encodeURIComponent(city)}/`}
-                class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors flex justify-between items-center"
-              >
-                <span class="font-medium text-neutral-800">{city}</span>
-                <span class="text-sm text-neutral-500">{candidatesByCity[city] || 0} 人</span>
-              </a>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     </section>
 

@@ -2,6 +2,20 @@
 import districts from '../data/districts.json';
 import ballotRules from '../data/ballotRules.json';
 import electoralDistricts from '../data/electoralDistricts.json';
+import candidates from '../data/candidates.json';
+
+const villageIndex: Record<string, Record<string, string[]>> = {};
+for (const candidate of candidates as Array<{ position?: string; county?: string; district?: string; village?: string }>) {
+  if (candidate.position !== 'village-chief' || !candidate.county || !candidate.district || !candidate.village) continue;
+  const byDistrict = villageIndex[candidate.county] ?? (villageIndex[candidate.county] = {});
+  const names = byDistrict[candidate.district] ?? (byDistrict[candidate.district] = []);
+  if (!names.includes(candidate.village)) names.push(candidate.village);
+}
+for (const city of Object.keys(villageIndex)) {
+  for (const district of Object.keys(villageIndex[city])) {
+    villageIndex[city][district].sort((a, b) => a.localeCompare(b, 'zh-TW'));
+  }
+}
 
 const cities = Object.keys(districts.cities);
 const directMunicipalities = districts.directMunicipalities.list;
@@ -10,21 +24,21 @@ const mountainIndigenousDistricts = districts.mountainIndigenousDistricts.list;
 const baseUrl = import.meta.env.BASE_URL;
 ---
 
-<div class="bg-white border border-neutral-200 rounded p-4 sm:p-5">
-  <h2 class="text-base font-semibold text-neutral-800 mb-4">
-    查詢選票
-  </h2>
+<div class="ui-card">
+  <h2 class="text-lg font-semibold text-strong">查詢選票</h2>
+  <p class="mt-1 mb-3 text-sm text-secondary">依戶籍縣市查這次會領到的選票。村里可略過。</p>
   
-  <form id="ballot-form" class="space-y-4">
+  <form id="ballot-form">
+    <div class="lookup-row">
     <!-- Step 1: Select City -->
-    <div>
-      <label for="city-select" class="block text-sm text-neutral-700 mb-1.5">
+    <div class="lookup-field">
+      <label for="city-select" class="lookup-label">
         戶籍所在縣市
       </label>
       <select 
         id="city-select" 
         name="city"
-        class="w-full px-3 py-2 border border-neutral-300 rounded text-sm focus:outline-none focus:border-neutral-500"
+        class="ui-input"
         required
       >
         <option value="">選擇縣市</option>
@@ -47,14 +61,14 @@ const baseUrl = import.meta.env.BASE_URL;
     </div>
 
     <!-- Step 2: Select District -->
-    <div id="district-section" class="hidden">
-      <label for="district-select" class="block text-sm text-neutral-700 mb-1.5">
+    <div id="district-section" class="lookup-field hidden">
+      <label for="district-select" class="lookup-label">
         鄉鎮市區
       </label>
       <select 
         id="district-select" 
         name="district"
-        class="w-full px-3 py-2 border border-neutral-300 rounded text-sm focus:outline-none focus:border-neutral-500"
+        class="ui-input"
       >
         <option value="">選擇鄉鎮市區</option>
       </select>
@@ -63,12 +77,29 @@ const baseUrl = import.meta.env.BASE_URL;
       </p>
     </div>
 
+    <!-- Optional village: only affects the village-chief candidate link -->
+    <div id="village-section" class="lookup-field hidden">
+      <label for="village-select" class="lookup-label">
+        村里（可略過）
+      </label>
+      <select
+        id="village-select"
+        name="village"
+        class="ui-input"
+      >
+        <option value="">不指定，查看全區名單</option>
+      </select>
+      <p class="mt-1.5 text-xs text-neutral-500">
+        有選時，里長的候選人只顯示該村里
+      </p>
+    </div>
+
     <!-- Step 2.5: Select Electoral District for split townships -->
-    <div id="electoral-district-section" class="hidden">
-      <label class="block text-sm text-neutral-700 mb-1.5">
+    <div id="electoral-district-section" class="lookup-span hidden">
+      <label class="lookup-label">
         議員選區（此鄉鎮市區依村里劃分）
       </label>
-      <div id="electoral-district-options" class="space-y-1.5">
+      <div id="electoral-district-options" class="lookup-choices">
         <!-- Options will be inserted here -->
       </div>
       <p class="mt-2 text-xs text-neutral-500">
@@ -77,20 +108,20 @@ const baseUrl = import.meta.env.BASE_URL;
     </div>
 
     <!-- Step 3: Indigenous Status -->
-    <div id="indigenous-section" class="hidden">
-      <label class="block text-sm text-neutral-700 mb-1.5">
+    <div id="indigenous-section" class="lookup-field lookup-indigenous hidden">
+      <label class="lookup-label">
         原住民身分
       </label>
-      <div class="flex flex-wrap gap-2">
-        <label class="flex items-center gap-2 px-3 py-1.5 border border-neutral-200 rounded cursor-pointer hover:bg-neutral-50 has-[:checked]:border-neutral-400 has-[:checked]:bg-neutral-100 text-sm">
+      <div class="lookup-choices">
+        <label class="choice">
           <input type="radio" name="indigenous" value="none" class="w-3.5 h-3.5" checked />
           <span>無</span>
         </label>
-        <label class="flex items-center gap-2 px-3 py-1.5 border border-neutral-200 rounded cursor-pointer hover:bg-neutral-50 has-[:checked]:border-neutral-400 has-[:checked]:bg-neutral-100 text-sm">
+        <label class="choice">
           <input type="radio" name="indigenous" value="plains" class="w-3.5 h-3.5" />
           <span>平地原住民</span>
         </label>
-        <label class="flex items-center gap-2 px-3 py-1.5 border border-neutral-200 rounded cursor-pointer hover:bg-neutral-50 has-[:checked]:border-neutral-400 has-[:checked]:bg-neutral-100 text-sm">
+        <label class="choice">
           <input type="radio" name="indigenous" value="mountain" class="w-3.5 h-3.5" />
           <span>山地原住民</span>
         </label>
@@ -98,13 +129,15 @@ const baseUrl = import.meta.env.BASE_URL;
     </div>
 
     <!-- Submit -->
-    <div id="submit-section" class="hidden">
+    <div id="submit-section" class="lookup-submit hidden">
+      <span class="lookup-label" aria-hidden="true"></span>
       <button 
         type="submit" 
-        class="px-4 py-2 bg-neutral-800 text-white text-sm font-medium rounded hover:bg-neutral-700"
+        class="btn btn-primary"
       >
         查詢
       </button>
+    </div>
     </div>
   </form>
 
@@ -119,11 +152,13 @@ const baseUrl = import.meta.env.BASE_URL;
   </div>
 </div>
 
-<script define:vars={{ districts, ballotRules, mountainIndigenousDistricts, directMunicipalities, provincialCities, electoralDistricts, baseUrl }}>
+<script define:vars={{ districts, ballotRules, mountainIndigenousDistricts, directMunicipalities, provincialCities, electoralDistricts, baseUrl, villageIndex }}>
   const citySelect = document.getElementById('city-select');
   const districtSelect = document.getElementById('district-select');
   const districtSection = document.getElementById('district-section');
   const districtNote = document.getElementById('district-note');
+  const villageSection = document.getElementById('village-section');
+  const villageSelect = document.getElementById('village-select');
   const electoralDistrictSection = document.getElementById('electoral-district-section');
   const electoralDistrictOptions = document.getElementById('electoral-district-options');
   const indigenousSection = document.getElementById('indigenous-section');
@@ -133,6 +168,33 @@ const baseUrl = import.meta.env.BASE_URL;
   const resultsContent = document.getElementById('results-content');
   
   let selectedElectoralDistrict = null;
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function updateVillageSection(city, adminDistrict) {
+    const villages = city && adminDistrict ? (villageIndex?.[city]?.[adminDistrict] || []) : [];
+    if (!villages.length) {
+      villageSection.classList.add('hidden');
+      villageSelect.innerHTML = '<option value="">不指定，查看全區名單</option>';
+      return;
+    }
+    villageSelect.innerHTML = '<option value="">不指定，查看全區名單</option>' +
+      villages.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join('');
+    villageSection.classList.remove('hidden');
+  }
+
+  function villageChiefListUrl(city, adminDistrict, village) {
+    if (!adminDistrict) return null;
+    const url = `${baseUrl}candidates/district/village-chief/${city}/${adminDistrict}/`;
+    if (!village) return url;
+    return `${url}?village=${encodeURIComponent(village)}`;
+  }
 
   function getCouncilorMapping(city, adminDistrict, positionId) {
     return electoralDistricts.adminToElectoralMapping?.[positionId]?.[city]?.[adminDistrict];
@@ -186,7 +248,7 @@ const baseUrl = import.meta.env.BASE_URL;
     selectedElectoralDistrict = null;
     
     const optionsHtml = mapping.districts.map((d, i) => `
-      <label class="flex items-center gap-2 px-3 py-2 border border-neutral-200 rounded cursor-pointer hover:bg-neutral-50 has-[:checked]:border-neutral-400 has-[:checked]:bg-neutral-100 text-sm">
+      <label class="choice">
         <input type="radio" name="electoral-district" value="${d.districtName}" class="w-3.5 h-3.5" />
         <span class="font-medium">${d.districtName}</span>
         <span class="text-neutral-500">（${d.seats} 名）</span>
@@ -208,6 +270,7 @@ const baseUrl = import.meta.env.BASE_URL;
     const city = citySelect.value;
     if (!city) {
       districtSection.classList.add('hidden');
+      updateVillageSection('', '');
       electoralDistrictSection.classList.add('hidden');
       indigenousSection.classList.add('hidden');
       submitSection.classList.add('hidden');
@@ -222,13 +285,14 @@ const baseUrl = import.meta.env.BASE_URL;
       districtSection.classList.remove('hidden');
       
       if (cityData.notes) {
-        districtNote.textContent = `⚠️ ${cityData.notes}`;
+        districtNote.textContent = `注意：${cityData.notes}`;
         districtNote.classList.remove('hidden');
       } else {
         districtNote.classList.add('hidden');
       }
     }
     
+    updateVillageSection('', '');
     electoralDistrictSection.classList.add('hidden');
     selectedElectoralDistrict = null;
     indigenousSection.classList.remove('hidden');
@@ -241,13 +305,20 @@ const baseUrl = import.meta.env.BASE_URL;
     const adminDistrict = districtSelect.value;
     
     if (!city || !adminDistrict) {
+      updateVillageSection('', '');
       electoralDistrictSection.classList.add('hidden');
       selectedElectoralDistrict = null;
+      resultsSection.classList.add('hidden');
       return;
     }
     
+    updateVillageSection(city, adminDistrict);
     const positionId = directMunicipalities.includes(city) ? 'councilor-municipal' : 'councilor-county';
     updateElectoralDistrictSection(city, adminDistrict, positionId);
+    resultsSection.classList.add('hidden');
+  });
+
+  villageSelect.addEventListener('change', () => {
     resultsSection.classList.add('hidden');
   });
 
@@ -256,6 +327,7 @@ const baseUrl = import.meta.env.BASE_URL;
     
     const city = citySelect.value;
     const district = districtSelect.value;
+    const village = villageSelect.value;
     const indigenous = document.querySelector('input[name="indigenous"]:checked').value;
     
     if (!city) return;
@@ -346,9 +418,9 @@ const baseUrl = import.meta.env.BASE_URL;
       ballots.push({
         name: '里長',
         color: '白色或粉紅色',
-        scope: '戶籍所在里',
+        scope: village || '戶籍所在里',
         positionLink: `${baseUrl}positions/village-chief/`,
-        candidateListUrl: district ? `${baseUrl}candidates/district/village-chief/${city}/${district}/` : null
+        candidateListUrl: villageChiefListUrl(city, district, village)
       });
       
     } else if (provincialCities.includes(city)) {
@@ -395,9 +467,9 @@ const baseUrl = import.meta.env.BASE_URL;
       ballots.push({
         name: '里長',
         color: '白色或粉紅色',
-        scope: '戶籍所在里',
+        scope: village || '戶籍所在里',
         positionLink: `${baseUrl}positions/village-chief/`,
-        candidateListUrl: district ? `${baseUrl}candidates/district/village-chief/${city}/${district}/` : null
+        candidateListUrl: villageChiefListUrl(city, district, village)
       });
       
     } else {
@@ -460,9 +532,9 @@ const baseUrl = import.meta.env.BASE_URL;
       ballots.push({
         name: '村（里）長',
         color: '白色或粉紅色',
-        scope: '戶籍所在村里',
+        scope: village || '戶籍所在村里',
         positionLink: `${baseUrl}positions/village-chief/`,
-        candidateListUrl: district ? `${baseUrl}candidates/district/village-chief/${city}/${district}/` : null
+        candidateListUrl: villageChiefListUrl(city, district, village)
       });
     }
     
@@ -480,7 +552,7 @@ const baseUrl = import.meta.env.BASE_URL;
     
     let html = `
       <p class="text-xs text-neutral-500 mb-3">
-        戶籍：${city}${district ? ` ${district}` : ''}${councilDistrictName ? `（${councilDistrictName}）` : ''}${indigenous !== 'none' ? ` · ${indigenous === 'plains' ? '平地' : '山地'}原住民` : ''}
+        戶籍：${city}${district ? ` ${district}` : ''}${village ? ` ${village}` : ''}${councilDistrictName ? `（${councilDistrictName}）` : ''}${indigenous !== 'none' ? ` · ${indigenous === 'plains' ? '平地' : '山地'}原住民` : ''}
       </p>
       <table class="w-full text-sm">
         <tbody class="divide-y divide-neutral-100">

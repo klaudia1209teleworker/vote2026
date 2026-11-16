@@ -1,0 +1,36 @@
+---
+interface Props {
+  label: string;
+  ratio: string;
+  tooltip: string;
+  footnote?: string;
+}
+
+const { label, ratio, tooltip, footnote } = Astro.props;
+const tipId = `tip-${label.replace(/\s+/g, '-')}-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="space-y-1">
+  <div class="flex items-baseline justify-between gap-3">
+    <div class="flex items-center gap-1.5 min-w-0">
+      <span class="text-xs text-neutral-500">{label}</span>
+      <button
+        type="button"
+        class="metric-tip-btn inline-flex items-center justify-center min-w-11 min-h-11 -my-3 text-tertiary hover:text-ink text-sm"
+        aria-describedby={tipId}
+        aria-expanded="false"
+        data-metric-tip
+      >
+        ?
+        <span class="sr-only">{label}說明</span>
+      </button>
+    </div>
+    <span class="text-sm tabular-nums text-neutral-800 font-medium" title={tooltip}>{ratio}</span>
+  </div>
+  <p id={tipId} class="metric-tip hidden text-xs text-neutral-500 leading-relaxed" role="tooltip">
+    {tooltip}
+  </p>
+  {footnote && (
+    <p class="text-xs text-neutral-500">{footnote}</p>
+  )}
+</div>

@@ -1,68 +1,23 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import MetricWithTooltip from '../../components/MetricWithTooltip.astro';
+import ExpandableRecordList from '../../components/ExpandableRecordList.astro';
 import candidates from '../../data/candidates.json';
 import positions from '../../data/positions.json';
 import bulletinData from '../../data/bulletin.json';
 import incumbentsData from '../../data/incumbents.json';
 import { getCandidateKey } from '../../utils/candidateKey';
+import {
+  attendanceUnavailableLabel,
+  buildDistrictAverages,
+  formatMetricRatio,
+  getInterpellationCount,
+  getProposalCount,
+  getProposalItems,
+  type IncumbentEntry,
+} from '../../utils/incumbentStats';
 
 const baseUrl = import.meta.env.BASE_URL;
-
-type IncumbentInterpellationItem = {
-  date?: string;
-  dateAsRecorded?: string;
-  time?: string;
-  session?: string;
-  department?: string;
-  title?: string;
-  councillorsAsRecorded?: string;
-  listedAs?: string;
-  sourceUrl?: string;
-  videoUrl?: string;
-  transcriptUrl?: string;
-  documentUrl?: string;
-};
-
-type ProposalItem = {
-  session?: string;
-  title?: string;
-  outcome?: Record<string, string | null>;
-  sourceUrl?: string;
-};
-
-type IncumbentEntry = {
-  incumbency: {
-    publish: boolean;
-    matchMethod?: string;
-    rosterName?: string;
-    rosterDistrict?: string;
-    rosterNote?: string;
-    rosterSourceUrl?: string;
-    profileUrl?: string;
-  };
-  interpellation?: {
-    kind?: string;
-    count?: number;
-    sourceUrl?: string;
-    note?: string;
-    items?: IncumbentInterpellationItem[];
-  };
-  proposals?: {
-    kind?: string;
-    note?: string;
-    count?: number;
-    sourceUrl?: string;
-    asProposer?: {
-      count?: number;
-      sourceUrl?: string;
-      items?: ProposalItem[];
-    };
-    asCoSigner?: {
-      count?: number;
-      sourceUrl?: string;
-    };
-  };
-};
 
 type BulletinEntry = {
   county: string;
@@ -85,7 +40,6 @@ type BulletinEntry = {
   asOf?: string;
 };
 
-
 function getBulletinImagePath(entry: BulletinEntry): string | null {
   if (entry.platformFormat !== 'image' || !entry.sourceUrl || !entry.sourcePage) {
     return null;
@@ -93,8 +47,12 @@ function getBulletinImagePath(entry: BulletinEntry): string | null {
   const urlMatch = entry.sourceUrl.match(/\/([a-f0-9-]+)\.pdf$/i);
   if (!urlMatch) return null;
   const fileId = urlMatch[1].substring(0, 8);
-  return `/bulletin-pages/${fileId}-p${entry.sourcePage}.webp`;
+  return `bulletin-pages/${fileId}-p${entry.sourcePage}.webp`;
 }
+
+const districtAverages = buildDistrictAverages(
+  incumbentsData as Record<string, IncumbentEntry>
+);
 
 export function getStaticPaths() {
   function generateCandidateId(c: any): string {
@@ -131,10 +89,81 @@ const partyDisplay = getPartyDisplay(candidate.party, candidate.partyAsListed);
 const candidateKey = getCandidateKey(candidate);
 const bulletin = (bulletinData as Record<string, BulletinEntry>)[candidateKey] || null;
 const bulletinImagePath = bulletin ? getBulletinImagePath(bulletin) : null;
+const hasPlatformText = Boolean(bulletin?.platformFormat === 'text' && bulletin.platform?.trim());
+const hasPlatformImage = Boolean(bulletin?.platformFormat === 'image' && bulletinImagePath);
 
 const incumbentKey = candidateKey;
 const incumbentRaw = (incumbentsData as Record<string, IncumbentEntry>)[incumbentKey];
 const incumbent = incumbentRaw?.incumbency?.publish ? incumbentRaw : null;
+
+const districtAvgKey = incumbentKey.split('|').slice(0, 3).join('|');
+const districtAvg = districtAverages[districtAvgKey] || null;
+
+const interpellationCount = incumbent ? getInterpellationCount(incumbent) : null;
+const proposalCount = incumbent ? getProposalCount(incumbent) : null;
+const proposalItems = incumbent ? getProposalItems(incumbent) : [];
+const interpellationItems = incumbent?.interpellation?.items ?? [];
+
+const attendanceLabel = incumbent ? attendanceUnavailableLabel(incumbent.attendance) : '';
+const attendanceCounts = incumbent?.attendance?.plenaryCounts;
+const attendancePlenary =
+  incumbent?.attendance?.status === 'available' && typeof incumbent.attendance.plenary === 'number'
+    ? incumbent.attendance.plenary
+    : null;
+const attendanceFootnote =
+  attendancePlenary != null
+    ? attendanceCounts
+      ? `出席 ${attendanceCounts.attended} 場／應出席 ${attendanceCounts.denominator} 場。分子是大會出席場次，分母含請假與缺席；同一場兩份名單都有的 ${attendanceCounts.excludedBothLists} 場已剔除。委員會未計算。右側只跟同選區有數值的現任者比。`
+      : '分子是大會出席場次，分母含請假與缺席；同一場兩份名單都有的場次已剔除。委員會未計算。只跟同選區有數值的現任者比。'
+    : attendanceLabel || undefined;
+const attendanceCommittee =
+  incumbent?.attendance?.status === 'available' && typeof incumbent.attendance.committee === 'number'
+    ? incumbent.attendance.committee
+    : null;
+
+const interpellationList = interpellationItems.map((item) => {
+  const links: { label: string; href: string }[] = [];
+  if (item.videoUrl) links.push({ label: '影音紀錄', href: item.videoUrl });
+  if (item.transcriptUrl) links.push({ label: '逐字稿', href: item.transcriptUrl });
+  if (item.documentUrl) links.push({ label: '質詢資料 PDF', href: item.documentUrl });
+  if (item.sourceUrl && !links.some((l) => l.href === item.sourceUrl)) {
+    links.push({ label: '來源', href: item.sourceUrl });
+  }
+
+  const secondary = [
+    item.date || item.dateAsRecorded,
+    item.time,
+    item.session,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
+  return {
+    primary: item.title || item.listedAs || '（無標題）',
+    secondary: secondary || undefined,
+    meta: item.department
+      ? `部門：${item.department}`
+      : item.councillorsAsRecorded
+        ? `列名：${item.councillorsAsRecorded}`
+        : undefined,
+    links: links.length > 0 ? links : undefined,
+  };
+});
+
+const proposalList = proposalItems.map((item) => {
+  const outcomeLines = item.outcome
+    ? Object.entries(item.outcome)
+        .filter(([, value]) => Boolean(value))
+        .map(([key, value]) => `${key}：${value}`)
+    : undefined;
+
+  return {
+    primary: item.title || '（無標題）',
+    secondary: item.session,
+    outcomeLines,
+    links: item.sourceUrl ? [{ label: '案件詳情', href: item.sourceUrl }] : undefined,
+  };
+});
 
 const districtPageUrl = (() => {
   const positionId = candidate.position;
@@ -263,23 +292,25 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
           {/* Platform */}
           <div class="px-3 py-3">
-            <h3 class="text-xs text-neutral-500 mb-2">政見</h3>
-            {bulletin.platformFormat === 'text' ? (
+            <h3 class="text-sm font-medium text-neutral-700 mb-2">政見</h3>
+            {hasPlatformText ? (
               <div class="text-neutral-800 whitespace-pre-wrap text-sm leading-relaxed">
                 {bulletin.platform}
               </div>
-            ) : bulletinImagePath ? (
+            ) : hasPlatformImage ? (
               <div>
-                <img 
-                  src={`${baseUrl}${bulletinImagePath.substring(1)}`}
-                  alt="選舉公報政見原圖"
+                <img
+                  src={`${baseUrl}${bulletinImagePath}`}
+                  alt={`${candidate.name}選舉公報政見原圖`}
                   class="max-w-full h-auto border border-neutral-200"
                   loading="lazy"
                 />
                 <p class="text-xs text-neutral-500 mt-1">公報第 {bulletin.sourcePage} 頁</p>
               </div>
+            ) : bulletin.platformFormat === 'image' ? (
+              <p class="text-neutral-500 text-sm">政見以圖片刊載，原圖處理中</p>
             ) : (
-              <p class="text-neutral-500 text-sm">政見以圖片刊載，處理中</p>
+              <p class="text-neutral-500 text-sm">政見文字尚未整理</p>
             )}
           </div>
 
@@ -345,78 +376,128 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
     {/* Incumbent Performance - only for publish:true incumbents */}
     {incumbent && (
-      <details class="border border-neutral-200 rounded" open>
-        <summary class="px-3 py-2 cursor-pointer text-sm font-medium text-neutral-700 hover:bg-neutral-50 select-none">
-          現任表現
-        </summary>
-        
-        <div class="divide-y divide-neutral-100 border-t border-neutral-100">
-          {/* Proposals */}
+      <section class="border border-neutral-200 rounded overflow-hidden">
+        <div class="px-3 py-2 bg-neutral-50 border-b border-neutral-200">
+          <h2 class="text-sm font-medium text-neutral-700">現任表現</h2>
+          <p class="text-xs text-neutral-500 mt-0.5">
+            指標格式為「該候選人／同選區現任者均值」；均值僅納入該指標有數值的人，不作評分或排名。
+          </p>
+        </div>
+
+        <div class="divide-y divide-neutral-100">
+          {/* Attendance */}
           <div class="px-3 py-3">
-            <h3 class="text-xs text-neutral-500 mb-2">提案</h3>
-            
-            {incumbent.proposals?.kind === 'unspecified' ? (
-              <div class="text-sm">
-                <p class="text-neutral-700">{incumbent.proposals.count || 0} 筆</p>
-                {incumbent.proposals.sourceUrl && (
-                  <a href={incumbent.proposals.sourceUrl} target="_blank" rel="noopener" class="text-xs underline text-neutral-600">
-                    議會議決案目錄
-                  </a>
+            <MetricWithTooltip
+              label="出席率（大會）"
+              ratio={
+                attendancePlenary != null
+                  ? formatMetricRatio(attendancePlenary, districtAvg?.attendancePlenary ?? null, {
+                      asPercent: true,
+                    })
+                  : '—/—'
+              }
+              tooltip={
+                attendancePlenary != null
+                  ? `分子：大會出席${attendanceCounts ? ` ${attendanceCounts.attended} 場／應出席 ${attendanceCounts.denominator} 場` : '率'}。分母：同選區（${candidate.districtOfficial || candidate.district || candidate.county}）有出席率資料的現任者平均（n=${districtAvg?.sampleSize.attendancePlenary ?? 0}）。請假與缺席留在分母；同一場兩份名單都有的場次已剔除。委員會未計算。`
+                  : `目前無可用出席率數值。${attendanceLabel || '議會未公開可統計資料或尚未整理'}。分母同樣僅在有數值時計算。`
+              }
+              footnote={attendanceFootnote}
+            />
+          </div>
+
+          {/* Interpellation: metric + details */}
+          <div class="px-3 py-3 space-y-3">
+            <MetricWithTooltip
+              label="質詢數量"
+              ratio={formatMetricRatio(
+                interpellationCount,
+                districtAvg?.interpellation ?? null,
+                { digits: 1 }
+              )}
+              tooltip={`分子：此候選人質詢筆數${incumbent.interpellation?.kind ? `（${incumbent.interpellation.kind}）` : ''}。分母：同選區有質詢筆數的現任者平均（n=${districtAvg?.sampleSize.interpellation ?? 0}）。各議會公開格式不同，不宜跨縣市直接比較。`}
+            />
+
+            {(incumbent.interpellation?.term || incumbent.interpellation?.note) && (
+              <p class="text-xs text-neutral-500">
+                {incumbent.interpellation.term}
+                {incumbent.interpellation.totalCountNote && (
+                  <span class="ml-1">（{incumbent.interpellation.totalCountNote}）</span>
                 )}
-              </div>
-            ) : incumbent.proposals?.asProposer || incumbent.proposals?.asCoSigner ? (
-              <div class="text-sm space-y-2">
-                {incumbent.proposals.asProposer && (
-                  <div>
-                    <p class="text-neutral-700">提案人 {incumbent.proposals.asProposer.count || 0} 筆</p>
-                    {incumbent.proposals.asProposer.items && incumbent.proposals.asProposer.items.length > 0 && (
-                      <ul class="mt-1 space-y-1 text-xs text-neutral-600">
-                        {incumbent.proposals.asProposer.items.slice(0, 3).map(item => (
-                          <li class="pl-2 border-l border-neutral-200">{item.title}</li>
-                        ))}
-                      </ul>
-                    )}
-                    {incumbent.proposals.asProposer.sourceUrl && (
-                      <a href={incumbent.proposals.asProposer.sourceUrl} target="_blank" rel="noopener" class="text-xs underline text-neutral-600 mt-1 inline-block">
-                        完整紀錄
-                      </a>
-                    )}
-                  </div>
+                {incumbent.interpellation.note && (
+                  <span class={incumbent.interpellation.term ? 'ml-1' : ''}>
+                    {incumbent.interpellation.note}
+                  </span>
                 )}
-                {incumbent.proposals.asCoSigner && incumbent.proposals.asCoSigner.count > 0 && (
-                  <p class="text-neutral-600">連署 {incumbent.proposals.asCoSigner.count} 筆</p>
-                )}
-              </div>
+              </p>
+            )}
+
+            {interpellationList.length > 0 ? (
+              <ExpandableRecordList items={interpellationList} initialCount={5} />
+            ) : interpellationCount != null ? (
+              <p class="text-sm text-neutral-600">共 {interpellationCount} 筆（明細尚未整理或僅有彙總）</p>
+            ) : incumbent.interpellation?.status === 'missing' ? (
+              <p class="text-sm text-neutral-500">
+                {incumbent.interpellation.reason?.includes('未擷取')
+                  ? '尚未整理'
+                  : '議會未公開可統計資料'}
+              </p>
             ) : (
-              <p class="text-neutral-500 text-sm">無公開資料</p>
+              <p class="text-sm text-neutral-500">無公開明細</p>
+            )}
+
+            {incumbent.interpellation?.sourceUrl && (
+              <a
+                href={incumbent.interpellation.sourceUrl}
+                target="_blank"
+                rel="noopener"
+                class="text-xs underline text-neutral-600 inline-block"
+              >
+                完整紀錄（議會官網）
+              </a>
             )}
           </div>
 
-          {/* Interpellations */}
-          <div class="px-3 py-3">
-            <h3 class="text-xs text-neutral-500 mb-2">
-              質詢{incumbent.interpellation?.kind && `（${incumbent.interpellation.kind}）`}
-            </h3>
-            
-            {incumbent.interpellation?.items && incumbent.interpellation.items.length > 0 ? (
-              <div class="text-sm">
-                <p class="text-neutral-700">{incumbent.interpellation.count || incumbent.interpellation.items.length} 筆</p>
-                <ul class="mt-1 space-y-1 text-xs text-neutral-600">
-                  {incumbent.interpellation.items.slice(0, 3).map(item => (
-                    <li class="pl-2 border-l border-neutral-200">
-                      {item.date && <span class="text-neutral-400">{item.date} </span>}
-                      {item.title || item.listedAs}
-                    </li>
-                  ))}
-                </ul>
-                {incumbent.interpellation.sourceUrl && (
-                  <a href={incumbent.interpellation.sourceUrl} target="_blank" rel="noopener" class="text-xs underline text-neutral-600 mt-1 inline-block">
+          {/* Proposals: metric + details */}
+          <div class="px-3 py-3 space-y-3">
+            <MetricWithTooltip
+              label="提案數量"
+              ratio={formatMetricRatio(proposalCount, districtAvg?.proposals ?? null, { digits: 1 })}
+              tooltip={`分子：此候選人提案筆數${incumbent.proposals?.kind === 'unspecified' ? '（議會未區分提案人／連署）' : '（以提案人計）'}。分母：同選區有提案筆數的現任者平均（n=${districtAvg?.sampleSize.proposals ?? 0}）。`}
+              footnote={
+                incumbent.proposals?.asCoSigner && (incumbent.proposals.asCoSigner.count ?? 0) > 0
+                  ? `另有連署 ${incumbent.proposals.asCoSigner.count} 筆（不計入上方提案數量）`
+                  : incumbent.proposals?.note || undefined
+              }
+            />
+
+            {proposalList.length > 0 ? (
+              <ExpandableRecordList items={proposalList} initialCount={5} />
+            ) : proposalCount != null ? (
+              <div class="text-sm text-neutral-600 space-y-1">
+                <p>共 {proposalCount} 筆（明細尚未整理或僅有彙總）</p>
+                {incumbent.proposals?.sourceUrl && (
+                  <a
+                    href={incumbent.proposals.sourceUrl}
+                    target="_blank"
+                    rel="noopener"
+                    class="text-xs underline text-neutral-600 inline-block"
+                  >
+                    議會議決案目錄
+                  </a>
+                )}
+                {incumbent.proposals?.asProposer?.sourceUrl && (
+                  <a
+                    href={incumbent.proposals.asProposer.sourceUrl}
+                    target="_blank"
+                    rel="noopener"
+                    class="text-xs underline text-neutral-600 inline-block"
+                  >
                     完整紀錄
                   </a>
                 )}
               </div>
             ) : (
-              <p class="text-neutral-500 text-sm">無公開資料</p>
+              <p class="text-sm text-neutral-500">無公開明細</p>
             )}
           </div>
 
@@ -427,10 +508,10 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                 {candidate.county}議會名冊
               </a>
             )}
-            <span class="ml-2">原文照錄</span>
+            <span class="ml-2">原文照錄 · 均值由本站依同選區現任資料計算</span>
           </div>
         </div>
-      </details>
+      </section>
     )}
 
     {/* Data Sources */}
@@ -554,3 +635,42 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
     </nav>
   </article>
 </Layout>
+
+<script>
+  function bindMetricTips(root: ParentNode = document) {
+    root.querySelectorAll<HTMLButtonElement>('[data-metric-tip]').forEach((btn) => {
+      if (btn.dataset.bound === '1') return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', () => {
+        const tipId = btn.getAttribute('aria-describedby');
+        if (!tipId) return;
+        const tip = document.getElementById(tipId);
+        if (!tip) return;
+        const open = tip.classList.toggle('hidden') === false;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  }
+
+  function bindExpandableLists(root: ParentNode = document) {
+    root.querySelectorAll<HTMLElement>('[data-expandable-list]').forEach((wrap) => {
+      const btn = wrap.querySelector<HTMLButtonElement>('[data-expandable-toggle]');
+      const rest = wrap.querySelector<HTMLElement>('[data-expandable-rest]');
+      if (!btn || !rest || btn.dataset.bound === '1') return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', () => {
+        const willShow = rest.classList.contains('hidden');
+        rest.classList.toggle('hidden', !willShow);
+        btn.setAttribute('aria-expanded', willShow ? 'true' : 'false');
+        btn.textContent = willShow ? '收合明細' : `展開其餘 ${rest.children.length} 則`;
+      });
+    });
+  }
+
+  bindMetricTips();
+  bindExpandableLists();
+  document.addEventListener('astro:page-load', () => {
+    bindMetricTips();
+    bindExpandableLists();
+  });
+</script>

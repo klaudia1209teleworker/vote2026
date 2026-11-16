@@ -1,0 +1,165 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import candidatesData from '../../../data/candidates.json';
+import { getCityCandidateNav } from '../../../utils/cityCandidateNav';
+import districtsData from '../../../data/districts.json';
+
+const baseUrl = import.meta.env.BASE_URL;
+
+type CandidateRow = {
+  county: string;
+  position: string;
+  district?: string | null;
+  districtOfficial?: string | null;
+  name: string;
+  number?: number | null;
+  party?: string | null;
+  partyAsListed?: string | null;
+};
+
+export function getStaticPaths() {
+  return Object.keys(districtsData.cities).map((city) => ({
+    params: { city },
+    props: { city },
+  }));
+}
+
+const { city } = Astro.props;
+const nav = getCityCandidateNav(city);
+if (!nav) {
+  throw new Error(`找不到縣市：${city}`);
+}
+
+const candidates = candidatesData as CandidateRow[];
+
+function getPartyDisplay(party: string | null | undefined, partyAsListed: string | null | undefined): string {
+  if (party) return party;
+  if (partyAsListed === '無' || partyAsListed == null) return '無黨籍推薦';
+  return partyAsListed;
+}
+
+function candidatePageId(candidate: CandidateRow): string {
+  return `${candidate.county}-${candidate.position}-${candidate.district || candidate.districtOfficial || ''}-${candidate.name}`
+    .replace(/[^a-zA-Z0-9\u4e00-\u9fff-]/g, '')
+    .toLowerCase();
+}
+
+const pageTitle = `${city}候選人`;
+const pageDescription = `${city}各職位候選人名單，共 ${nav.total.toLocaleString()} 人`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <article class="space-y-6">
+    <header>
+      <nav class="text-xs text-neutral-500 mb-2">
+        <a href={baseUrl} class="hover:underline">首頁</a>
+        <span class="mx-1">›</span>
+        <a href={`${baseUrl}candidates/`} class="hover:underline">候選人</a>
+        <span class="mx-1">›</span>
+        <span class="text-neutral-700">{city}</span>
+      </nav>
+      <h1 class="page-title">{pageTitle}</h1>
+      <p class="text-sm text-neutral-600 mt-2">
+        {nav.type} · 共 {nav.total.toLocaleString()} 位候選人。選擇職位查看名單。
+      </p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        {nav.positions.map((position) => (
+          <a
+            href={`#${position.id}`}
+            class="text-sm px-2.5 py-1 bg-white border border-neutral-200 rounded-full hover:border-primary-300 hover:bg-primary-50"
+          >
+            {position.shortName}
+            <span class="text-neutral-500 tabular-nums">{position.count.toLocaleString()}</span>
+          </a>
+        ))}
+      </div>
+    </header>
+
+    {nav.positions.map((position) => {
+      const citywide = position.areas.length === 0
+        ? candidates
+            .filter((candidate) => candidate.county === city && candidate.position === position.id)
+            .sort((a, b) => {
+              if (a.number != null && b.number != null) return a.number - b.number;
+              if (a.number != null) return -1;
+              if (b.number != null) return 1;
+              return a.name.localeCompare(b.name, 'zh-TW');
+            })
+        : [];
+
+      return (
+        <section id={position.id} class="p-4 sm:p-6 bg-white rounded-xl shadow-sm border border-neutral-200 scroll-mt-16">
+          <div class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+            <h2 class="text-lg font-semibold text-neutral-800">
+              {position.name}
+              <span class="ml-2 text-sm font-normal text-neutral-500">{position.count.toLocaleString()} 人</span>
+            </h2>
+            {position.listHref && position.areas.length > 0 && (
+              <a href={`${baseUrl}${position.listHref}`} class="text-sm text-primary-600 hover:underline">
+                選區一覽
+              </a>
+            )}
+          </div>
+
+          {citywide.length > 0 ? (
+            <div class="border border-neutral-200 rounded overflow-hidden">
+              <table class="w-full text-sm">
+                <thead class="bg-neutral-50 border-b border-neutral-200">
+                  <tr>
+                    <th class="px-3 py-2 text-right w-10 font-medium text-neutral-700">號次</th>
+                    <th class="px-3 py-2 text-left font-medium text-neutral-700">姓名</th>
+                    <th class="px-3 py-2 text-left font-medium text-neutral-700">推薦政黨</th>
+                    <th class="px-3 py-2 text-right font-medium text-neutral-700"></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-neutral-100">
+                  {citywide.map((candidate) => (
+                    <tr class="hover:bg-neutral-50">
+                      <td class="px-3 py-2 text-right text-neutral-400 tabular-nums">
+                        {candidate.number != null ? candidate.number : '—'}
+                      </td>
+                      <td class="px-3 py-2 font-medium text-neutral-800">{candidate.name}</td>
+                      <td class="px-3 py-2 text-neutral-600">{getPartyDisplay(candidate.party, candidate.partyAsListed)}</td>
+                      <td class="px-3 py-2 text-right">
+                        <a
+                          href={`${baseUrl}candidates/${encodeURIComponent(candidatePageId(candidate))}/`}
+                          class="text-xs text-neutral-600 underline hover:text-neutral-800"
+                        >
+                          詳細
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {position.areas.map((area) => (
+                <a
+                  href={`${baseUrl}${area.href}`}
+                  class="p-3 bg-neutral-50 hover:bg-primary-50 border border-neutral-200 hover:border-primary-300 rounded-lg transition-colors flex justify-between items-center gap-3"
+                >
+                  <span class="font-medium text-neutral-800">
+                    {area.name}
+                    {area.note && <span class="ml-1.5 text-xs font-normal text-neutral-500">{area.note}</span>}
+                  </span>
+                  <span class="text-sm text-neutral-500 tabular-nums shrink-0">{area.count.toLocaleString()} 人</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </section>
+      );
+    })}
+
+    <nav class="flex justify-between text-sm pt-4 border-t border-neutral-200">
+      <a href={`${baseUrl}candidates/`} class="text-neutral-600 underline hover:text-neutral-800">
+        ← 全部縣市
+      </a>
+      <a href={baseUrl} class="text-neutral-600 underline hover:text-neutral-800">
+        首頁查詢選票 →
+      </a>
+    </nav>
+  </article>
+</Layout>

@@ -1,0 +1,81 @@
+---
+interface Props {
+  items: {
+    primary: string;
+    secondary?: string;
+    meta?: string;
+    links?: { label: string; href: string }[];
+    outcomeLines?: string[];
+  }[];
+  initialCount?: number;
+  emptyText?: string;
+}
+
+const { items, initialCount = 5, emptyText = '無明細資料' } = Astro.props;
+const visible = items.slice(0, initialCount);
+const rest = items.slice(initialCount);
+const listId = `records-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+{items.length === 0 ? (
+  <p class="text-sm text-neutral-500">{emptyText}</p>
+) : (
+  <div class="space-y-2" data-expandable-list>
+    <ul class="space-y-3 text-sm">
+      {visible.map((item) => (
+        <li class="pl-2 border-l border-neutral-200">
+          {item.secondary && <p class="text-xs text-neutral-400">{item.secondary}</p>}
+          <p class="text-neutral-800 mt-0.5">{item.primary}</p>
+          {item.meta && <p class="text-xs text-neutral-500 mt-1">{item.meta}</p>}
+          {item.outcomeLines && item.outcomeLines.length > 0 && (
+            <p class="text-xs text-neutral-500 mt-1">{item.outcomeLines.join(' · ')}</p>
+          )}
+          {item.links && item.links.length > 0 && (
+            <div class="flex flex-wrap gap-3 mt-1.5">
+              {item.links.map((link) => (
+                <a href={link.href} target="_blank" rel="noopener" class="text-xs underline text-neutral-600 hover:text-neutral-800">
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    {rest.length > 0 && (
+      <div>
+        <ul id={listId} class="hidden space-y-3 text-sm mt-2" data-expandable-rest>
+          {rest.map((item) => (
+            <li class="pl-2 border-l border-neutral-200">
+              {item.secondary && <p class="text-xs text-neutral-400">{item.secondary}</p>}
+              <p class="text-neutral-800 mt-0.5">{item.primary}</p>
+              {item.meta && <p class="text-xs text-neutral-500 mt-1">{item.meta}</p>}
+              {item.outcomeLines && item.outcomeLines.length > 0 && (
+                <p class="text-xs text-neutral-500 mt-1">{item.outcomeLines.join(' · ')}</p>
+              )}
+              {item.links && item.links.length > 0 && (
+                <div class="flex flex-wrap gap-3 mt-1.5">
+                  {item.links.map((link) => (
+                    <a href={link.href} target="_blank" rel="noopener" class="text-xs underline text-neutral-600 hover:text-neutral-800">
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+        <button
+          type="button"
+          class="btn btn-tertiary mt-1 text-sm underline"
+          data-expandable-toggle
+          aria-controls={listId}
+          aria-expanded="false"
+        >
+          展開其餘 {rest.length} 則
+        </button>
+      </div>
+    )}
+  </div>
+)}

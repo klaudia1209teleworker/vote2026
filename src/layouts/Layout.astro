@@ -6,8 +6,25 @@ interface Props {
   description?: string;
 }
 
-const { title, description = '2026 九合一地方選舉候選人與選票查詢' } = Astro.props;
+const { title, description = '2026 九合一地方選舉資訊：選票查詢、職務說明與候選人資料' } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL;
+
+const navItems = [
+  { href: baseUrl, label: '首頁', end: true },
+  { href: `${baseUrl}positions/`, label: '職務介紹', end: false },
+  { href: `${baseUrl}candidates/`, label: '候選人', end: false },
+  { href: `${baseUrl}how-to-judge/`, label: '判斷候選人', end: false },
+  { href: `${baseUrl}voting-day/`, label: '投票指南', end: false },
+  { href: `${baseUrl}about/`, label: '關於', end: false },
+];
+
+const here = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+
+function isActive(href: string, end: boolean) {
+  const target = href.endsWith('/') ? href : `${href}/`;
+  if (end || target === baseUrl) return here === target;
+  return here.startsWith(target);
+}
 ---
 
 <!doctype html>
@@ -19,64 +36,97 @@ const baseUrl = import.meta.env.BASE_URL;
     <link rel="icon" type="image/svg+xml" href={`${baseUrl}favicon.svg`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <title>{title} | 2026 九合一選舉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <slot name="head" />
+    <title>{title} | 2026 台灣九合一地方選舉</title>
   </head>
-  <body class="min-h-screen bg-neutral-50 text-neutral-800">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-neutral-800 text-white px-3 py-1.5 text-sm rounded">
+  <body class="min-h-screen bg-canvas text-ink">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[70] btn btn-primary">
       跳至主要內容
     </a>
-    
-    <header class="bg-white border-b border-neutral-200 sticky top-0 z-50">
-      <nav class="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
-        <a href={baseUrl} class="text-base font-semibold text-neutral-800 hover:text-neutral-600">
-          2026 九合一選舉
+
+    <header class="bg-surface border-b border-line sticky top-0 z-50">
+      <nav class="shell h-14 flex items-center gap-2" aria-label="主要">
+        <a href={baseUrl} class="mr-auto font-semibold text-strong tracking-tight">
+          <span class="md:hidden">2026 九合一</span>
+          <span class="hidden md:inline">2026 台灣九合一地方選舉</span>
         </a>
-        
-        <button 
-          id="menu-toggle" 
-          class="md:hidden p-1.5 -mr-1.5 text-neutral-600 hover:text-neutral-800"
+
+        <ul class="hidden md:flex items-center">
+          {navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={['nav-link', isActive(item.href, item.end) && 'is-active']}
+                aria-current={isActive(item.href, item.end) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <button
+          id="menu-toggle"
+          type="button"
+          class="icon-btn md:hidden"
           aria-label="開啟選單"
           aria-expanded="false"
+          aria-controls="nav-drawer"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
-
-        <ul id="nav-menu" class="hidden md:flex items-center gap-0.5 text-sm">
-          <li><a href={baseUrl} class="px-2.5 py-1.5 rounded hover:bg-neutral-100 text-neutral-600 hover:text-neutral-800">首頁</a></li>
-          <li><a href={`${baseUrl}positions/`} class="px-2.5 py-1.5 rounded hover:bg-neutral-100 text-neutral-600 hover:text-neutral-800">職務介紹</a></li>
-          <li><a href={`${baseUrl}how-to-judge/`} class="px-2.5 py-1.5 rounded hover:bg-neutral-100 text-neutral-600 hover:text-neutral-800">判斷候選人</a></li>
-          <li><a href={`${baseUrl}voting-day/`} class="px-2.5 py-1.5 rounded hover:bg-neutral-100 text-neutral-600 hover:text-neutral-800">投票須知</a></li>
-          <li><a href={`${baseUrl}about/`} class="px-2.5 py-1.5 rounded hover:bg-neutral-100 text-neutral-600 hover:text-neutral-800">關於</a></li>
-        </ul>
       </nav>
-      
-      <!-- Mobile menu -->
-      <ul id="mobile-menu" class="hidden md:hidden px-4 pb-3 space-y-0.5 text-sm border-t border-neutral-100">
-        <li><a href={baseUrl} class="block px-2.5 py-2 rounded hover:bg-neutral-100">首頁</a></li>
-        <li><a href={`${baseUrl}positions/`} class="block px-2.5 py-2 rounded hover:bg-neutral-100">職務介紹</a></li>
-        <li><a href={`${baseUrl}how-to-judge/`} class="block px-2.5 py-2 rounded hover:bg-neutral-100">判斷候選人</a></li>
-        <li><a href={`${baseUrl}voting-day/`} class="block px-2.5 py-2 rounded hover:bg-neutral-100">投票須知</a></li>
-        <li><a href={`${baseUrl}about/`} class="block px-2.5 py-2 rounded hover:bg-neutral-100">關於</a></li>
-      </ul>
     </header>
 
-    <main id="main-content" class="max-w-5xl mx-auto px-4 py-6">
+    <div id="nav-drawer" class="nav-drawer md:hidden" hidden>
+      <button type="button" class="nav-backdrop" data-close-nav aria-label="關閉選單"></button>
+      <div class="nav-panel" role="dialog" aria-modal="true" aria-labelledby="nav-drawer-title">
+        <div class="flex items-center justify-between mb-2">
+          <p id="nav-drawer-title" class="px-3 font-semibold text-strong">選單</p>
+          <button type="button" class="icon-btn" data-close-nav aria-label="關閉選單">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18"></path>
+            </svg>
+          </button>
+        </div>
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[isActive(item.href, item.end) && 'is-active']}
+            aria-current={isActive(item.href, item.end) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+        <a href={`${baseUrl}#lookup`}>查詢選票</a>
+      </div>
+    </div>
+
+    <main id="main-content" class="shell py-5 md:py-6">
       <slot />
     </main>
 
-    <footer class="bg-neutral-800 text-neutral-400 mt-12 text-sm">
-      <div class="max-w-5xl mx-auto px-4 py-6">
-        <div class="space-y-3 text-center">
-          <p class="text-neutral-300">
-            本站非中央選舉委員會官方網站，資訊以
-            <a href="https://www.cec.gov.tw/" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">中選會公告</a>
-            為準
+    <footer class="border-t border-line bg-surface mt-10">
+      <div class="shell py-6 flex flex-col gap-4 text-sm">
+        <div class="space-y-3">
+          <h2 class="text-base font-semibold text-strong">資料來源</h2>
+          <p class="text-secondary">
+            本站非中央選舉委員會官方網站。候選人、日期、投票規則與選舉結果以
+            <a href="https://www.cec.gov.tw/" target="_blank" rel="noopener noreferrer" class="underline text-ink">中選會</a>
+            及各地方選舉委員會正式公告為準。
           </p>
-          <p class="text-neutral-500">
-            投票日 2026/11/28（六）08:00–16:00 · 資料更新 2026-11-15
+          <p class="text-secondary tabular-nums">投票日 2026-11-28（六）08:00–16:00</p>
+          <p class="text-secondary tabular-nums">資料更新 2026-11-15</p>
+        </div>
+        <div class="space-y-3">
+          <p class="text-secondary">
+            頁面上的 YouTube 影片是知識架構的啟發來源，不代表創作者認可或背書本站，也不能取代官方公告。
+          </p>
+          <p>
+            <a href={`${baseUrl}about/`} class="underline text-ink">來源清單與免責說明</a>
           </p>
         </div>
       </div>
@@ -84,12 +134,36 @@ const baseUrl = import.meta.env.BASE_URL;
 
     <script>
       const toggle = document.getElementById('menu-toggle');
-      const menu = document.getElementById('mobile-menu');
-      
+      const drawer = document.getElementById('nav-drawer');
+      const panel = drawer?.querySelector('.nav-panel');
+
+      function setOpen(open: boolean) {
+        if (!toggle || !drawer) return;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? '關閉選單' : '開啟選單');
+        drawer.hidden = !open;
+        document.body.style.overflow = open ? 'hidden' : '';
+        if (open) {
+          panel?.querySelector<HTMLElement>('a, button')?.focus();
+        }
+      }
+
       toggle?.addEventListener('click', () => {
-        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', (!isExpanded).toString());
-        menu?.classList.toggle('hidden');
+        setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+      });
+
+      drawer?.querySelectorAll('[data-close-nav]').forEach((button) => {
+        button.addEventListener('click', () => {
+          setOpen(false);
+          toggle?.focus();
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && drawer && !drawer.hidden) {
+          setOpen(false);
+          toggle?.focus();
+        }
       });
     </script>
   </body>

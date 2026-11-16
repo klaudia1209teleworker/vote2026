@@ -6,6 +6,7 @@ import districts from '../../../data/districts.json';
 import electoralDistricts from '../../../data/electoralDistricts.json';
 import incumbentsData from '../../../data/incumbents.json';
 import { getCandidateKey } from '../../../utils/candidateKey';
+import { cityHubPath, getCityCandidateNav, positionEntryPath } from '../../../utils/cityCandidateNav';
 
 const baseUrl = import.meta.env.BASE_URL;
 
@@ -214,8 +215,24 @@ const councilDistrictsForCity = scope === 'city-councilor-index'
   : [];
 
 const uniqueVillages = isVillageChief && scope === 'village'
-  ? [...new Set(candidatesForPage.map(c => c.district))].sort((a, b) => a.localeCompare(b, 'zh-TW'))
+  ? [...new Set(candidatesForPage.map(c => c.village).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'zh-TW'))
   : [];
+
+function localAreaLabel(candidate: { districtOfficial?: string | null; district?: string | null }): string {
+  const area = district || township || '';
+  const official = candidate.districtOfficial || '';
+  const prefix = `${city}${area}`;
+  if (area && official.startsWith(prefix) && official.length > prefix.length) {
+    return official.slice(prefix.length);
+  }
+  return '';
+}
+
+const showSubdistrict = !isVillageChief
+  && scope !== 'city-councilor-index'
+  && new Set(candidatesForPage.map((candidate) => localAreaLabel(candidate)).filter(Boolean)).size > 1;
+
+const cityNav = getCityCandidateNav(city);
 
 const latestAsOf = hasCandidates 
   ? candidatesForPage.reduce((latest, c) => {
@@ -238,10 +255,12 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
         <span class="mx-1">›</span>
         <a href={`${baseUrl}candidates/`} class="hover:underline">候選人</a>
         <span class="mx-1">›</span>
-        <span class="text-neutral-700">{locationLabel}</span>
+        <a href={`${baseUrl}${cityHubPath(city)}`} class="hover:underline">{city}</a>
+        <span class="mx-1">›</span>
+        <span class="text-neutral-700">{shortName}{scope === 'city-councilor-index' ? '選區' : ''}{district || township ? ` ${district || township}` : ''}</span>
       </nav>
       
-      <h1 class="text-lg font-semibold text-neutral-800">
+      <h1 class="page-title">
         {pageTitle}
       </h1>
       
@@ -253,6 +272,26 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
           {districtData?.seats && ` · 應選 ${districtData.seats} 名`}
           {hasCandidates && ` · ${candidatesForPage.length} 位`}
         </p>
+      )}
+
+      {cityNav && cityNav.positions.length > 1 && (
+        <nav class="flex flex-wrap gap-1.5 mt-3" aria-label="同縣市其他職位">
+          {cityNav.positions.map((position) => {
+            const current = position.id === positionId;
+            const className = current
+              ? 'text-xs px-2 py-1 rounded border border-neutral-800 bg-neutral-800 text-white'
+              : 'text-xs px-2 py-1 rounded border border-neutral-200 bg-white text-neutral-700 hover:border-neutral-400';
+            return current ? (
+              <span class={className} aria-current="page">
+                {position.shortName} {position.count.toLocaleString()}
+              </span>
+            ) : (
+              <a href={`${baseUrl}${positionEntryPath(city, position)}`} class={className}>
+                {position.shortName} {position.count.toLocaleString()}
+              </a>
+            );
+          })}
+        </nav>
       )}
     </header>
 
@@ -305,7 +344,7 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
         <label for="village-filter" class="text-sm text-neutral-600">篩選村里</label>
         <select 
           id="village-filter" 
-          class="px-2 py-1 text-sm border border-neutral-300 rounded focus:outline-none focus:border-neutral-500"
+          class="ui-input w-auto min-w-48"
         >
           <option value="">全部（{uniqueVillages.length}）</option>
           {uniqueVillages.map(v => (
@@ -323,7 +362,7 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
             {isVillageChief && scope === 'village' ? (
               // Village Chief: Group by village
               uniqueVillages.map(village => {
-                const villageCandidates = candidatesForPage.filter(c => c.district === village);
+                const villageCandidates = candidatesForPage.filter(c => c.village === village);
                 return (
                   <div class="village-group" data-village={village}>
                     <div class="px-3 py-2 bg-neutral-50 border-b border-neutral-200 text-sm font-medium text-neutral-700">
@@ -360,6 +399,9 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                   <tr>
                     <th class="px-3 py-2 text-right w-10 font-medium text-neutral-700">號次</th>
                     <th class="px-3 py-2 text-left font-medium text-neutral-700">姓名</th>
+                    {showSubdistrict && (
+                      <th class="px-3 py-2 text-left font-medium text-neutral-700">選區</th>
+                    )}
                     <th class="px-3 py-2 text-left font-medium text-neutral-700">推薦政黨</th>
                     <th class="px-3 py-2 text-right font-medium text-neutral-700"></th>
                   </tr>
@@ -379,6 +421,9 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
                           <span class="font-medium text-neutral-800">{candidate.name}</span>
                           {incumbent && <span class="ml-1.5 text-xs text-neutral-500 bg-neutral-100 px-1 py-0.5 rounded">現任</span>}
                         </td>
+                        {showSubdistrict && (
+                          <td class="px-3 py-2 text-neutral-600">{localAreaLabel(candidate)}</td>
+                        )}
                         <td class="px-3 py-2 text-neutral-600">{partyDisplay}</td>
                         <td class="px-3 py-2 text-right">
                           <a 
@@ -461,19 +506,28 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
     document.addEventListener('DOMContentLoaded', () => {
       const filter = document.getElementById('village-filter') as HTMLSelectElement;
       const groups = document.querySelectorAll('.village-group');
-      
+
+      function applyVillageFilter(selected: string) {
+        groups.forEach(group => {
+          const village = (group as HTMLElement).dataset.village;
+          (group as HTMLElement).style.display = !selected || village === selected ? '' : 'none';
+        });
+      }
+
       if (filter && groups.length > 0) {
         filter.addEventListener('change', () => {
-          const selected = filter.value;
-          groups.forEach(group => {
-            const village = (group as HTMLElement).dataset.village;
-            if (!selected || village === selected) {
-              (group as HTMLElement).style.display = '';
-            } else {
-              (group as HTMLElement).style.display = 'none';
-            }
-          });
+          applyVillageFilter(filter.value);
+          const url = new URL(window.location.href);
+          if (filter.value) url.searchParams.set('village', filter.value);
+          else url.searchParams.delete('village');
+          history.replaceState(null, '', url);
         });
+
+        const initial = new URLSearchParams(window.location.search).get('village');
+        if (initial && Array.from(filter.options).some(option => option.value === initial)) {
+          filter.value = initial;
+          applyVillageFilter(initial);
+        }
       }
     });
   </script>
