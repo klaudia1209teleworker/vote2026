@@ -57,7 +57,7 @@ function isActive(href: string, end: boolean) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <slot name="head" />
-    <title>{title} | 2026 台灣九合一地方選舉</title>
+    <title>{title} | 2026 台灣九合一地方選舉資訊彙整</title>
   </head>
   <body class="min-h-screen bg-canvas text-ink">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[70] btn btn-primary">
@@ -66,9 +66,8 @@ function isActive(href: string, end: boolean) {
 
     <header class="site-header bg-surface border-b border-line sticky top-0 z-50">
       <div class="shell h-14 flex items-center">
-        <a href={baseUrl} class="font-semibold text-strong tracking-tight">
-          <span class="md:hidden">2026 九合一</span>
-          <span class="hidden md:inline">2026 台灣九合一地方選舉</span>
+        <a href={baseUrl} class="min-w-0 font-semibold text-strong tracking-tight whitespace-nowrap">
+          2026 台灣九合一地方選舉資訊彙整
         </a>
 
         <ul class="ml-auto hidden md:flex items-center">

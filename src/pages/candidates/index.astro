@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import DocFrame from '../../components/DocFrame.astro';
 import candidates from '../../data/candidates.json';
 import districts from '../../data/districts.json';
 import positions from '../../data/positions.json';
@@ -13,218 +14,163 @@ const cityGroups = [
   { title: '縣', cities: districts.counties.list },
 ];
 
-const positionCounts = (candidates as any[]).reduce((acc, c) => {
-  acc[c.position] = (acc[c.position] || 0) + 1;
+const positionCounts = (candidates as { position: string }[]).reduce((acc, candidate) => {
+  acc[candidate.position] = (acc[candidate.position] || 0) + 1;
   return acc;
 }, {} as Record<string, number>);
 
-const totalCandidates = (candidates as any[]).length;
-
-const candidatesByCity = (candidates as any[]).reduce((acc, candidate) => {
-  const city = candidate.county;
-  if (!acc[city]) acc[city] = 0;
-  acc[city]++;
-  return acc;
-}, {} as Record<string, number>);
+const totalCandidates = (candidates as unknown[]).length;
 
 function getPositionName(positionId: string): string {
-  const position = positions.positions.find(p => p.id === positionId);
+  const position = positions.positions.find((item) => item.id === positionId);
   return position?.shortName || position?.name || positionId;
 }
+
+const officialLinks = [
+  {
+    href: 'https://info.cec.gov.tw/vote2026/',
+    title: '中選會選舉專區',
+    note: '官方候選人查詢系統',
+  },
+  {
+    href: 'https://bulletin.cec.gov.tw/',
+    title: '選舉公報',
+    note: '候選人完整政見',
+  },
+  {
+    href: 'https://pdps-dec.cec.gov.tw/release/formal/HomePage.html',
+    title: '財產申報查詢',
+    note: '縣市長、縣市議員（不含基層）',
+  },
+  {
+    href: 'https://journal.th.gov.tw/',
+    title: '議事錄總庫',
+    note: '現任議員質詢紀錄',
+  },
+];
 ---
 
 <Layout title="候選人資訊" description="2026 九合一選舉各選區候選人資訊">
-  <article class="space-y-8">
+  <DocFrame groups={[{
+    label: '快速導覽',
+    items: [
+      { href: '#cities', label: '依縣市查看' },
+      { href: '#stats', label: '候選人統計' },
+      { href: '#official', label: '官方查詢' },
+      { href: '#detail', label: '詳細頁面' },
+      { href: '#update', label: '資料更新' },
+      { href: '#contribute', label: '貢獻資料' },
+    ],
+  }]}>
     <header>
-      <h1 class="page-title mb-4">
-        👤 候選人資訊
-      </h1>
-      <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
-        <p class="text-green-700">
-          <strong>✅ 資料已更新：</strong>本站已收錄 <strong>{totalCandidates.toLocaleString()}</strong> 位候選人資料，
-          皆來自中選會及各縣市選委會官方公告。
-          <a href={`${baseUrl}about/`} class="underline">了解資料來源</a>
-        </p>
-      </div>
+      <h1 class="page-title">候選人資訊</h1>
+      <p class="mt-2 text-secondary">
+        已收錄 {totalCandidates.toLocaleString()} 位候選人，資料來自中選會及各縣市選委會官方公告。
+        <a href={`${baseUrl}about/`} class="underline">來源清單與免責說明</a>
+      </p>
     </header>
 
-    {/* Statistics */}
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📊 候選人統計</h2>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {Object.entries(positionCounts).sort((a, b) => b[1] - a[1]).map(([positionId, count]) => (
-          <div class="p-4 bg-neutral-50 rounded-lg">
-            <p class="text-2xl font-bold text-primary-600">{count.toLocaleString()}</p>
-            <p class="text-neutral-600">{getPositionName(positionId)}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    {/* Quick Access by City */}
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🗺️ 依縣市查看候選人</h2>
-      <p class="text-neutral-600 mb-4">
-        選擇縣市快速查看各職位候選人名單。或者回到<a href={baseUrl} class="text-primary-600 hover:underline">首頁查詢您的選票</a>，直接連結到對應選區。
-      </p>
-      
-      <div class="space-y-6">
-        {cityGroups.map((group) => (
-          <div>
-            <h3 class="text-sm font-medium text-neutral-500 mb-2">{group.title}</h3>
-            <div class="grid gap-3 sm:grid-cols-2">
-              {group.cities.map((city) => {
-                const nav = getCityCandidateNav(city);
-                return (
-                  <div class="p-3 bg-neutral-50 border border-neutral-200 rounded-lg">
-                    <a
-                      href={`${baseUrl}${cityHubPath(city)}`}
-                      class="flex justify-between items-center gap-3 hover:text-primary-700"
-                    >
-                      <span class="font-medium text-neutral-800">{city}</span>
-                      <span class="text-sm text-neutral-500">{(nav?.total ?? candidatesByCity[city] ?? 0).toLocaleString()} 人</span>
-                    </a>
-                    {nav && (
-                      <div class="flex flex-wrap gap-1.5 mt-2">
-                        {nav.positions.map((position) => (
-                          <a
-                            href={`${baseUrl}${positionEntryPath(city, position)}`}
-                            class="text-xs px-2 py-1 bg-white border border-neutral-200 rounded hover:border-primary-300 hover:bg-primary-50"
-                          >
-                            {position.shortName}
-                            <span class="text-neutral-500 tabular-nums"> {position.count.toLocaleString()}</span>
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    {/* Official Sources */}
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🔗 官方候選人查詢</h2>
-      
-      <div class="grid gap-4 sm:grid-cols-2">
-        <a 
-          href="https://info.cec.gov.tw/vote2026/" 
-          target="_blank" 
-          rel="noopener"
-          class="p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors"
-        >
-          <p class="font-medium text-primary-700">中選會選舉專區</p>
-          <p class="text-sm text-primary-600">官方候選人查詢系統</p>
-        </a>
-        
-        <a 
-          href="https://bulletin.cec.gov.tw/" 
-          target="_blank" 
-          rel="noopener"
-          class="p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors"
-        >
-          <p class="font-medium text-primary-700">選舉公報</p>
-          <p class="text-sm text-primary-600">候選人完整政見</p>
-        </a>
-        
-        <a 
-          href="https://pdps-dec.cec.gov.tw/release/formal/HomePage.html" 
-          target="_blank" 
-          rel="noopener"
-          class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
-        >
-          <p class="font-medium text-neutral-700">財產申報查詢</p>
-          <p class="text-sm text-neutral-500">縣市長、縣市議員（不含基層）</p>
-        </a>
-        
-        <a 
-          href="https://journal.th.gov.tw/" 
-          target="_blank" 
-          rel="noopener"
-          class="p-4 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
-        >
-          <p class="font-medium text-neutral-700">議事錄總庫</p>
-          <p class="text-sm text-neutral-500">現任議員質詢紀錄</p>
-        </a>
-      </div>
-    </section>
-
-    {/* Detail Page Info */}
-    <section class="p-6 bg-blue-50 border border-blue-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-blue-800 mb-4">📄 候選人詳細頁面</h2>
-      <p class="text-blue-700 mb-3">
-        點擊候選人可查看詳細資訊頁面，包含：
-      </p>
-      <ul class="space-y-1 text-sm text-blue-600">
-        <li>• <strong>候選人狀態</strong>：登記、抽籤、公告等階段</li>
-        <li>• <strong>資料來源</strong>：登記公告、抽籤結果、正式名單等官方文件連結</li>
-        <li>• <strong>政見</strong>：選舉公報連結</li>
-        <li>• <strong>官方資源</strong>：財產申報、議會紀錄等連結</li>
-      </ul>
-      <p class="text-xs text-blue-500 mt-3">
-        每項資料皆附官方來源連結，所有數據皆可追溯驗證。
-        村里長候選人因數量龐大（{positionCounts['village-chief']?.toLocaleString() || '14,000+'}人），僅提供列表查詢，不生成個別詳細頁面。
-      </p>
-    </section>
-
-    {/* Data Refresh Info */}
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🔄 資料更新</h2>
-      <p class="text-neutral-600">
-        本站資料來自中選會及各縣市選委會官方公告，會定期更新。
-        最近一次更新：<strong>2026-11-15</strong>
-      </p>
-    </section>
-
-    {/* Contributing */}
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📝 如何貢獻資料</h2>
-      <p class="text-neutral-600 mb-4">
-        本站候選人資料以 JSON 格式儲存，歡迎協助補充。貢獻方式：
-      </p>
-      
-      <ol class="space-y-3 text-neutral-600">
-        <li class="flex items-start gap-3">
-          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">1</span>
-          <span>參閱 <code class="text-sm bg-neutral-100 px-1 py-0.5 rounded">src/data/candidates.json</code> 與 <code class="text-sm bg-neutral-100 px-1 py-0.5 rounded">src/data/README.md</code></span>
-        </li>
-        <li class="flex items-start gap-3">
-          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">2</span>
-          <span>僅使用<strong>官方來源</strong>（選舉公報、議會紀錄）</span>
-        </li>
-        <li class="flex items-start gap-3">
-          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">3</span>
-          <span>每筆資料須附 <code class="text-sm bg-neutral-100 px-1 py-0.5 rounded">sourceUrl</code> 與相關日期</span>
-        </li>
-        <li class="flex items-start gap-3">
-          <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">4</span>
-          <span>提交 Pull Request，說明資料來源</span>
-        </li>
-      </ol>
-      
-      <div class="mt-4 p-4 bg-red-50 rounded-lg">
-        <p class="text-sm text-red-700">
-          <strong>⚠️ 重要原則：</strong>
+    <section id="cities" class="doc-anchor space-y-6">
+      <div>
+        <h2 class="section-title">依縣市查看</h2>
+        <p class="mt-2 text-sm text-secondary">
+          選擇縣市查看各職位候選人。也可以回到<a href={baseUrl} class="underline">首頁查詢選票</a>，直接連到對應選區。
         </p>
-        <ul class="mt-2 space-y-1 text-sm text-red-600">
-          <li>• 不可捏造、推測或使用非官方來源</li>
-          <li>• 不可包含主觀評價、推薦或排名</li>
-          <li>• 所有數據須可回溯至原始官方文件</li>
-        </ul>
+      </div>
+
+      {cityGroups.map((group) => (
+        <div>
+          <h3 class="mb-3 text-sm font-semibold text-secondary">{group.title}</h3>
+          <div class="grid gap-3 sm:grid-cols-2">
+            {group.cities.map((city) => {
+              const nav = getCityCandidateNav(city);
+              return (
+                <article class="ui-card">
+                  <a href={`${baseUrl}${cityHubPath(city)}`} class="flex items-baseline justify-between gap-3">
+                    <span class="font-semibold text-strong">{city}</span>
+                    <span class="text-sm text-secondary tabular-nums">{(nav?.total ?? 0).toLocaleString()} 人</span>
+                  </a>
+                  {nav && (
+                    <div class="mt-3 flex flex-wrap gap-1.5">
+                      {nav.positions.map((position) => (
+                        <a
+                          href={`${baseUrl}${positionEntryPath(city, position)}`}
+                          class="rounded-md border border-line bg-muted px-2 py-1 text-xs text-ink hover:bg-hover"
+                        >
+                          {position.shortName}
+                          <span class="text-secondary tabular-nums"> {position.count.toLocaleString()}</span>
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <section id="stats" class="ui-card doc-anchor">
+      <h2 class="section-title">候選人統計</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {Object.entries(positionCounts).sort((a, b) => b[1] - a[1]).map(([positionId, count]) => (
+          <div>
+            <p class="text-2xl font-bold tabular-nums text-strong">{count.toLocaleString()}</p>
+            <p class="text-sm text-secondary">{getPositionName(positionId)}</p>
+          </div>
+        ))}
       </div>
     </section>
 
-    <nav class="flex justify-between pt-8 border-t border-neutral-200">
-      <a href={`${baseUrl}cooperation/`} class="text-primary-600 hover:underline">
-        ← 合作案例
-      </a>
-      <a href={`${baseUrl}about/`} class="text-primary-600 hover:underline">
-        關於本站 →
-      </a>
-    </nav>
-  </article>
+    <section id="official" class="doc-anchor">
+      <h2 class="section-title mb-3">官方查詢</h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        {officialLinks.map((link) => (
+          <a href={link.href} target="_blank" rel="noopener noreferrer" class="ui-card block">
+            <p class="font-semibold text-strong">{link.title}</p>
+            <p class="mt-1 text-sm text-secondary">{link.note}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section id="detail" class="ui-card doc-anchor">
+      <h2 class="section-title">候選人詳細頁面</h2>
+      <p class="mt-3 text-sm text-secondary">點候選人姓名可看詳細頁，內容依該人實際資料顯示：</p>
+      <ul class="mt-3 space-y-1 text-sm text-secondary">
+        <li>登記資料：姓名、號次、推薦政黨與選區</li>
+        <li>選舉公報：政見與公報連結</li>
+        <li>現任表現：有對到現任者時，顯示大會出席、提案與質詢</li>
+        <li>資料來源與外部資源：官方文件、財產申報、議事錄</li>
+      </ul>
+      <p class="mt-3 text-xs text-secondary">
+        村里長候選人共 {positionCounts['village-chief']?.toLocaleString() || '—'} 人，只提供列表，不另建個別詳細頁。
+      </p>
+    </section>
+
+    <section id="update" class="ui-card doc-anchor">
+      <h2 class="section-title">資料更新</h2>
+      <p class="mt-3 text-sm text-secondary">
+        資料來自中選會及各縣市選委會官方公告，會定期更新。最近一次更新：
+        <time class="font-semibold text-ink tabular-nums" datetime="2026-11-15">2026-11-15</time>
+      </p>
+    </section>
+
+    <section id="contribute" class="ui-card doc-anchor">
+      <h2 class="section-title">如何貢獻資料</h2>
+      <p class="mt-3 text-sm text-secondary">候選人資料以 JSON 儲存。補充時請依下列方式：</p>
+      <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm text-secondary">
+        <li>參閱 <code class="rounded bg-muted px-1 py-0.5">src/data/candidates.json</code> 與 <code class="rounded bg-muted px-1 py-0.5">src/data/README.md</code></li>
+        <li>只使用官方來源，例如選舉公報與議會紀錄</li>
+        <li>每筆資料附 <code class="rounded bg-muted px-1 py-0.5">sourceUrl</code> 與相關日期</li>
+        <li>提交 Pull Request，並寫明資料來源</li>
+      </ol>
+      <ul class="mt-4 space-y-1 border-t border-line pt-4 text-sm text-secondary">
+        <li>不可捏造、推測，或使用非官方來源</li>
+        <li>不可加入主觀評價、推薦或排名</li>
+        <li>所有數據須能回溯到原始官方文件</li>
+      </ul>
+    </section>
+  </DocFrame>
 </Layout>
