@@ -1,0 +1,88 @@
+---
+description: TypeScript 與 React 寫作注意事項（不指定 bundler／後端；以專案既有慣例為準）
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+alwaysApply: false
+---
+
+# TypeScript 與 React 注意事項
+
+本檔**不指定** Vite、Next.js 或 Firebase。技術棧以目標專案為準（見 `000-core-workflow.mdc`）。下列為寫作注意事項；**與專案既有慣例衝突時，以專案為準，先詢問再改**。
+
+- 使用 Firebase 時的注意事項 → `101-firebase.mdc`
+- 使用 Next.js 時的注意事項 → `claude-design/_stack.mdc`
+- 使用 Claude Design 轉檔 → `claude-design/_handoff.mdc`
+
+## TypeScript 注意事項
+
+### 型別標註
+
+- 公開 API（匯出函式、元件 props、服務回傳值）必須有明確型別
+- 禁止使用 `any`，必要時使用 `unknown` 並進行型別守衛
+- 區域變數可依賴推斷，不必為了規則而逐行標註
+- 物件形狀優先 `interface`；聯合型別或運算型別用 `type`
+
+```typescript
+// ✅ 正確
+interface UserProfile {
+  id: string;
+  displayName: string;
+  email: string;
+  createdAt: Timestamp;
+}
+
+// ❌ 避免
+const user: any = fetchUser();
+```
+
+## React 元件注意事項
+
+- 使用函數式元件搭配 Hooks
+- 元件檔案使用 PascalCase 命名
+- Props 介面命名為 `{ComponentName}Props`
+- **對齊專案既有寫法**：已用 `React.FC` 或已用 `export function` 就維持；不要為了本檔整批改寫
+- Next.js App Router：**頁面檔**（`page.tsx`）必須 `export default`；其餘元件優先具名匯出（見 `_stack.mdc`）
+
+```typescript
+interface UserCardProps {
+  user: UserProfile;
+  onSelect?: (userId: string) => void;
+}
+
+export function UserCard({ user, onSelect }: UserCardProps) {
+  // 實作邏輯
+}
+```
+
+## 命名注意事項
+
+| 類型 | 建議 | 範例 |
+|------|------|------|
+| 變數/函數 | camelCase | `getUserData`, `isLoading` |
+| 元件/類別 | PascalCase | `UserProfile`, `DataTable` |
+| 常數 | UPPER_SNAKE_CASE | `MAX_RETRY_COUNT` |
+| 型別/介面 | PascalCase | `UserResponse`, `ApiError` |
+| 檔案（元件） | PascalCase | `UserCard.tsx` |
+| 檔案（工具／hook） | **跟隨專案既有慣例** | 見下 |
+
+**檔名陷阱**：同一專案不要混用。Vite／較舊 React 專案常見工具檔 `camelCase`（`formatDate.ts`）；Next.js App Router 常見 `kebab-case`（`format-date.ts`、`use-scroll-lock.ts`）。**新建檔對齊同目錄既有檔**，不要依本檔「統一」成另一套。
+
+## 目錄結構（對齊專案，下列僅供辨識）
+
+不要為了下表改建專案。辨識現況後，把新檔放到**專案已在用的位置**。
+
+| 常見於 | 典型位置 |
+|--------|----------|
+| Vite SPA | `src/pages/`、`src/components/`、`src/services/` |
+| Next.js App Router | `src/app/`、`src/components/`（見 `_stack.mdc`） |
+| Next.js Pages Router | `pages/` 或 `src/pages/`（維持現況，勿擅自改 App Router） |
+| 共用 | `src/hooks/`、`src/types/`、`src/utils/` 或 `src/lib/` |
+
+## 禁止事項
+
+- ❌ 禁止使用 `var`，一律使用 `const` 或 `let`
+- ❌ 禁止直接操作 DOM（除非該專案明確需要，例如 SEO 的 SPA canonical 補丁）
+- ❌ 禁止在元件中寫入敏感資訊
+- ❌ 禁止使用 `// @ts-ignore` 或 `// @ts-nocheck`
+- ⚠️ 不必為每個 JSX 事件處理器包 `useCallback`；僅在傳入 memo 子元件、或確實造成多餘重渲染時再包

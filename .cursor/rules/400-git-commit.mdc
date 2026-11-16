@@ -1,0 +1,173 @@
+---
+description: Git Commit、推送 GitHub 與日期制 Release Note（用戶要求提交／推送時）
+globs:
+alwaysApply: true
+---
+
+# Git Commit 與推送規範
+
+## Conventional Commits 格式
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+## Type 類型
+
+| Type | 說明 |
+|------|------|
+| `feat` | 新功能 |
+| `fix` | 修復 Bug |
+| `docs` | 文件更新 |
+| `style` | 程式碼格式調整（不影響邏輯） |
+| `refactor` | 重構 |
+| `perf` | 效能優化 |
+| `test` | 測試相關 |
+| `chore` | 建構或輔助工具變動 |
+| `ci` | CI/CD 相關 |
+
+## 範例
+
+```
+feat(auth): 新增 Google OAuth 登入功能
+
+- 整合 Firebase Authentication
+- 新增登入狀態持久化
+- 實作登出功能
+
+Closes #123
+```
+
+```
+fix(api): 修復使用者資料更新失敗問題
+
+問題：當使用者更新個人資料時，若 email 欄位為空會導致錯誤
+原因：缺少空值檢查
+解決：新增 email 欄位的驗證邏輯
+
+Fixes #456
+```
+
+```
+chore: pre-deployment cleanup and lint fixes
+```
+
+## Subject 撰寫規範
+
+- 使用祈使句（動詞開頭）；中文同樣用動詞開頭（如「新增」「修復」）
+- **英文** subject：首字母小寫、結尾不加句號  
+- **中文** subject：無「首字母小寫」問題；結尾不加句號  
+- 長度：英文約 50 字元內；中文約 25 個字內（對齊 Conventional Commits 可掃性，不要為湊字數寫英文）
+
+## 常用動詞
+
+| 動詞 | 用途 |
+|------|------|
+| add | 新增功能、檔案 |
+| remove | 移除功能、檔案 |
+| update | 更新現有功能 |
+| fix | 修復問題 |
+| refactor | 重構程式碼 |
+| improve | 改善效能或體驗 |
+| implement | 實作功能 |
+| optimize | 優化 |
+
+---
+
+## 推送 GitHub 與 Release Note（強制）
+
+### 何時必須建立 Release Note
+
+僅在下列情況，於 **`git push` 成功後必須同步**建立（或更新）**GitHub Release**（含 Release Notes）。**不得**只 push、不建立 Release。
+
+| 適用 | 說明 |
+|------|------|
+| ✅ 用戶明確要求「推送到 GitHub」 | 含「push」「推送」「部署後 push」等 |
+| ✅ 部署流程中的 push | 見 `001-deployment.mdc`（通常 push 至 `main` 或 release 分支） |
+| ✅ APP 階段三用戶要求提交並 push | 見 `002-app-development.mdc`；與 .ipa／`version`／`buildNumber` 一併完成 |
+
+| 不適用（不必為此單獨建 Release） | 說明 |
+|------|------|
+| ❌ 僅本機 commit、用戶未要求 push | — |
+| ❌ 未受用戶指示的 feature branch 暫存 push | 若用戶之後要求把該變更推上主線／正式庫，屆時再一併建 Release |
+| ❌ 僅建立／更新 PR、未要求 push 正式結果 | — |
+
+```
+⛔ 禁止：
+- 用戶要求推送後只執行 git push，略過 gh release create
+- 用佔位／空白 Release Notes 交差
+- 未經確認擅自 push 至 main／release（仍須用戶明確要求）
+
+✅ 必須：
+- push 成功 → 立刻建立 GitHub Release（日期制 tag）→ 回報 Release URL
+```
+
+### Tag 命名（日期制）
+
+格式：`vYYYY.MM.DD`（以**推送當日**為準，時區以執行環境／用戶所在日為準，本專案慣例為 **UTC+8**）。
+
+| 情況 | Tag 範例 |
+|------|----------|
+| 當日第一次正式推送 Release | `v2026.08.05` |
+| 同日第二次 | `v2026.08.05-2` |
+| 同日第 N 次 | `v2026.08.05-N`（N ≥ 2） |
+
+判定「同日已有幾次」：先查既有 tag／release（`git tag`、`gh release list`），若已存在 `vYYYY.MM.DD`，下一次用 `-2`，以此類推。
+
+**歷史 semver tag**（如既有 `v1.0.0`）可保留，不強制刪除；**新建立的 GitHub Release 一律改用日期制**，勿再新增 `v1.x.x` 作為 Release tag（APP 的 `app.json` semver 另見下節）。
+
+### Release Notes 內容
+
+至少包含：
+
+1. **Summary**：1–3 句說明本次推送的目的／重點  
+2. **變更要點**：條列新增／修正／文件（可對應自上次 Release 以來的 commits）  
+3. （選用）同步方式、遷移注意、破壞性變更
+
+### 建議指令順序
+
+```bash
+# 1. commit（用戶要求提交時）
+git add …
+git commit -m "…"
+
+# 2. push（用戶要求推送時）
+git push -u origin HEAD
+
+# 3. 決定 tag（例：當日首次 → v2026.08.05；若已存在則 v2026.08.05-2）
+# 4. 建立 GitHub Release
+gh release create vYYYY.MM.DD \
+  --title "vYYYY.MM.DD — 〈簡短標題〉" \
+  --notes "$(cat <<'EOF'
+## Summary
+…
+
+## Changes
+- …
+EOF
+)"
+```
+
+完成後**必須**向用戶回報 Release URL（`gh release create` 輸出或 repo 的 `/releases/tag/…`）。
+
+### 與 APP 版號的關係
+
+- GitHub Release **tag** → 本檔日期制（`vYYYY.MM.DD`／`-N`）  
+- `app.json` 的 **`version`（semver）** 與 **`ios.buildNumber`** → 仍依 `002-app-development.mdc`  
+- Release Notes 內**應註明**對應的 app `version`／`buildNumber`（若本次為 APP release）  
+- 若 002 需要額外可追溯的 semver Git tag，可與日期 Release **並存**（指向同一 commit）；**對用戶揭露的 GitHub Release 以日期 tag 為準**
+
+### 檢查清單（每次適用的推送）
+
+```markdown
+- [ ] 用戶已明確要求 push／部署推送
+- [ ] git push 已成功
+- [ ] 已查詢當日既有日期 tag，決定 vYYYY.MM.DD 或 vYYYY.MM.DD-N
+- [ ] 已用 gh release create 建立 Release，Notes 非空白
+- [ ] 已回報 Release URL
+- [ ] （APP）Notes 已含 version／buildNumber；.ipa 流程見 002
+```

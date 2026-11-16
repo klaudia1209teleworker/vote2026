@@ -1,0 +1,170 @@
+---
+description: Agentation 開發工具安裝與使用規範 - React 專案開發輔助工具
+globs:
+  - "**/App.tsx"
+  - "**/main.tsx"
+alwaysApply: false
+---
+
+# Agentation 開發工具注意事項
+
+僅在 React **Client** 端、且使用者要求安裝時套用。Next.js App Router 必須放在 Client Component（`"use client"`），不要寫進 Server `layout.tsx` 卻無宣告。
+
+Create React App 已停止維護；新專案不要用 CRA 當環境判斷依據。
+
+## 工具簡介
+
+Agentation 是一個 React 開發輔助工具，提供瀏覽器內的開發功能選單，用於提升前端開發效率。
+
+## 使用限制
+
+| 項目 | 說明 |
+|------|------|
+| React 版本 | **React 18+** |
+| 執行環境 | 僅 Client 端（需要 DOM） |
+| 顯示環境 | 僅開發環境（Production 不顯示） |
+| 瀏覽器支援 | 桌面瀏覽器為主 |
+| 資料安全 | 工具在瀏覽器內運行，不會主動送出資料 |
+
+## 安裝方式
+
+```bash
+npm install agentation
+# 或
+yarn add agentation
+# 或
+pnpm add agentation
+```
+
+## 基本用法
+
+### 方式一：App 根層引入（推薦）
+
+```tsx
+// App.tsx
+import { Agentation } from 'agentation';
+
+function App() {
+  return (
+    <>
+      {/* 只在開發環境啟用 */}
+      {import.meta.env.DEV && <Agentation />}
+      
+      {/* 其他應用內容 */}
+      <Router>
+        <Routes />
+      </Router>
+    </>
+  );
+}
+
+export default App;
+```
+
+### 方式二：Layout 層引入
+
+```tsx
+// layout.tsx（Next.js：此檔須為 Client Component，或抽成帶 "use client" 的子元件）
+"use client"
+import { Agentation } from 'agentation';
+
+export function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html>
+      <body>
+        {/* 只在開發環境啟用 */}
+        {process.env.NODE_ENV === 'development' && <Agentation />}
+        
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+### 方式三：條件式載入（減少 Production Bundle）
+
+```tsx
+// App.tsx
+import { lazy, Suspense } from 'react';
+
+// 動態載入，Production 不會打包
+const Agentation = lazy(() => 
+  import('agentation').then(mod => ({ default: mod.Agentation }))
+);
+
+function App() {
+  return (
+    <>
+      {import.meta.env.DEV && (
+        <Suspense fallback={null}>
+          <Agentation />
+        </Suspense>
+      )}
+      
+      <Router>
+        <Routes />
+      </Router>
+    </>
+  );
+}
+```
+
+## 環境判斷方式
+
+| 建構工具 | 開發環境判斷 |
+|----------|--------------|
+| Vite | `import.meta.env.DEV` |
+| Next.js | `process.env.NODE_ENV === 'development'`（元件須在 Client） |
+| 其他 | 專案既有 env 慣例；不要為了本檔引入 CRA |
+
+## 驗證安裝成功
+
+安裝完成後，在瀏覽器打開專案：
+- ✅ 右下角出現功能選單 → 工具已正常啟動
+- ❌ 沒有看到選單 → 檢查環境變數或引入方式
+
+## 快速安裝指令
+
+在 Cursor 對話中使用以下指令，可自動安裝並設定：
+
+```
+請為我的 React 專案安裝 agentation（npm 套件），
+並在 App 根層或 layout 加入最簡單用法：
+只在開發環境啟用，production 不顯示。
+```
+
+## 注意事項
+
+```
+⚠️ 重要提醒：
+- 確保只在開發環境渲染，避免 Production 洩漏開發工具
+- 放置於 App 根層或 layout 最外層
+- 不要在 Server Component 中使用（需要 DOM）
+```
+
+## 完整範例
+
+```tsx
+// src/App.tsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Agentation } from 'agentation';
+import { HomePage } from './pages/HomePage';
+import { AboutPage } from './pages/AboutPage';
+
+function App() {
+  return (
+    <BrowserRouter>
+      {/* Agentation 開發工具 - 僅開發環境 */}
+      {import.meta.env.DEV && <Agentation />}
+      
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+```

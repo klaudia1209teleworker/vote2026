@@ -1,0 +1,330 @@
+---
+description: Sitemap、robots.txt、llms.txt 自動生成規範
+globs:
+  - "**/scripts/generate*.{ts,js}"
+  - "**/functions/**/sitemap*.{ts,js}"
+  - "**/public/robots.txt"
+  - "**/public/sitemap.xml"
+  - "**/public/sitemap.xsl"
+  - "**/public/llms.txt"
+alwaysApply: false
+---
+
+# Sitemap 與爬蟲設定注意事項
+
+生成腳本路徑（`scripts/generate-robots.js`、Firestore `articles` 等）為**常見實作範例**。專案若已有 sitemap／robots 流程，對齊現況，不要為了本檔新建 Firebase 腳本。
+
+## robots.txt 生成
+
+實際實作位於 `scripts/generate-robots.js`（或 `.ts`）和 `public/robots.txt`：
+
+- **主要頁面路徑**：依專案 `CONFIG.mainPages` 定義（例：`articles`、`blog`、`products`）；**必須包含文章／內容列表頁**
+- **支援語言**：依專案多語系設定（例：zh-TW、en、ja、ko）
+- **禁止路徑**：`/admin/`、`/login`、`/emergency`、`/api/`、`/_next/`、`/static/admin/`（依專案調整）
+- **執行方式**：`npm run generate-robots` 或透過 `npm run generate-seo` 整合執行
+
+**重要**：robots.txt 必須明確允許內容頁路徑（如 `/articles`），以確保搜尋引擎能正確爬取文章頁面。
+
+**禁止與 SEO 檔案衝突的 Disallow 規則**：
+
+- 不可使用未排除例外的 `Disallow: /*.xml$`（會與 `Allow: /sitemap.xml` 衝突）
+- 不可使用未排除例外的 `Disallow: /*.txt$`（會擋住 `/llms.txt`）
+- `generate-robots` 腳本的 `disallowedFileTypes` 須排除：`sitemap.xml`、`llms.txt`、`robots.txt`
+
+### AI/LLM 爬蟲設置（GEO 優化）
+
+> **2026-08 更新**：AI 爬蟲已明確分成**「訓練用」**與**「即時檢索／搜尋用」**兩類，且各家在 2026 年都已個別拆出獨立的 user-agent。這兩類**不能用同一套邏輯處理**——訓練用爬蟲是否開放屬於資料授權/商業決策，即時檢索用爬蟲則**直接決定內容會不會被 AI 引用**。舊版規則用單一扁平清單、且沿用了 Anthropic 已淘汰的 `anthropic-ai` 舊名稱，容易讓人誤判。
+
+#### 分類原則
+
+| 類別 | 用途 | 是否影響 GEO 能見度 | 預設建議 |
+|------|------|:---:|------|
+| **訓練用爬蟲** | 抓取內容用於模型訓練 | 否（不影響「被引用」） | 依公司資料授權政策自行決定是否開放 |
+| **即時檢索／搜尋用爬蟲** | AI 產品即時抓取或索引，用於回答使用者問題時引用 | **是** | **必須放行**，否則會被 AI 產品排除在答案來源之外 |
+
+**常見誤區**（2026 年多起案例指出）：只封鎖訓練用爬蟲（如 `GPTBot`）卻忘了放行對應的檢索用爬蟲（如 `OAI-SearchBot`），會直接讓網站在 ChatGPT／Perplexity 等 AI 搜尋結果中消失。**兩者必須分開設定，不可用同一條規則處理。**
+
+#### 建議設定內容
+
+```
+# ============================
+# 訓練用爬蟲（依公司政策決定是否開放；以下為預設開放）
+# ============================
+
+# OpenAI — 模型訓練
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 1
+
+# Anthropic（Claude）— 模型訓練
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 1
+
+# Common Crawl（多家 AI 公司訓練資料來源）
+User-agent: CCBot
+Allow: /
+Crawl-delay: 1
+
+# Meta（Llama 訓練）
+User-agent: Meta-ExternalAgent
+Allow: /
+Crawl-delay: 1
+
+# Apple Intelligence 訓練（選退憑證，非傳統爬蟲）
+User-agent: Applebot-Extended
+Allow: /
+
+# Google Gemini／AI 相關訓練選退憑證（不是搜尋索引爬蟲；放行與否屬資料授權，與「被 AI 搜尋引用」無直接對等）
+User-agent: Google-Extended
+Allow: /
+
+# ============================
+# 已知會忽視 robots.txt，建議封鎖（需搭配 WAF／CDN 層規則，僅靠 robots.txt 不足以擋下）
+# ============================
+
+User-agent: Bytespider
+Disallow: /
+
+# ============================
+# 即時檢索／搜尋用爬蟲 — 必須放行，直接影響 AI 引用與可見度
+# ============================
+
+# OpenAI — ChatGPT 搜尋索引
+User-agent: OAI-SearchBot
+Allow: /
+Crawl-delay: 1
+
+# OpenAI — 使用者在對話中即時觸發的抓取
+User-agent: ChatGPT-User
+Allow: /
+Crawl-delay: 1
+
+# Anthropic（Claude）— 搜尋索引
+User-agent: Claude-SearchBot
+Allow: /
+Crawl-delay: 1
+
+# Anthropic（Claude）— 使用者在對話中即時觸發的抓取
+User-agent: Claude-User
+Allow: /
+Crawl-delay: 1
+
+# Perplexity — 索引爬蟲
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 1
+
+# Perplexity — 使用者即時檢索
+User-agent: Perplexity-User
+Allow: /
+Crawl-delay: 1
+
+# Amazon（Alexa／Amazon AI 產品）
+User-agent: Amazonbot
+Allow: /
+Crawl-delay: 1
+
+# You.com AI
+User-agent: YouBot
+Allow: /
+Crawl-delay: 1
+```
+
+**GEO 優化重點**：
+- **即時檢索類爬蟲一律放行**（`OAI-SearchBot`、`ChatGPT-User`、`Claude-SearchBot`、`Claude-User`、`PerplexityBot`、`Perplexity-User`、`Amazonbot`），這是內容能否被 AI 引用的直接開關
+- **訓練用爬蟲**（`GPTBot`、`ClaudeBot`、`CCBot`、`Meta-ExternalAgent`、`Google-Extended` 等）是否開放，屬於公司資料授權政策，需與 PM／法務確認；**不**把 `Google-Extended` 當成「即時檢索必須放行」
+- **`Bytespider` 建議明確封鎖**，但因其已知會忽視 robots.txt，務必同時在 WAF／CDN 設定阻擋
+- `Crawl-delay`：**Googlebot 會忽略**；對部分其他爬蟲可能有效，可保留但不要當成流量保證
+- 各家爬蟲清單會變動，**部署前建議查核**：[OpenAI 爬蟲](https://platform.openai.com/docs/bots)、[Anthropic 爬蟲說明](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web)、[Google 爬蟲總覽](https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers)、[Perplexity](https://docs.perplexity.ai/)。本清單為 2026-08 彙整
+- **禁止**再使用已淘汰的 `anthropic-ai` user-agent；Anthropic 訓練用為 `ClaudeBot`，檢索用為 `Claude-SearchBot`／`Claude-User`
+
+## llms.txt 生成（AI 爬蟲指引）
+
+實際實作位於 `scripts/generate-llms-txt.js`（或 `.ts`）：
+
+- **資料來源**：從 Firebase Firestore 的 `articles` collection 讀取（或依專案 CMS 調整）
+- **篩選條件**：
+  - `is_published === true`（已發布）
+  - `include_in_llms_txt === true`（標記為包含在 llms.txt 中）
+- **Firebase 連接**：使用 Firebase Admin SDK，參考 `generate-sitemap` 腳本的 `fetchPublishedArticles()` 實作
+- **執行方式**：透過 `npm run generate-seo` 整合執行（會自動從 Firebase 讀取文章）
+
+**重要**：
+- 文章必須在內容管理系統中勾選「加入 llms.txt 核心清單」選項（對應到 `include_in_llms_txt` 欄位）
+- 生成腳本會自動從 Firebase 讀取所有符合條件的文章並生成 llms.txt
+- 如果沒有符合條件的文章，會顯示提示訊息
+
+## Sitemap.xml 生成
+
+實際實作位於 `scripts/generate-sitemap.js`（或 `.ts`）：
+
+- **主要頁面路徑**：依 `CONFIG.mainPages` 定義（例：`articles`、`tags`），含預設語言與多語系版本
+- **支援語言**：依專案設定（例：zh-TW 預設、en、ja、ko）
+- **動態內容**：
+  - 從 Firebase Firestore 讀取已發布文章並生成 URL
+  - 從已發布文章中提取所有唯一標籤，為每個標籤生成詳情頁 URL（含多語系策略，依專案調整）
+- **禁止包含的頁面**：
+  - `/login` — 登入頁面不應包含在 sitemap 中（搜尋引擎不應索引）
+  - `/admin/*` — 管理後台頁面不應包含在 sitemap 中
+- **執行方式**：`npm run generate-sitemap` 或透過 `npm run generate-seo` 整合執行
+
+**標籤頁面處理**（若專案有標籤功能）：
+- 標籤列表頁（`/tags`）作為主要頁面包含在 sitemap 中（含多語系版本）
+- 標籤詳情頁（`/tags/:tagName`）從已發布文章的 `tags` 欄位動態提取
+- 標籤詳情頁是否生成多語系版本，依專案 i18n 策略決定
+- 標籤頁面的 `lastmod` 時間根據該標籤下最新文章的更新時間計算
+- 標籤頁面的 `changefreq` 建議設為 `weekly`，`priority` 建議設為 `0.7`
+
+**重要規範**：
+- 登入頁面（`/login`）和管理頁面（`/admin/*`）**絕對不應**包含在 sitemap.xml 中
+- 這些頁面應在 robots.txt 中被禁止索引
+- 只有公開的、希望被搜尋引擎索引的頁面才應包含在 sitemap 中
+
+```typescript
+// scripts/generate-sitemap.js 實際實作範例
+// 主要頁面（不包含登入頁面）
+CONFIG.mainPages.forEach(page => {
+  const path = page === '' ? '/' : `/${page}`;
+  const url = `${CONFIG.domain}${path}`;
+  urlEntries.push(createUrlEntry(url, today, changefreq, priority));
+});
+
+// ❌ 不應包含登入頁面
+// urlEntries.push(createUrlEntry(`${CONFIG.domain}/login`, ...)); // 已移除
+```
+
+### XSLT 樣式表（人機可讀表格）
+
+Sitemap **必須**附加 XSLT，讓瀏覽器以表格呈現；搜尋引擎仍解析原始 XML，不受樣式影響。
+
+**檔案位置**：
+- 靜態專案：`public/sitemap.xsl`（與 `sitemap.xml` 同目錄）
+- 動態生成／Firebase Storage：與 `sitemap.xml` 一併產出並上傳，URL 需可公開存取
+
+**XML 宣告**（`sitemap.xml` 開頭，`<?xml` 之後）：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- ... -->
+</urlset>
+```
+
+**人看表格欄位**（僅此四欄，順序固定）：
+
+| 欄位 | 對應 XML |
+|------|----------|
+| URL | `<loc>` |
+| 最後更新 | `<lastmod>` |
+| 頻率 | `<changefreq>` |
+| 優先度 | `<priority>` |
+
+**hreflang 處置**：
+- XML 內的 `xhtml:link rel="alternate" hreflang="..."` **必須保留**，供搜尋引擎讀取
+- XSLT **不得**將 hreflang／alternate link 輸出到人看的表格（不要多一欄、不要額外列、不要展開為子列）
+
+**XSLT 要點**（`sitemap.xsl`）：
+- 使用 `xsl:stylesheet`，以表格列出每個 `url` 的 `loc`、`lastmod`、`changefreq`、`priority`
+- 選擇器須正確處理 sitemap 預設 namespace（例：`*[local-name()='loc']` 或宣告 namespace）
+- **禁止** template 輸出 `xhtml:link`／`hreflang` 相關節點
+
+```xml
+<!-- ✅ 表格列只取 loc / lastmod / changefreq / priority -->
+<tr>
+  <td><xsl:value-of select="*[local-name()='loc']"/></td>
+  <td><xsl:value-of select="*[local-name()='lastmod']"/></td>
+  <td><xsl:value-of select="*[local-name()='changefreq']"/></td>
+  <td><xsl:value-of select="*[local-name()='priority']"/></td>
+</tr>
+<!-- ❌ 不要 value-of 或 for-each xhtml:link / @hreflang -->
+```
+
+**檢查清單**：
+- [ ] `sitemap.xml` 含 `<?xml-stylesheet ... href="/sitemap.xsl"?>`
+- [ ] `sitemap.xsl` 可公開存取，與 href 路徑一致
+- [ ] 瀏覽器開啟 `/sitemap.xml` 可見 URL／最後更新／頻率／優先度表格
+- [ ] 表格中**無** hreflang／alternate 列或欄
+- [ ] 原始 XML（檢視原始碼）仍含多語系 `xhtml:link`（若專案有多語系）
+
+## Firebase Cloud Function 每日排程
+
+```typescript
+// functions/src/scheduledSitemap.ts
+import * as functions from 'firebase-functions';
+
+// 每日凌晨 2 點執行（台北時間）
+export const dailySitemapUpdate = functions
+  .region('asia-east1')
+  .pubsub.schedule('0 2 * * *')
+  .timeZone('Asia/Taipei')
+  .onRun(async () => {
+    // 1. 從 Firestore 取得動態頁面
+    const productsSnapshot = await db.collection('products')
+      .where('isPublished', '==', true).get();
+    
+    // 2. 合併靜態與動態 URL
+    const urls = [
+      { loc: '/', changefreq: 'daily', priority: 1.0 },
+      { loc: '/about', changefreq: 'monthly', priority: 0.8 },
+      ...productsSnapshot.docs.map((doc) => ({
+        loc: `/products/${doc.id}`,
+        lastmod: doc.data().updatedAt?.toDate().toISOString().split('T')[0],
+        changefreq: 'weekly',
+        priority: 0.8,
+      })),
+    ];
+
+    // 3. 生成並上傳 sitemap
+    const sitemapXml = generateSitemapXml(urls);
+    await storage.bucket().file('sitemap.xml').save(sitemapXml);
+
+    // 4. 通知搜尋引擎
+    await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(SITE_URL + '/sitemap.xml')}`);
+  });
+```
+
+## package.json 腳本
+
+實際腳本配置：
+
+```json
+{
+  "scripts": {
+    "generate-seo": "node scripts/generate-seo-files.js",
+    "generate-sitemap": "node scripts/generate-sitemap.js",
+    "generate-robots": "node scripts/generate-robots.js",
+    "build": "npm run generate-seo && ..."
+  }
+}
+```
+
+**整合腳本**：`generate-seo-files.js` 會依序執行：
+1. 從 Firebase 讀取已發布文章
+2. 生成 Sitemap.xml（包含文章 URL；須含 `xml-stylesheet` 指向 XSLT）
+3. 確保 `sitemap.xsl` 已部署／可公開存取（人看表格顯示 URL／最後更新／頻率／優先度，不顯示 hreflang）
+4. 生成 Robots.txt（包含 articles 頁面允許規則）
+5. 生成 llms.txt（包含標記為 `include_in_llms_txt` 的文章）
+
+**注意**：所有生成腳本都需要 Firebase Admin SDK 配置才能從 Firestore 讀取文章資料。
+
+## 驗證檢查清單
+
+```markdown
+### AI 爬蟲設定
+- [ ] 即時檢索類爬蟲（OAI-SearchBot、ChatGPT-User、Claude-SearchBot、Claude-User、
+      PerplexityBot、Perplexity-User、Amazonbot）皆已放行
+- [ ] 訓練用爬蟲的開放與否已與 PM／法務確認過公司政策
+- [ ] Bytespider 已在 robots.txt 封鎖，且已在 WAF／CDN 層另設阻擋規則
+- [ ] robots.txt 的 Disallow 規則未誤擋 sitemap.xml / llms.txt / robots.txt 本身
+- [ ] 爬蟲清單已對照官方最新文件核實（爬蟲名稱與政策會持續變動）
+- [ ] 未再使用已淘汰的 `anthropic-ai` user-agent
+
+### Sitemap／llms.txt
+- [ ] /login、/admin/* 未出現在 sitemap.xml
+- [ ] llms.txt 已涵蓋所有標記為 include_in_llms_txt 的已發布文章
+- [ ] generate-seo 整合腳本已納入 build 流程
+- [ ] sitemap.xml 含 xml-stylesheet，瀏覽器可見四欄表格且不含 hreflang（見上方 XSLT 檢查清單）
+```

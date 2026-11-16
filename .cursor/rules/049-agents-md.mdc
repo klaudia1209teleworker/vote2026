@@ -1,0 +1,82 @@
+---
+description: AGENTS.md 與 .cursor/rules 的分工、優先順序，以及與 CLAUDE.md 等其他工具設定檔的整合原則
+globs:
+alwaysApply: true
+---
+
+# AGENTS.md 與 Cursor Rules 整合規範
+
+## 背景
+
+**AGENTS.md** 是 2026 年逐漸成形的跨工具（cross-vendor）AI 代理設定檔開放標準，目前已被 Cursor、Claude Code、Aider、Zed、Sourcegraph、Google Jules 等 20 個以上工具採用。與 `.cursor/rules/*.mdc`（Cursor 專屬格式）不同，AGENTS.md 是**單一檔案、無作用域限制**，任何支援此標準的工具都會讀取。
+
+本檔說明本倉庫如何讓 `AGENTS.md` 與既有 `.cursor/rules/` 體系並存，避免同一條規範分散在多處、彼此漂移。
+
+---
+
+## 1. 分工原則
+
+| | AGENTS.md | `.cursor/rules/*.mdc` |
+|---|---|---|
+| 讀取範圍 | 跨工具（Cursor、Claude Code、Aider、Zed 等） | 僅 Cursor |
+| 內容性質 | 總則、規範摘要，建議控制在 500–2,000 字 | 細則、完整程式碼範例、檢查清單 |
+| 觸發方式 | 全部載入（無 globs 概念） | `alwaysApply` / `globs` / `description`（Agent Requested）/ 手動 `@` 引用 |
+| 適合放的內容 | 核心行為原則、**本專案**技術棧填空、Commit／測試／部署的一句話摘要 | 各技術注意事項、完整程式碼範例、檢查清單（**不**用來指定全公司預設棧） |
+
+**判斷方式**：新增一條規範時，先問「這條規則是所有 AI 工具都要遵守，還是只有 Cursor 需要／只在特定檔案類型才需要？」
+
+- 前者 → 寫進 `AGENTS.md`（摘要形式即可）
+- 後者，或需要 `globs`／完整程式碼範例 → 寫進對應 `.mdc`，並回頭在 `AGENTS.md` 的「詳細規則索引」補一行連結
+
+**禁止行為**：禁止把同一條規範的完整內容，同時寫在 `AGENTS.md` 與對應 `.mdc` 兩處——只在其中一處寫完整版本，另一處用一句話摘要 + 連結帶過，否則修改時容易漏改其中一份，導致兩邊規範不一致。
+
+---
+
+## 2. 優先順序（發生衝突時）
+
+由嚴格到寬鬆：
+
+1. **專案事實**：`package.json`、既有目錄與實作、`.cursor/rules/project/`（若有裁決檔）。**技術棧以此為準**，共用規則不得覆寫
+2. **`.cursor/rules/000-core-workflow.mdc`**：核心流程（先問再做、變更同步文件等）
+3. **其餘已載入的 `.mdc`**：編號規則與 `claude-design/` 皆為**該技術的注意事項**（部署、SEO、Next.js 陷阱、Firebase 慣例等），不是「必須改用某套棧」
+4. **`AGENTS.md`**：跨工具摘要；若與上列衝突，以專案事實與 `.mdc` 為準，並**同步更新 `AGENTS.md` 對應摘要**
+
+若無法判斷是否牴觸，依 `000-core-workflow.mdc`：**先詢問再行動**。
+
+---
+
+## 3. 與 CLAUDE.md 等其他工具設定檔的關係
+
+- **Claude Code／Claude（Cowork）** 會讀 `CLAUDE.md`；較新版本也可能讀 `AGENTS.md`。為避免雙寫漂移，**將 `CLAUDE.md` 設為 `AGENTS.md` 的 symlink**（或一句指向說明，見下）。不要維護兩份完整內容。
+
+  ```bash
+  ln -s AGENTS.md CLAUDE.md
+  ```
+
+  若團隊工具鏈或部署流程不支援 symlink（例如某些 Windows 環境、或版控系統對 symlink 處理不一致），退而求其次讓 `CLAUDE.md` 只保留一句指向說明：
+
+  ```markdown
+  # CLAUDE.md
+
+  請參考本專案根目錄的 [AGENTS.md](./AGENTS.md)，本檔案不另外維護內容。
+  ```
+
+- **其他支援 AGENTS.md 標準的工具**（Aider、Zed、Sourcegraph、Google Jules 等）：直接讀取 `AGENTS.md`，無需額外設定或轉換。
+
+---
+
+## 4. 同步腳本調整提醒
+
+本倉庫的 `scripts/sync-cursor-rules.sh` **目前不同步 `AGENTS.md`**，也**不同步 `.cursor/agents/`**（腳本只處理 `.cursor/README.md`、`.cursor/rules/`、`.cursor/prd/README.md`、`design-input/README.md`）。維護時請注意：
+
+- 若 `AGENTS.md` 的「核心行為原則」等跨專案共用段落有異動，需**手動**同步到已複製本倉庫規則的其他專案（或未來擴充腳本納入）
+- 若專案的 `AGENTS.md` 內容以「專案專屬填空」為主（技術棧、部署環境等），本來就不該被同步腳本覆蓋，維持各專案獨立維護即可
+
+---
+
+## 5. 新專案套用步驟
+
+1. 複製本倉庫根目錄的 `AGENTS.md` 範本到專案根目錄，填寫「專案基本資訊」與各段落方括號內容
+2. 依 `.cursor/README.md` 複製 `.cursor/` 目錄
+3. 建立 `CLAUDE.md` symlink（或指標檔，見第 3 節）
+4. 於 `AGENTS.md` 的「詳細規則索引」表格中，刪除本專案未使用的規則列（例如未使用 Claude Design 流程時，刪除該列）

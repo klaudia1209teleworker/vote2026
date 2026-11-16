@@ -1,0 +1,82 @@
+---
+description: vote2026 黑白灰階 design tokens
+globs:
+  - "**/*.astro"
+  - "**/*.css"
+alwaysApply: false
+---
+
+# vote2026 CI 設計系統
+
+- **版本**：v1.0
+- **最後更新**：2026-11-16
+- **來源**：TAIWAN_ELECTION_2026_UI_GUIDELINE.md（Neutral Monochrome）
+- **實作**：`src/styles/global.css` 的 `@theme` 與 `:root`。本專案是 Astro，不要另建 `tailwind.config.ts`，也不要改成 Next.js 字型載入。
+- **取捨**：見 [`.cursor/prd/ui-guideline.md`](../../prd/ui-guideline.md)
+
+## 色彩 Token
+
+全站品牌只用黑白灰。不要用藍綠、紅、綠、藍當主按鈕、導覽 Active、卡片或背景裝飾。
+
+| Token | HEX | 用途 | Tailwind |
+| --- | --- | --- | --- |
+| `canvas` | `#FAFAF9` | 頁面背景 | `bg-canvas` |
+| `surface` | `#FFFFFF` | 卡片、表格 | `bg-surface` |
+| `muted` | `#F4F4F3` | 次要底 | `bg-muted` |
+| `hover` | `#ECECEB` | Hover | `bg-hover` |
+| `ink` | `#202124` | 內文 | `text-ink` |
+| `strong` | `#111111` | 標題、主按鈕 | `text-strong` `bg-strong` |
+| `secondary` | `#62666B` | 次要文字 | `text-secondary` |
+| `tertiary` | `#81858A` | 輔助文字 | `text-tertiary` |
+| `line` | `#E1E2E2` | 邊框 | `border-line` |
+| `line-strong` | `#C7C9CA` | 較強邊框 | `border-line-strong` |
+
+`--color-neutral-*`、`primary`、`accent`，以及頁面上既有的 blue／green／red／amber／teal／purple 色階，已改寫成同一套灰階，避免舊 class 殘留彩色。
+
+政黨色只允許出現在已查證的資料視覺，且必須同時有政黨名稱。目前沒有查證過的政黨色字典，候選人頁只顯示政黨名稱，不加色點。
+
+錯誤與警告用文字、圖示與邊框。不要只靠顏色。
+
+## 字型
+
+| 用途 | 字型 | class |
+| --- | --- | --- |
+| 中文 | Noto Sans TC | `font-sans` |
+| 英文與數字 | Inter | `font-sans` |
+| 票數、日期、統計 | tabular numerals | `tabular-nums` |
+
+字型由 `Layout.astro` 的 Google Fonts `link` 載入（`display=swap`）。不要在 `global.css` 用 `@import` 再載一次。
+
+## 字級
+
+| 層級 | 尺寸 |
+| --- | --- |
+| 頁面 H1 | `page-title`：手機約 26px，桌機最大 40px／700 |
+| 區塊 H2 | `section-title`：20–28px／700 |
+| 內文 | 16px／1.65 |
+| 次要 | 14px |
+| 註記 | 12–13px，仍需足夠對比 |
+
+## 版面與元件
+
+- 內容最大寬度 1440px（`.shell`）。左右間距：手機 16px、768px 起 24px、1200px 起 32px。
+- 說明頁用 `.doc-layout`：桌機左側目錄、右側內容，並用滿內容寬度。手機的全站導覽與說明頁目錄都是單行橫向列，貼在頁首下方。`.page-copy` 仍保留，但說明頁不再使用。
+- 卡片 `.ui-card`：白底、1px 邊框、16px 圓角、手機 padding 16px、桌機 24px。
+- 按鈕 `.btn` + `.btn-primary`／`.btn-secondary`／`.btn-tertiary`。主按鈕底 `#111111`、hover `#303030`、高度至少 44px。
+- 輸入 `.ui-input`：白底、8px 圓角、高度 48px，須有可見 label。
+- 選項 `.choice`。狀態 `.badge` 預設灰底深字。
+- 焦點：2px `#202124` outline，不能只靠 hover。
+- 桌機頁首 Active：黑字 + 底線。說明頁目前項目與手機導覽列：左側 4px 直線，不跟圓角彎成括號。
+
+## 禁止
+
+1. 不要用未覆寫的 Tailwind 預設彩色當品牌色（`bg-blue-500` 這類舊 class 雖已對到灰階，新程式請改用上表 token）。
+2. 不要在 class 寫裸 hex。
+3. 不要引入另一套 UI kit 預設主題。
+4. 不要在元件裡硬編字型家族。
+
+## 變更紀錄
+
+| 日期 | 版本 | 變更 |
+| --- | --- | --- |
+| 2026-11-16 | v1.0 | 依 UI guideline 填入黑白灰階 token，並套到全站 |

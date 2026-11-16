@@ -1,0 +1,368 @@
+---
+description: Next.js 注意事項（僅當專案使用 Next.js）— App Router、async 動態 API、proxy.ts、版本陷阱
+globs:
+  - "next.config.*"
+  - "src/app/**/*.tsx"
+  - "src/app/**/*.ts"
+  - "src/proxy.ts"
+  - "**/middleware.ts"
+  - "**/app/**/page.tsx"
+  - "**/app/**/layout.tsx"
+alwaysApply: false
+---
+
+# Next.js 注意事項
+
+本檔**只在專案使用 Next.js 時**適用，**不是**要求各專案改用 Next.js。技術棧以目標專案 `package.json` 為準（見 `000-core-workflow.mdc`）。色彩與字型見同目錄 `ci.mdc`（若有使用 Claude Design）。
+
+Vite／Expo／其他棧：不要依本檔改建目錄或引入 `proxy.ts`。
+
+> **2026-08**：下列注意事項以 **Next.js 16** 的行為為準（Turbopack 預設、`proxy.ts`、async 動態 API 等）。若 `package.json` 的 `next` 仍為 **14／15**，先看文末相容表，**先詢問**是否升級或沿用舊寫法，不要直接套用 16 專屬寫法。
+
+---
+
+## 版本與常見組合（注意事項，非強制改棧）
+
+以專案 **已安裝的套件與既有寫法** 為準。下表僅標出 Next.js 專案容易踩的版本差異：
+
+| 項目 | Next.js 16 注意 | 其他 |
+|------|-----------------|------|
+| Router | 若專案已是 **App Router**，不要新建 `pages/` | 若仍是 Pages Router，維持現況，遷移須先詢問 |
+| Bundler | 16 起 **Turbopack** 為預設；退回 webpack 才需 `--webpack` | 14／15 預設不是 Turbopack |
+| Node.js | 16 要求最低 20.9；不支援 Node 18 | 先看專案 CI／engines |
+| 樣式 | 本交接流程常用 Tailwind；**專案若已用其他方案，不要為了本檔改掉** | — |
+| 動畫／表單／Email | 沿用專案既有套件 | 不要為了本檔改加 Framer Motion、RHF、SendGrid |
+| Lint | **16 已移除 `next lint`**，CI 請呼叫 ESLint／Biome（見 `001-deployment.mdc`） | 14／15 仍可能有 `next lint` |
+
+---
+
+## App Router 常見資料夾（僅當專案已是此結構時對齊）
+
+若專案不是 `src/app/`（例如 `pages/`、Vite `src/pages/`），**不要**依下表改建。
+
+```
+src/
+├── app/                      ← App Router 路由
+│   ├── layout.tsx           ← 根 layout
+│   ├── page.tsx             ← 首頁
+│   ├── [route]/
+│   │   └── page.tsx
+│   └── api/                 ← Route Handlers
+├── components/
+│   ├── layout/              ← Header, Footer, Nav
+│   ├── ui/                  ← Button, Card, Input 等基礎元件
+│   ├── sections/            ← Hero, FeatureList 等頁面區塊
+│   └── forms/               ← 表單元件
+├── lib/                     ← 工具函式、API clients
+├── hooks/                   ← custom React hooks
+├── types/                   ← 型別定義
+├── proxy.ts                 ← 網路邊界攔截（Next.js 16 起取代 middleware.ts，見下）
+└── styles/
+    └── globals.css          ← Tailwind base + 全域樣式
+```
+
+---
+
+## 檔名慣例（App Router 專案常見；對齊既有檔）
+
+| 類型 | 常見寫法 | 範例 |
+|------|----------|------|
+| React 元件 | `PascalCase.tsx` | `HeroSection.tsx` |
+| 工具函式 | `kebab-case.ts` | `format-date.ts` |
+| Hook | `use-kebab-case.ts` | `use-scroll-lock.ts` |
+| 型別檔 | `kebab-case.types.ts` | `user.types.ts` |
+| 路由資料夾 | `kebab-case` | `contact-us/` |
+| 網路邊界攔截 | Next 16：`proxy.ts`；14／15：`middleware.ts` | `src/proxy.ts` |
+
+若專案工具檔已是 `camelCase`，新建檔跟隨專案，不要混用（見 `100-typescript-react.mdc`）。
+
+---
+
+## 元件撰寫規範
+
+### 1. TypeScript 介面
+
+所有元件 props 必須有介面定義，命名 `[元件名]Props`：
+
+```tsx
+interface HeroSectionProps {
+  title: string
+  subtitle?: string
+  ctaLabel?: string
+  onCtaClick?: () => void
+}
+
+export function HeroSection({ title, subtitle, ctaLabel, onCtaClick }: HeroSectionProps) {
+  // ...
+}
+```
+
+### 2. Server / Client Component
+
+**預設為 Server Component**（無 `"use client"` 宣告）。
+
+需要 `"use client"` 的情況：
+- `useState` / `useEffect` / `useContext` / `useEffectEvent`（React 19.2 新 hook，用於從 Effect 抽出非響應式邏輯）等 hooks
+- 事件處理器（onClick, onChange, onSubmit）
+- 瀏覽器 API（window, localStorage, document）
+- Framer Motion 的 animation 元件，或 React 19.2 的 `<ViewTransition>` / `<Activity>`
+- 第三方 client-only 套件
+
+### 3. 預設匯出 vs 具名匯出
+
+- **頁面檔（`page.tsx`）**：使用 `export default`
+- **元件**：優先使用具名匯出 `export function ComponentName`
+- **工具函式**：一律具名匯出
+
+---
+
+## ⚠️ 動態 API 一律使用 async（Next.js 15+ 起強制，Next.js 16 已移除同步存取）
+
+以下四個 API **必須 `await`**，同步存取（例如直接讀 `params.id`）在 Next.js 16 會編譯失敗或行為錯誤：
+
+```tsx
+// ✅ 正確：page.tsx / layout.tsx 中的 params、searchParams
+interface PageProps {
+  params: Promise<{ slug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function ArticlePage({ params, searchParams }: PageProps) {
+  const { slug } = await params
+  const query = await searchParams
+  // ...
+}
+```
+
+```tsx
+// ✅ 正確：cookies() / headers() / draftMode()
+import { cookies, headers } from 'next/headers'
+
+export default async function ProfilePage() {
+  const cookieStore = await cookies()
+  const headersList = await headers()
+  // ...
+}
+```
+
+```tsx
+// ❌ 錯誤：同步存取（Next.js 14 的舊寫法，Next.js 16 會出錯）
+export default function ArticlePage({ params }: { params: { slug: string } }) {
+  const slug = params.slug // 不再支援
+}
+```
+
+---
+
+## 資料獲取（Data Fetching）
+
+### Server Component（優先）
+
+```tsx
+async function ProductList() {
+  const products = await fetch('https://api.example.com/products', {
+    next: { revalidate: 3600 } // ISR 1小時
+  }).then(r => r.json())
+
+  return <div>{/* ... */}</div>
+}
+```
+
+### Cache Components（Next.js 16 新模型，選用）
+
+若專案在 `next.config.ts` 啟用 `cacheComponents: true`，可用 `"use cache"` 明確標記要快取的元件/函式，取代舊版 `experimental.ppr`：
+
+```tsx
+async function ProductList() {
+  "use cache"
+  const products = await fetch('https://api.example.com/products').then(r => r.json())
+  return <div>{/* ... */}</div>
+}
+```
+
+未啟用 `cacheComponents` 的專案，繼續使用上方 `fetch` + `next.revalidate` 寫法即可，兩者不強制擇一，依專案既有設定為準。
+
+### 使用者互動後更新快取（Server Actions）
+
+```ts
+'use server'
+import { updateTag, revalidateTag, refresh } from 'next/cache'
+
+// 需要「馬上看到自己剛存的資料」：用 updateTag（Next.js 16 新增）
+export async function updateUserProfile(userId: string, profile: Profile) {
+  await db.users.update(userId, profile)
+  updateTag(`user-${userId}`)
+}
+
+// 一般背景更新、可接受些微延遲：用 revalidateTag，Next.js 16 起第二參數（cacheLife profile）為必填
+export async function republishArticle(articleId: string) {
+  await db.articles.publish(articleId)
+  revalidateTag(`article-${articleId}`, 'max')
+}
+
+// 只想刷新「未被快取」的資料（例如通知數字），不動快取本體
+export async function markNotificationRead(id: string) {
+  await db.notifications.markRead(id)
+  refresh()
+}
+```
+
+### Client Component（需互動時）
+
+```tsx
+"use client"
+import useSWR from 'swr'
+
+function LiveData() {
+  const { data } = useSWR('/api/live', fetcher)
+  // ...
+}
+```
+
+---
+
+## 表單處理
+
+**沿用專案既有表單方案。** 下列僅在專案**已使用** React Hook Form + Zod 時對齊寫法；不要為了本檔新加套件。
+
+```tsx
+"use client"
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+const schema = z.object({
+  email: z.string().email('請輸入有效 email'),
+  message: z.string().min(10, '訊息至少 10 字'),
+})
+
+type FormData = z.infer<typeof schema>
+
+export function ContactForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  })
+  // ...
+}
+```
+
+---
+
+## API Routes（Route Handlers）
+
+放在 `src/app/api/[endpoint]/route.ts`：
+
+```ts
+import { NextResponse } from 'next/server'
+
+export async function POST(request: Request) {
+  const body = await request.json()
+  // ...
+  return NextResponse.json({ success: true })
+}
+```
+
+---
+
+## 網路邊界攔截：`proxy.ts`（取代 `middleware.ts`）
+
+Next.js 16 將 `middleware.ts` 更名為 `proxy.ts`，語意更清楚（明確標示「這是網路邊界」），並固定執行於 Node.js runtime：
+
+```ts
+// src/proxy.ts
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export default function proxy(request: NextRequest) {
+  // 例如：未登入導向登入頁
+  return NextResponse.redirect(new URL('/login', request.url))
+}
+```
+
+- **Next.js 16 新專案**：用 `proxy.ts`，不要新建 `middleware.ts`
+- **Next.js 14／15** 或既有 `middleware.ts`：維持現況；非緊急不強制遷移
+
+---
+
+## 環境變數
+
+- 公開變數：`NEXT_PUBLIC_*` 前綴
+- 私密變數：不加前綴（僅 server-side 可用）
+- 型別定義放 `src/types/env.d.ts`
+
+```ts
+// src/types/env.d.ts
+declare namespace NodeJS {
+  interface ProcessEnv {
+    NEXT_PUBLIC_API_URL: string
+    SENDGRID_API_KEY: string
+    DATABASE_URL: string
+  }
+}
+```
+
+---
+
+## 圖片處理
+
+- 使用 `next/image` 而非原生 `<img>`
+- 靜態圖片放 `public/images/`
+- 外部圖片來源需在 `next.config.js` 的 `images.remotePatterns` 註冊（**不要**使用已 deprecated 的 `images.domains`）
+- 本機圖片路徑若帶 query string，Next.js 16 起需另外設定 `images.localPatterns`，否則會被安全機制擋下
+
+```tsx
+import Image from 'next/image'
+
+<Image
+  src="/images/hero.jpg"
+  alt="產品介紹"
+  width={1200}
+  height={600}
+  priority  // above-the-fold 圖片
+/>
+```
+
+---
+
+## 連結處理
+
+- 站內連結使用 `next/link`
+- 外部連結使用 `<a>` + `target="_blank" rel="noopener noreferrer"`
+
+```tsx
+import Link from 'next/link'
+
+<Link href="/about">關於我們</Link>
+<a href="https://external.com" target="_blank" rel="noopener noreferrer">外部連結</a>
+```
+
+---
+
+## 在 Next.js 專案中應避免（依實際版本套用）
+
+1. **已使用 App Router 時**不要新建 `pages/`；**仍為 Pages Router 時**不要擅自改 App Router
+2. **本專案樣式若已是 Tailwind**：不要再引入 CSS Modules／styled-components／emotion 作為新預設；若專案本來就用那些方案，維持現況
+3. **禁用 `any`** — 必須明確定義或使用 `unknown`
+4. **元件**優先具名匯出（`page.tsx` 必須 default export）
+5. **禁止在 Server Component 引入 Client-only 套件**
+6. **禁止硬編碼 API URL** — 必須透過環境變數
+7. **禁止同步存取 `params` / `searchParams` / `cookies()` / `headers()` / `draftMode()`** — Next.js 15+ 起應 `await`；16 移除同步支援
+8. **Next.js 16 新專案**不要新建 `middleware.ts`，用 `proxy.ts`；**14／15** 繼續用 `middleware.ts`
+9. **禁止使用 `images.domains`** — 改 `images.remotePatterns`（本機帶 query 的路徑，16 起還需 `images.localPatterns`）
+10. **Next.js 16 禁止依賴 `next lint`** — CI／pre-commit 呼叫 ESLint／Biome 本身
+
+---
+
+## 版本相容性提醒（若專案仍在 Next.js 14 / 15）
+
+本規則以 Next.js 16 為基準撰寫。若目標專案**尚未升級**，請注意以下規則**不適用**於舊版本，避免 AI 依本檔產生無法執行的程式碼：
+
+| 本檔規則 | Next.js 14 | Next.js 15 | Next.js 16 |
+|----------|:----------:|:----------:|:----------:|
+| `params`/`searchParams` 同步存取 | ✅ 可同步 | ⚠️ 已棄用，仍相容 | ❌ 需 async |
+| Turbopack 為預設 bundler | ❌ | ❌（需手動啟用） | ✅ 預設 |
+| `proxy.ts` | ❌ 不支援，用 `middleware.ts` | ❌ 不支援，用 `middleware.ts` | ✅ 建議改用 |
+| `"use cache"` / Cache Components | ❌ | ⚠️ 實驗性 `experimental.dynamicIO` | ✅ 穩定（需開啟 `cacheComponents`） |
+| `next lint` | ✅ 可用 | ✅ 可用 | ❌ 已移除 |
+
+**建議**：先確認 `package.json` 的 `next` 版本，告知使用者「偵測到 Next.js X，下列注意事項以 16 為準；是否沿用舊寫法或升級？」依 `000` **先詢問再行動**，不要自行改棧或一次套用 16 寫法。

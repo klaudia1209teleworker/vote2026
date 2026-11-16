@@ -1,0 +1,291 @@
+---
+description: 前端效能優化規範 - 圖片、字體、懶加載、多語系與各地快取
+globs:
+  - "**/*.tsx"
+  - "**/*.ts"
+  - "**/*.css"
+  - "**/vite.config.ts"
+  - "**/next.config.*"
+  - "**/i18n/**"
+  - "**/locales/**"
+  - "**/messages/**"
+alwaysApply: false
+---
+
+# 前端效能優化注意事項
+
+適用於不需登入即可訪問的公開頁面。**不要**為了本檔更換框架。Vite 與 Next 的載入策略不同，對齊專案現況（見 §5.2）。
+
+## 1. 圖片優化
+
+### WebP 與圖片格式
+
+- **Vite／靜態 `<img>`／`<picture>`**：公開頁圖片提供 WebP，並保留原始格式作 fallback  
+- **Next.js**：用 `next/image`（見 `_stack.mdc`），**不要**為了本檔再包一套 `<picture>`；格式與 srcset 交給 Next  
+- 不要為了規則改掉專案既有圖片管線
+
+### 響應式圖片元件
+
+```tsx
+// components/common/ResponsiveImage.tsx
+interface ResponsiveImageProps {
+  src: string;
+  alt: string;
+  sizes?: string;
+  priority?: boolean;
+}
+
+export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
+  src, alt, sizes = '100vw', priority = false,
+}) => {
+  const basePath = src.replace(/\.[^.]+$/, '');
+  
+  return (
+    <picture>
+      <source
+        type="image/webp"
+        srcSet={`${basePath}-640w.webp 640w, ${basePath}-1024w.webp 1024w, ${basePath}-1920w.webp 1920w`}
+        sizes={sizes}
+      />
+      <img
+        src={`${basePath}-1024w.jpg`}
+        alt={alt}
+        loading={priority ? 'eager' : 'lazy'}
+        decoding={priority ? 'sync' : 'async'}
+      />
+    </picture>
+  );
+};
+```
+
+### 懶加載 Hook
+
+```typescript
+// hooks/useLazyLoad.ts
+export function useLazyLoad<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, isVisible };
+}
+```
+
+## 2. 字體優化
+
+### 字體載入策略
+
+```css
+@font-face {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/NotoSansTC-Regular.woff2') format('woff2');
+  unicode-range: U+4E00-9FFF, U+3400-4DBF;
+}
+```
+
+### HTML 預載入
+
+```html
+<head>
+  <link rel="preload" href="/fonts/NotoSansTC-Regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+</head>
+```
+
+## 3. JavaScript 拆分與延遲加載
+
+### 路由層級代碼分割
+
+```typescript
+const HomePage = lazy(() => import('@/pages/HomePage'));
+const AboutPage = lazy(() => import('@/pages/AboutPage'));
+
+<Suspense fallback={<PageLoader />}>
+  <HomePage />
+</Suspense>
+```
+
+### Vite 分塊策略
+
+```typescript
+// vite.config.ts
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-firebase': ['firebase/app', 'firebase/firestore'],
+        },
+      },
+    },
+  },
+});
+```
+
+### 第三方腳本：GTM 容器不可延遲
+
+載入順序（採用 GTM 時，與 `305`／`307` 一致）：
+
+1. （EEA／UK）`gtag('consent', 'default', …)`  
+2. **儘早**載入 GTM 容器（`head` 標準片段，見 `307`）  
+3. 其他重型第三方腳本（聊天室、A/B、非 GTM 管理的 widget）才可延遲到 `load` 或 idle  
+
+```typescript
+export function loadScript(src: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.defer = true;
+    script.onload = () => resolve();
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+}
+
+// ❌ 不要：window.addEventListener('load', () => loadScript('…/gtm.js?id=GTM-…'))
+// ✅ GTM 容器用 307 的 head 片段；下列僅用於「非 GTM 容器」的重腳本
+window.addEventListener('load', () => {
+  loadScript('/vendor/heavy-widget.js');
+});
+```
+
+## 4. 資源提示
+
+```html
+<head>
+  <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="preload" href="/assets/hero-image.webp" as="image" />
+</head>
+```
+
+走 GTM 時**不要**再對 `www.google-analytics.com` 做 dns-prefetch（頁面不另載 `gtag.js`，見 `307`）。Firebase Hosting 專案可另加 `firestore.googleapis.com` 的 preconnect。
+
+## 5. 多語系載入與各地快取優化
+
+適用於公開頁與需多語系的前端應用。目標：**只下載當前 locale 需要的資源**，並讓 CDN／Hosting **依語系／地區正確快取**，避免語系內容互相污染。
+
+SEO 的 hreflang／多語 sitemap 見 `300-seo-basics.mdc`、`302-sitemap-robots.mdc`；Hosting 靜態資產 `Cache-Control` 基準見 `101-firebase.mdc`（Firebase Hosting 快取配置），其他平台應對齊同等策略。
+
+### 5.1 共通原則（架構無關）
+
+| 原則 | 說明 |
+|------|------|
+| **按需載入語言包** | 禁止首屏一次打包／下載全部 locale；預設語言可同步，其餘 `import()`／動態載入 |
+| **語系綁定 URL** | 優先 path 前綴（`/zh-TW/...`、`/en/...`）或明確子網域；避免僅靠 cookie／`Accept-Language` 決定 HTML 內容（不利快取與 SEO） |
+| **靜態資產與語系分離** | 圖片／CSS／vendor JS 盡量與 locale 無關；文案 JSON／語系 chunk 才依 locale 變動 |
+| **字體依語系** | CJK 字體僅在需要的 locale preload；拉丁語系勿強制載入完整 Noto CJK（可搭配本檔 §2 `unicode-range`） |
+| **快取鍵含語系** | 同一 URL 若會因語系回傳不同 HTML／JSON，必須用不同 URL，或設定正確的 `Vary`／禁用共享快取 |
+| **變更前確認** | 專案既有 i18n 套件、預設語言、CDN 供應商不明時，依 `000-core-workflow` **先詢問再實作** |
+
+### 5.2 多語系載入（依技術棧）
+
+#### React + Vite SPA（含 React Router）
+
+- 語言包以動態 import 拆檔，路由切換或 `locale` 變更時再載入：
+
+```typescript
+// 例：i18n/load-locale.ts
+type Locale = 'zh-TW' | 'en' | 'ja';
+
+const loaders: Record<Locale, () => Promise<Record<string, string>>> = {
+  'zh-TW': () => import('../locales/zh-TW.json').then((m) => m.default),
+  en: () => import('../locales/en.json').then((m) => m.default),
+  ja: () => import('../locales/ja.json').then((m) => m.default),
+};
+
+export async function loadLocaleMessages(locale: Locale) {
+  return loaders[locale]();
+}
+```
+
+- `vite.config` 的 `manualChunks` 可將 `locales/*` 與 vendor 分開，避免語系檔並入巨大主包。
+- 使用 `react-i18next`／`i18next` 時：開啟 namespace／partial loading；**不要**把所有語言放進 `resources` 初始物件。
+- SPA 仍應為各語系提供可爬取的 URL 策略（與 `303-rendering-seo-visibility.mdc` 一致）；純 client 切語系且 URL 不變時，**不得**期望 CDN 依語系快取 HTML。
+
+#### Next.js（App Router 優先）
+
+- 使用官方 i18n 路由慣例（例：`app/[locale]/...`）或專案既定套件（`next-intl`、`next-i18next` 等）；**頁面與 `generateStaticParams` 依 locale 產出**。
+- Server Component 只載入當前 `locale` 的 messages；Client 互動元件若需文案，傳入必要子集或再動態載入，避免把全語系 JSON 打進 client bundle。
+- `next/font`：依 locale 條件載入字型；CJK 與拉丁分開，勿在全站 layout 無條件載入所有字重／字族。
+- 靜態／ISR 頁面：每個 locale 獨立快取條目（不同 path）；Middleware 做 locale 偵測時，**rewrite／redirect 到帶 locale 的 path**，不要在同一個 path 依 header 回不同 HTML。
+
+```ts
+// 概念：僅載入當前 locale
+import { getRequestConfig } from 'next-intl/server'; // 若專案使用 next-intl
+
+export default getRequestConfig(async ({ locale }) => ({
+  messages: (await import(`../../messages/${locale}.json`)).default,
+}));
+```
+
+（實際 API 以專案依賴版本為準；若未使用 next-intl，改為同等「動態 import 單一 locale」實作。）
+
+#### 其他 React／前端架構（Remix、Gatsby、CRA 衍生、自架 SSR 等）
+
+- 同樣遵守「單一請求／單一路由 → 單一 locale 資源」。
+- SSR／SSG：render 結果與 locale 綁定 URL；hydration 所需的 messages 僅含該頁 locale。
+- 微前端／Module Federation：遠端模組若含文案，應支援按 locale 載入遠端 chunk，避免主應用預拉全部語系。
+
+### 5.3 各地／CDN 快取策略
+
+#### 建議分層
+
+| 資源類型 | 快取建議 | 備註 |
+|----------|----------|------|
+| Hash 靜態資產（JS／CSS／圖片／字體） | 長快取 + `immutable` | 與語系無關；對齊 `101-firebase.mdc` 的 js／css／圖片 headers |
+| 語系 JSON／locale chunk（含 content hash） | 長快取 + `immutable` | 檔名或 query 必須含 hash；換文案即換檔名 |
+| HTML／SSR 文件（URL 已含 locale） | `max-age=0, must-revalidate` 或短 TTL + ISR／SWR | 對齊 `101-firebase.mdc` 的 `**/*.html`；Next 可用 ISR `revalidate` |
+| 依地理／個資變化的 API | 短 TTL 或不快取；必要時 `Vary` | 勿把個人化回應放進共享 CDN 長快取 |
+
+#### 禁止與必須
+
+```
+⛔ 禁止：
+- 同一 HTML URL 依 Cookie／Accept-Language 回傳不同語系內容，卻仍設定公開長快取
+- 將「全語系打包」的單一 messages 檔做長快取後，在 client 再過濾（浪費頻寬）
+- 忽略 CDN 的 Vary／快取鍵，導致地區 A 的語系頁被提供給地區 B
+
+✅ 必須：
+- 語系差異優先體現在 URL（path／子網域）
+- 靜態 Hosting headers 引用並沿用 101-firebase（或 Netlify／Vercel／Cloudflare 等效設定）
+- 若無法改 URL、必須依 header 協商內容：對該回應設 Cache-Control: private 或等價，並文件化原因
+```
+
+#### 平台對照（實作時選專案實際平台）
+
+| 平台 | 作法摘要 |
+|------|----------|
+| **Firebase Hosting** | 沿用 `101-firebase.mdc`；多語 HTML 若為預渲染檔（`/zh-TW/index.html`），路徑分開即可各自套用 html 規則 |
+| **Vercel／Next** | 依賴 path 中的 `[locale]`；ISR／Edge Cache 以完整 path 為鍵；Middleware 只做導向，不在無 locale 的 path 上快取協商結果 |
+| **Cloudflare／通用 CDN** | Page Rule／Cache Rule：靜態 `/assets/*` 長快取；HTML 短快取或 bypass；Custom Cache Key 若使用，必須包含 locale path segment |
+| **Netlify／其他靜態主機** | `_headers`／等效設定對齊 101 的 max-age 分層 |
+
+### 5.4 檢查清單
+
+```markdown
+- [ ] 首屏／主包未內嵌全部 locale 文案
+- [ ] 非預設語系以動態 import／獨立 chunk 載入
+- [ ] 字型 preload 僅涵蓋當前（或預設）語系所需字形
+- [ ] 使用者可見的語系版本有獨立 URL（或已確認不做公開 CDN 快取）
+- [ ] Hosting／CDN headers 與 101-firebase（或等效）一致：hash 資產長快取、HTML 短快取／revalidate
+- [ ] 切換語系不會強制重新下載與語系無關的 vendor／圖片
+- [ ] （SEO）hreflang／sitemap 多語版本已與 300／302 對齊
+```

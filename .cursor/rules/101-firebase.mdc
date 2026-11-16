@@ -1,0 +1,90 @@
+---
+description: Firebase 開發規範 - Firestore、Authentication、Cloud Functions
+globs:
+  - "**/firebase.ts"
+  - "**/firebase.json"
+  - "**/firestore.rules"
+  - "functions/**/*.ts"
+  - "**/lib/firebase*.ts"
+alwaysApply: false
+---
+
+# Firebase 注意事項
+
+僅當專案**已使用 Firebase** 時套用。不要為了本檔把非 Firebase 專案改成 Firestore／Hosting。
+
+## Firestore 操作
+
+- 將 Firestore 操作封裝在專案既有的服務層（常見 `services/` 或 `lib/`），不要為了本檔新建目錄
+- 使用 TypeScript 泛型確保資料型別安全
+- 實作錯誤處理與重試機制
+
+```typescript
+// services/userService.ts
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import type { UserProfile } from '@/types';
+
+export const userService = {
+  async getById(userId: string): Promise<UserProfile | null> {
+    const docRef = doc(db, 'users', userId);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? (docSnap.data() as UserProfile) : null;
+  },
+
+  async update(userId: string, data: Partial<UserProfile>): Promise<void> {
+    const docRef = doc(db, 'users', userId);
+    await setDoc(docRef, data, { merge: true });
+  },
+};
+```
+
+## 安全規則
+
+- 所有 Firestore 集合必須有對應的安全規則
+- 敏感操作需驗證使用者身份與權限
+
+## 錯誤處理
+
+```typescript
+// utils/errors.ts
+export class AppError extends Error {
+  constructor(
+    message: string,
+    public code: string,
+    public statusCode?: number
+  ) {
+    super(message);
+    this.name = 'AppError';
+  }
+}
+
+export class ValidationError extends AppError {
+  constructor(message: string) {
+    super(message, 'VALIDATION_ERROR', 400);
+  }
+}
+```
+
+## Firebase Hosting 快取配置
+
+```json
+{
+  "hosting": {
+    "headers": [
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|png|gif|webp|svg)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      },
+      {
+        "source": "**/*.html",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+      }
+    ]
+  }
+}
+```

@@ -211,13 +211,6 @@ export function formatMetricRatio(
 }
 
 export function attendanceUnavailableLabel(attendance?: AttendanceInfo): string {
-  if (!attendance) return '尚未整理';
-  if (attendance.status === 'available') return '';
-  if (attendance.reason?.includes('未找到')) return '議會未公開可統計資料';
-  if (attendance.reason === '尚未整理' || attendance.reason?.includes('未擷取')) {
-    return '尚未整理';
-  }
-  return attendance.reason?.includes('未公開')
-    ? '議會未公開可統計資料'
-    : '尚未整理';
+  if (attendance?.status === 'available') return '';
+  return '議會無法提供相關資料';
 }

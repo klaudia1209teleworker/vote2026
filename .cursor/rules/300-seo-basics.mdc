@@ -1,0 +1,277 @@
+---
+description: SEO 基礎注意事項 - Meta、語意化 HTML、URL；依專案框架實作，不指定棧
+globs:
+  - "**/pages/**/*.tsx"
+  - "**/app/**/page.tsx"
+  - "**/app/**/layout.tsx"
+  - "**/src/app/**/*.tsx"
+  - "**/components/seo/**/*.tsx"
+  - "**/index.html"
+alwaysApply: false
+---
+
+# SEO 基礎注意事項
+
+本檔不指定 SPA 或 Next.js。**實作方式對齊專案既有 meta 機制**，不要為了 SEO 規則改框架或改加 `react-helmet`／改砍 `metadata` API。
+
+## 依技術寫入 Meta（對齊專案）
+
+| 專案類型 | 注意事項 |
+|----------|----------|
+| Vite／CSR SPA | 可用 `react-helmet-async` 或專案既有 Head 元件；**不可**在 `index.html` 寫死全站 canonical／og:url |
+| Next.js App Router | 用 `metadata`／`generateMetadata`，**不要**引入 react-helmet |
+| Next.js Pages Router | 用 `next/head` 或專案既有方式；不要擅自改 App Router |
+
+`og:image`：**以專案／`ci.mdc` 為準**。若 CI 定義了 OG Image 則使用；若專案明確規定不輸出分享圖，不要擅自加上。
+
+下列 Helmet 範例僅適用 **已在用 Helmet 的 SPA**。
+
+```tsx
+// components/seo/SEOHead.tsx
+interface SEOHeadProps {
+  title: string;
+  description: string;
+  canonical: string;
+  image?: string;
+  keywords?: string;
+  type?: 'website' | 'article' | 'product';
+  noindex?: boolean;
+}
+
+export const SEOHead: React.FC<SEOHeadProps> = ({
+  title, description, canonical, image, keywords, type = 'website', noindex = false,
+}) => {
+  const siteName = 'Your Site Name';
+  
+  return (
+    <Helmet>
+      <title>{title} | {siteName}</title>
+      <meta name="description" content={description} />
+      <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+      <link rel="canonical" href={canonical} />
+      
+      {/* Open Graph */}
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:type" content={type} />
+      <meta property="og:url" content={canonical} />
+      {image && <meta property="og:image" content={image} />}
+      
+      {/* Twitter Card：必須使用 name（不可用 property） */}
+      <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      {image && <meta name="twitter:image" content={image} />}
+      
+      {/* Meta Keywords（選用） */}
+      {keywords && <meta name="keywords" content={keywords} />}
+    </Helmet>
+  );
+};
+```
+
+## Title 與 Description 規範
+
+| 項目 | 長度限制 | 說明 |
+|------|----------|------|
+| Title | 30-60 字元 | 主要關鍵字 \| 次要資訊 \| 品牌名 |
+| Description | 120-160 字元 | 包含關鍵字與行動呼籲 |
+
+## 語意化 HTML 結構
+
+```tsx
+<>
+  <header role="banner">
+    <nav aria-label="主要導航">...</nav>
+  </header>
+
+  <main role="main">
+    <nav aria-label="麵包屑">
+      <ol>
+        <li><a href="/">首頁</a></li>
+        <li aria-current="page">當前頁面</li>
+      </ol>
+    </nav>
+
+    <article>
+      <header>
+        <h1>頁面主標題（每頁僅一個）</h1>
+        <time dateTime="2024-01-15">2024 年 1 月 15 日</time>
+      </header>
+      
+      <section aria-labelledby="section-1">
+        <h2 id="section-1">章節標題</h2>
+        <h3>子章節標題</h3>
+      </section>
+    </article>
+  </main>
+
+  <footer role="contentinfo">...</footer>
+</>
+```
+
+## 標題層級規範
+
+- 每頁只能有一個 `<h1>`
+- 標題層級必須依序（H1 → H2 → H3），不可跳級
+- **首頁必須使用 H1 標題**：首頁主標題應為 `<h1>`，不要把唯一主標做成 H2
+
+### 實際範例
+
+```tsx
+// ✅ 正確：首頁使用 H1
+const HomePage = () => {
+  return (
+    <div className="home">
+      <h1>{t('home.title')}</h1>  {/* 首頁主標題使用 H1 */}
+      <p className="description">{t('home.subtitle')}</p>
+      {/* 其他內容使用 H2、H3 等 */}
+    </div>
+  );
+};
+
+// ❌ 錯誤：首頁使用 H2
+<h2>{t('home.title')}</h2>  // 應改為 H1
+```
+
+## URL 結構規範
+
+```typescript
+export const URL_RULES = {
+  useLowercase: true,
+  separator: '-',
+  maxLength: 75,
+  stopWords: ['a', 'an', 'the', 'and', 'or', 'in', 'on', 'at', 'to', 'for'],
+};
+
+// ✅ 良好的 URL
+'/products/wireless-headphones'
+'/blog/2024/seo-optimization-guide'
+
+// ❌ 應避免
+'/products?id=12345'
+'/PRODUCTS/Headphones'
+'/p/12345'
+```
+
+## 圖片 SEO
+
+```tsx
+// 必須提供描述性 alt 文字
+<img src="wireless-headphones-black.webp" alt="黑色無線藍牙耳機正面產品照" />
+
+// 使用 figure 與 figcaption
+<figure>
+  <img src="chart.png" alt="2024 年銷售趨勢圖" />
+  <figcaption>圖表：2024 年各季度銷售數據</figcaption>
+</figure>
+```
+
+## 內部連結最佳實踐
+
+```tsx
+// ❌ 避免
+<a href="/products">點此查看</a>
+
+// ✅ 正確
+<a href="/products" title="瀏覽所有產品類別">
+  瀏覽我們的產品系列
+</a>
+```
+
+## Canonical URL 規範
+
+**index.html 不得寫死 canonical 或 og:url**（**Vite／CSR SPA**）：SPA 對所有路由回傳同一份 index.html。若寫死首頁 canonical，文章頁會被當成替代網頁。canonical、og:url、title、description 由各頁動態設定——此為必要步驟，但 **不足以保證索引**；根本解法見 `303-rendering-seo-visibility.mdc`。
+
+**Next.js**：用 `metadata`／`generateMetadata` 輸出 canonical，不要用下方 `document.querySelector` 補丁（除非專案已是該寫法）。
+
+**所有公開頁必須有 Canonical**（完整 https URL）。SPA 動態設定範例：
+
+```tsx
+// 在文章詳情頁元件中實作
+const baseUrl = getBaseUrl();
+const articleUrl = `${baseUrl}/articles/${article.slug}`;
+
+let canonicalLink = document.querySelector('link[rel="canonical"]');
+if (!canonicalLink) {
+  canonicalLink = document.createElement('link');
+  canonicalLink.rel = 'canonical';
+  document.head.appendChild(canonicalLink);
+}
+canonicalLink.href = articleUrl;
+```
+
+**重要**：
+- 所有文章頁面必須有 Canonical URL
+- 所有作者專頁必須有 Canonical URL
+- URL 必須使用完整路徑（含 https://）
+
+## GEO 優化（生成式引擎優化）規範
+
+> 內容策略、同一頁實體圖、頁型 Schema 與「只寫看得到的內容」見 `304-generative-search-optimization.mdc`。本節為頁面上的作者、引用與日期。
+> robots.txt 訓練用／即時檢索用爬蟲分流（GEO 能見度開關）見 `302-sitemap-robots.mdc`。
+
+### 作者權威資訊
+
+**必須包含**：
+- 作者完整簡介（description）
+- 職業和認證資訊（jobTitle, credentials）
+- 經驗年數（years_of_experience）
+- 個人資料頁面連結（`/author/:slug`）
+- 社群媒體連結（sameAs）
+- 作者照片
+
+**實作位置**：文章詳情頁的作者區、標題區、文末（路徑依專案，例如 `ArticleDetail` 或對應 App Router 頁）。Schema 產生函式放在專案既有的 schema／utils 目錄。
+
+### 事實檢查友善格式
+
+**必須使用**：
+- `<blockquote>` 標籤標記直接引用
+- `<cite>` 標籤標記引用來源
+- 為所有引用添加完整 URL 和訪問日期
+
+**實作範例**：
+```tsx
+<blockquote className="article-expert-quote-text" cite={sourceUrl}>
+  {quoteText}
+</blockquote>
+<cite className="article-expert-quote-author">
+  — {expertInfo}
+  {sourceUrl && (
+    <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+      （來源）
+    </a>
+  )}
+</cite>
+```
+
+### 更新指示
+
+**必須顯示**：
+- 發布日期（datePublished）
+- 最後更新日期（dateModified）
+
+**實作位置**：文章標題區域（路徑依專案）
+
+### 免責聲明和可信度標記
+
+**必須包含**：
+- 免責聲明區塊
+- 聯絡資訊連結
+- 關於我們連結
+
+**實作位置**：文章底部（路徑依專案）
+
+## 驗證檢查清單
+
+- [ ] 使用 [Google Rich Results Test](https://search.google.com/test/rich-results) 測試
+- [ ] 使用 [Schema Markup Validator](https://validator.schema.org/) 驗證
+- [ ] Schema 數據與頁面可見內容一致
+- [ ] 日期格式正確（ISO 8601，YYYY-MM-DD）
+- [ ] URL 使用完整路徑（含 https://）
+- [ ] 所有頁面包含 Canonical URL
+- [ ] 作者 Schema 包含完整權威資訊（經驗、認證、個人資料頁面）
+- [ ] Article Schema 包含 `datePublished` 和 `dateModified`
+- [ ] 引用來源包含完整 URL 和訪問日期
+- [ ] 使用 blockquote 和 cite 標籤標記引用
+- [ ] 包含免責聲明和聯絡資訊

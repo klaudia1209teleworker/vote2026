@@ -1,0 +1,92 @@
+---
+description: 網站 GTM Container 注意事項 — 預設建議單一容器；例外記入專案；載入順序與 Consent／GA4 分工
+globs:
+  - "**/index.html"
+  - "**/gtm.{js,ts}"
+  - "**/layout.tsx"
+  - "**/constants/site.{js,ts}"
+  - "**/analytics.{js,ts}"
+  - "**/data-layer.{js,ts}"
+alwaysApply: false
+---
+
+# GTM Container 注意事項
+
+對外公開網站**預設建議**以 **Google Tag Manager（GTM）** 作為分析／廣告／像素的單一前端入口。  
+**不是**要求已直連 `gtag.js`、或其他已文件化方案的專案必須改棧。例外須記入 `rules/project/` 或 PRD（見 `000`）。
+
+Consent Mode、同意橫幅 → `305-consent-mode.mdc`。  
+GA4 事件 `dataLayer.push` → `306-ga4-datalayer-events.mdc`。  
+**不要**為了效能把 GTM **容器**延遲到 `window.load`（見 `200`）。
+
+## 適用範圍
+
+| 範圍 | 注意事項 |
+|------|----------|
+| **Web** 公開頁／行銷站／官網／落地頁 | **預設建議**埋設 GTM；已有經確認的例外（直連 gtag 等）則維持並記入專案文件 |
+| 同一產品含公開站＋登入後 App | 公開殼層／行銷站對齊上列；登入後區是否另載依專案確認 |
+| 純內部工具、無對外公開頁、亦無追蹤需求 | 可不埋；有疑義依 `000` **先詢問** |
+| **APP**（iOS／Android／Expo） | **不適用**本檔；若另有 Web 官網／落地頁，該 Web 對齊上列 |
+
+## 實作前必問
+
+依 `000-core-workflow`，下列未確認前**不得**用假 ID 上線，也**不得**在未問的情況下拆掉既有追蹤：
+
+1. 若走 GTM：請客戶提供 **GTM Container ID（`GTM-XXXX`）**（新建或既有容器皆可）。
+2. 若客戶**只給** `G-XXXX`、沒有 GTM：說明預設建議為「頁面只接 GTM」，請其開容器或授權代開；**例外**直連 `gtag.js` 須確認並記入 `project/`／PRD。
+3. 盤點是否已有第二套追蹤（頁面硬編碼 Pixel／`gtag.js` 等）→ 走 GTM 時原則遷入或移除重複（細節見 `305`）。
+4. 專案已直連 gtag／其他 CMP 且運作正常：**不要**為了本檔強制改 GTM。
+
+## 預設架構（採用 GTM 時）
+
+| 項目 | 規範 |
+|------|------|
+| 前端入口 | **僅** GTM（`GTM-XXXX`） |
+| GA4／Ads／Pixel 等 | 在 **GTM 容器內**設定，**禁止**頁面另載 `gtag.js`（`G-XXXX`）或重複像素 |
+| Container 數量 | 公開站 **單一** GTM 容器（除非客戶明確要求多容器並記入文件） |
+| ID 存放 | 常數集中（例：`GTM_CONTAINER_ID`）；`index.html`／layout 與程式共用；**禁止**多處硬編碼且不一致 |
+| dataLayer | 變數名預設 `dataLayer`；與 GTM 片段第四參數一致 |
+
+## 標準埋設片段
+
+`<head>` 儘早放入（若有 Consent Mode：須先跑 consent default，見 `305`）：
+
+```html
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXX');</script>
+<!-- End Google Tag Manager -->
+```
+
+`<body>` 開頭：
+
+```html
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager -->
+```
+
+Next.js App Router：放在**公開**根 `layout.tsx`（或對應公開殼層）；勿只放在單一行銷頁而漏掉其他公開路由。Vite／SPA：放在 `index.html`（或公開殼層等效位置）。
+
+## 禁止事項
+
+1. ❌ 用佔位 ID（`GTM-XXXX`）進入正式環境  
+2. ❌ 已採用 GTM 時，再於頁面另載 `gtag.js`（`G-XXXX`）或重複像素  
+3. ❌ 散落多個不同的 `GTM-XXXX`（未文件化的多容器）  
+4. ❌ 為了效能把 **GTM 容器**延遲到 `window.load`／互動後（Consent default 仍須在容器之前，見 `305`；延遲只適用其他重腳本，見 `200`）  
+5. ❌ 未確認就拆掉既有、已文件化的直連 gtag／CMP
+
+## 檢查清單
+
+- [ ] 已確認走 GTM 或已記入例外（直連 gtag／CMP）  
+- [ ] （走 GTM）客戶已提供真實 `GTM-XXXX`  
+- [ ] （走 GTM）公開頁 `head`＋`body` noscript（或等效）已接同一 Container ID；**未**延遲容器本身  
+- [ ] ID 集中於常數；與 GTM 後台一致  
+- [ ] 頁面未與 GTM 並存另載 `gtag.js`／重複像素  
+- [ ] （EEA／UK）Consent default 早於 GTM（`305`）  
+- [ ] 業務事件契約與 GTM 觸發器對齊（`306`）  
+- [ ] 決策已記入專案 `.cursor`／`project/`／PRD

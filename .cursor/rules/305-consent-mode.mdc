@@ -1,0 +1,300 @@
+---
+description: Google Consent Mode v2 — 未登入公開頁；CMP／自製必問；GTM＋GA4 dataLayer 處置與 Consent 控管
+globs:
+  - "**/index.html"
+  - "**/consent.{js,ts}"
+  - "**/data-layer.{js,ts}"
+  - "**/gtm.{js,ts}"
+  - "**/CookieConsent.{jsx,tsx}"
+  - "**/layout.tsx"
+  - "**/constants/site.{js,ts}"
+alwaysApply: false
+---
+
+# Google Consent Mode v2 規範
+
+有 **EEA／UK（歐盟市場）** 需求的網站，**必須**實作 Consent Mode v2，不可僅放 Cookie 文案而無 `gtag('consent', …)`。consent API 仍透過 `gtag`／`dataLayer` 下達；**若走 GTM** 則由容器載入，**若專案已直連 gtag** 則維持該入口（見 `307`）。
+
+**分析／Consent**：對外公開站**預設建議** GTM（見 `307-gtm-container.mdc`）；已有經確認的例外則維持。有 EEA／UK 需求時疊加 Consent Mode（`305`）。本檔假設追蹤入口已確認，再疊加 Consent。
+
+## 適用情境（強制）
+
+| 範圍 | 是否需要 Consent Mode／同意橫幅 |
+|------|--------------------------------|
+| **未登入**的公開頁（行銷站、落地頁、官網、登入前頁） | **需要** |
+| **已登入**的應用內頁（儀表板、後台、會員區等） | **不需要**（勿掛橫幅、勿為登入區單獨再加一套 consent UI） |
+
+補充：
+
+- 同一 SPA／App 若含公開與登入後路由：僅在**未登入 layout／公開殼層**掛載 `CookieConsent` 與相關追蹤；登入後 layout **排除**橫幅。
+- 若公開與登入共用同一個 `index.html`／根 layout 且會載入 GTM：consent **default／update 腳本仍可留在公開首屏**；但橫幅與「Cookie 設定」入口僅出現在未登入頁。
+- 純內部工具、且無未登入公開頁、亦無對歐行銷追蹤者：可不實作；有疑義時依 `000-core-workflow` **先詢問**。
+
+## 實作前必問（禁止未確認就開工）
+
+依 `000-core-workflow`：下列問題**未獲客戶確認前，不得實作** Consent／橫幅／搬移追蹤。
+
+### 1. Consent UI 來源
+
+請先詢問客戶：
+
+> Consent Mode／同意橫幅要用 **外部 CMP／Consent 服務**，還是 **自行開發**？
+
+| 選項 | 說明 | 後續 |
+|------|------|------|
+| **A. 外部** | Cookiebot、OneTrust、CookieYes、或客戶指定的 CMP／Consent Mode 整合 | 向客戶索取廠商、安裝方式（腳本／GTM 範本）、地區與預設同意策略；**以該廠商文件為準**，本檔「自製橫幅」條款不強制套用 |
+| **B. 自行開發** | 自製橫幅＋`gtag('consent', …)`，經 **GTM** 控管標籤 | 繼續問第 2 點；確認後才可依本檔其餘章節實作 |
+
+未回答前**不得**預設選 B 直接做橫幅。
+
+### 2. 自行開發時：既有追蹤盤點（強制）
+
+若客戶選 **自行開發**，必須再詢問並記錄：
+
+> 目前網站／公開頁**已埋設**哪些追蹤或行銷代碼？請列出名稱與 ID（若有）。
+
+至少盤點（有則列出，無則註明「無」）：
+
+| 類型 | 範例 |
+|------|------|
+| 容器 | GTM（`GTM-XXXX`） |
+| 分析 | GA4（`G-XXXX`）、UA 殘留、其他分析 |
+| 廣告 | Google Ads、Meta Pixel、LinkedIn、TikTok 等 |
+| 其他 | Hotjar、Clarity、聊天／再行銷外掛、硬編碼在 `index.html` 或元件內的第三方腳本 |
+
+盤點後的處理原則：
+
+1. **目標架構**：頁面只留 Consent default／update＋**單一 GTM**；追蹤改由 GTM 觸發，並以 Consent Mode 參數控制是否發送。
+2. **硬編碼在頁面的追蹤**（非經 GTM）：應**遷入 GTM** 或移除重複；遷入前須客戶確認，避免漏數或雙重命中。
+3. 在 GTM 為各標籤設定對應 Consent（例：GA4 → `analytics_storage`；廣告 → `ad_storage`／`ad_user_data`／`ad_personalization`）。
+4. 將盤點表與決策寫入該專案 `.cursor` 文件（或 PRD），供後續維護。
+
+### 3. 客戶須提供的識別碼（確認導入方式之後）
+
+**GDPR／EEA 合規不取決於「給 GTM 還是給 GA4」**，而取決於：未登入公開頁有同意機制、Consent Mode v2（EEA／UK 預設 `denied`）、依選擇才放行追蹤標籤，以及隱私權說明。僅有 GTM 或僅有 GA4、卻無同意＋Consent Mode，**不符合**本規範對歐作法。
+
+| 識別碼 | 誰提供／誰設定 | 用途 |
+|--------|----------------|------|
+| **GTM Container ID（`GTM-XXXX`）** | **自行開發時前端必收** | 網站只接此 ID；寫入常數與 `index.html`／公開 layout |
+| **GA4 Measurement ID（`G-XXXX`）** | 通常在 **GTM 容器內**設定 | 量測用；**不必**（也不應）再於頁面另載 `gtag.js` |
+| 外部 CMP | 選 A 時由客戶／廠商提供 | 安裝鍵、網域設定等 |
+| Google Ads 等 | 在 GTM 內設定（並對照盤點表） | 設定對應 Consent 條件 |
+
+對客戶的簡短說明（自行開發＋GTM 時）：
+
+> 請提供 **GTM 容器 ID（`GTM-XXXX`）**，並告知目前還有哪些追蹤代碼。GA4 等請盡量在 GTM 裡接；我們用 Consent Mode 經 GTM 控制是否發送。合規靠的是同意與 Consent Mode，不是選哪一種 tag。
+
+實作前若客戶只給了 `G-XXXX`、沒有 GTM：依 `307-gtm-container.mdc` 與 `000-core-workflow` **先詢問**是否改開 GTM，或例外改為直連 gtag（非本規則預設）。
+
+## 預設技術選擇（僅「自行開發」且已確認後）
+
+| 項目 | 預設 |
+|------|------|
+| 追蹤導入 | **Google Tag Manager（GTM）**；GA4／Ads 等在 GTM 內設定，**禁止**頁面另載 `gtag.js`（`G-XXXX`）以免雙重命中 |
+| Banner | **自製**（接受／拒絕／偏好），配合品牌色與既有 i18n |
+| 版本 | **Consent Mode v2**（含 `ad_user_data`、`ad_personalization`） |
+| 地區 | **僅 EEA／UK** 預設 `denied` 並顯示橫幅；其他地區預設 `granted` |
+| 既有追蹤 | 依盤點表遷入／對齊 GTM，以 Consent Mode **控制 GTM 內標籤** |
+
+若客戶選外部 CMP，以上「Banner／自製」列改依廠商；GTM 與 Consent 對接方式以廠商＋客戶確認為準。
+
+## 必備 Consent 參數
+
+```text
+ad_storage | ad_user_data | ad_personalization | analytics_storage
+```
+
+另建議啟用：
+
+- `wait_for_update: 500`（EEA／UK default）
+- `ads_data_redaction: true`
+- `url_passthrough: true`
+
+GTM 容器側：相關標籤應依 Consent Mode 設定（例：GA4 需 `analytics_storage`；廣告標籤需對應 `ad_*`），與頁面 `consent` default／update 一致。
+
+## 地區預設（須早於 GTM 容器腳本）
+
+| 地區 | analytics / ad_* | 橫幅 |
+|------|------------------|------|
+| EEA + UK（`region` 清單） | `denied` | 顯示 |
+| 其他地區 | `granted` | 不顯示 |
+| 國家偵測失敗 | 視為需同意（保守） | 顯示 |
+| 開發環境（無已存選擇） | — | **強制顯示**，方便本機驗證 |
+
+EEA＋UK 國家碼（與 `gtag` `region` 一致）：
+
+```text
+AT BE BG HR CY CZ DK EE FI FR DE GR HU IS IE IT LV LI LT LU MT NL NO PL PT RO SK SI ES SE GB
+```
+
+## head 載入順序（強制）
+
+1. `dataLayer` + `gtag` 函式（consent 指令用；**不是**另載 gtag.js）
+2. `gtag('consent', 'default', { … region: EEA/UK, denied … })`
+3. `gtag('consent', 'default', { … granted … })`（非 region 預設）
+4. `ads_data_redaction` / `url_passthrough`
+5. 若 `localStorage` 已有選擇 → 立即 `gtag('consent', 'update', …)`
+6. **之後**才載入 GTM 容器（`GTM-XXXX`）及（若使用）`<noscript>` iframe
+
+```html
+<!-- ❌ BAD：先載 GTM／gtag.js 再設 consent；或 GTM + 頁面再載一份 gtag.js -->
+<script>(function(w,d,s,l,i){…})(window,document,'script','dataLayer','GTM-XXXX');</script>
+<script>gtag('consent', 'default', { … });</script>
+
+<!-- ✅ GOOD：consent default → 還原已存選擇 → 再載入 GTM -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    wait_for_update: 500,
+    region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','GB']
+  });
+  gtag('consent', 'default', {
+    ad_storage: 'granted',
+    ad_user_data: 'granted',
+    ad_personalization: 'granted',
+    analytics_storage: 'granted'
+  });
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
+  // 若有 localStorage 同意紀錄：gtag('consent', 'update', { … })
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXX');</script>
+```
+
+`body` 開頭可放 GTM `<noscript>` iframe（標準片段）；仍僅掛在**未登入公開頁**殼層。
+
+Container ID 集中在常數（例：`GTM_CONTAINER_ID`），`index.html`／layout 與程式碼共用同一值；**禁止**散落硬編碼多處且不一致。GA4 Measurement ID 放在 **GTM 容器設定**，前端常數以 GTM 為準（見上「客戶須提供的識別碼」）。
+
+## 同意狀態對應
+
+| 使用者動作 | `analytics_storage` | `ad_storage` / `ad_user_data` / `ad_personalization` |
+|------------|---------------------|------------------------------------------------------|
+| 全部接受 | granted | granted |
+| 全部拒絕 | denied | denied |
+| 儲存偏好 | 依分析核取方塊 | **denied**（僅「全部接受」才開廣告相關） |
+
+使用者選擇變更時呼叫 `gtag('consent', 'update', …)`（或等效 `dataLayer` push），讓 GTM 內標籤依同意狀態作動。
+
+## GTM 與 GA4 dataLayer 處置
+
+本節規範**自行開發＋GTM**時，前端與容器如何共用、寫入 `dataLayer`，避免雙重命中或 Consent 失效。外部 CMP 若另有 dataLayer 約定，以廠商文件為準，但仍須遵守「單一 dataLayer、Consent 先於追蹤事件」。
+
+**GA4 事件的 `dataLayer.push` 格式、GTM 觸發／標籤逐步設置、SPA／轉換範例與 TS 封裝** → 見 `306-ga4-datalayer-events.mdc`。
+
+### 角色分工
+
+| 層級 | 職責 |
+|------|------|
+| **前端** | 初始化**同一個** `window.dataLayer`；下達 consent default／update；推送業務事件（`event` + 參數） |
+| **GTM** | 監聽 `dataLayer`；觸發 GA4／Ads 等標籤；依 Consent Mode 決定是否發送 |
+| **GA4** | **只活在 GTM 容器內**（GA4 Configuration／Event 標籤）；前端**不**呼叫 `gtag('config', 'G-XXXX')`、**不**另載 `gtag.js` |
+
+### 單一 dataLayer（強制）
+
+```js
+// ✅ 一律復用
+window.dataLayer = window.dataLayer || []
+
+// ❌ 禁止：覆寫成新陣列（會丟掉先前 consent／gtm.start）
+window.dataLayer = []
+```
+
+- 變數名稱預設為 `dataLayer`（與 GTM 容器片段的第四參數一致）。若專案必須改名，GTM 片段與所有 push **必須**同一名稱，並記在專案 `.cursor` 文件。
+- Consent 使用的 `function gtag(){ dataLayer.push(arguments); }` 與 GTM 共用同一陣列；**不要**另建第二套 queue。
+
+### 寫入方式
+
+| 用途 | 建議寫法 | 說明 |
+|------|----------|------|
+| Consent default／update | `gtag('consent', …)` | 與 Google Consent Mode 文件一致；會進入 dataLayer |
+| 虛擬頁面／自訂事件 | `dataLayer.push({ event: '…', … })` | 供 GTM 自訂事件觸發器使用 |
+| 電商／導流參數 | `dataLayer.push({ … })` 後再 `event` | 先清／設參數再推事件，約定寫在專案文件 |
+
+```js
+// ✅ SPA 路由變更（範例事件名；實際以 GTM 觸發器為準）
+window.dataLayer = window.dataLayer || []
+window.dataLayer.push({
+  event: 'virtual_page_view',
+  page_path: location.pathname + location.search,
+  page_title: document.title,
+})
+
+// ❌ 前端直打 GA4（與「只經 GTM」衝突，易雙重 page_view）
+gtag('config', 'G-XXXX', { page_path: '…' })
+gtag('event', 'sign_up', { … })
+```
+
+同意更新後，若需讓 GTM 再跑一輪標籤，可另 push 約定事件（例：`event: 'consent_update'`），**須與 GTM 設定對齊**，事件名寫入專案文件。
+
+### 與 Consent 的順序
+
+1. consent `default`（＋必要時首屏 `update`）  
+2. 載入 GTM  
+3. 之後才推送會觸發分析／廣告的 `dataLayer` 事件  
+
+在 EEA／UK 且使用者尚未同意前：仍可 push 事件到 dataLayer，但 GTM 內 GA4／Ads 應受 Consent 擋住實際發送；**不可**為了「先有數」而在同意前直連 `gtag.js`／Pixel。
+
+### GTM 容器側（GA4）
+
+- 使用 **GA4 Configuration**（或 Google 標籤）＋ **GA4 Event**，Measurement ID 只填在容器。
+- 啟用 Consent Overview／各標籤 Required consent（至少 `analytics_storage`；廣告另加 `ad_*`）。
+- **page_view**：由 GTM 的 Configuration「Send a page view」或專用觸發器二擇一，**不要**前端 gtag config 與 GTM 各打一次。
+- SPA：用 History Change 或前端 `virtual_page_view`（擇一為主，避免雙重）。採哪一種須在實作前記入專案文件。
+
+### 禁止事項
+
+1. 頁面同時存在 **GTM** 與 **gtag.js（G-XXXX）**  
+2. 多處 `dataLayer = []` 重置  
+3. 未確認就自訂大量 event 名稱，與 GTM 觸發器不一致  
+4. 在登入後應用區推送行銷 dataLayer 事件（本規範僅未登入公開頁需要 Consent／行銷追蹤時才 push；登入區政策另案確認）  
+5. 把 PII（email、電話、姓名等）寫入 dataLayer／事件參數  
+
+### 建議前端封裝
+
+集中一個模組（例：`utils/data-layer.ts`／`lib/gtm.ts`）：
+
+- `ensureDataLayer()`、`pushEvent(name, payload)`、consent 的 `update` 仍走既有 `utils/consent`  
+- 公開頁元件只呼叫封裝，禁止散落裸 `dataLayer.push`
+
+## UI／儲存慣例
+
+- 元件建議：`CookieConsent`；工具：`utils/consent`（讀寫、`update`、地區偵測、開啟設定事件）
+- **僅掛在未登入頁／公開 layout**；登入後路由不得渲染橫幅
+- 選擇持久化：`localStorage`（專案自訂鍵名，例：`*_cookie_consent`，結構含 `analytics`、`ads`、`updatedAt`）
+- 未登入頁頁腳提供「Cookie 設定」入口，可隨時重開橫幅（登入區可不提供）
+- 多語系：同意文案與隱私權「Cookie」段落同步更新
+- 隱私權政策須說明 Consent Mode v2、EEA／UK 橫幅與可變更選擇的方式
+
+## 與效能規則的關係
+
+延遲載入 GTM 時，**不可**省略 consent default；見 `200-performance-assets.mdc`。Consent 腳本區塊仍須在 `gtm.js` 之前執行。
+
+## 實作檢查清單
+
+```markdown
+- [ ] 已詢問：外部 CMP 或自行開發；未確認前未開工
+- [ ] （自行開發）已盤點既有追蹤，並規劃經 Consent Mode 控制 GTM
+- [ ] 僅未登入／公開頁需要；登入後頁面無橫幅
+- [ ] （自行開發）客戶已提供 GTM-XXXX；GA4／其他在 GTM 內；頁面未另載重複追蹤腳本
+- [ ] 單一 dataLayer；未覆寫重置；GA4 僅經 GTM，前端不 gtag config／另載 gtag.js
+- [ ] 業務事件經 dataLayer.push（或封裝）；SPA page_view 策略已與 GTM 對齊且無雙重命中
+- [ ] Consent default 在 GTM 容器腳本之前
+- [ ] v2 四參數齊全；EEA／UK denied、其他 granted
+- [ ] ads_data_redaction + url_passthrough
+- [ ] 已存同意於首屏 update
+- [ ] GTM 內各標籤已設定對應 Consent 條件（對照盤點表）
+- [ ] 僅 EEA／UK（+ 偵測失敗）顯示橫幅；DEV 可強制顯示
+- [ ] 接受／拒絕／偏好行為符合上表（自製時）
+- [ ] 未登入頁頁腳可重開設定；隱私權文案已更新
+- [ ] GTM／CMP 識別、盤點與 dataLayer 事件約定已記入專案 .cursor 文件
+```

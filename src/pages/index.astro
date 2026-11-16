@@ -23,40 +23,41 @@ const quickLinks = [
 ---
 
 <Layout title="首頁" description="2026 九合一地方選舉資訊彙整：查詢選票、縣市候選人與投票須知">
+  <link slot="head" rel="preload" as="image" href={`${baseUrl}hero-landscape.webp`} />
   <link slot="head" rel="preconnect" href="https://www.youtube-nocookie.com" />
   <link slot="head" rel="dns-prefetch" href="https://www.youtube-nocookie.com" />
   <div class="space-y-6">
-    <header class="hero">
+    <header class="hero" style={`--hero-image: url('${baseUrl}hero-landscape.webp')`}>
       <div>
-        <p class="text-sm hero-muted tabular-nums">投票日 2026-11-28（六）08:00–16:00</p>
-        <h1 class="page-title mt-1 text-balance">2026 九合一地方選舉資訊彙整</h1>
-        <p class="mt-2 hero-muted">
+        <p class="hero-description text-sm tabular-nums">投票日 2026-11-28（六）08:00–16:00</p>
+        <h1 class="page-title hero-title mt-1 text-balance">2026 九合一地方選舉資訊彙整</h1>
+        <p class="hero-description mt-2">
           九合一地方公職人員選舉暨全國性公民投票。依戶籍查會領到的選票，並查看已公告的職務說明與候選人資料。
         </p>
-        <p class="mt-1 text-sm hero-muted">同日舉行公投第 22 案。18–19 歲僅可投公投。</p>
+        <p class="hero-description mt-1 text-sm">同日舉行公投第 22 案。18–19 歲僅可投公投。</p>
       </div>
       <section class="hero-overview" aria-labelledby="overview-title">
         <h2 id="overview-title" class="hero-overview-title">選舉摘要</h2>
         <dl class="mt-2 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <div>
-            <dt class="text-sm hero-muted">縣市</dt>
+            <dt class="hero-description text-sm">縣市</dt>
             <dd class="kpi-value mt-1">{cityCount}</dd>
-            <p class="mt-1 text-xs hero-muted">直轄市、省轄市與縣。來源：中選會地方選舉劃分公告。</p>
+            <p class="mt-1 text-xs hero-description">直轄市、省轄市與縣。來源：中選會地方選舉劃分公告。</p>
           </div>
           <div>
-            <dt class="text-sm hero-muted">選舉類別</dt>
+            <dt class="hero-description text-sm">選舉類別</dt>
             <dd class="kpi-value mt-1">{positionCount}<span class="ml-1 text-sm font-semibold">種職務</span></dd>
-            <p class="mt-1 text-xs hero-muted">公投第 22 案同日舉行，不計入這 {positionCount} 種地方公職。</p>
+            <p class="mt-1 text-xs hero-description">公投第 22 案同日舉行，不計入這 {positionCount} 種地方公職。</p>
           </div>
           <div>
-            <dt class="text-sm hero-muted">本站收錄候選人</dt>
+            <dt class="hero-description text-sm">本站收錄候選人</dt>
             <dd class="kpi-value mt-1">{candidateCount.toLocaleString()}</dd>
-            <p class="mt-1 text-xs hero-muted">來源：中選會及各縣市選委會公告。不是推薦名單。</p>
+            <p class="mt-1 text-xs hero-description">來源：中選會及各縣市選委會公告。不是推薦名單。</p>
           </div>
           <div>
-            <dt class="text-sm hero-muted">資料更新</dt>
+            <dt class="hero-description text-sm">資料更新</dt>
             <dd class="kpi-value mt-1 text-2xl">{updatedAt}</dd>
-            <p class="mt-1 text-xs hero-muted">來源：中選會及各縣市選委會公告。</p>
+            <p class="mt-1 text-xs hero-description">來源：中選會及各縣市選委會公告。</p>
           </div>
         </dl>
       </section>
@@ -78,6 +79,7 @@ const quickLinks = [
       </ul>
     </nav>
 
+    <div class="grid items-start gap-6 lg:grid-cols-2">
     <section aria-labelledby="timeline-title">
       <h2 id="timeline-title" class="section-title">選舉時程</h2>
       <p class="mt-1 text-sm text-secondary">狀態依目前頁面已記載的公告用語，推估日期標為預計。</p>
@@ -121,7 +123,7 @@ const quickLinks = [
         <h2 id="guide-title" class="section-title">投票指南</h2>
         <a href={`${baseUrl}voting-day/`} class="btn btn-secondary">完整說明</a>
       </div>
-      <ul class="mt-2 grid gap-2 md:grid-cols-2">
+      <ul class="mt-2 grid gap-2">
         <li class="ui-card">
           <h3 class="font-semibold text-strong">投票時間</h3>
           <p class="mt-2 text-sm text-secondary tabular-nums">2026-11-28（六）08:00–16:00</p>
@@ -140,6 +142,7 @@ const quickLinks = [
         </li>
       </ul>
     </section>
+    </div>
 
     <section class="ui-card" aria-labelledby="tribute-title">
       <h2 id="tribute-title" class="section-title">知識來源・特別致敬</h2>

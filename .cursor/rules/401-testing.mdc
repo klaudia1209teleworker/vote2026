@@ -1,0 +1,135 @@
+---
+description: 測試與程式碼品質規範
+globs:
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+alwaysApply: false
+---
+
+# 測試注意事項
+
+本檔**不指定**專案必須用 Vitest 或 Jest。以 `package.json` 既有測試工具為準；下列為各情境注意事項。
+
+## 測試工具
+
+| 專案情境 | 注意事項 |
+|----------|----------|
+| **Vite + React**，尚無測試或正在新開測試 | 優先 **Vitest** + React Testing Library（與 `vite.config` 共用、ESM／TS 較順） |
+| **已在用 Jest 且運作正常** | **不要**為了本檔遷移 |
+| **Next.js** | 兩者皆可；無 Jest 投資時可優先 Vitest。設定須對齊該專案的 Next／bundler，不要照搬下方純 Vite 範例卻不改路徑 |
+| **Expo／React Native** | 跟隨專案既有（Jest／Jest-Expo 等），不要改成 Vitest 除非使用者要求 |
+
+- 單元測試：跟隨上表（Vitest 或既有 Jest）+ React Testing Library
+- E2E 測試：Playwright（可選；專案已有其他 E2E 則維持）
+
+### Vitest 設定範例（Vite 專案）
+
+```typescript
+// vitest.config.ts
+import { defineConfig, mergeConfig } from 'vitest/config';
+import viteConfig from './vite.config';
+
+export default mergeConfig(
+  viteConfig,
+  defineConfig({
+    test: {
+      environment: 'jsdom',
+      setupFiles: ['./src/test/setup.ts'],
+      // 不使用 globals: true，一律明確 import describe/it/expect，
+      // 避免額外依賴全域型別宣告，與本專案「型別必須明確」的原則一致
+      globals: false,
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'html'],
+      },
+    },
+  }),
+);
+```
+
+```typescript
+// src/test/setup.ts
+import '@testing-library/jest-dom/vitest';
+```
+
+```typescript
+// 測試檔一律明確 import，不依賴 globals
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+```
+
+```json
+// package.json
+{
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  }
+}
+```
+
+### 既有 Jest 專案（維持現況時）
+
+若專案尚未遷移，維持原設定即可，不需要為了跟上這份規則而強行更動：
+
+- 單元測試：Jest + React Testing Library
+- Mock 語法（`jest.fn()` / `jest.mock()`）與 Vitest（`vi.fn()` / `vi.mock()`）僅命名空間不同，其餘 API 概念一致，未來要遷移時可直接對照替換
+
+## 檔案命名
+
+- 測試檔案與原始碼放在同一目錄
+- 命名為 `*.test.ts(x)` 或 `*.spec.ts(x)`
+
+## 測試覆蓋要求
+
+- 關鍵業務邏輯需有測試覆蓋
+- 工具函數應有單元測試
+- 公開 API 需有整合測試
+
+## 測試命名規範
+
+```typescript
+import { describe, it, expect } from 'vitest'; // 既有 Jest 專案可省略此行
+
+describe('UserService', () => {
+  describe('getById', () => {
+    it('should return user when valid id is provided', async () => {
+      // ...
+    });
+
+    it('should return null when user not found', async () => {
+      // ...
+    });
+
+    it('should throw error when id is invalid', async () => {
+      // ...
+    });
+  });
+});
+```
+
+## 註解規範
+
+### JSDoc
+
+```typescript
+/**
+ * 計算使用者的會員等級
+ * @param points - 累積點數
+ * @returns 會員等級（bronze | silver | gold | platinum）
+ */
+export function calculateMembershipTier(points: number): MembershipTier {
+  // 實作邏輯
+}
+```
+
+### TODO 註解
+
+```typescript
+// TODO(owner): 2026-08-28 優化查詢效能
+// FIXME: 暫時解法，需重構
+// HACK: 繞過第三方套件的限制
+```

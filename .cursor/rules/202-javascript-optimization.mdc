@@ -1,0 +1,113 @@
+---
+description: JavaScript 優化與 Tree Shaking 規範 - 減少未使用的 JavaScript
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/vite.config.ts"
+  - "**/next.config.*"
+alwaysApply: false
+---
+
+# JavaScript 優化注意事項
+
+下列 `vite.config` 範例**僅適用 Vite 專案**。Next.js 用框架預設 minify（Turbopack／swc），不要把 terser／esbuild `drop` 整段搬進 `next.config`。
+
+若專案 Vite 已用預設 esbuild minify，維持即可。**不要**在同一份 config 同時設 `minify: 'terser'` 與 `esbuild.drop`。
+
+## Tree Shaking 配置
+
+```typescript
+// vite.config.ts — 跟隨 Vite 預設 esbuild minify，不要同時再開 terser
+export default defineConfig({
+  build: {
+    chunkSizeWarningLimit: 500,
+  },
+  esbuild: {
+    drop: ['debugger'],
+    // 正式環境可 drop console；若專案依賴 console.error 做監控則不要 drop 全部
+    pure: ['console.log', 'console.debug', 'console.info'],
+  },
+});
+```
+
+## 第三方套件按需導入
+
+```typescript
+// ❌ 錯誤：導入整個套件
+import _ from 'lodash';
+import * as Icons from 'lucide-react';
+import moment from 'moment';
+
+// ✅ 正確：按需導入
+import debounce from 'lodash/debounce';
+import { Search, Menu, X } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
+```
+
+## 輕量替代方案
+
+| 原套件 | 大小 | 替代方案 | 大小 |
+|--------|------|----------|------|
+| moment.js | 67KB | date-fns / dayjs | 2-3KB |
+| lodash | 71KB | lodash-es (按需) | 依使用 |
+| axios | 13KB | fetch API | 原生 |
+
+## 動態導入重型套件
+
+```typescript
+export async function loadChartLibrary() {
+  const { Chart, registerables } = await import('chart.js');
+  Chart.register(...registerables);
+  return Chart;
+}
+
+export async function loadPDFLibrary() {
+  const pdfMake = await import('pdfmake/build/pdfmake');
+  const pdfFonts = await import('pdfmake/build/vfs_fonts');
+  pdfMake.default.vfs = pdfFonts.default.pdfMake.vfs;
+  return pdfMake.default;
+}
+```
+
+## 條件式載入 Polyfills
+
+```typescript
+export async function loadPolyfillsIfNeeded(): Promise<void> {
+  const polyfills: Promise<unknown>[] = [];
+
+  if (!('IntersectionObserver' in window)) {
+    polyfills.push(import('intersection-observer'));
+  }
+  if (!('ResizeObserver' in window)) {
+    polyfills.push(import('resize-observer-polyfill'));
+  }
+
+  await Promise.all(polyfills);
+}
+```
+
+## 未使用導出檢測
+
+```bash
+# 使用 ts-prune 檢測
+npm install -D ts-prune
+npx ts-prune --error
+```
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  }
+}
+```
+
+## Bundle Size 限制
+
+| 類型 | 警告門檻 | 錯誤門檻 |
+|------|----------|----------|
+| 單一 JS chunk | 150KB | 250KB |
+| 總 JS 大小 | 300KB | 500KB |
+| 總 CSS 大小 | 100KB | 150KB |

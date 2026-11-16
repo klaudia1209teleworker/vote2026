@@ -1,0 +1,60 @@
+---
+description: Claude Design 規則的掛載方式、與編號規則並存；不指定專案技術棧
+globs:
+alwaysApply: true
+---
+
+# Claude Design 與外部 Cursor Rules 整合
+
+本檔說明如何將 **Claude Design** 的 `_handoff.mdc`、`_stack.mdc`、`ci.mdc` 與本倉庫編號規則並存。**不指定**專案必須使用 Next.js 或 Vite；技術棧以目標專案為準（見 `000-core-workflow.mdc`）。
+
+## 1. 優先順序（發生衝突時）
+
+由嚴格到寬鬆：
+
+1. **專案事實**（`package.json`、既有架構、`rules/project/`）與 **`000-core-workflow.mdc`**
+2. **編號規則中與本專案技術相關的注意事項**（`001`–`401` 等）
+3. **`claude-design/`**：設計交付與 **Next.js 注意事項**（僅當專案使用 Next.js／該流程時）；若與 1、2 牴觸，**不得覆寫**，應改寫或 stub
+
+若無法判斷是否牴觸，依 `000`：**先詢問再行動**。
+
+`AGENTS.md`／`CLAUDE.md` 與 `.mdc` 的分工見 `049-agents-md.mdc`。Claude Design **不得**寫進 `AGENTS.md` 完整版，只在索引留連結。
+
+三件套**內部**（僅在該資料夾啟用時）：`ci.mdc`（品牌 token）> `_handoff.mdc`（轉檔流程）> `_stack.mdc`（Next.js 注意事項）。
+
+## 2. 本倉庫實際掛載方式（請以此為準）
+
+Cursor 讀取 **`.cursor/rules/`**（含子資料夾）的 `.mdc`。本倉庫已將三件套放在 **`.cursor/rules/claude-design/`**，**不要**再改名成根目錄的 `051`–`053`（舊建議已廢棄，以免與現況兩套說法並存）。
+
+| 檔案 | 角色 | 何時載入 |
+|------|------|----------|
+| `claude-design/_handoff.mdc` | 設計稿 → 元件的轉換步驟 | `design-input/**/*`（改元件時不自動載入） |
+| `claude-design/_stack.mdc` | **Next.js 注意事項**（版本陷阱、App Router 寫法） | **僅**專案出現 Next 相關檔時（`alwaysApply: false`） |
+| `claude-design/ci.mdc` | 品牌色票／字型 token | 範本預設不 alwaysApply；**填完色票後**由該專案改為 `alwaysApply: true` |
+
+**不需要 Claude Design 的專案**：複製規則時不要帶 `claude-design/`，或複製後整包刪除。
+
+**需要轉檔、但專案不是 Next.js**：保留 `_handoff` 與填好的 `ci.mdc`；`_stack` 不會因 Vite／Expo 專案而 alwaysApply。轉檔輸出路徑必須對齊**該專案**既有目錄（見 `_handoff.mdc`），不要為了規則改成 `src/app/`。
+
+### 若從上游 starter 重新匯入
+
+比對 `claude-design/` 內三檔即可，保留本檔「專案事實優先、不指定棧」。不要把 starter 再拆成 `051`–`053`，除非團隊明確無法使用子資料夾。
+
+## 3. 與編號規則的關係（注意事項，非選棧）
+
+| 主題 | 以哪裡為準 |
+|------|------------|
+| 技術棧本身 | **目標專案**（`package.json`、既有程式、`project/`、`AGENTS.md` 填空） |
+| TypeScript／React 寫法 | `100-typescript-react.mdc`（與 bundler 無關的注意事項） |
+| Firebase | `101-firebase.mdc`（僅當專案使用 Firebase） |
+| Next.js 版本陷阱 | `claude-design/_stack.mdc`（僅當專案使用 Next.js；先讀 `package.json` 的 `next` 版本） |
+| 部署／ESLint | `001-deployment.mdc`（依專案 linter／框架選對應注意事項） |
+| Git | `400-git-commit.mdc` |
+
+接手 Next.js 時：若仍為 14／15，依 `_stack` 文末相容表**先詢問**是否升級或沿用舊寫法，不要直接套用 `proxy.ts`、async `params`、禁止 `next lint` 等 16 專屬注意事項。
+
+## 4. 同步 starter 更新時
+
+1. 比對 `claude-design/` 三檔（或團隊實際路徑）。
+2. 保留「不指定技術棧、專案事實優先」。
+3. 更新本檔或 `rules/README.md` 的檔案清單（若有新增／更名）。

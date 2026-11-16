@@ -1,0 +1,75 @@
+---
+description: CSS 優化與未使用程式碼移除規範
+globs:
+  - "**/*.css"
+  - "**/postcss.config.*"
+  - "**/tailwind.config.*"
+  - "**/vite.config.ts"
+  - "**/next.config.*"
+alwaysApply: false
+---
+
+# CSS 優化注意事項
+
+下列範例以 **Vite + Tailwind** 常見設定為主。**Next.js** 請用該專案的 `postcss`／Tailwind 設定，不要為了本檔加一套 Vite-only 插件。
+
+**Tailwind v3+** 用 `content` 掃描即可，**不要**再加 PurgeCSS。v4 用 CSS-first `@theme`，對齊專案既有寫法。非 Tailwind 且專案**已經**在用 PurgeCSS 時才維持該套件，不要為了本檔新裝。
+
+## CSS Minify 與合併
+
+```typescript
+// vite.config.ts
+export default defineConfig({
+  build: {
+    cssMinify: 'lightningcss',
+    cssCodeSplit: true,
+  },
+});
+```
+
+## Tailwind CSS 優化（v3 `content`；v4 對齊專案 `@theme`）
+
+Vite + Tailwind v3 範例（不要為了本檔關掉專案仍在用的 corePlugins）：
+
+```typescript
+// tailwind.config.ts
+const config: Config = {
+  content: [
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+    '!./src/**/*.test.{js,ts,jsx,tsx}',
+  ],
+};
+```
+
+## 動態載入非關鍵 CSS
+
+```typescript
+export function loadCSS(href: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`link[href="${href}"]`)) {
+      resolve();
+      return;
+    }
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    link.onload = () => resolve();
+    link.onerror = () => reject(new Error(`Failed to load: ${href}`));
+    document.head.appendChild(link);
+  });
+}
+```
+
+## Stylelint 規則
+
+```javascript
+// stylelint.config.js
+export default {
+  rules: {
+    'no-duplicate-selectors': true,
+    'declaration-block-no-duplicate-properties': true,
+    'block-no-empty': true,
+  },
+};
+```

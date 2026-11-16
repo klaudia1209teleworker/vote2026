@@ -1,0 +1,362 @@
+---
+description: 渲染架構與 SEO 可見性規範 - 確保網站能被搜尋引擎收錄
+globs:
+  - "**/vite.config.ts"
+  - "**/next.config.*"
+  - "**/nuxt.config.*"
+  - "**/App.tsx"
+  - "**/main.tsx"
+  - "**/index.html"
+alwaysApply: false
+---
+
+# 渲染架構與 SEO 可見性注意事項
+
+**不要為了 SEO 更換技術棧。** 專案已是 Vite SPA，用預渲染／SSR 外掛或動態預渲染；已是 Next／Nuxt／Astro，用該框架既有 SSG／SSR／ISR。遷移框架須使用者明確要求。
+
+## ⚠️ 核心問題
+
+使用純前端框架（React、Vue）建立的網站，預設採用 **CSR（Client-side Rendering）**：
+- 頁面內容由 JavaScript 在瀏覽器端動態產生
+- HTML 原始碼幾乎是空白的（只有 `<div id="root">`）
+- 部分爬蟲與社群爬蟲**不執行或延遲執行** JavaScript，會當成內容不足
+- Google 會渲染 JS，但有延遲與失敗風險；關鍵內容仍應出現在首屏 HTML（SSR／SSG／預渲染）
+- 結果：索引不穩、AI 搜尋與部分引擎看不到內容
+
+```html
+<!-- ❌ CSR 網站的 HTML - 爬蟲看到的是這個 -->
+<!DOCTYPE html>
+<html>
+  <head><title>My App</title></head>
+  <body>
+    <div id="root"></div>
+    <script src="/assets/main.js"></script>
+  </body>
+</html>
+<!-- 若未預渲染／SSR，部分爬蟲與社群機器人看到的就是接近空白的 HTML -->
+```
+
+## 🎯 誰需要關注這個問題
+
+| 網站類型 | 需要 SEO | 建議架構 |
+|----------|----------|----------|
+| Landing Page / 行銷頁面 | ✅ 必須 | SSR / SSG |
+| 部落格 / 內容網站 | ✅ 必須 | SSR / SSG |
+| 個人品牌 / 作品集 | ✅ 必須 | SSR / SSG |
+| 電商產品頁 | ✅ 必須 | SSR / SSG |
+| 後台管理系統 | ❌ 不需要 | CSR 可接受 |
+| 內部工具 / Dashboard | ❌ 不需要 | CSR 可接受 |
+| 線上遊戲 / 互動應用 | ❌ 不需要 | CSR 可接受 |
+
+## 📊 渲染架構比較
+
+| 架構 | 全名 | SEO 友善 | 說明 |
+|------|------|----------|------|
+| **CSR** | Client-side Rendering | ❌ | 瀏覽器端渲染，爬蟲看不到內容 |
+| **SSR** | Server-side Rendering | ✅ | 伺服器端渲染，每次請求即時產生 HTML |
+| **SSG** | Static Site Generation | ✅ | 建構時預先產生靜態 HTML |
+| **ISR** | Incremental Static Regeneration | ✅ | SSG + 定期更新 |
+
+## ✅ 解決方案
+
+### 方案一：使用 SSR/SSG 框架（推薦）
+
+#### Next.js（僅當專案已是 Next.js）
+
+**App Router**（對齊 `_stack.mdc`；`params` 須 `await`）：
+
+```tsx
+// app/page.tsx 或 src/app/page.tsx
+export default async function HomePage() {
+  const data = await fetchData()
+  return (
+    <main>
+      <h1>我的網站</h1>
+      <p>{data.description}</p>
+    </main>
+  )
+}
+```
+
+**若專案仍為 Pages Router**（不要為了本檔改 App Router）：
+
+```tsx
+// pages/index.tsx
+export async function getServerSideProps() {
+  const data = await fetchData();
+  return { props: { data } };
+}
+
+export default function HomePage({ data }) {
+  return (
+    <main>
+      <h1>我的網站</h1>
+      <p>{data.description}</p>
+    </main>
+  );
+}
+```
+
+#### Nuxt.js（Vue）
+
+```vue
+<!-- pages/index.vue -->
+<script setup>
+// 自動 SSR
+const { data } = await useFetch('/api/data');
+</script>
+
+<template>
+  <main>
+    <h1>我的網站</h1>
+    <p>{{ data.description }}</p>
+  </main>
+</template>
+```
+
+#### Astro（多框架支援）
+
+```astro
+---
+// src/pages/index.astro
+// 預設就是 SSG，零 JavaScript
+const data = await fetchData();
+---
+
+<html>
+  <head><title>我的網站</title></head>
+  <body>
+    <h1>我的網站</h1>
+    <p>{data.description}</p>
+  </body>
+</html>
+```
+
+### 方案二：Vite 專案加預渲染（專案已是 Vite 時）
+
+如果已使用純 React + Vite，可加入預渲染：
+
+```typescript
+// vite.config.ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import prerender from '@prerenderer/rollup-plugin';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    prerender({
+      routes: ['/', '/about', '/products', '/contact'],
+      renderer: '@prerenderer/renderer-puppeteer',
+      rendererOptions: {
+        maxConcurrentRoutes: 4,
+        renderAfterTime: 500,
+      },
+      postProcess(renderedRoute) {
+        // 注入 SEO 相關 meta
+        renderedRoute.html = renderedRoute.html.replace(
+          '</head>',
+          `<meta name="prerender-status-code" content="200"></head>`
+        );
+        return renderedRoute;
+      },
+    }),
+  ],
+});
+```
+
+### 方案三：動態預渲染服務
+
+使用預渲染服務為爬蟲提供靜態 HTML：
+
+```typescript
+// 使用 prerender.io 或類似服務
+// 在伺服器端檢測爬蟲並返回預渲染版本
+
+// firebase.json
+{
+  "hosting": {
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "prerenderHandler"
+      }
+    ]
+  }
+}
+```
+
+```typescript
+// functions/src/prerender.ts
+import * as functions from 'firebase-functions';
+
+const BOT_AGENTS = [
+  'googlebot',
+  'bingbot',
+  'yandex',
+  'baiduspider',
+  'facebookexternalhit',
+  'twitterbot',
+  'linkedinbot',
+  'slackbot',
+  'telegrambot',
+  'applebot',
+  'oai-searchbot',
+  'chatgpt-user',
+  'gptbot',
+  'claude-searchbot',
+  'claude-user',
+  'claudebot',
+  'perplexitybot',
+  'perplexity-user',
+];
+
+export const prerenderHandler = functions.https.onRequest(async (req, res) => {
+  const userAgent = req.headers['user-agent']?.toLowerCase() || '';
+  const isBot = BOT_AGENTS.some(bot => userAgent.includes(bot));
+
+  if (isBot) {
+    // 返回預渲染的靜態 HTML
+    const prerenderUrl = `https://your-prerender-service.com/render?url=${encodeURIComponent(req.url)}`;
+    const response = await fetch(prerenderUrl);
+    const html = await response.text();
+    res.send(html);
+  } else {
+    // 正常用戶返回 SPA
+    res.sendFile('index.html');
+  }
+});
+```
+
+## 🔍 如何檢查網站是否被收錄
+
+### 方法一：Google 搜尋（10 秒快速檢查）
+
+```
+site:你的網址
+```
+
+例如：`site:example.com`
+
+- ✅ 有結果 → 已被收錄
+- ❌ 「找不到任何結果」→ 未被收錄，中招了！
+
+### 方法二：查看原始碼
+
+```bash
+# 在瀏覽器中按 Ctrl+U (Windows) 或 Cmd+Option+U (Mac)
+# 或右鍵 → 檢視網頁原始碼
+
+# 搜尋頁面上可見的文字
+# ✅ 找得到 → SSR/SSG，爬蟲看得到
+# ❌ 找不到 → CSR，爬蟲看不到
+```
+
+### 方法三：使用 curl 模擬爬蟲
+
+```bash
+curl -s https://你的網址 | grep -o '<h1>.*</h1>'
+
+# 如果輸出為空或只有框架代碼，代表是 CSR
+```
+
+### 方法四：Google Search Console
+
+1. 前往 https://search.google.com/search-console
+2. 添加你的網站
+3. 查看「涵蓋範圍」報告
+4. 確認哪些頁面被收錄、哪些被排除
+
+### 方法五：使用「網址檢查」工具
+
+1. 在 Google Search Console 中
+2. 輸入要檢查的網址
+3. 點擊「測試線上網址」
+4. 查看「已檢索的網頁」預覽
+
+## 📋 開發前檢查清單
+
+```markdown
+### 專案啟動前必問
+
+- [ ] 這個網站需要被 Google 搜尋到嗎？
+- [ ] 這個網站需要被 AI 搜尋工具（ChatGPT、Perplexity）推薦嗎？
+- [ ] 這個網站會透過社群分享，需要好的 OG 預覽嗎？
+
+### 如果以上任一項為「是」
+
+- [ ] 使用 SSR/SSG 框架（Next.js、Nuxt.js、Astro）
+- [ ] 或為現有 SPA 加入預渲染
+- [ ] 確保關鍵內容在 HTML 原始碼中可見
+- [ ] 設定完整的 meta tags 和 Open Graph
+- [ ] 提交 sitemap.xml 到 Google Search Console
+```
+
+## 🚨 使用 AI 工具（Vibe Coding）時的提示詞
+
+當使用 Cursor、Lovable、Bolt、v0 等工具時，**明確要求 SSR**：
+
+```
+請使用 Next.js 的 SSR 模式建立這個網站，
+確保所有頁面內容在伺服器端就渲染完成，
+讓搜尋引擎爬蟲可以直接讀取 HTML 內容。
+不要使用純 CSR（Client-side Rendering）。
+```
+
+或：
+
+```
+這是一個需要 SEO 的行銷網站，
+請確保：
+1. 使用 SSR 或 SSG 架構
+2. HTML 原始碼包含完整的頁面內容
+3. 設定正確的 meta tags 和 structured data
+4. 產生 sitemap.xml
+```
+
+## ⚡ 不同情境的架構選擇
+
+```
+需要 SEO 嗎？
+    │
+    ├─ 是 → 內容多久更新一次？
+    │         │
+    │         ├─ 很少更新（部落格、Landing Page）→ SSG
+    │         │
+    │         ├─ 經常更新（新聞、電商）→ SSR 或 ISR
+    │         │
+    │         └─ 即時資料（股價、社群）→ SSR + CSR 混合
+    │
+    └─ 否 → 純 CSR 可以接受
+              （後台系統、內部工具、遊戲）
+```
+
+## 📚 框架推薦
+
+| 原框架 | 若需要 SSR／SSG 且**使用者同意改棧** |
+|--------|------------------|
+| React (Vite) | Next.js、React Router 7、Astro |
+| Vue (Vite) | Nuxt.js、Astro |
+| 純 HTML/JS | Astro、11ty |
+| WordPress | 維持 WordPress（本身 SSR） |
+
+未獲同意前，在現有棧上做預渲染／meta，不要自行換框架。
+
+## ⚠️ 常見錯誤認知
+
+```
+❌ 「我有設定 meta tags，SEO 應該沒問題」
+   → meta tags 也是用 JS 動態產生的，爬蟲一樣看不到
+
+❌ 「Google 會執行 JavaScript，所以 CSR 沒問題」
+   → Google 會渲染但有延遲與失敗；其他引擎與多數 AI 爬蟲往往不執行 JS
+   → 需要 SEO 的頁面仍應讓關鍵內容出現在 HTML
+
+❌ 「我不靠 SEO，都用社群導流」
+   → 有人 Google 你的名字/品牌搜不到，信任感直接打折
+   → AI 搜尋工具（ChatGPT、Perplexity）也抓不到你的內容
+
+❌ 「網站看起來正常，應該沒問題」
+   → 你看到的是瀏覽器執行 JS 後的結果
+   → 爬蟲看到的是原始 HTML，可能是空白的
+```

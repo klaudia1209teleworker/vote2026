@@ -1,0 +1,86 @@
+---
+description: 核心開發流程規範 - 所有開發作業必須遵循的基礎規則
+globs:
+alwaysApply: true
+---
+
+# 核心開發流程規範
+
+## ⚠️ 最高優先級規則
+
+### 0. 技術棧以目標專案為準（共用規則不指定棧）
+
+共用規則**只寫各技術的注意事項與陷阱**，**不**規定專案必須使用 Vite、Next.js、Firebase、Expo 或任何一套預設棧。
+
+- **判定方式**：讀 `package.json`（及 lockfile）、既有目錄（`src/app`／`src/pages`／`vite.config.*`／`next.config.*`）、`rules/project/`（若有）、根目錄 `AGENTS.md` 的「專案基本資訊」
+- **禁止**：為了「對齊共用規則」而更換框架、bundler、路由模式、後端或目錄結構
+- **套用方式**：只套用**與本專案實際使用之技術**對應的注意事項（例如專案是 Next.js 16 才套用 `proxy.ts`／async `params`；專案是 Vite SPA 則不要引入 App Router 寫法）
+- 無法判定、或規則注意事項與現況衝突時：**先詢問再行動**
+
+衝突時優先序（由嚴到寬）見 `049-agents-md.mdc`：專案事實／`project/` → 本檔 → 其餘已載入的注意事項 → `AGENTS.md` 摘要。
+
+### 1. 依據 .cursor 目錄文件進行開發
+
+- **必須**先閱讀本檔，以及與**本次工作／本專案技術**相關的 `.mdc`（依 `alwaysApply`／`globs`／使用者 `@`）。**不要**為了開工而讀遍所有技術棧注意事項
+- 專案根目錄若有 **`AGENTS.md`**，該檔為跨工具總則（摘要）。衝突時以**專案事實**與本檔／已載入注意事項為準（見 `049-agents-md.mdc`），並同步摘要。**禁止**在 `AGENTS.md` 與對應 `.mdc` 各寫一份完整規範
+- 若專案使用 **Claude Design**（`.cursor/rules/claude-design/`），一併遵守 `050-claude-design-rules.mdc`；與本核心流程牴觸時以本檔為準。**未使用**該流程的專案不必載入或遷就 `_stack`／`_handoff`
+- **介面與使用者可見文案**委派 GPT、**規格抓漏**委派 Claude、程式結構與改檔留主代理；僅高門檻需求才開，且同一件事各最多一次。見 `003-ui-design-delegation.mdc`
+- 開發過程中若遇到以下情況，**必須優先詢問並確認，切勿自行採取行動**：
+  - 文件描述與實際程式碼有衝突
+  - 文件描述不夠完整或有歧義
+  - 需要做出架構層級的決策（含更換技術棧）
+  - 不確定某項變更是否符合專案規範
+
+```
+⛔ 禁止行為：
+- 在未確認的情況下自行解讀模糊需求
+- 擅自修改已定義的架構或流程
+- 忽略 .cursor 文件中的既有規範
+
+✅ 正確行為：
+- 主動提出疑問並等待確認
+- 列出可能的選項供決策
+- 保持與文件的一致性
+```
+
+### 2. 同步更新 .cursor 目錄文件
+
+每次進行程式碼變更後，**必須**同步更新 `.cursor/rules/` 目錄中的相關 `.mdc` 文件：
+
+- 新增的功能模組或元件
+- API 端點變更
+- 資料結構調整
+- 環境變數新增或修改
+- 第三方套件的新增或移除
+- 重要的技術決策與原因
+- 若變更影響跨工具總則，同步根目錄 `AGENTS.md` 對應**摘要**（禁止與 `.mdc` 雙寫完整規範；見 `049-agents-md.mdc`）
+
+### 3. APP 開發驗證流程（iOS／Android）
+
+若專案為 **APP**（含 Expo Dev Client、React Native 等），功能或介面修正後**必須**依 `002-app-development.mdc` 三階段順序執行：
+
+1. **Dev Client（模擬器）** — 優先讓用戶確認介面調整
+2. **Dev Client（真機）** — 通過介面確認後，驗證讀寫與權限流程
+3. **Commit 與 Release** — 兩階段皆通過且用戶要求提交時，commit／push；release 產物依平台（**iOS → .ipa**，**僅 Android → aab／apk**，見 `002`），更新 `version` 與對應建置序號；GitHub Release 用日期制 tag
+
+**不得**跳過模擬器或真機確認直接 commit／發佈 release。
+
+### 4. 推送 GitHub 必須同步 Release Note
+
+當用戶要求「推送到 GitHub」或部署流程含 `git push`（通常為 `main`／release 分支）時，**必須**於 push 成功後依 `400-git-commit.mdc` 以 **日期制 tag**（`vYYYY.MM.DD`，同日多次為 `-2`、`-3`…）建立 **GitHub Release**（含完整 Release Notes），並回報 Release URL。  
+**不得**只 push、不建 Release。feature branch 暫存 push（用戶未要求正式推送）不在此限。
+
+### 5. 變更檢查清單
+
+```markdown
+- [ ] 是否已依 `package.json`／既有目錄判定技術棧，且未為了共用規則改棧？
+- [ ] 是否需要更新架構文件？
+- [ ] API 文件是否反映最新端點？
+- [ ] 環境變數文件是否完整？
+- [ ] 元件文件是否包含新增元件？
+- [ ] 變更日誌是否已記錄？
+- [ ] （跨工具總則有變）是否已同步根目錄 `AGENTS.md` 摘要？（禁止與 `.mdc` 雙寫完整規範；見 049-agents-md）
+- [ ] （用戶要求推送／部署 push）是否已建立 GitHub Release（日期制 tag）並回報 URL？（見 400-git-commit）
+- [ ] （APP 專案）是否已完成模擬器與真機 Dev Client 驗證？（見 002-app-development）
+- [ ] （APP release）是否已更新 `version` 與對應建置序號、依平台產出 ipa 或 aab／apk 至 `releases/`？（見 002-app-development）
+```

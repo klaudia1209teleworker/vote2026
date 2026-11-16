@@ -174,7 +174,7 @@ const districtPageUrl = (() => {
   }
   
   if (positionId === 'councilor-municipal' || positionId === 'councilor-county') {
-    const districtName = candidate.districtOfficial || candidate.district;
+    const districtName = candidate.district || candidate.districtOfficial;
     if (districtName) {
       return `${baseUrl}candidates/district/${positionId}/${encodeURIComponent(city)}/${encodeURIComponent(districtName)}/`;
     }
@@ -197,12 +197,6 @@ const districtPageUrl = (() => {
   
   return `${baseUrl}candidates/`;
 })();
-
-const pageTitle = `${candidate.name} - ${positionName}候選人`;
-const pageUrl = `https://klaudia1209teleworker.github.io/vote2026/candidates/${encodeURIComponent(candidate.county)}-${encodeURIComponent(candidate.position)}-${encodeURIComponent(candidate.district || candidate.districtOfficial || '')}-${encodeURIComponent(candidate.name)}/`;
-const reportSubject = encodeURIComponent(`[勘誤] ${candidate.name}`);
-const reportBody = encodeURIComponent(`頁面網址：${pageUrl}\n\n哪裡有錯：\n\n正確內容：\n\n官方來源連結：\n`);
-const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${reportSubject}&body=${reportBody}`;
 ---
 
 <Layout title={`${candidate.name} - ${positionName}候選人`} description={`${candidate.county}${candidate.district || ''} ${positionName}候選人 ${candidate.name}`}>
@@ -398,10 +392,58 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
               tooltip={
                 attendancePlenary != null
                   ? `分子：大會出席${attendanceCounts ? ` ${attendanceCounts.attended} 場／應出席 ${attendanceCounts.denominator} 場` : '率'}。分母：同選區（${candidate.districtOfficial || candidate.district || candidate.county}）有出席率資料的現任者平均（n=${districtAvg?.sampleSize.attendancePlenary ?? 0}）。請假與缺席留在分母；同一場兩份名單都有的場次已剔除。委員會未計算。`
-                  : `目前無可用出席率數值。${attendanceLabel || '議會未公開可統計資料或尚未整理'}。分母同樣僅在有數值時計算。`
+                  : `目前無可用出席率數值。${attendanceLabel}。分母同樣僅在有數值時計算。`
               }
               footnote={attendanceFootnote}
             />
+          </div>
+        </div>
+
+        <div class="ui-card overflow-hidden p-0">
+          <div class="border-b border-line bg-muted px-4 py-2">
+            <h3 class="text-sm font-semibold text-strong">提案</h3>
+          </div>
+          <div class="space-y-3 px-4 py-3">
+            <MetricWithTooltip
+              label="提案數量"
+              ratio={formatMetricRatio(proposalCount, districtAvg?.proposals ?? null, { digits: 1 })}
+              tooltip={`分子：此候選人提案筆數${incumbent.proposals?.kind === 'unspecified' ? '（議會未區分提案人／連署）' : '（以提案人計）'}。分母：同選區有提案筆數的現任者平均（n=${districtAvg?.sampleSize.proposals ?? 0}）。`}
+              footnote={
+                incumbent.proposals?.asCoSigner && (incumbent.proposals.asCoSigner.count ?? 0) > 0
+                  ? `另有連署 ${incumbent.proposals.asCoSigner.count} 筆（不計入上方提案數量）`
+                  : incumbent.proposals?.note || undefined
+              }
+            />
+
+            {proposalList.length > 0 ? (
+              <ExpandableRecordList items={proposalList} initialCount={5} />
+            ) : proposalCount != null ? (
+              <div class="text-sm text-neutral-600 space-y-1">
+                <p>共 {proposalCount} 筆（明細尚未整理或僅有彙總）</p>
+                {incumbent.proposals?.sourceUrl && (
+                  <a
+                    href={incumbent.proposals.sourceUrl}
+                    target="_blank"
+                    rel="noopener"
+                    class="text-xs underline text-neutral-600 inline-block"
+                  >
+                    議會議決案目錄
+                  </a>
+                )}
+                {incumbent.proposals?.asProposer?.sourceUrl && (
+                  <a
+                    href={incumbent.proposals.asProposer.sourceUrl}
+                    target="_blank"
+                    rel="noopener"
+                    class="text-xs underline text-neutral-600 inline-block"
+                  >
+                    完整紀錄
+                  </a>
+                )}
+              </div>
+            ) : (
+              <p class="text-sm text-neutral-500">無公開明細</p>
+            )}
           </div>
         </div>
 
@@ -457,54 +499,6 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
               >
                 完整紀錄（議會官網）
               </a>
-            )}
-          </div>
-        </div>
-
-        <div class="ui-card overflow-hidden p-0">
-          <div class="border-b border-line bg-muted px-4 py-2">
-            <h3 class="text-sm font-semibold text-strong">提案</h3>
-          </div>
-          <div class="space-y-3 px-4 py-3">
-            <MetricWithTooltip
-              label="提案數量"
-              ratio={formatMetricRatio(proposalCount, districtAvg?.proposals ?? null, { digits: 1 })}
-              tooltip={`分子：此候選人提案筆數${incumbent.proposals?.kind === 'unspecified' ? '（議會未區分提案人／連署）' : '（以提案人計）'}。分母：同選區有提案筆數的現任者平均（n=${districtAvg?.sampleSize.proposals ?? 0}）。`}
-              footnote={
-                incumbent.proposals?.asCoSigner && (incumbent.proposals.asCoSigner.count ?? 0) > 0
-                  ? `另有連署 ${incumbent.proposals.asCoSigner.count} 筆（不計入上方提案數量）`
-                  : incumbent.proposals?.note || undefined
-              }
-            />
-
-            {proposalList.length > 0 ? (
-              <ExpandableRecordList items={proposalList} initialCount={5} />
-            ) : proposalCount != null ? (
-              <div class="text-sm text-neutral-600 space-y-1">
-                <p>共 {proposalCount} 筆（明細尚未整理或僅有彙總）</p>
-                {incumbent.proposals?.sourceUrl && (
-                  <a
-                    href={incumbent.proposals.sourceUrl}
-                    target="_blank"
-                    rel="noopener"
-                    class="text-xs underline text-neutral-600 inline-block"
-                  >
-                    議會議決案目錄
-                  </a>
-                )}
-                {incumbent.proposals?.asProposer?.sourceUrl && (
-                  <a
-                    href={incumbent.proposals.asProposer.sourceUrl}
-                    target="_blank"
-                    rel="noopener"
-                    class="text-xs underline text-neutral-600 inline-block"
-                  >
-                    完整紀錄
-                  </a>
-                )}
-              </div>
-            ) : (
-              <p class="text-sm text-neutral-500">無公開明細</p>
             )}
           </div>
         </div>
@@ -616,14 +610,6 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
     <p class="text-xs text-neutral-500 border-t border-neutral-200 pt-4">
       資料整理自官方公開來源，附有來源連結供查證。本站不提供評分、排名或比較。
     </p>
-
-    {/* Report Error */}
-    <div class="flex items-center gap-2 text-xs">
-      <a href={reportMailto} class="text-neutral-600 underline hover:text-neutral-800">
-        回報資料錯誤
-      </a>
-      <span class="text-neutral-400">以官方資料核對後修正</span>
-    </div>
 
     <nav class="flex justify-between text-sm pt-4 border-t border-neutral-200">
       <a href={districtPageUrl} class="text-neutral-600 underline hover:text-neutral-800">

@@ -1,0 +1,308 @@
+---
+description: APP 開發與驗證流程 - 模擬器、真機確認後再 commit；iOS 產 ipa、僅 Android 產 aab／apk
+globs:
+  - "**/app.json"
+  - "**/app.config.*"
+  - "**/eas.json"
+  - "**/ios/**"
+  - "**/android/**"
+  - "**/*.xcodeproj/**"
+  - "**/*.xcworkspace/**"
+alwaysApply: false
+---
+
+# APP 開發與驗證流程
+
+本規則適用 **iOS／Android 原生或跨平台 APP**（例如 Expo Dev Client、React Native）。功能修正或介面調整完成後，**必須依下列三階段順序**進行，**不得跳過**前一階段直接 commit 或發佈 release。
+
+與 `001-deployment.mdc`（Web 部署）並行：Web 專案走部署流程；APP 專案走本檔流程。
+
+---
+
+## 流程總覽
+
+```
+功能／介面修正
+    ↓
+① Dev Client（模擬器）→ 用戶確認介面
+    ↓ 通過
+② Dev Client（真機）→ 確認讀寫與權限流程
+    ↓ 通過
+③ Commit → GitHub → Release Build（含 .ipa）→ 版本控制
+```
+
+---
+
+## 階段一：Dev Client（模擬器）— 介面確認
+
+**時機**：每次完成 UI／版面／互動相關修正後，**優先**執行本階段。
+
+**目的**：在低成本環境快速迭代，由用戶確認視覺與操作是否符合預期。
+
+### 必須確認項目
+
+| 類別 | 檢查內容 |
+|------|----------|
+| 版面 | 間距、對齊、字型、色彩 token、深色／淺色模式（若有） |
+| 導覽 | Tab、Stack、Modal 開關與返回行為 |
+| 狀態 | Loading、Empty、Error 等 UI 狀態 |
+| 響應式 | 不同模擬器尺寸（如 iPhone SE、Pro Max） |
+| 無阻斷錯誤 | Metro／Xcode 無紅屏、無阻斷性 crash |
+
+### 建議指令（依專案調整）
+
+```bash
+# Expo Dev Client 範例
+npx expo start --dev-client
+# 於 Xcode Simulator 或 Android Emulator 開啟
+
+# React Native 範例
+npx react-native run-ios
+# 或 npx react-native run-android
+```
+
+### 通過條件
+
+- 用戶**明確表示**介面調整可接受，或列出待修項目且已修復
+- Agent **不得**在用戶未確認介面前進入階段二或 commit
+
+```
+⛔ 禁止：
+- 僅在程式碼層「看起來正確」就跳過模擬器確認
+- 未經用戶確認介面即進入真機或 release 流程
+
+✅ 正確：
+- 啟動 Dev Client（模擬器）並告知用戶如何操作驗證
+- 記錄用戶回饋，修正後重新執行本階段直至通過
+```
+
+---
+
+## 階段二：Dev Client（真機）— 讀寫與權限
+
+**時機**：階段一通過後。
+
+**目的**：模擬器無法完整覆蓋的硬體、權限與資料流程，必須在真機驗證。
+
+### 必須確認項目
+
+| 類別 | 檢查內容 |
+|------|----------|
+| 資料讀寫 | 本地儲存、API、Firebase／後端 CRUD、離線／同步 |
+| 權限 | 相機、相簿、麥克風、定位、推播、藍牙等（依功能需求） |
+| 登入／登出 | OAuth、生物辨識、Session 持久化 |
+| 檔案 | 上傳、下載、分享、快取 |
+| 效能 | 冷啟動、列表捲動、大量資料載入 |
+| 背景行為 | App 切換前後台、推播點擊深連結（若有） |
+
+### 建議指令（依專案調整）
+
+```bash
+# 以實體裝置連線 Dev Client（Expo 範例）
+npx expo start --dev-client
+# 掃描 QR 或透過 Xcode 選擇已連線的 iPhone
+
+# 直接安裝至已連線 iOS 裝置
+npx expo run:ios --device
+```
+
+### 通過條件
+
+- 讀寫流程在真機上**可重現且穩定**
+- 權限請求文案、拒絕／允許後行為符合 PRD 與平台規範
+- 用戶確認可進入 commit 與 release 階段
+
+---
+
+## 階段三：Commit、Release Build 與版本控制
+
+**時機**：階段二通過後；**僅在用戶明確要求時**才執行 commit／push（依 `400-git-commit.mdc`）。
+
+### 步驟 3.1：提交前清理（對齊部署規範）
+
+依 `001-deployment.mdc` 清理調試程式碼與臨時檔案，並修復 ESLint／TypeScript 錯誤：
+
+```bash
+npm run lint
+npm run typecheck   # 若專案有設定
+```
+
+### 步驟 3.2：Commit 至 GitHub
+
+- 遵循 `400-git-commit.mdc` 的 Conventional Commits
+- Commit message 應反映**已通過模擬器與真機驗證**的完整變更
+- **不得** push 至 main／release 分支若階段一或二尚未通過
+- **push 成功後必須**依 `400-git-commit.mdc` 建立 **GitHub Release**（日期制 tag `vYYYY.MM.DD`／同日 `-N`；Notes 註明本次 `version`／`ios.buildNumber`）
+
+```bash
+# 僅在用戶明確要求 commit／push 時執行（見 400）；不要 git add .
+git commit -m "fix(ui): 調整首頁卡片間距並通過模擬器與真機驗證"
+git push origin HEAD
+# 接著：gh release create vYYYY.MM.DD …（見 400-git-commit）
+```
+
+### 步驟 3.3：Release Build（依平台產出）
+
+Release 建置用於商店／TestFlight／內測，產物**不**提交 Git。
+
+| 專案 | 必須產物 | 存放 |
+|------|----------|------|
+| **含 iOS** | `.ipa` | `releases/ios/`（見 3.5） |
+| **僅 Android** | `.aab` 及／或 `.apk` | `releases/android/`；**不要**為了本檔產出 `.ipa` |
+| 雙平台 | 各自產出；iOS 仍須 `.ipa` | `releases/ios/`、`releases/android/` |
+
+| 項目 | 要求 |
+|------|------|
+| 建置類型 | **Release**（非 Debug／Development） |
+| 簽章 | 使用正確的 Distribution／Provisioning／keystore |
+| 可追溯 | 建置對應的 **Git commit SHA** 必須可追查 |
+
+**EAS Build 範例：**
+
+```bash
+eas build --platform ios --profile production
+# 建置完成後下載 .ipa，依命名規則移至 releases/ios/
+```
+
+**本地 Xcode Archive 範例：**
+
+```bash
+# Product → Archive → Distribute App → 匯出 .ipa
+# 匯出後依命名規則移至 releases/ios/
+```
+
+### 步驟 3.4：版本號（iOS 與 Android 分開，不可混用）
+
+共用：`version`（semver，對使用者顯示）。平台建置序號分開遞增。
+
+| 用途 | `app.json` 欄位 | 格式 | 遞增時機 |
+|------|-----------------|------|----------|
+| **對使用者顯示的版本** | `version` | **Semver**（如 `1.0.0`） | 對外發佈新功能／修正時 |
+| **iOS 建置序號** | `ios.buildNumber` | **只增不減的整數**（字串如 `"42"`） | **每次** iOS 散佈必須 +1 |
+| **Android 建置序號** | `android.versionCode` | **只增不減的整數** | **每次** Android 散佈必須 +1 |
+
+僅 Android 的專案：更新 `version` 與 `android.versionCode`，不要填 `ios.buildNumber`。僅 iOS 則不必為了本檔加 `versionCode`。
+
+對應原生：
+
+| `app.json` | iOS Info.plist | Android |
+|------------|----------------|---------|
+| `version` | `CFBundleShortVersionString` | `versionName` |
+| `ios.buildNumber` | `CFBundleVersion` | — |
+| `android.versionCode` | — | `versionCode` |
+
+**`app.json` 範例（雙平台）：**
+
+```json
+{
+  "expo": {
+    "version": "1.2.0",
+    "ios": { "buildNumber": "42" },
+    "android": { "versionCode": 42 }
+  }
+}
+```
+
+```
+⛔ 常見錯誤：
+- 把 `1.2.0` 寫進 `ios.buildNumber` 或 `android.versionCode`
+- 用 semver 第三段當建置號，或未每次散佈 +1
+- 只改 `version`、忘記遞增對應平台的建置序號
+- Android-only 專案仍產出／要求 `.ipa`
+
+✅ 正確：
+- `version` = 使用者看到的 semver
+- 每次該平台 release 前：對應 `buildNumber`／`versionCode` +1
+- Git 版控的是 app.json 變更；ipa／aab 本體不進 Git
+```
+
+**Semver 遞增參考（僅適用 `version`）：**
+
+- 修 bug、無新功能：`1.2.0` → `1.2.1`（patch）
+- 向下相容新功能：`1.2.1` → `1.3.0`（minor）
+- 不相容變更：`1.3.0` → `2.0.0`（major）
+
+### 步驟 3.5：.ipa 存放與 Git 版控
+
+**.ipa 為大型二進位檔，不得納入 Git。**
+
+| 項目 | 規範 |
+|------|------|
+| 存放目錄 | `releases/ios/`（專案根目錄下；若不存在則建立） |
+| 檔名格式 | `{AppName}-{version}-{buildNumber}.ipa` |
+| 範例 | `MyApp-1.2.0-42.ipa` |
+| Git | **`releases/` 整目錄列入 `.gitignore`** |
+
+**`.gitignore` 必須包含：**
+
+```gitignore
+# APP release 產物（二進位，不納版控）
+releases/
+```
+
+**版控與追溯方式：**
+
+- **進 Git**：`app.json` 的 `version`、`ios.buildNumber`／`android.versionCode`；release 紀錄  
+- **對用戶揭露的 GitHub Release**：一律 **日期制** tag（`vYYYY.MM.DD`，見 `400-git-commit.mdc`）；Notes 註明 app `version` 與建置序號  
+- **可選**並存 semver Git tag（如 `v1.2.0-build42`）指向同一 commit，**不要**用它取代日期制 GitHub Release  
+- **不進 Git**：`releases/**` 二進位
+
+**可選 semver Git tag（非 GitHub Release 主 tag）：**
+
+```bash
+git tag -a v1.2.0-build42 -m "Release 1.2.0 (ios.buildNumber 42)"
+git push origin v1.2.0-build42
+```
+
+**建議 release 紀錄**（寫入 `.cursor/prd/` 或 CHANGELOG，**可**進 Git）：
+
+```markdown
+## v1.2.0 (ios.buildNumber 42)
+- Git: abc1234
+- Tag: v1.2.0-build42
+- .ipa（本機，不進 Git）: releases/ios/MyApp-1.2.0-42.ipa
+- 驗證：模擬器 UI ✓、真機讀寫與權限 ✓
+- 備註：TestFlight 上傳日期、已知限制
+```
+
+### 敏感檔案
+
+- **勿**將 `.p12`、`.mobileprovision`、API 金鑰提交至 repo
+- `.ipa` 若需團隊共享，使用 **CI artifact、TestFlight、或私有物件儲存**，而非 Git／Git LFS
+
+---
+
+## 完整檢查清單
+
+```markdown
+### 階段一 — Dev Client（模擬器）
+- [ ] 已啟動 Dev Client 於 iOS Simulator／Android Emulator
+- [ ] 介面、導覽、狀態 UI 已確認
+- [ ] 用戶已確認介面調整可接受
+
+### 階段二 — Dev Client（真機）
+- [ ] 已於實體裝置安裝並連線 Dev Client
+- [ ] 資料讀寫流程已驗證
+- [ ] 所需權限流程已驗證
+- [ ] 用戶已確認可進入 release
+
+### 階段三 — Commit 與 Release
+- [ ] 已清理調試程式碼（對齊 001-deployment）
+- [ ] ESLint／TypeScript 無錯誤
+- [ ] 已 commit 並 push 至 GitHub（用戶要求時）
+- [ ] 已建立 GitHub Release（日期制 tag）且 Notes 含 version／buildNumber（見 400-git-commit）
+- [ ] `version`（semver）已依對外發佈需求更新
+- [ ] （iOS）`ios.buildNumber` 已遞增；`.ipa` 已存至 `releases/ios/`
+- [ ] （Android）`android.versionCode` 已遞增；`.aab`／`.apk` 已存至 `releases/android/`
+- [ ] `.gitignore` 已包含 `releases/`
+- [ ] GitHub Release 為日期制 tag（見 400）；可選 semver Git tag 僅並存
+```
+
+---
+
+## Agent 行為準則
+
+1. **功能或 UI 修正完成後**：主動提議啟動 **Dev Client（模擬器）**，說明驗證步驟，等待用戶確認。
+2. **介面確認通過後**：再提議 **Dev Client（真機）** 驗證讀寫與權限。
+3. **兩階段皆通過且用戶要求提交時**：才執行 commit／push；release 前更新 **`version`** 與對應平台建置序號；iOS 產出 `.ipa`，僅 Android 則產出 aab／apk（不要強求 ipa）；`releases/` 已在 `.gitignore`  
+4. **衝突或歧義**（例如 semver bump 層級）：依 `000-core-workflow.mdc` **先詢問再行動**

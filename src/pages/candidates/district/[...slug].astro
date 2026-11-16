@@ -70,6 +70,15 @@ export function getStaticPaths() {
                 districtData: dist
               }
             });
+            const officialName = `${city}${dist.name}`;
+            if (officialName !== dist.name) {
+              paths.push({
+                params: { slug: `${posType.id}/${city}/${officialName}` },
+                props: {
+                  redirectTo: `${import.meta.env.BASE_URL}candidates/district/${posType.id}/${encodeURIComponent(city)}/${encodeURIComponent(dist.name)}/`
+                }
+              });
+            }
           }
         }
         paths.push({
@@ -132,7 +141,13 @@ export function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const { positionId, city, district, township, scope, districtData } = Astro.props;
+const pageProps = Astro.props;
+
+if (pageProps.redirectTo) {
+  return Astro.redirect(pageProps.redirectTo, 301);
+}
+
+const { positionId, city, district, township, scope, districtData } = pageProps;
 
 const position = positions.positions.find(p => p.id === positionId);
 const positionName = position?.name || positionId;
@@ -241,10 +256,6 @@ const latestAsOf = hasCandidates
     }, '')
   : '';
 
-const pageUrl = `https://klaudia1209teleworker.github.io/vote2026/candidates/district/${slug}/`;
-const reportSubject = encodeURIComponent(`[勘誤] ${pageTitle}`);
-const reportBody = encodeURIComponent(`頁面網址：${pageUrl}\n\n哪裡有錯：\n\n正確內容：\n\n官方來源連結：\n`);
-const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${reportSubject}&body=${reportBody}`;
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -457,17 +468,6 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
         資料來源：中選會及各縣市選委會官方公告
       </p>
     )}
-
-    {/* Report Error */}
-    <div class="flex items-center gap-2 text-xs">
-      <a 
-        href={reportMailto}
-        class="text-neutral-600 underline hover:text-neutral-800"
-      >
-        回報資料錯誤
-      </a>
-      <span class="text-neutral-400">以官方資料核對後修正</span>
-    </div>
 
     {/* Voting Tips */}
     {position?.checkpoints && (

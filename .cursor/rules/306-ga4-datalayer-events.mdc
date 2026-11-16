@@ -1,0 +1,302 @@
+---
+description: GA4 事件經 dataLayer.push 設置 — 前端格式、GTM 觸發／標籤、SPA／轉換範例、TS 封裝
+globs:
+  - "**/data-layer.{js,ts}"
+  - "**/gtm.{js,ts}"
+  - "**/analytics.{js,ts}"
+  - "**/tracking.{js,ts}"
+  - "**/lib/gtm.{js,ts}"
+  - "**/utils/data-layer.{js,ts}"
+alwaysApply: false
+---
+
+# GA4 事件 dataLayer.push 設置規範
+
+本檔規範**自行開發＋GTM**時，如何用 `dataLayer.push` 送出 GA4 事件。GTM 注意事項 → `307-gtm-container.mdc`（預設建議；例外直連 gtag 則本檔不強制改寫事件入口）。Consent／載入順序 → `305-consent-mode.mdc`。
+
+前置假設（**採用 GTM 時**，與 305／307 一致）：
+
+- 頁面只接 **GTM**（`GTM-XXXX`）；**禁止**另載 `gtag.js`／前端 `gtag('event', …)`
+- 單一 `window.dataLayer`；**禁止** `dataLayer = []` 重置
+- 行銷事件僅在**未登入公開頁**（登入區政策另案確認）
+- **禁止**把 PII（email、電話、姓名等）寫入 dataLayer／事件參數
+
+---
+
+## 1. 前端 dataLayer.push 格式
+
+### 基本契約
+
+```js
+window.dataLayer = window.dataLayer || []
+window.dataLayer.push({
+  event: '事件名稱',       // 必填：供 GTM「自訂事件」觸發器比對
+  // …事件參數（選填；鍵名須與 GTM Data Layer 變數／GA4 Event 參數對齊）
+})
+```
+
+| 欄位 | 規則 |
+|------|------|
+| `event` | **必填**字串；與 GTM 觸發器「事件名稱」**完全一致**（大小寫敏感） |
+| 其餘鍵 | 業務參數；優先使用 [GA4 建議事件](https://developers.google.com/analytics/devguides/collection/ga4/reference/events) 的參數名 |
+| 命名 | 建議事件：用官方名（如 `generate_lead`）；自訂：`snake_case`，專案內統一並記入 `.cursor` |
+
+### 建議事件 vs 自訂事件
+
+| 類型 | 何時用 | 範例 |
+|------|--------|------|
+| **建議事件** | 有對應官方事件時優先 | `sign_up`、`login`、`generate_lead`、`purchase`、`view_item` |
+| **自訂事件** | 無對應建議事件 | `cta_click`、`form_step_complete`、`virtual_page_view` |
+
+未與 GTM 對齊前，**禁止**大量自創事件名。新增事件須先確認 GTM 觸發器／標籤，並寫入專案文件。
+
+### 參數注意
+
+```js
+// ✅ GOOD：無 PII；參數名對齊 GA4
+dataLayer.push({
+  event: 'generate_lead',
+  form_id: 'contact',
+  lead_type: 'demo_request',
+})
+
+// ❌ BAD：PII、或前端直打 gtag
+dataLayer.push({ event: 'generate_lead', email: 'a@b.com' })
+gtag('event', 'generate_lead', { … })
+```
+
+電商／多參數：可先設資料再推 `event`（與 GTM／專案約定一致）：
+
+```js
+dataLayer.push({ ecommerce: null }) // 清上一筆（若使用 ecommerce 物件）
+dataLayer.push({
+  event: 'purchase',
+  ecommerce: {
+    transaction_id: 'T123',
+    value: 99.0,
+    currency: 'TWD',
+    items: [{ item_id: 'SKU1', item_name: 'Plan A', quantity: 1, price: 99.0 }],
+  },
+})
+```
+
+---
+
+## 2. GTM 容器側設置（逐步）
+
+前端只負責 push；**實際進 GA4** 靠 GTM。每一個 `event` 名稱對應一組設定。
+
+### 步驟概覽
+
+1. **變數**：為每個要送進 GA4 的參數建立 **Data Layer Variable**
+2. **觸發器**：類型「自訂事件」，事件名稱 = `dataLayer` 的 `event` 字串
+3. **標籤**：GA4 Event（或 Google 標籤事件），Measurement ID 用容器內設定；事件名稱與參數對應變數
+4. **Consent**：標籤 Required consent ≥ `analytics_storage`（見 305）
+5. **預覽／除錯** → 發佈
+
+### 2.1 Data Layer 變數
+
+| GTM 變數名稱（建議） | Data Layer 變數名稱 | 用途 |
+|----------------------|---------------------|------|
+| `dlv - page_path` | `page_path` | SPA 虛擬頁 |
+| `dlv - page_title` | `page_title` | SPA 虛擬頁 |
+| `dlv - form_id` | `form_id` | 表單／導流 |
+| `dlv - lead_type` | `lead_type` | 轉換細分 |
+
+變數名稱可依團隊慣例；**Data Layer 鍵名必須與前端 push 的鍵一致**。
+
+### 2.2 自訂事件觸發器
+
+| 觸發器名稱（例） | 類型 | 事件名稱 |
+|------------------|------|----------|
+| `CE - virtual_page_view` | 自訂事件 | `virtual_page_view` |
+| `CE - generate_lead` | 自訂事件 | `generate_lead` |
+| `CE - sign_up` | 自訂事件 | `sign_up` |
+| `CE - purchase` | 自訂事件 | `purchase` |
+
+### 2.3 GA4 Event 標籤
+
+| 設定項 | 建議 |
+|--------|------|
+| 標籤類型 | **Google Analytics: GA4 Event**（或等效 Google 標籤事件） |
+| Configuration Tag / Measurement ID | 與容器內 GA4 Configuration 一致；**只填在 GTM** |
+| Event Name | 建議：與 `dataLayer.event` 同名；或對應官方建議事件名 |
+| Event Parameters | 參數名 → 對應 `dlv - *` 變數 |
+| 觸發條件 | 上表對應的 `CE - *` |
+| Consent | `analytics_storage`（廣告相關另加 `ad_*`） |
+
+```text
+例：標籤「GA4 - generate_lead」
+  Event Name: generate_lead
+  Parameters:
+    form_id   → {{dlv - form_id}}
+    lead_type → {{dlv - lead_type}}
+  Trigger: CE - generate_lead
+```
+
+### 2.4 page_view 策略（擇一，禁止雙重）
+
+| 策略 | 前端 | GTM |
+|------|------|-----|
+| **A. 容器自動** | 不另推 page_view | Configuration「Send a page view」；SPA 用 History Change **或** |
+| **B. 虛擬頁** | push `virtual_page_view`（或約定名） | Configuration **關閉**自動 page_view；用 CE 觸發 GA4 `page_view`／帶 `page_path` |
+
+採哪一種**必須**在實作前記入專案 `.cursor`；**不要**前端 gtag config 與 GTM 各打一次。
+
+---
+
+## 3. 常用事件範例
+
+### SPA 虛擬 page_view（策略 B）
+
+```js
+window.dataLayer = window.dataLayer || []
+window.dataLayer.push({
+  event: 'virtual_page_view',
+  page_path: location.pathname + location.search,
+  page_title: document.title,
+})
+```
+
+GTM：觸發器 `CE - virtual_page_view` → GA4 Event，Event Name = `page_view`（或專案約定），參數 `page_path`／`page_title`。
+
+### 轉換：generate_lead
+
+```js
+dataLayer.push({
+  event: 'generate_lead',
+  form_id: 'contact',
+  lead_type: 'newsletter',
+})
+```
+
+### 轉換：sign_up
+
+```js
+dataLayer.push({
+  event: 'sign_up',
+  method: 'email', // 官方建議參數；勿含 email 本體
+})
+```
+
+### 電商：purchase（精簡）
+
+```js
+dataLayer.push({ ecommerce: null })
+dataLayer.push({
+  event: 'purchase',
+  ecommerce: {
+    transaction_id: 'T123',
+    value: 1280,
+    currency: 'TWD',
+    items: [
+      {
+        item_id: 'sku_01',
+        item_name: 'Annual Plan',
+        item_category: 'subscription',
+        quantity: 1,
+        price: 1280,
+      },
+    ],
+  },
+})
+```
+
+GTM：若使用 ecommerce 物件，以 Data Layer 變數讀取巢狀欄位，或依團隊既有 GA4 Ecommerce 標籤範本；參數對齊須寫入專案文件。
+
+### CTA 自訂事件
+
+```js
+dataLayer.push({
+  event: 'cta_click',
+  cta_id: 'hero_primary',
+  cta_text: 'Get started', // 行銷文案可；勿放個資
+})
+```
+
+---
+
+## 4. TypeScript 封裝（強制建議）
+
+集中模組（例：`utils/data-layer.ts`／`lib/gtm.ts`），元件**禁止**散落裸 `dataLayer.push`。
+
+```ts
+// utils/data-layer.ts
+export type DataLayerEventName =
+  | 'virtual_page_view'
+  | 'generate_lead'
+  | 'sign_up'
+  | 'purchase'
+  | 'cta_click'
+  // 專案約定事件於此聯合型別擴充
+
+type DataLayerPayload = Record<string, unknown>
+
+declare global {
+  interface Window {
+    dataLayer?: DataLayerPayload[]
+  }
+}
+
+export function ensureDataLayer(): DataLayerPayload[] {
+  window.dataLayer = window.dataLayer || []
+  return window.dataLayer
+}
+
+export function pushEvent(
+  event: DataLayerEventName,
+  payload: DataLayerPayload = {},
+): void {
+  if (typeof window === 'undefined') return
+  ensureDataLayer().push({ event, ...payload })
+}
+
+export function pushVirtualPageView(path?: string, title?: string): void {
+  pushEvent('virtual_page_view', {
+    page_path: path ?? `${location.pathname}${location.search}`,
+    page_title: title ?? document.title,
+  })
+}
+
+export function pushGenerateLead(formId: string, leadType: string): void {
+  pushEvent('generate_lead', { form_id: formId, lead_type: leadType })
+}
+```
+
+使用處：
+
+```ts
+// ✅
+pushGenerateLead('contact', 'demo_request')
+pushVirtualPageView()
+
+// ❌ 元件內直接操作
+window.dataLayer.push({ event: 'generate_lead', email: user.email })
+```
+
+Consent 的 `update` 仍走 `305` 的 `utils/consent`／`gtag('consent', …)`，**不要**與業務 `pushEvent` 混在同一函式裡模糊職責。
+
+---
+
+## 5. 新增事件檢查清單
+
+```markdown
+- [ ] 事件名已與 GTM 觸發器對齊；已記入專案 .cursor／事件表
+- [ ] 優先使用 GA4 建議事件名與參數；自訂為 snake_case
+- [ ] 前端經封裝 pushEvent；無裸 push、無 gtag('event')、無另載 gtag.js
+- [ ] 無 PII 進入 dataLayer
+- [ ] GTM：Data Layer 變數 → 自訂事件觸發器 → GA4 Event 標籤 → Consent
+- [ ] page_view 策略（自動 vs virtual）已擇一，無雙重命中
+- [ ] GTM 預覽已驗證；再發佈容器
+```
+
+---
+
+## 與其他規則的關係
+
+| 主題 | 規則檔 |
+|------|--------|
+| 網站預設埋設 GTM Container、單一入口、識別碼 | `307-gtm-container.mdc` |
+| Consent Mode、橫幅、GTM 載入順序、單一 dataLayer | `305-consent-mode.mdc` |
+| 延遲載入 GTM、dns-prefetch | `200-performance-assets.mdc` |
+| 本檔 | 事件 push 契約、GTM 對接、封裝、常用範例 |

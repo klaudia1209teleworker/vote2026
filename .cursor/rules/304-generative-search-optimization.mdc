@@ -1,0 +1,185 @@
+---
+description: Generative Search Optimization (GSO) - 讓內容被 AI 搜尋與引用
+globs:
+  - "**/pages/**/*.tsx"
+  - "**/app/**/page.tsx"
+  - "**/src/app/**/*.tsx"
+  - "**/components/seo/**/*.tsx"
+  - "**/schemas/**/*.ts"
+  - "**/scripts/generateLlms*.ts"
+  - "**/llms.txt"
+alwaysApply: false
+---
+
+# Generative Search Optimization (GSO) 規範
+
+## 什麼是 GSO
+
+**GSO（Generative Search Optimization）** 是針對「生成式 AI 搜尋」的優化，目標是讓內容被 ChatGPT、Perplexity、Google AI Overview、Bing Copilot 等**引用與推薦**，而不只是傳統搜尋結果排名。
+
+| 比較維度 | 傳統 SEO | GSO |
+|----------|----------|-----|
+| 優化對象 | 搜尋引擎結果頁 (SERP) | AI 生成的回答與引用 |
+| 目標 | 排名、點擊 | 被 AI 引用、列為來源 |
+| 內容形式 | 關鍵字、標題、連結 | 可摘錄、可總結的結構化內容 |
+
+GSO 與 SEO 可並行：做好 GSO 通常同時有利於傳統 SEO。
+
+## 誰需要 GSO
+
+| 網站／內容類型 | 建議重視 GSO |
+|----------------|--------------|
+| 品牌官網、Landing、部落格 | ✅ 高 |
+| 產品說明、教學、FAQ | ✅ 高 |
+| 後台、內部工具 | ❌ 低 |
+
+## 內容結構規範（讓 AI 好摘錄）
+
+### 開頭放直接答案
+
+- 在段落**前 50–150 字**內提供可直接回答問題的摘要。
+- 避免長篇鋪陳才給結論，AI 會優先擷取前段清晰敘述。
+
+```tsx
+// ✅ 適合 GSO：開頭即答案
+<section>
+  <h1>如何設定 Firebase Authentication</h1>
+  <p>
+    在 Firebase Console 建立專案後，於 Authentication 啟用登入方法，
+    並在專案中安裝 firebase-admin（後端）或 firebase（前端）SDK，
+    使用 signInWithPopup 或 signInWithRedirect 實作 OAuth。
+  </p>
+  {/* 下方再展開步驟細節 */}
+</section>
+```
+
+```tsx
+// ❌ 不利 GSO：結論藏在文末
+<section>
+  <h1>如何設定 Firebase Authentication</h1>
+  <p>Firebase 是 Google 提供的服務…（長篇背景）</p>
+  <p>…（更多鋪陳）…</p>
+  <p>因此，你需要在 Console 建立專案並啟用登入方法。</p>
+</section>
+```
+
+### 模組化、可獨立理解的段落
+
+- 每個小節盡量**自包含**：單獨被引用時仍能成立。
+- 使用清楚的 `<h2>` / `<h3>` 與簡短段落，方便 AI 切分與引用。
+
+## 同一頁實體圖（配合 301）
+
+每一個可索引頁的 JSON-LD 是**一張圖**：商家實體只定義一次，其他節點用 `@id` 指回去。語法見 `301-schema-org`；本節決定**放哪些節點**。
+
+| 節點 | `@id` | 誰引用它 |
+|------|--------|----------|
+| 商家（`Organization`，在地服務再加 `LocalBusiness` 與產業子類型） | `https://{host}/` | `WebSite.publisher`、`Article.publisher`、`Article.author`、`Service.provider`、`VideoObject.publisher`、`Offer.seller` |
+| `WebSite` | `https://{host}/#website` | — |
+
+```json
+{ "@id": "https://example.com/" }
+```
+
+- `publisher`、`provider`、`seller` **只放上面這個 `@id`**，不要在 `Article`／`Service` 裡再嵌一份完整商家。
+- 同一頁仍要輸出商家節點本體，否則 `@id` 無法在該頁解析。
+- `inLanguage` 與頁面語系一致（例：`zh-TW`）。
+- 圖片、logo、canonical 一律**絕對 https URL**；頁面若提供 WebP，Schema 的 `image` 用同一張 WebP。
+
+### LocalBusiness 放哪裡
+
+在地服務（到府、門市、區域）才輸出 `LocalBusiness`。子類型用 Schema.org 最具體、且與業務相符的那個（反轉運輸用 `MovingCompany`；其他產業換成對應類型，例如 `Dentist`、`Restaurant`）。純內容站、SaaS、後台**不要**硬加 `LocalBusiness`。
+
+| 頁面 | 商家節點 |
+|------|----------|
+| 首頁、聯絡、服務區域 | 完整：`PostalAddress`、`GeoCoordinates`、`openingHoursSpecification`、`areaServed`、`telephone`、`logo`、`sameAs` |
+| 其他靜態頁（服務、方案、FAQ、作品集） | 較短的 `LocalBusiness`（名稱、網址、電話、logo、`areaServed`）；地址與座標不在每一頁重複塞滿 |
+| 文章、分類／標籤／列表與分頁 | **只放 `Organization`**，不要 `LocalBusiness` |
+
+作品集、案例這類**靜態品牌頁**可以放 `LocalBusiness`。列表與文章不要。
+
+## 頁型要輸出的 Schema
+
+每個可索引 URL 都先有三塊：商家節點、`WebSite`、`BreadcrumbList`。麵包屑首頁至少「首頁」一項；內頁最後一項是**目前 URL**；中間層用真實父路徑（服務列表、分類），不要跳層。下表是各頁型再加的節點。
+
+| 頁型 | 另加 |
+|------|------|
+| 首頁 | 評價出現在頁面上才加 `AggregateRating` 與 `Review` |
+| 聯絡、服務區域 | 商家節點用完整欄位。區域頁的 `areaServed` 含該區名稱 |
+| 服務 | `Service`：`serviceType`、`provider` → 商家 `@id`、`areaServed`、`hasOfferCatalog` |
+| 價格／方案 | `Service` + `Offer`／`PriceSpecification`（`priceCurrency`、可見的 min／max、`unitText`）+ `OfferCatalog` |
+| FAQ | `FAQPage`，問答與頁面可見內容相同 |
+| 文章 | `Organization` + `WebSite` + `Article`（`headline`、`datePublished`、`dateModified`、絕對路徑 `image`、`author` 為網站名稱與商家 `@id`） |
+| 內嵌影片 | 每個實際嵌入一則 `VideoObject`（`name`、`description`、`embedUrl`、`thumbnailUrl`、`publisher` → `@id`） |
+
+沒有站內搜尋就不要加 `SearchAction`。有搜尋結果頁才加。
+
+## Schema 只寫頁面上看得到的
+
+生成式引擎會把 JSON-LD 當事實引用。看不見的資料不要寫進去。
+
+- **FAQ**：題目與答案來自該頁標題與內文。去掉題號前綴（如 `Q1`、`Ｑ1.`），答案用純文字。
+- **價格**：數字、幣別、計價單位（每車、每小時、單件）來自頁上價目表。沒有出現的價格不要補。
+- **評價**：`ratingValue`、則數、內文與頁上顯示一致。沒有評價區塊就不要 `AggregateRating`。
+- **影片**：只為該頁 iframe／嵌入產生 `VideoObject`。
+- **日期**：ISO 8601。`dateModified` 沒有獨立值時沿用 `datePublished`，不要留空物件。
+
+## 讓引用對得上的 meta
+
+與 `300-seo-basics` 的 title／description／canonical 一併做：
+
+- `canonical`、`og:url` 為同一條絕對 https URL。
+- 非首頁 title 含品牌名（品牌已在標題內則不重複）。
+- description 約 160 字內，開頭就是可引用的答案（見上一節「開頭放直接答案」）。
+- 文章帶 `article:published_time`、`article:modified_time`（或同等 Open Graph 時間）。
+- `og:locale` 與頁面語系一致（例：`zh_TW`）。
+- 公開且希望被摘錄的頁面：`max-image-preview:large`，snippet 不主動縮限。專案已限制摘要長度時，沿用專案設定。
+
+## AI 爬蟲友善：llms.txt 與 robots.txt（配合 302）
+
+- 在站點根目錄提供 **llms.txt**，說明網站名稱、簡述、主要區塊與重要 URL。
+- 供 AI 爬蟲快速理解站點結構與優先抓取路徑（實作可參考 `302-sitemap-robots` 的 llms.txt 生成）。
+- **robots.txt 必須把訓練用與即時檢索用爬蟲分開設定**（見 `302-sitemap-robots`）：
+  - **即時檢索／搜尋用**（`OAI-SearchBot`、`ChatGPT-User`、`Claude-SearchBot`、`Claude-User`、`PerplexityBot`、`Perplexity-User`、`Amazonbot` 等）**一律放行**，否則內容不會被 AI 產品引用
+  - **訓練用**（`GPTBot`、`ClaudeBot`、`CCBot`、`Meta-ExternalAgent` 等）是否開放屬資料授權政策，不影響 GEO 能見度；禁止再用已淘汰的 `anthropic-ai`
+
+
+## 權威與可信度
+
+- 標示**第一手來源**（原創研究、官方文件、實際操作經驗）。
+- 保持**透明**：作者、更新日期、引用來源，有助降低被 AI 錯誤改寫的風險。
+- 品牌一致性與高品質反向連結，有助被視為可引用來源。
+
+## 技術與可抓取性（配合 303）
+
+- 內容須在 **HTML 原始碼中即可見**（SSR/SSG），避免僅依賴 CSR 動態渲染（見 `303-rendering-seo-visibility`）。
+- 確保 **robots.txt** 不封鎖重要內容路徑，並提交 **sitemap**。
+- 重要頁面定期更新，保持內容新鮮度。
+
+## 檢查清單
+
+```markdown
+### 內容
+- [ ] 關鍵頁面開頭 50–150 字內有直接答案
+- [ ] 章節可獨立理解、標題層級清楚
+- [ ] 第一手來源與更新日期有標示
+
+### 結構化與技術
+- [ ] 同一頁商家只定義一次；`publisher`／`provider`／`seller` 只用 `@id`
+- [ ] 文章與列表是 `Organization`，沒有 `LocalBusiness`
+- [ ] 首頁、聯絡、服務區域才有完整地址、座標、營業時間
+- [ ] 每個可索引 URL 都有 `BreadcrumbList`，最後一項是目前網址
+- [ ] 服務頁有 `Service`；價格頁的 `Offer` 對得上價目表
+- [ ] FAQ、評價、影片只對應頁上看得到的內容
+- [ ] 文章有 `datePublished`、`dateModified` 與絕對路徑圖片
+- [ ] canonical 與 `og:url` 相同
+- [ ] 根目錄提供 llms.txt
+- [ ] 內容為 SSR/SSG，爬蟲可見
+- [ ] sitemap 已提交、robots 未誤擋
+- [ ] 即時檢索類 AI 爬蟲已放行（訓練用與檢索用分開設定，見 302）
+```
+
+## 參考
+
+- 與 **300 SEO 基礎**、**301 Schema**、**302 Sitemap/robots**、**303 渲染與 SEO 可見性** 一併使用，效果最佳。
+- GSO 著重「被引用」與「可摘錄」，實作時以結構清晰、機器可解析為優先。

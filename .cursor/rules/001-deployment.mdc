@@ -1,0 +1,102 @@
+---
+description: 部署前置作業規範 - 執行部署時自動套用
+globs:
+  - "**/deploy.sh"
+  - "**/firebase.json"
+  - "**/.github/workflows/*.yml"
+  - "**/vercel.json"
+  - "**/netlify.toml"
+  - "**/next.config.*"
+  - "**/eas.json"
+alwaysApply: false
+---
+
+# 部署前置作業規範
+
+在開始進行部署作業時，**必須**依序完成以下步驟：
+
+## 步驟一：清理專案
+
+**必須移除的項目：**
+
+| 類型 | 說明 | 範例 |
+|------|------|------|
+| 調試訊息 | `console.log`, `console.debug`, `debugger` | 所有非錯誤處理的 console 輸出 |
+| 測試頁面 | 開發用的 HTML 測試頁面 | `test.html`, `debug.html` |
+| 測試按鈕 | UI 中的測試用按鈕或元件 | `<button>Test API</button>` |
+| SQL 檔案 | 本機測試用的 SQL 檔案 | `*.sql` |
+| 臨時 MD 檔案 | 非必要的 Markdown 檔案 | `notes.md`, `todo.md` |
+| 未使用的檔案 | 已棄用或不再引用的檔案 | 舊版元件、廢棄的工具函數 |
+
+**⚠️ 禁止刪除的項目：**
+
+- `.cursor/` 目錄中的所有檔案
+- 檔名以 `README` 開頭的 `.md` 檔案
+
+```typescript
+// ❌ 部署前必須移除
+console.log('Debug:', userData);
+debugger;
+
+// ✅ 可以保留（錯誤處理）
+console.error('Failed to fetch user:', error);
+```
+
+## 步驟二：修復 ESLint 錯誤與警告
+
+- **不得忽略任何 ESLint 錯誤**
+- 維持既有功能的穩定與完整性
+- 禁止使用 `eslint-disable` 來繞過錯誤
+- **依專案 linter 執行**（`package.json` 的 `lint` 腳本）。注意：
+  - **Next.js 16**：已移除 `next lint`，CI／pre-commit **不要**再呼叫該指令，改 `npx eslint .` 或 Biome（見 `claude-design/_stack.mdc`）
+  - **Next.js 14／15**：仍可能使用 `next lint`，不要為了本檔強制改掉
+  - **Vite／其他**：用專案既有 ESLint／Biome，不要引入 `next lint`
+
+```bash
+npm run lint
+npm run lint:fix
+# Next.js 16 若無 lint 腳本：npx eslint .
+```
+
+## 步驟三：建構
+
+```bash
+# 僅當 package.json 有 test 腳本時執行；沒有則跳過，不要為了本檔新建測試
+npm run test
+npm run build
+```
+
+**Commit／push**：本步驟**只做清理與 build**。`git add`／`commit`／`push` **僅在用戶明確要求時**依 `400-git-commit.mdc` 執行。  
+**禁止**：部署對話中自行 `git add .`、自行 commit、自行 `git push origin main`。
+
+## 步驟四：GitHub Release Note（僅當用戶要求 push 且已成功）
+
+`git push` **成功後**，**必須**依 `400-git-commit.mdc` 同步建立 **GitHub Release**：
+
+- Tag：`vYYYY.MM.DD`（同日多次為 `vYYYY.MM.DD-2`、`-3`…）
+- 含完整 Release Notes；完成後回報 Release URL
+- **不得**只 push、不建 Release
+
+## 部署檢查清單
+
+```markdown
+### 清理項目
+- [ ] 已移除所有 console.log / console.debug
+- [ ] 已移除所有 debugger 語句
+- [ ] 已刪除測試用 HTML 頁面
+- [ ] 已移除 UI 中的測試按鈕
+- [ ] 已刪除本機 SQL 檔案
+- [ ] 已刪除非必要的 MD 檔案（保留 README* 和 .cursor/）
+
+### 程式碼品質
+- [ ] ESLint 無錯誤
+- [ ] ESLint 無警告
+- [ ] TypeScript 編譯無錯誤
+- [ ] （若專案有 test 腳本）測試通過
+
+### 最終確認
+- [ ] 本地 build 成功
+- [ ] 功能測試通過
+- [ ] （用戶已要求 push）已 push 至 GitHub
+- [ ] （已 push）已建立 GitHub Release（日期制 tag）並回報 URL（見 400-git-commit）
+```

@@ -1,0 +1,165 @@
+---
+description: Schema.org 結構化數據規範 - JSON-LD 實作
+globs:
+  - "**/schemas/**/*.ts"
+  - "**/components/seo/**/*.tsx"
+  - "**/pages/**/*.tsx"
+  - "**/app/**/page.tsx"
+  - "**/src/app/**/*.tsx"
+alwaysApply: false
+---
+
+# Schema.org 結構化數據規範
+
+## 基本原則
+
+- 使用 **JSON-LD** 格式（Google 推薦）
+- 每個頁面至少包含一個主要 Schema 類型
+- 確保數據與頁面可見內容一致
+- 使用 Google Rich Results Test 驗證
+- **放哪些節點、`LocalBusiness` 放哪裡、`publisher` 只用 `@id`**：見 `304-generative-search-optimization`。本檔只示範語法
+
+## 實體參照
+
+商家 `@id` 全站固定為 `https://{host}/`，`WebSite` 為 `https://{host}/#website`。`Article`、`Service`、`VideoObject` 的 `publisher`／`provider` 只寫：
+
+```json
+{ "@id": "https://example.com/" }
+```
+
+同一頁仍要輸出商家節點本體。文章與列表頁用 `Organization`；在地服務的靜態頁才加 `LocalBusiness`（見 304）。
+
+## 通用 Schema 元件
+
+```tsx
+// components/seo/SchemaScript.tsx
+export const SchemaScript: React.FC<{ schema: Record<string, unknown> }> = ({ schema }) => (
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+  />
+);
+```
+
+## 網站層級 Schema
+
+```typescript
+// schemas/organizationSchema.ts
+export const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': 'https://example.com/',
+  name: '公司名稱',
+  url: 'https://example.com/',
+  logo: { '@type': 'ImageObject', url: 'https://example.com/logo.png' },
+  sameAs: [
+    'https://www.facebook.com/yourpage',
+    'https://www.linkedin.com/company/yourcompany',
+  ],
+};
+
+// schemas/websiteSchema.ts
+export const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': 'https://example.com/#website',
+  url: 'https://example.com/',
+  name: '網站名稱',
+  publisher: { '@id': 'https://example.com/' },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://example.com/search?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
+```
+
+## 頁面層級 Schema
+
+### 文章頁面
+
+```typescript
+export function createArticleSchema(article: {
+  title: string; description: string; url: string;
+  image: string; datePublished: string; authorName: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.description,
+    image: article.image,
+    datePublished: article.datePublished,
+    dateModified: article.datePublished,
+    inLanguage: 'zh-TW',
+    publisher: { '@id': 'https://example.com/' },
+    author: { '@type': 'Person', name: article.authorName },
+  };
+}
+```
+
+### 產品頁面
+
+```typescript
+export function createProductSchema(product: {
+  name: string; description: string; image: string[];
+  sku: string; price: number; currency: string;
+  availability: 'InStock' | 'OutOfStock';
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description,
+    image: product.image,
+    sku: product.sku,
+    offers: {
+      '@type': 'Offer',
+      price: product.price,
+      priceCurrency: product.currency,
+      availability: `https://schema.org/${product.availability}`,
+    },
+  };
+}
+```
+
+### FAQ 頁面
+
+```typescript
+export function createFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  };
+}
+```
+
+### 麵包屑導航
+
+```typescript
+export function createBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+```
+
+## 驗證檢查清單
+
+- [ ] 使用 [Google Rich Results Test](https://search.google.com/test/rich-results) 測試
+- [ ] 使用 [Schema Markup Validator](https://validator.schema.org/) 驗證
+- [ ] Schema 數據與頁面可見內容一致
+- [ ] 日期格式正確（ISO 8601）
+- [ ] URL 使用完整路徑（含 https://）

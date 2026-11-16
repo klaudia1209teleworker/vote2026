@@ -1,0 +1,15 @@
+---
+description: 專案裁決。與共用規則衝突時以本檔為準
+alwaysApply: true
+---
+
+# 專案裁決
+
+與共用 `.cursor/rules/` 衝突時，以本檔為準。
+
+## 追蹤（2026-11-16 確認）
+
+- 全站直連 `gtag.js`，GA4 Measurement ID 為 `G-NNCFK0YYDC`
+- 不接 GTM，頁面不另載第二套分析或廣告碼
+- 不掛同意橫幅。本站是台灣公開選舉資訊站，沒有登入區，也沒有對歐盟／英國的追蹤需求
+- ID 只寫在 `src/constants/analytics.ts`，由 `src/layouts/Layout.astro` 載入
