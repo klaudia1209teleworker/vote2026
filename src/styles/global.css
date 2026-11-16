@@ -562,6 +562,45 @@ body {
 .nav-panel a.is-active {
   box-shadow: inset 3px 0 0 var(--ink-strong);
 }
+
+.metric-tip-btn {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+
+.metric-tip-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+.metric-tip-btn:hover {
+  color: var(--ink-strong);
+}
+
+.metric-tip-btn[aria-expanded="true"] {
+  color: var(--inverse-text);
+}
+
+.metric-tip-btn[aria-expanded="true"] .metric-tip-ring {
+  fill: var(--ink-strong);
+  stroke: var(--ink-strong);
+}
 }
 
 @layer utilities {

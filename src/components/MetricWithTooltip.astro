@@ -16,12 +16,16 @@ const tipId = `tip-${label.replace(/\s+/g, '-')}-${Math.random().toString(36).sl
       <span class="text-xs text-neutral-500">{label}</span>
       <button
         type="button"
-        class="metric-tip-btn inline-flex items-center justify-center min-w-11 min-h-11 -my-3 text-tertiary hover:text-ink text-sm"
+        class="metric-tip-btn"
         aria-describedby={tipId}
         aria-expanded="false"
         data-metric-tip
       >
-        ?
+        <svg class="metric-tip-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <circle class="metric-tip-ring" cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.25" />
+          <path class="metric-tip-mark" d="M8 7.15V11" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+          <circle class="metric-tip-dot" cx="8" cy="4.85" r="0.75" fill="currentColor" />
+        </svg>
         <span class="sr-only">{label}說明</span>
       </button>
     </div>
