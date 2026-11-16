@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import DocFrame from '../../components/DocFrame.astro';
 import positions from '../../data/positions.json';
 
 export function getStaticPaths() {
@@ -15,38 +16,56 @@ const baseUrl = import.meta.env.BASE_URL;
 function formatMoney(num: number): string {
   return new Intl.NumberFormat('zh-TW').format(num);
 }
+
+const pageSections = [
+  { href: '#overview', label: '職位說明' },
+  position.salary ? { href: '#salary', label: '待遇' } : null,
+  position.appointmentPower ? { href: '#appoint', label: '可任命的職位' } : null,
+  position.budget ? { href: '#budget', label: '可調度預算' } : null,
+  position.responsibilities ? { href: '#duties', label: '職責' } : null,
+  position.cannotDo ? { href: '#limits', label: '不能做的事' } : null,
+  position.civilDefense ? { href: '#defense', label: '民防角色' } : null,
+  position.team ? { href: '#team', label: '團隊成員' } : null,
+  position.checkpoints ? { href: '#choose', label: '如何選擇' } : null,
+  position.whereToCheck ? { href: '#lookup', label: '查詢資源' } : null,
+  position.relatedLaws ? { href: '#laws', label: '相關法規' } : null,
+].filter((item): item is { href: string; label: string } => item != null);
 ---
 
 <Layout title={position.name} description={position.description}>
-  <article class="page-copy space-y-8">
+  <DocFrame groups={[
+    { label: '本頁', items: pageSections },
+    {
+      label: '其他職務',
+      items: positions.positions.map((item) => ({
+        href: `${baseUrl}positions/${item.id}/`,
+        label: item.name,
+        current: item.id === position.id,
+      })),
+    },
+  ]}>
     <header>
-      <nav class="text-sm text-neutral-500 mb-4">
-        <a href={`${baseUrl}positions/`} class="hover:text-primary-600">職務介紹</a>
-        <span class="mx-2">›</span>
-        <span class="text-neutral-700">{position.name}</span>
+      <nav class="mb-4 text-sm text-secondary">
+        <a href={`${baseUrl}positions/`} class="underline">職務介紹</a>
+        <span class="mx-2">/</span>
+        <span class="text-ink">{position.name}</span>
       </nav>
-      
-      <h1 class="page-title mb-4">
-        {position.name}
-      </h1>
-      
-      <div class="flex flex-wrap gap-3 text-sm">
-        <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full">
-          {position.category}級
-        </span>
-        <span class="px-3 py-1 bg-neutral-100 text-neutral-600 rounded-full">
-          任期 {position.term} {position.termUnit}
-        </span>
+
+      <h1 class="page-title">{position.name}</h1>
+
+      <div class="mt-4 flex flex-wrap gap-2 text-sm">
+        <span class="badge">{position.category}級</span>
+        <span class="badge">任期 {position.term} {position.termUnit}</span>
         {position.applicableTo && (
-          <span class="px-3 py-1 bg-neutral-100 text-neutral-600 rounded-full">
+          <span class="badge">
             適用：{Array.isArray(position.applicableTo) ? position.applicableTo.join('、') : position.applicableTo}
           </span>
         )}
       </div>
     </header>
 
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-3">📖 職位說明</h2>
+    <section id="overview" class="ui-card doc-anchor">
+      <h2 class="section-title mb-3">職位說明</h2>
       <p class="text-neutral-600">{position.description}</p>
       
       {position.areas && (
@@ -67,8 +86,8 @@ function formatMoney(num: number): string {
     </section>
 
     {position.salary && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-3">💰 待遇</h2>
+      <section id="salary" class="ui-card doc-anchor">
+        <h2 class="section-title mb-3">待遇</h2>
         
         {position.salary.type === '無給職' ? (
           <div>
@@ -129,8 +148,8 @@ function formatMoney(num: number): string {
     )}
 
     {position.appointmentPower && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-3">👥 可任命的職位</h2>
+      <section id="appoint" class="ui-card doc-anchor">
+        <h2 class="section-title mb-3">可任命的職位</h2>
         <p class="text-neutral-600 mb-4">{position.appointmentPower.description}</p>
         
         <div class="space-y-2">
@@ -162,8 +181,8 @@ function formatMoney(num: number): string {
     )}
 
     {position.budget && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-3">💵 可調度預算</h2>
+      <section id="budget" class="ui-card doc-anchor">
+        <h2 class="section-title mb-3">可調度預算</h2>
         
         {position.budget.example && (
           <p class="text-neutral-600">{position.budget.example}</p>
@@ -191,8 +210,8 @@ function formatMoney(num: number): string {
     )}
 
     {position.responsibilities && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-3">✅ 職責</h2>
+      <section id="duties" class="ui-card doc-anchor">
+        <h2 class="section-title mb-3">職責</h2>
         <ul class="space-y-2">
           {position.responsibilities.map(resp => (
             <li class="flex items-start gap-3 text-neutral-600">
@@ -205,8 +224,8 @@ function formatMoney(num: number): string {
     )}
 
     {position.cannotDo && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-3">❌ 不能做的事</h2>
+      <section id="limits" class="ui-card doc-anchor">
+        <h2 class="section-title mb-3">不能做的事</h2>
         <ul class="space-y-2">
           {position.cannotDo.map(item => (
             <li class="flex items-start gap-3 text-neutral-600">
@@ -219,8 +238,8 @@ function formatMoney(num: number): string {
     )}
 
     {position.civilDefense && (
-      <section class="p-6 bg-amber-50 border border-amber-200 rounded-xl">
-        <h2 class="text-lg font-semibold text-amber-800 mb-3">🚨 民防角色：{position.civilDefense.role}</h2>
+      <section id="defense" class="ui-card doc-anchor">
+        <h2 class="section-title mb-3">民防角色：{position.civilDefense.role}</h2>
         <p class="text-amber-700 mb-3">{position.civilDefense.importance}</p>
         <ul class="space-y-1">
           {position.civilDefense.duties.map(duty => (
@@ -231,8 +250,8 @@ function formatMoney(num: number): string {
     )}
 
     {position.team && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-3">👥 團隊成員</h2>
+      <section id="team" class="ui-card doc-anchor">
+        <h2 class="section-title mb-3">團隊成員</h2>
         <div class="space-y-3">
           {position.team.map(member => (
             <div class="p-4 bg-neutral-50 rounded-lg">
@@ -245,8 +264,8 @@ function formatMoney(num: number): string {
     )}
 
     {position.checkpoints && (
-      <section class="p-6 bg-primary-50 border border-primary-200 rounded-xl">
-        <h2 class="text-lg font-semibold text-primary-800 mb-3">🔍 如何選擇候選人</h2>
+      <section id="choose" class="ui-card doc-anchor">
+        <h2 class="section-title mb-3">如何選擇候選人</h2>
         <ul class="space-y-2">
           {position.checkpoints.map(checkpoint => (
             <li class="flex items-start gap-3 text-primary-700">
@@ -259,8 +278,8 @@ function formatMoney(num: number): string {
     )}
 
     {position.whereToCheck && (
-      <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-        <h2 class="text-lg font-semibold text-neutral-800 mb-3">📚 查詢資源</h2>
+      <section id="lookup" class="ui-card doc-anchor">
+        <h2 class="section-title mb-3">查詢資源</h2>
         <div class="space-y-3">
           {position.whereToCheck.taipei && (
             <div class="p-4 bg-neutral-50 rounded-lg">
@@ -309,7 +328,7 @@ function formatMoney(num: number): string {
     )}
 
     {position.relatedLaws && (
-      <section class="p-4 bg-neutral-100 rounded-lg">
+      <section id="laws" class="ui-card doc-anchor">
         <p class="text-sm text-neutral-600">
           <strong>相關法規：</strong>
           {position.relatedLaws.map((law, i) => (
@@ -337,5 +356,5 @@ function formatMoney(num: number): string {
         怎麼判斷候選人 →
       </a>
     </nav>
-  </article>
+  </DocFrame>
 </Layout>

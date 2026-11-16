@@ -45,14 +45,14 @@ function isActive(href: string, end: boolean) {
       跳至主要內容
     </a>
 
-    <header class="bg-surface border-b border-line sticky top-0 z-50">
-      <nav class="shell h-14 flex items-center gap-2" aria-label="主要">
-        <a href={baseUrl} class="mr-auto font-semibold text-strong tracking-tight">
+    <header class="site-header bg-surface border-b border-line sticky top-0 z-50">
+      <div class="shell h-14 flex items-center">
+        <a href={baseUrl} class="font-semibold text-strong tracking-tight">
           <span class="md:hidden">2026 九合一</span>
           <span class="hidden md:inline">2026 台灣九合一地方選舉</span>
         </a>
 
-        <ul class="hidden md:flex items-center">
+        <ul class="ml-auto hidden md:flex items-center">
           {navItems.map((item) => (
             <li>
               <a
@@ -65,45 +65,21 @@ function isActive(href: string, end: boolean) {
             </li>
           ))}
         </ul>
+      </div>
 
-        <button
-          id="menu-toggle"
-          type="button"
-          class="icon-btn md:hidden"
-          aria-label="開啟選單"
-          aria-expanded="false"
-          aria-controls="nav-drawer"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-      </nav>
-    </header>
-
-    <div id="nav-drawer" class="nav-drawer md:hidden" hidden>
-      <button type="button" class="nav-backdrop" data-close-nav aria-label="關閉選單"></button>
-      <div class="nav-panel" role="dialog" aria-modal="true" aria-labelledby="nav-drawer-title">
-        <div class="flex items-center justify-between mb-2">
-          <p id="nav-drawer-title" class="px-3 font-semibold text-strong">選單</p>
-          <button type="button" class="icon-btn" data-close-nav aria-label="關閉選單">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18"></path>
-            </svg>
-          </button>
-        </div>
+      <nav class="site-nav-mobile md:hidden" aria-label="主要">
         {navItems.map((item) => (
           <a
             href={item.href}
-            class:list={[isActive(item.href, item.end) && 'is-active']}
+            class:list={['nav-link', isActive(item.href, item.end) && 'is-active']}
             aria-current={isActive(item.href, item.end) ? 'page' : undefined}
           >
             {item.label}
           </a>
         ))}
-        <a href={`${baseUrl}#lookup`}>查詢選票</a>
-      </div>
-    </div>
+        <a class="nav-link" href={`${baseUrl}#lookup`}>查詢選票</a>
+      </nav>
+    </header>
 
     <main id="main-content" class="shell py-5 md:py-6">
       <slot />
@@ -133,38 +109,9 @@ function isActive(href: string, end: boolean) {
     </footer>
 
     <script>
-      const toggle = document.getElementById('menu-toggle');
-      const drawer = document.getElementById('nav-drawer');
-      const panel = drawer?.querySelector('.nav-panel');
-
-      function setOpen(open: boolean) {
-        if (!toggle || !drawer) return;
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        toggle.setAttribute('aria-label', open ? '關閉選單' : '開啟選單');
-        drawer.hidden = !open;
-        document.body.style.overflow = open ? 'hidden' : '';
-        if (open) {
-          panel?.querySelector<HTMLElement>('a, button')?.focus();
-        }
-      }
-
-      toggle?.addEventListener('click', () => {
-        setOpen(toggle.getAttribute('aria-expanded') !== 'true');
-      });
-
-      drawer?.querySelectorAll('[data-close-nav]').forEach((button) => {
-        button.addEventListener('click', () => {
-          setOpen(false);
-          toggle?.focus();
-        });
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && drawer && !drawer.hidden) {
-          setOpen(false);
-          toggle?.focus();
-        }
-      });
+      document
+        .querySelector('.site-nav-mobile a[aria-current="page"]')
+        ?.scrollIntoView({ inline: 'center', block: 'nearest' });
     </script>
   </body>
 </html>

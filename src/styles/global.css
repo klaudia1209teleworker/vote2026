@@ -126,6 +126,13 @@
   --border-strong: #c7c9ca;
   --focus: #202124;
   --inverse-text: #ffffff;
+  --site-header-height: 6.375rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --site-header-height: 3.5rem;
+  }
 }
 
 html {
@@ -308,6 +315,131 @@ body {
   max-width: 960px;
 }
 
+.doc-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+  min-width: 0;
+}
+
+.doc-nav {
+  position: sticky;
+  top: var(--site-header-height);
+  z-index: 30;
+  display: flex;
+  flex-wrap: nowrap;
+  min-width: 0;
+  max-width: 100%;
+  margin-top: -1.25rem;
+  margin-inline: -16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.doc-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.doc-nav-group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.doc-nav-label {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.doc-nav a {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 0.75rem 0 1rem;
+  color: var(--ink);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.doc-nav a:hover {
+  background: var(--surface-muted);
+}
+
+.doc-nav a.is-current {
+  color: var(--ink-strong);
+  font-weight: 600;
+}
+
+.doc-nav a.is-current::before,
+.site-nav-mobile .nav-link.is-active::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 0;
+  width: 4px;
+  background: var(--ink-strong);
+}
+
+.doc-anchor {
+  scroll-margin-top: calc(var(--site-header-height) + 3.25rem);
+}
+
+@media (min-width: 768px) {
+  .doc-nav {
+    margin-top: -1.5rem;
+    margin-inline: -24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .doc-layout {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .doc-nav {
+    top: calc(var(--site-header-height) + 0.75rem);
+    flex-direction: column;
+    max-height: calc(100vh - 5.5rem);
+    margin: 0;
+    overflow: auto;
+  }
+
+  .doc-nav-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .doc-nav-label {
+    min-height: 0;
+    padding: 0.5rem 0.75rem 0.125rem;
+  }
+
+  .doc-nav a {
+    border-radius: 8px;
+  }
+
+  .doc-nav a.is-current {
+    background: var(--surface-muted);
+  }
+
+  .doc-anchor {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
 .ui-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -319,6 +451,16 @@ body {
 @media (min-width: 768px) {
   .ui-card {
     padding: 16px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .doc-nav.ui-card {
+    padding: 0 4px;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 }
 
@@ -500,6 +642,34 @@ body {
   box-shadow: inset 0 -2px 0 var(--ink-strong);
 }
 
+.site-nav-mobile .nav-link {
+  position: relative;
+}
+
+.site-nav-mobile .nav-link.is-active {
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.site-nav-mobile {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  padding-inline: 6px;
+  overflow-x: auto;
+  border-top: 1px solid var(--border);
+  scrollbar-width: none;
+}
+
+.site-nav-mobile::-webkit-scrollbar {
+  display: none;
+}
+
+.site-nav-mobile .nav-link {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
 .icon-btn {
   display: inline-flex;
   align-items: center;
@@ -514,54 +684,6 @@ body {
   background: var(--surface-muted);
 }
 
-.nav-drawer[hidden] {
-  display: none;
-}
-
-.nav-drawer {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-}
-
-.nav-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(17, 17, 17, 0.4);
-  border: 0;
-}
-
-.nav-panel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  width: min(320px, 88vw);
-  height: 100%;
-  padding: 16px;
-  background: var(--surface);
-  box-shadow: var(--shadow-card);
-}
-
-.nav-panel a {
-  display: flex;
-  align-items: center;
-  min-height: 48px;
-  padding: 0 12px;
-  border-radius: 8px;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.nav-panel a:hover,
-.nav-panel a.is-active {
-  background: var(--surface-muted);
-}
-
-.nav-panel a.is-active {
-  box-shadow: inset 3px 0 0 var(--ink-strong);
-}
 
 .metric-tip-btn {
   position: relative;

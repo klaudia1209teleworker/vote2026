@@ -207,59 +207,56 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
 <Layout title={`${candidate.name} - ${positionName}候選人`} description={`${candidate.county}${candidate.district || ''} ${positionName}候選人 ${candidate.name}`}>
   <article class="space-y-6">
-    <header class="border-b border-neutral-200 pb-4">
-      <nav class="text-xs text-neutral-500 mb-3">
-        <a href={`${baseUrl}candidates/`} class="hover:underline">候選人</a>
+    <header class="border-b border-line pb-4">
+      <nav class="mb-3 text-sm text-secondary">
+        <a href={`${baseUrl}candidates/`} class="underline">候選人</a>
         <span class="mx-1">/</span>
-        <a href={districtPageUrl} class="hover:underline">{candidate.county} {candidate.districtOfficial || candidate.district || ''}</a>
+        <a href={districtPageUrl} class="underline">{candidate.county} {candidate.districtOfficial || candidate.district || ''}</a>
         <span class="mx-1">/</span>
-        <span class="text-neutral-700">{candidate.name}</span>
+        <span class="text-ink">{candidate.name}</span>
       </nav>
-      
-      <div class="flex items-baseline gap-3">
+
+      <div class="flex flex-wrap items-center gap-3">
         {candidate.number != null && (
-          <span class="text-xl font-semibold text-neutral-500 tabular-nums">{candidate.number}</span>
+          <span class="text-2xl font-semibold tabular-nums text-secondary">{candidate.number}</span>
         )}
-        <h1 class="text-xl font-semibold text-neutral-800">
-          {candidate.name}
-        </h1>
-        {incumbent && (
-          <span class="text-xs text-neutral-500 bg-neutral-100 px-1.5 py-0.5 rounded">現任</span>
-        )}
+        <h1 class="page-title">{candidate.name}</h1>
+        {incumbent && <span class="badge">現任</span>}
       </div>
-      <p class="text-sm text-neutral-500 mt-1">
+      <p class="mt-2 text-sm text-secondary">
         {candidate.county} {candidate.districtOfficial || candidate.district || ''} · {positionName} · {partyDisplay}
       </p>
     </header>
 
-    {/* Status Info */}
-    <section class="border border-neutral-200 rounded overflow-hidden">
+    <section class="ui-card overflow-hidden p-0" aria-labelledby="profile-title">
+      <div class="border-b border-line bg-muted px-4 py-2">
+        <h2 id="profile-title" class="text-sm font-semibold text-strong">登記資料</h2>
+      </div>
       <table class="w-full text-sm">
-        <tbody class="divide-y divide-neutral-100">
+        <tbody class="divide-y divide-line">
           {candidate.number != null && (
             <tr>
-              <td class="px-3 py-2 text-neutral-500 w-24">號次</td>
-              <td class="px-3 py-2 text-neutral-800 tabular-nums">{candidate.number} 號</td>
+              <th class="w-28 px-4 py-2 text-left font-medium text-secondary">號次</th>
+              <td class="px-4 py-2 tabular-nums text-ink">{candidate.number} 號</td>
             </tr>
           )}
           <tr>
-            <td class="px-3 py-2 text-neutral-500 w-24">政黨</td>
-            <td class="px-3 py-2 text-neutral-800">{partyDisplay}</td>
+            <th class="w-28 px-4 py-2 text-left font-medium text-secondary">政黨</th>
+            <td class="px-4 py-2 text-ink">{partyDisplay}</td>
           </tr>
           {candidate.registeredOn && (
             <tr>
-              <td class="px-3 py-2 text-neutral-500 w-24">登記日期</td>
-              <td class="px-3 py-2 text-neutral-800">{candidate.registeredOn}</td>
+              <th class="w-28 px-4 py-2 text-left font-medium text-secondary">登記日期</th>
+              <td class="px-4 py-2 text-ink">{candidate.registeredOn}</td>
             </tr>
           )}
         </tbody>
       </table>
     </section>
 
-    {/* Election Bulletin Content */}
-    <section class="border border-neutral-200 rounded overflow-hidden">
-      <div class="px-3 py-2 bg-neutral-50 border-b border-neutral-200">
-        <h2 class="text-sm font-medium text-neutral-700">選舉公報</h2>
+    <section class="ui-card overflow-hidden p-0" aria-labelledby="bulletin-title">
+      <div class="border-b border-line bg-muted px-4 py-2">
+        <h2 id="bulletin-title" class="text-sm font-semibold text-strong">選舉公報</h2>
       </div>
       
       {bulletin ? (
@@ -291,8 +288,8 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
           </div>
 
           {/* Platform */}
-          <div class="px-3 py-3">
-            <h3 class="text-sm font-medium text-neutral-700 mb-2">政見</h3>
+          <div class="px-4 py-3">
+            <h3 class="mb-2 text-sm font-semibold text-strong">政見</h3>
             {hasPlatformText ? (
               <div class="text-neutral-800 whitespace-pre-wrap text-sm leading-relaxed">
                 {bulletin.platform}
@@ -316,8 +313,8 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
           {/* Education */}
           {bulletin.education && bulletin.education.length > 0 && (
-            <div class="px-3 py-3">
-              <h3 class="text-xs text-neutral-500 mb-2">學歷</h3>
+            <div class="px-4 py-3">
+              <h3 class="mb-2 text-sm font-semibold text-strong">學歷</h3>
               <ul class="text-sm text-neutral-800 space-y-0.5">
                 {bulletin.education.map(item => (
                   <li>· {item}</li>
@@ -328,8 +325,8 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
           {/* Experience */}
           {bulletin.experience && bulletin.experience.length > 0 && (
-            <div class="px-3 py-3">
-              <h3 class="text-xs text-neutral-500 mb-2">經歷</h3>
+            <div class="px-4 py-3">
+              <h3 class="mb-2 text-sm font-semibold text-strong">經歷</h3>
               <ul class="text-sm text-neutral-800 space-y-0.5">
                 {bulletin.experience.map(item => (
                   <li>· {item}</li>
@@ -340,8 +337,8 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
           {/* Declarations */}
           {bulletin.declarationsAsPrinted && bulletin.declarationsAsPrinted.length > 0 && (
-            <div class="px-3 py-3">
-              <h3 class="text-xs text-neutral-500 mb-2">具結情形</h3>
+            <div class="px-4 py-3">
+              <h3 class="mb-2 text-sm font-semibold text-strong">具結情形</h3>
               <ul class="text-sm text-neutral-700 space-y-1">
                 {bulletin.declarationsAsPrinted.map(decl => (
                   <li class="flex items-start gap-1.5">
@@ -376,17 +373,19 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
     {/* Incumbent Performance - only for publish:true incumbents */}
     {incumbent && (
-      <section class="border border-neutral-200 rounded overflow-hidden">
-        <div class="px-3 py-2 bg-neutral-50 border-b border-neutral-200">
-          <h2 class="text-sm font-medium text-neutral-700">現任表現</h2>
-          <p class="text-xs text-neutral-500 mt-0.5">
-            指標格式為「該候選人／同選區現任者均值」；均值僅納入該指標有數值的人，不作評分或排名。
+      <section class="space-y-2" aria-labelledby="incumbent-title">
+        <div>
+          <h2 id="incumbent-title" class="section-title">現任表現</h2>
+          <p class="mt-1 text-sm text-secondary">
+            指標格式為「該候選人／同選區現任者均值」。均值只納入該指標有數值的人，不作評分或排名。
           </p>
         </div>
 
-        <div class="divide-y divide-neutral-100">
-          {/* Attendance */}
-          <div class="px-3 py-3">
+        <div class="ui-card overflow-hidden p-0">
+          <div class="border-b border-line bg-muted px-4 py-2">
+            <h3 class="text-sm font-semibold text-strong">出席率（大會）</h3>
+          </div>
+          <div class="px-4 py-3">
             <MetricWithTooltip
               label="出席率（大會）"
               ratio={
@@ -404,9 +403,13 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
               footnote={attendanceFootnote}
             />
           </div>
+        </div>
 
-          {/* Interpellation: metric + details */}
-          <div class="px-3 py-3 space-y-3">
+        <div class="ui-card overflow-hidden p-0">
+          <div class="border-b border-line bg-muted px-4 py-2">
+            <h3 class="text-sm font-semibold text-strong">質詢</h3>
+          </div>
+          <div class="space-y-3 px-4 py-3">
             <MetricWithTooltip
               label="質詢數量"
               ratio={formatMetricRatio(
@@ -456,9 +459,13 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
               </a>
             )}
           </div>
+        </div>
 
-          {/* Proposals: metric + details */}
-          <div class="px-3 py-3 space-y-3">
+        <div class="ui-card overflow-hidden p-0">
+          <div class="border-b border-line bg-muted px-4 py-2">
+            <h3 class="text-sm font-semibold text-strong">提案</h3>
+          </div>
+          <div class="space-y-3 px-4 py-3">
             <MetricWithTooltip
               label="提案數量"
               ratio={formatMetricRatio(proposalCount, districtAvg?.proposals ?? null, { digits: 1 })}
@@ -500,27 +507,25 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
               <p class="text-sm text-neutral-500">無公開明細</p>
             )}
           </div>
-
-          {/* Source */}
-          <div class="px-3 py-2 bg-neutral-50 text-xs text-neutral-500">
-            {incumbent.incumbency.rosterSourceUrl && (
-              <a href={incumbent.incumbency.rosterSourceUrl} target="_blank" rel="noopener" class="underline">
-                {candidate.county}議會名冊
-              </a>
-            )}
-            <span class="ml-2">原文照錄 · 均值由本站依同選區現任資料計算</span>
-          </div>
         </div>
+
+        <p class="text-xs text-secondary">
+          {incumbent.incumbency.rosterSourceUrl && (
+            <a href={incumbent.incumbency.rosterSourceUrl} target="_blank" rel="noopener" class="underline">
+              {candidate.county}議會名冊
+            </a>
+          )}
+          <span class="ml-2">原文照錄 · 均值由本站依同選區現任資料計算</span>
+        </p>
       </section>
     )}
 
-    {/* Data Sources */}
-    <section class="border border-neutral-200 rounded overflow-hidden">
-      <div class="px-3 py-2 bg-neutral-50 border-b border-neutral-200">
-        <h2 class="text-sm font-medium text-neutral-700">資料來源</h2>
+    <section class="ui-card overflow-hidden p-0" aria-labelledby="sources-title">
+      <div class="border-b border-line bg-muted px-4 py-2">
+        <h2 id="sources-title" class="text-sm font-semibold text-strong">資料來源</h2>
       </div>
-      
-      <ul class="divide-y divide-neutral-100 text-sm">
+
+      <ul class="divide-y divide-line text-sm">
         {candidate.sourceUrl && (
           <li class="px-3 py-2 flex justify-between items-center">
             <span class="text-neutral-600">候選人公告</span>
@@ -555,17 +560,16 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
         )}
       </ul>
       
-      <div class="px-3 py-2 bg-neutral-50 border-t border-neutral-100">
-        <p class="text-xs text-neutral-500">
+      <div class="border-t border-line bg-muted px-4 py-2">
+        <p class="text-xs text-secondary">
           最後驗證：{candidate.lastVerified || candidate.asOf || '未記錄'}
         </p>
       </div>
     </section>
 
-    {/* Official Resources */}
-    <section class="text-sm">
-      <p class="text-xs text-neutral-500 mb-2">外部資源</p>
-      <ul class="space-y-1">
+    <section class="ui-card" aria-labelledby="external-title">
+      <h2 id="external-title" class="text-sm font-semibold text-strong">外部資源</h2>
+      <ul class="mt-2 space-y-2 text-sm">
         <li>
           <a href="https://bulletin.cec.gov.tw/" target="_blank" rel="noopener" class="underline text-neutral-700">
             選舉公報查詢
@@ -595,21 +599,17 @@ const reportMailto = `mailto:kay-ycqbxw+vote2026@mail.grokbot.com?subject=${repo
 
     {/* Evaluation Guide */}
     {position?.checkpoints && (
-      <details class="border border-neutral-200 rounded">
-        <summary class="px-3 py-2 cursor-pointer text-sm font-medium text-neutral-700 hover:bg-neutral-50 select-none">
-          如何評估{shortName}候選人
-        </summary>
-        <div class="px-3 py-2 border-t border-neutral-100">
-          <ul class="text-sm text-neutral-600 space-y-1">
-            {position.checkpoints.slice(0, 4).map((checkpoint) => (
-              <li>· {checkpoint}</li>
-            ))}
-          </ul>
-          <a href={`${baseUrl}how-to-judge/`} class="mt-2 inline-block text-xs underline text-neutral-600">
-            完整指南
-          </a>
-        </div>
-      </details>
+      <section class="ui-card" aria-labelledby="judge-title">
+        <h2 id="judge-title" class="text-sm font-semibold text-strong">如何評估{shortName}候選人</h2>
+        <ul class="mt-2 space-y-1 text-sm text-secondary">
+          {position.checkpoints.slice(0, 4).map((checkpoint) => (
+            <li>· {checkpoint}</li>
+          ))}
+        </ul>
+        <a href={`${baseUrl}how-to-judge/`} class="mt-3 inline-flex min-h-11 items-center text-sm underline">
+          完整指南
+        </a>
+      </section>
     )}
 
     {/* Disclaimer */}

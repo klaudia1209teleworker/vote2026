@@ -1,16 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import DocFrame from '../components/DocFrame.astro';
 
 const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout title="怎麼判斷候選人" description="學習如何評估候選人：設定底線、查詢出席率與質詢紀錄、觀察里長">
-  <article class="page-copy space-y-8">
+  <DocFrame groups={[{
+    label: '本頁',
+    items: [
+      { href: '#baseline', label: '底線' },
+      { href: '#issues', label: '在乎的事' },
+      { href: '#incumbent', label: '現任議員' },
+      { href: '#newcomer', label: '新人' },
+      { href: '#village', label: '里長' },
+      { href: '#avoid', label: '不要做的事' },
+      { href: '#checklist', label: '檢查清單' },
+    ],
+  }]}>
     <header>
-      <h1 class="page-title mb-4">
-        🔍 怎麼判斷候選人
-      </h1>
-      <p class="text-neutral-600">
+      <h1 class="page-title">怎麼判斷候選人</h1>
+      <p class="mt-2 text-secondary">
         根據影片「讀字生活 Ep02」的建議，以下是評估候選人的方法與資源。
       </p>
       <p class="text-xs text-neutral-500 mt-2">
@@ -19,11 +29,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </header>
 
     <!-- Step 1 -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">1</span>
-        先畫好你的底線
-      </h2>
+    <section id="baseline" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">1. 先畫好你的底線</h2>
       <p class="text-neutral-600 mb-4">
         不可能找到百分之百滿意的候選人，但你可以設定「絕對不能接受」的底線：
       </p>
@@ -43,11 +50,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Step 2 -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">2</span>
-        抓 2-3 件你最在乎的事
-      </h2>
+    <section id="issues" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">2. 抓 2–3 件你最在乎的事</h2>
       <p class="text-neutral-600 mb-4">
         從你的生活出發，找出最在乎的議題，看候選人在這些議題上的表現：
       </p>
@@ -76,18 +80,15 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Step 3: For Incumbents -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">3</span>
-        現任議員：查出席率與質詢
-      </h2>
+    <section id="incumbent" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">3. 現任議員：查出席率與質詢</h2>
       <p class="text-neutral-600 mb-4">
         爭取連任的議員，可以從以下管道查詢過去表現：
       </p>
       
       <div class="space-y-4">
         <div class="p-4 bg-green-50 rounded-lg">
-          <h3 class="font-medium text-green-800 mb-2">📊 查什麼？</h3>
+          <h3 class="font-medium text-neutral-800 mb-2">查什麼？</h3>
           <ul class="space-y-2 text-sm text-green-700">
             <li class="flex items-start gap-2">
               <span>✓</span>
@@ -109,7 +110,7 @@ const baseUrl = import.meta.env.BASE_URL;
         </div>
 
         <div class="p-4 bg-neutral-50 rounded-lg">
-          <h3 class="font-medium text-neutral-800 mb-3">🔗 查詢資源</h3>
+          <h3 class="font-medium text-neutral-800 mb-3">查詢資源</h3>
           <div class="space-y-3 text-sm">
             <div>
               <p class="font-medium text-neutral-700">地方議會議事錄總庫</p>
@@ -136,7 +137,7 @@ const baseUrl = import.meta.env.BASE_URL;
         </div>
 
         <div class="p-4 bg-amber-50 rounded-lg">
-          <h3 class="font-medium text-amber-800 mb-2">⚠️ 注意事項</h3>
+          <h3 class="font-medium text-neutral-800 mb-2">注意事項</h3>
           <ul class="space-y-1 text-sm text-amber-700">
             <li>• 監督品質不是看短影音剪得多精彩</li>
             <li>• 刪預算多少 ≠ 認真（亂刪也可能癱瘓市政）</li>
@@ -148,11 +149,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Step 4: For Newcomers -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">4</span>
-        新人候選人：查背景與公共參與
-      </h2>
+    <section id="newcomer" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">4. 新人候選人：查背景與公共參與</h2>
       <p class="text-neutral-600 mb-4">
         首次參選的人沒有議會紀錄可查，但可以從以下方面了解：
       </p>
@@ -191,11 +189,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Step 5: Village Chief -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4 flex items-center gap-2">
-        <span class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-700 rounded-full text-sm font-bold">5</span>
-        里長：觀察日常生活
-      </h2>
+    <section id="village" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">5. 里長：觀察日常生活</h2>
       <p class="text-neutral-600 mb-4">
         里長是最貼近生活的選舉，最重要的是日常觀察：
       </p>
@@ -240,8 +235,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- What NOT to do -->
-    <section class="p-6 bg-amber-50 border border-amber-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-amber-800 mb-4">⚠️ 不要做的事</h2>
+    <section id="avoid" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">不要做的事</h2>
       <div class="space-y-4">
         <div class="p-4 bg-white rounded-lg">
           <h3 class="font-medium text-neutral-800 mb-2">不要為了分裂而分裂投票</h3>
@@ -273,8 +268,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Summary -->
-    <section class="p-6 bg-primary-50 border border-primary-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-primary-800 mb-4">📋 簡易檢查清單</h2>
+    <section id="checklist" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">簡易檢查清單</h2>
       <div class="space-y-2 text-primary-700">
         <p class="flex items-start gap-2">
           <span>☐</span>
@@ -311,5 +306,5 @@ const baseUrl = import.meta.env.BASE_URL;
         投票當天須知 →
       </a>
     </nav>
-  </article>
+  </DocFrame>
 </Layout>

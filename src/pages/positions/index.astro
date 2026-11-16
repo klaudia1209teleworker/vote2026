@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import DocFrame from '../../components/DocFrame.astro';
 import positions from '../../data/positions.json';
 
 const baseUrl = import.meta.env.BASE_URL;
@@ -16,53 +17,56 @@ const categoryDescriptions = {
   '基層': '最貼近居民生活的民選代表'
 };
 
-const categoryIcons = {
-  '首長': '🏛️',
-  '民意代表': '🎤',
-  '基層': '🏘️'
+const categoryAnchors: Record<string, string> = {
+  '首長': 'executive',
+  '民意代表': 'council',
+  '基層': 'local',
 };
 ---
 
 <Layout title="職務介紹" description="了解九合一選舉中市長、議員、里長等九種職務的職責、待遇與選擇標準">
-  <div class="space-y-8">
-    <section>
-      <h1 class="page-title mb-4">
-        📋 九種職務介紹
-      </h1>
-      <p class="text-neutral-600 mb-6">
+  <DocFrame groups={[{
+    label: '本頁',
+    items: [
+      { href: '#executive', label: '首長' },
+      { href: '#council', label: '民意代表' },
+      { href: '#local', label: '基層' },
+      { href: '#table', label: '職位一覽' },
+    ],
+  }]}>
+    <header>
+      <h1 class="page-title">九種職務介紹</h1>
+      <p class="mt-2 text-secondary">
         九合一選舉包含九種地方公職，依據您的戶籍地不同，實際會投的票也不同。
         了解每個職位的職責，有助於您做出更好的選擇。
       </p>
-    </section>
+    </header>
 
-    <section class="p-6 bg-blue-50 border border-blue-200 rounded-xl">
-      <h2 class="font-semibold text-blue-800 mb-3">💡 您的選票像一張聘書</h2>
-      <p class="text-sm text-blue-700">
+    <section class="ui-card">
+      <h2 class="section-title">您的選票像一張聘書</h2>
+      <p class="mt-2 text-sm text-secondary">
         選票不是「選爸媽」，而是「發聘書」。這些人當選後是來替我們工作、領我們付的薪水。
         我們是老闆，他們是員工。投票後還要持續關心他們有沒有好好做事。
       </p>
-      <p class="text-xs text-blue-600 mt-2">
-        — 參考自<a href="https://www.youtube.com/watch?v=f6VOJumCwIg" target="_blank" rel="noopener" class="underline">讀字生活 Ep02</a>
+      <p class="mt-2 text-xs text-secondary">
+        參考自<a href="https://www.youtube.com/watch?v=f6VOJumCwIg" target="_blank" rel="noopener" class="underline">讀字生活 Ep02</a>
       </p>
     </section>
 
     {Object.entries(positionsByCategory).map(([category, categoryPositions]) => (
-      <section>
-        <div class="flex items-center gap-3 mb-4">
-          <span class="text-2xl">{categoryIcons[category]}</span>
-          <div>
-            <h2 class="text-xl font-semibold text-neutral-800">{category}級</h2>
-            <p class="text-sm text-neutral-500">{categoryDescriptions[category]}</p>
-          </div>
+        <section id={categoryAnchors[category]} class="doc-anchor">
+        <div class="mb-4">
+            <h2 class="section-title">{category}級</h2>
+            <p class="text-sm text-secondary">{categoryDescriptions[category]}</p>
         </div>
         
         <div class="grid gap-4 sm:grid-cols-2">
           {categoryPositions.map(position => (
             <a 
               href={`${baseUrl}positions/${position.id}/`}
-              class="group block p-5 bg-white rounded-xl shadow-sm border border-neutral-200 hover:border-primary-300 hover:shadow-md transition-all"
+              class="ui-card block"
             >
-              <h3 class="text-lg font-semibold text-neutral-800 group-hover:text-primary-700 mb-2">
+              <h3 class="text-lg font-semibold text-strong mb-2">
                 {position.name}
               </h3>
               <p class="text-sm text-neutral-600 mb-3 line-clamp-2">
@@ -84,8 +88,8 @@ const categoryIcons = {
       </section>
     ))}
 
-    <section class="p-6 bg-neutral-100 border border-neutral-200 rounded-xl">
-      <h2 class="font-semibold text-neutral-800 mb-3">📊 九合一選舉職位一覽</h2>
+    <section id="table" class="ui-card doc-anchor">
+      <h2 class="section-title mb-3">九合一選舉職位一覽</h2>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
@@ -113,5 +117,5 @@ const categoryIcons = {
         </table>
       </div>
     </section>
-  </div>
+  </DocFrame>
 </Layout>

@@ -1,16 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import DocFrame from '../components/DocFrame.astro';
 
 const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout title="投票當天須知" description="2026年11月28日投票日注意事項：時間、證件、圈選工具、禁止事項">
-  <article class="page-copy space-y-8">
+  <DocFrame groups={[{
+    label: '本頁',
+    items: [
+      { href: '#place', label: '投票所' },
+      { href: '#documents', label: '證件' },
+      { href: '#process', label: '流程' },
+      { href: '#ballots', label: '有效與無效' },
+      { href: '#prohibited', label: '禁止事項' },
+      { href: '#公投第-22-案', label: '公投第 22 案' },
+      { href: '#access', label: '無障礙' },
+      { href: '#official', label: '官方資源' },
+    ],
+  }]}>
     <header>
-      <h1 class="page-title mb-4">
-        🗳️ 投票當天須知
-      </h1>
-      <div class="p-6 bg-primary-50 border border-primary-200 rounded-xl">
+      <h1 class="page-title">投票當天須知</h1>
+      <div class="ui-card mt-4">
         <p class="text-2xl font-bold text-primary-700 mb-2">
           2026 年 11 月 28 日（星期六）
         </p>
@@ -24,8 +35,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </header>
 
     <!-- Polling Station -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📍 我的投票所在哪裡？</h2>
+    <section id="place" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">我的投票所在哪裡？</h2>
       
       <div class="p-4 bg-blue-50 rounded-lg mb-4">
         <p class="text-blue-700 font-medium mb-2">線上查詢（11/23 起開放）</p>
@@ -51,8 +62,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- What to Bring -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📋 攜帶證件</h2>
+    <section id="documents" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">攜帶證件</h2>
       
       <div class="space-y-4">
         <div class="p-4 bg-green-50 rounded-lg">
@@ -76,8 +87,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Voting Process -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🚶 投票流程</h2>
+    <section id="process" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">投票流程</h2>
       
       <div class="space-y-4">
         <div class="flex gap-4">
@@ -112,8 +123,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Valid/Invalid Ballots -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">✅ 有效票 vs ❌ 無效票</h2>
+    <section id="ballots" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">有效票與無效票</h2>
       
       <div class="grid gap-4 sm:grid-cols-2 mb-4">
         <div class="p-4 bg-green-50 rounded-lg">
@@ -148,8 +159,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Prohibited Actions -->
-    <section class="p-6 bg-red-50 border border-red-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-red-800 mb-4">🚫 禁止事項</h2>
+    <section id="prohibited" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">禁止事項</h2>
       
       <div class="space-y-4">
         <div class="p-4 bg-white rounded-lg">
@@ -179,8 +190,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Referendum -->
-    <section id="公投第-22-案" class="p-6 bg-amber-50 border border-amber-200 rounded-xl scroll-mt-4">
-      <h2 class="text-lg font-semibold text-amber-800 mb-4">🗳️ 公投第 22 案</h2>
+    <section id="公投第-22-案" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">公投第 22 案</h2>
       
       <div class="p-4 bg-white rounded-lg mb-4">
         <p class="font-medium text-neutral-800 mb-2">公投主文</p>
@@ -228,8 +239,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Accessibility -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">♿ 無障礙投票</h2>
+    <section id="access" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">無障礙投票</h2>
       
       <p class="text-neutral-600 mb-4">
         身心障礙或因故行動不便者，可申請協助。
@@ -266,8 +277,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Official Resources -->
-    <section class="p-6 bg-neutral-100 border border-neutral-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🔗 官方資源</h2>
+    <section id="official" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">官方資源</h2>
       
       <div class="grid gap-4 sm:grid-cols-2">
         <a 
@@ -320,5 +331,5 @@ const baseUrl = import.meta.env.BASE_URL;
         合作案例 →
       </a>
     </nav>
-  </article>
+  </DocFrame>
 </Layout>

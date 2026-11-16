@@ -1,20 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import DocFrame from '../components/DocFrame.astro';
 
 const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout title="關於本站與資料來源" description="資料來源、免責聲明、更新紀錄">
-  <article class="page-copy space-y-8">
+  <DocFrame groups={[{
+    label: '本頁',
+    items: [
+      { href: '#disclaimer', label: '重要聲明' },
+      { href: '#about', label: '關於本站' },
+      { href: '#sources', label: '資料來源' },
+      { href: '#limits', label: '本站不提供' },
+      { href: '#status', label: '驗證狀態' },
+      { href: '#errata', label: '勘誤' },
+      { href: '#license', label: '授權' },
+    ],
+  }]}>
     <header>
-      <h1 class="page-title mb-4">
-        ℹ️ 關於本站與資料來源
-      </h1>
+      <h1 class="page-title">關於本站與資料來源</h1>
     </header>
 
     <!-- Disclaimer -->
-    <section class="p-6 bg-red-50 border-2 border-red-300 rounded-xl">
-      <h2 class="text-lg font-bold text-red-800 mb-4">⚠️ 重要聲明</h2>
+    <section id="disclaimer" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">重要聲明</h2>
       <div class="space-y-3 text-red-700">
         <p class="font-medium">
           本站非中央選舉委員會官方網站。
@@ -31,8 +41,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- About -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📖 關於本站</h2>
+    <section id="about" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">關於本站</h2>
       <div class="space-y-4 text-neutral-600">
         <p>
           本站為 2026 年 11 月 28 日九合一地方選舉的公民資訊網站，
@@ -54,8 +64,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Data Sources -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📚 資料來源</h2>
+    <section id="sources" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">資料來源</h2>
       
       <div class="space-y-6">
         <div>
@@ -189,8 +199,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- What We Don't Do -->
-    <section class="p-6 bg-amber-50 border border-amber-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-amber-800 mb-4">🚫 本站不提供</h2>
+    <section id="limits" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">本站不提供</h2>
       <ul class="space-y-2 text-amber-700">
         <li class="flex items-start gap-2">
           <span>✗</span>
@@ -212,8 +222,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Data Verification Status -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">✅ 資料驗證狀態</h2>
+    <section id="status" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">資料驗證狀態</h2>
       
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -271,8 +281,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Error Correction -->
-    <section id="errata" class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">✏️ 勘誤</h2>
+    <section id="errata" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">勘誤</h2>
       <div class="space-y-4 text-neutral-600">
         <p>
           發現資料錯誤？請透過以下方式回報，我們會以官方資料核對後修正：
@@ -300,8 +310,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- License -->
-    <section class="p-6 bg-neutral-100 border border-neutral-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">📜 授權說明</h2>
+    <section id="license" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">授權說明</h2>
       <div class="text-sm text-neutral-600 space-y-2">
         <p>
           本站程式碼以 MIT License 授權。
@@ -325,5 +335,5 @@ const baseUrl = import.meta.env.BASE_URL;
         返回首頁 →
       </a>
     </nav>
-  </article>
+  </DocFrame>
 </Layout>

@@ -1,16 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import DocFrame from '../components/DocFrame.astro';
 
 const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout title="市長、議員、里長怎麼合作" description="透過萬華路燈案例，了解市長、議員、里長如何協同運作服務市民">
-  <article class="page-copy space-y-8">
+  <DocFrame groups={[{
+    label: '本頁',
+    items: [
+      { href: '#case', label: '案例' },
+      { href: '#lessons', label: '重點' },
+      { href: '#why', label: '為什麼要了解' },
+      { href: '#ship', label: '船的比喻' },
+    ],
+  }]}>
     <header>
-      <h1 class="page-title mb-4">
-        🤝 市長、議員、里長怎麼合作
-      </h1>
-      <p class="text-neutral-600">
+      <h1 class="page-title">市長、議員、里長怎麼合作</h1>
+      <p class="mt-2 text-secondary">
         透過一個實際案例，了解三種不同角色如何在同一件事情上互相協助、推進市政。
       </p>
       <p class="text-xs text-neutral-500 mt-2">
@@ -19,10 +26,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </header>
 
     <!-- Case Study -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">
-        💡 案例：萬華忠貞社區行人通道照明改善
-      </h2>
+    <section id="case" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">案例：萬華忠貞社區行人通道照明改善</h2>
       
       <div class="p-4 bg-amber-50 rounded-lg mb-6">
         <p class="text-amber-700">
@@ -145,8 +150,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Key Insights -->
-    <section class="p-6 bg-primary-50 border border-primary-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-primary-800 mb-4">📌 從案例學到的重點</h2>
+    <section id="lessons" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">從案例學到的重點</h2>
       
       <div class="space-y-4">
         <div class="p-4 bg-white rounded-lg">
@@ -195,8 +200,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Why This Matters -->
-    <section class="p-6 bg-white rounded-xl shadow-sm border border-neutral-200">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">💭 為什麼要了解這些？</h2>
+    <section id="why" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">為什麼要了解這些？</h2>
       
       <div class="space-y-4 text-neutral-600">
         <p>
@@ -219,8 +224,8 @@ const baseUrl = import.meta.env.BASE_URL;
     </section>
 
     <!-- Analogy -->
-    <section class="p-6 bg-neutral-100 border border-neutral-200 rounded-xl">
-      <h2 class="text-lg font-semibold text-neutral-800 mb-4">🚢 船的比喻</h2>
+    <section id="ship" class="ui-card doc-anchor">
+      <h2 class="section-title mb-4">船的比喻</h2>
       
       <p class="text-neutral-600 mb-4">
         影片用「一艘船」來比喻地方政府：
@@ -257,5 +262,5 @@ const baseUrl = import.meta.env.BASE_URL;
         候選人資訊 →
       </a>
     </nav>
-  </article>
+  </DocFrame>
 </Layout>
