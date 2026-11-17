@@ -38,9 +38,13 @@ type BulletinEntry = {
   sourcePage?: number;
   sourceArticleUrl?: string;
   asOf?: string;
+  pageImage?: string;
 };
 
 function getBulletinImagePath(entry: BulletinEntry): string | null {
+  if (entry.platformFormat === 'image' && entry.pageImage) {
+    return entry.pageImage.replace(/^\/+/, '');
+  }
   if (entry.platformFormat !== 'image' || !entry.sourceUrl || !entry.sourcePage) {
     return null;
   }
