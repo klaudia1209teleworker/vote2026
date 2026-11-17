@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { GA_MEASUREMENT_ID } from '../constants/analytics';
+import { dataUpdatedAt } from '../utils/dataUpdated';
 
 interface Props {
   title: string;
@@ -106,7 +107,7 @@ function isActive(href: string, end: boolean) {
     <footer class="border-t border-line bg-surface mt-10">
       <div class="shell py-6 text-sm">
         <h2 class="text-base font-semibold text-strong">
-          資料來源（資料更新 <time class="tabular-nums font-semibold" datetime="2026-11-15">2026-11-15</time>｜<a href={`${baseUrl}about/`} class="underline">來源清單與免責說明</a>）
+          資料來源（資料更新 <time class="tabular-nums font-semibold" datetime={dataUpdatedAt}>{dataUpdatedAt}</time>｜<a href={`${baseUrl}about/`} class="underline">來源清單與免責說明</a>）
         </h2>
         <p class="mt-3 text-secondary">
           本站非中央選舉委員會官方網站。候選人、日期、投票規則與選舉結果以
